@@ -11,8 +11,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    mango.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    mango.h
 
 FORMS    += mainwindow.ui
+
+
