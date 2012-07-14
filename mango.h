@@ -28,6 +28,10 @@ private:
 
 class Item {
 public:
+    Item() {
+
+    }
+
     Item(int aId, const std::string& aArabicName, const std::string& aEnglishName,
          int aCategoryId, int aSizeId, int aPrice) {
         this->id = aId;
@@ -57,9 +61,13 @@ private:
 class DatabaseManager {
 public:
     DatabaseManager() {
-        QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
+        database = QSqlDatabase::addDatabase("QSQLITE");
         database.setDatabaseName("C:\\database\\mango.db");
         database.open();
+    }
+
+    ~DatabaseManager() {
+        database.close();
     }
 
     std::vector<Mango::Category> getCategories() {
@@ -97,15 +105,27 @@ public:
         return items;
     }
 
+    Mango::Item getItemDetails(int itemId) {
+        Mango::Item item;
+
+        QSqlQuery query(QString("SELECT * FROM items WHERE id = %1").arg(itemId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+            int categoryId = query.value(3).toInt();
+            int sizeId = query.value(4).toInt();
+            int price = query.value(5).toInt();
+
+            item = Mango::Item(id, arabicName.toStdString(), englishName.toStdString(), categoryId, sizeId, price);
+        }
+
+        return item;
+    }
+
 private:
     QSqlDatabase database;
 };
-
-//Mango::Item getItemDetails(int itemId) {
-//    Mango::Item item;
-
-//    return item;
-//}
 
 }
 

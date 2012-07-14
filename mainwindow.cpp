@@ -25,6 +25,10 @@ MainWindow::MainWindow(QWidget *parent) :
     for(std::vector<Mango::Item>::iterator p = items.begin(); p != items.end(); ++p ) {
         qDebug() << p->getId() << " : " << QString::fromStdString(p->getEnglishName()) << " " << p->getPrice();
     }
+
+    // get item information
+    Mango::Item item = databaseManager.getItemDetails(15);
+    qDebug() << endl << item.getId() << " " << QString::fromStdString(item.getEnglishName()) << " " << item.getPrice();
 }
 
 MainWindow::~MainWindow()
