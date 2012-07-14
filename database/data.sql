@@ -97,6 +97,29 @@ CREATE TABLE components (
 	english_name TEXT
 );
 
+INSERT INTO components(arabic_name, english_name) values("مانجو", "Mango");
+INSERT INTO components(arabic_name, english_name) values("فروالة", "Strawberry");
+INSERT INTO components(arabic_name, english_name) values("موز بالحليب", "Banana Milk");
+INSERT INTO components(arabic_name, english_name) values("موز", "Banana");
+INSERT INTO components(arabic_name, english_name) values("فانيليا", "Vanilla");
+INSERT INTO components(arabic_name, english_name) values("حليب", "Milk");
+INSERT INTO components(arabic_name, english_name) values("جزر", "Carrots");
+INSERT INTO components(arabic_name, english_name) values("برتقال", "Orange");
+INSERT INTO components(arabic_name, english_name) values("آيس كريم", "Ice cream");
+INSERT INTO components(arabic_name, english_name) values("تفاح", "Apple");
+INSERT INTO components(arabic_name, english_name) values("عصير رقي مع القطع", "Watermelon Juice with Pieces");
+INSERT INTO components(arabic_name, english_name) values("توت", "Barries");
+INSERT INTO components(arabic_name, english_name) values("أناناس", "Pinapple");
+INSERT INTO components(arabic_name, english_name) values("خوخ", "Peach");
+INSERT INTO components(arabic_name, english_name) values("كيوي", "Kiwi");
+INSERT INTO components(arabic_name, english_name) values("تفاح أخضر", "Green Apple");
+INSERT INTO components(arabic_name, english_name) values("جوز هند", "Coconut");
+INSERT INTO components(arabic_name, english_name) values("أفوكادو", "Avocado");
+INSERT INTO components(arabic_name, english_name) values("شمام", "Melon");
+INSERT INTO components(arabic_name, english_name) values("ليمون", "Lemon");
+INSERT INTO components(arabic_name, english_name) values("رمان", "Pomegranate");
+INSERT INTO components(arabic_name, english_name) values("مكس", "Mix");
+
 CREATE TABLE item_components (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
 	item_id INTEGER, 
