@@ -74,6 +74,23 @@ CREATE TABLE items (
 	price INTEGER
 );
 
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("طبق كويتي", "Kuwaiti Dish", 3, 5, 16);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("طبق طلعت", "Talaat Dish", 3, 5, 16);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("أمازون", "Amazon", 3, 5, 17);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("بنانا سبليت", "Banana Split", 3, 5, 16);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("كورن فليكس", "Corn Flakes", 3, 5, 7);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("جاكو وويف", "Jaco Wave", 3, 5, 14);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("شاكو ماني", "Chackomani", 3, 5, 14);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("كيك بالآيس كريم", "Ice Cream Cake", 3, 5, 12);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("لولو", "Lulu", 3, 5, 17);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("موكا", "Mocha", 3, 5, 13);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("صمدي", "Samadi", 3, 5, 10);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("فخفخينا", "Fakhfakhina", 3, 5, 10);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("خلطة رجيم", "Diet Mix", 3, 5, 13);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("براوني", "Brownie", 3, 5, 12);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("هاي أناناس", "High Pineapple", 3, 5, 16);
+INSERT INTO items(arabic_name, english_name, categories_id, size_id, price) values("الطبق الأحمر", "Red Dish", 3, 5, 12);
+
 CREATE TABLE components (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
 	arabic_name TEXT,

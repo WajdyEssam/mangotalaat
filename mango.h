@@ -3,12 +3,19 @@
 
 #include <vector>
 #include <string>
+#include <QtSql/QtSql>
+#include <QDebug>
 
 namespace Mango {
 
 class Category {
 public:
-    Category(int aId, const std::string& aArabicName, const std::string& aEnglishName);
+    Category(int aId, const std::string& aArabicName, const std::string& aEnglishName) {
+        this->id = aId;
+        this->arabicName = aArabicName;
+        this->englishName = aEnglishName;
+    }
+
     int getId() const { return this->id; }
     std::string getArabicName() const { return this->arabicName; }
     std::string getEnglishName() const { return this->englishName; }
@@ -21,14 +28,20 @@ private:
 
 class Item {
 public:
-    Item();
-
     Item(int aId, const std::string& aArabicName, const std::string& aEnglishName,
-         int sizeId, int price);
+         int aCategoryId, int aSizeId, int aPrice) {
+        this->id = aId;
+        this->arabicName = aArabicName;
+        this->englishName = aEnglishName;
+        this->categoryId = aCategoryId;
+        this->sizeId = aSizeId;
+        this->price = aPrice;
+    }
 
     int getId() const { return this->id; }
     std::string getArabicName() const { return this->arabicName; }
     std::string getEnglishName() const { return this->englishName; }
+    int getCategoryId() const { return this->categoryId; }
     int getSizeId() const { return this->sizeId ;}
     int getPrice() const { return this->price; }
 
@@ -36,13 +49,64 @@ private:
     int id;
     std::string arabicName;
     std::string englishName;
+    int categoryId;
     int sizeId;
     int price;
 };
 
-static std::vector<Category> getCategories();
-static std::vector<Item> getItemsInCategory(int categoryId);
-static Item getItemDetails(int itemId);
+class DatabaseManager {
+public:
+    DatabaseManager() {
+        QSqlDatabase database = QSqlDatabase::addDatabase("QSQLITE");
+        database.setDatabaseName("C:\\database\\mango.db");
+        database.open();
+    }
+
+    std::vector<Mango::Category> getCategories() {
+        std::vector<Mango::Category> categories;
+
+        QSqlQuery query("SELECT * FROM categories");
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+
+            Mango::Category category(id, arabicName.toStdString(), englishName.toStdString());
+            categories.push_back(category);
+        }
+
+        return categories;
+    }
+
+    std::vector<Mango::Item> getItemsInCategory(int categoryId) {
+        std::vector<Mango::Item> items;
+        QSqlQuery query(QString("SELECT * FROM items WHERE categories_id = %1").arg(categoryId));
+
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+            int categoryId = query.value(3).toInt();
+            int sizeId = query.value(4).toInt();
+            int price = query.value(5).toInt();
+
+            Mango::Item item(id, arabicName.toStdString(), englishName.toStdString(), categoryId, sizeId, price);
+            items.push_back(item);
+        }
+
+        return items;
+    }
+
+private:
+    QSqlDatabase database;
+};
+
+//Mango::Item getItemDetails(int itemId) {
+//    Mango::Item item;
+
+//    return item;
+//}
+
 }
 
 #endif // MANGO_H
