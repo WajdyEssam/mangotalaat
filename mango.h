@@ -26,6 +26,29 @@ private:
     std::string englishName;
 };
 
+class Component {
+public:
+    Component() {
+
+    }
+
+    Component(int aId, const std::string& aArabicName, const std::string& aEnglishName) {
+        this->id = aId;
+        this->arabicName = aArabicName;
+        this->englishName = aEnglishName;
+    }
+
+    int getId() const { return this->id; }
+    std::string getArabicName() const { return this->arabicName; }
+    std::string getEnglishName() const { return this->englishName; }
+
+private:
+    int id;
+    std::string arabicName;
+    std::string englishName;
+
+};
+
 class Item {
 public:
     Item() {
@@ -121,6 +144,49 @@ public:
         }
 
         return item;
+    }
+
+    std::vector<Mango::Component> getAllCompnents() {
+        std::vector<Mango::Component> components;
+
+        QSqlQuery query(QString("SELECT * FROM components"));
+        while(query.next()){
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+
+            Mango::Component component(id, arabicName.toStdString(), englishName.toStdString());
+            components.push_back(component);
+        }
+
+        return components;
+    }
+
+    std::vector<Mango::Component> getCompnentsInItem(int itemId) {
+        std::vector<Mango::Component> components;
+
+        QSqlQuery query(QString("SELECT * FROM item_components WHERE item_id = %1").arg(itemId));
+        while(query.next()){
+            int componentId = query.value(2).toInt();
+            components.push_back(getComponentById(componentId));
+        }
+
+        return components;
+    }
+
+    Mango::Component getComponentById(int componentId){
+        Mango::Component component;
+
+        QSqlQuery query(QString("SELECT * FROM components WHERE id = %1").arg(componentId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+
+            component = Mango::Component(id, arabicName.toStdString(), englishName.toStdString());
+        }
+
+        return component;
     }
 
 private:
