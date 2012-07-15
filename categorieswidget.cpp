@@ -65,5 +65,5 @@ void CategoriesWidget::setCurrentCategory(int id){
             button->setChecked(false);
     }
 
-    qDebug() << "Selected Id: " << id;
+    emit selectCategory(id);
 }

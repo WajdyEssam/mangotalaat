@@ -36,6 +36,9 @@ private:
 
 private slots:
     void setCurrentCategory(int id);
+
+signals:
+    void selectCategory(int id);
 };
 
 #endif // CATEGORIESWIDGET_H

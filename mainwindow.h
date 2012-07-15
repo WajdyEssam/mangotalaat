@@ -34,10 +34,13 @@ private:
     void addWidgets();
     void addButtons();
     void addStatusBar();
-
+    void addSignals();
 
 private slots:
     void setCurrentWindow(int id);
+
+public slots:
+    void selectCategorySlot(int id);
 };
 
 #endif // MAINWINDOW_H

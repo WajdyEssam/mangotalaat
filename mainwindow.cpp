@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->addWidgets();
     this->addButtons();
     this->addStatusBar();
+    this->addSignals();
 }
 
 MainWindow::~MainWindow()
@@ -151,3 +152,10 @@ void MainWindow::setCurrentWindow(int id){
     this->stackedWidget->setCurrentIndex(id);
 }
 
+void MainWindow::addSignals(){
+    connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
+}
+
+void MainWindow::selectCategorySlot(int id) {
+    qDebug() << "The Selected Id: " << id;
+}
