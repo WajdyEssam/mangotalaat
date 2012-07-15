@@ -2,6 +2,7 @@
 #include "ui_categorieswidget.h"
 
 #include "mango.h"
+#include <QDebug>
 
 CategoriesWidget::CategoriesWidget(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +18,8 @@ CategoriesWidget::~CategoriesWidget()
 }
 
 void CategoriesWidget::addWidgets(){
+    this->signalMapper = new QSignalMapper(this);
+
     this->horizontalGroupBox = new QGroupBox(tr("Categories"));
     QGridLayout *layout = new QGridLayout;
 
@@ -29,9 +32,13 @@ void CategoriesWidget::addWidgets(){
             p != categories.end(); ++p ) {
 
         buttons[i] = new QPushButton(QString::fromStdString(p->getEnglishName()));
+        buttons[i]->setObjectName(QString("%1_toolButton").arg(p->getId()));
+        connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
+        this->signalMapper->setMapping(buttons[i], p->getId());
         layout->addWidget(buttons[i], row, col);
 
         col++;
+        i++;
 
         if ( col % ButtonsPerLine == 0) {
             row++;
@@ -45,4 +52,18 @@ void CategoriesWidget::addWidgets(){
     mainLayout->addWidget(horizontalGroupBox);
     this->setLayout(mainLayout);
 
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentCategory(int)));
+}
+
+void CategoriesWidget::setCurrentCategory(int id){
+    QString buttonName = QString::number(id) + "_toolButton";
+    QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
+    foreach (QPushButton* button,buttons) {
+        if (button->objectName() == buttonName)
+            button->setChecked(true);
+        else
+            button->setChecked(false);
+    }
+
+    qDebug() << "Selected Id: " << id;
 }

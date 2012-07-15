@@ -5,6 +5,7 @@
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QSignalMapper>
 
 namespace Ui {
     class CategoriesWidget;
@@ -24,9 +25,17 @@ private:
 private:
     Ui::CategoriesWidget *ui;
 
-    enum { NumButtons = 8 , ButtonsPerLine = 4};
+private:
+    enum {
+        NumButtons = 8 , ButtonsPerLine = 4
+    };
+
+    QSignalMapper *signalMapper;
     QPushButton *buttons[NumButtons];
     QGroupBox *horizontalGroupBox;
+
+private slots:
+    void setCurrentCategory(int id);
 };
 
 #endif // CATEGORIESWIDGET_H
