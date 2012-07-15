@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QSignalMapper>
+#include "categorieswidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -23,6 +24,8 @@ private:
     QSignalMapper *signalMapper;
     QWidget *headerWidget;
     QStackedWidget *stackedWidget;
+    CategoriesWidget* categoriesWidget;
+
     QLabel *versionLabel;
     QLabel *helpLabel;
 

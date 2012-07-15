@@ -12,15 +12,33 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    mango.cpp
+    mango.cpp \
+    itemswidget.cpp \
+    sizewidget.cpp \
+    categorieswidget.cpp
 
 HEADERS  += mainwindow.h \
-    mango.h
+    mango.h \
+    itemswidget.h \
+    sizewidget.h \
+    categorieswidget.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    itemswidget.ui \
+    sizewidget.ui \
+    categorieswidget.ui
 
 RESOURCES += \
     resources.qrc
+
+
+
+
+
+
+
+
+
 
 
 

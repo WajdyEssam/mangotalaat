@@ -60,7 +60,10 @@ void MainWindow::setWindowSize() {
 }
 
 void MainWindow::addWidgets() {
+    this->categoriesWidget = new CategoriesWidget;
+
     this->stackedWidget =new QStackedWidget(this);
+    this->stackedWidget->addWidget(this->categoriesWidget);
     this->setCentralWidget(this->stackedWidget);
 }
 
