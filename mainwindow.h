@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtGui>
+#include <QSignalMapper>
 
 namespace Ui {
     class MainWindow;
@@ -17,6 +19,22 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    QSignalMapper *signalMapper;
+    QWidget *headerWidget;
+    QStackedWidget *stackedWidget;
+    QLabel *versionLabel;
+    QLabel *helpLabel;
+
+private:
+    void setWindowSize();
+    void addWidgets();
+    void addButtons();
+    void addStatusBar();
+
+
+private slots:
+    void setCurrentWindow(int id);
 };
 
 #endif // MAINWINDOW_H
