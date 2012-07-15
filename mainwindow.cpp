@@ -62,9 +62,14 @@ void MainWindow::setWindowSize() {
 
 void MainWindow::addWidgets() {
     this->categoriesWidget = new CategoriesWidget;
+    this->itemsWidget = new ItemsWidget;
+    this->sizeWidget = new SizeWidget;
 
     this->stackedWidget =new QStackedWidget(this);
     this->stackedWidget->addWidget(this->categoriesWidget);
+    this->stackedWidget->addWidget(this->itemsWidget);
+    this->stackedWidget->addWidget(this->sizeWidget);
+
     this->setCentralWidget(this->stackedWidget);
 }
 
@@ -154,8 +159,17 @@ void MainWindow::setCurrentWindow(int id){
 
 void MainWindow::addSignals(){
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
+    connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
 }
 
 void MainWindow::selectCategorySlot(int id) {
-    qDebug() << "The Selected Id: " << id;
+    qDebug() << "The Selected Category Id: " << id;
+    this->itemsWidget->addWidgets(id);
+    this->stackedWidget->setCurrentIndex(1);
 }
+
+void MainWindow::selectItemSlot(int id) {
+    qDebug() << "The Selected Item Id: " << id;
+    this->stackedWidget->setCurrentIndex(2);
+}
+

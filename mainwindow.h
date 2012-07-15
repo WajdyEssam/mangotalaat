@@ -4,7 +4,10 @@
 #include <QMainWindow>
 #include <QtGui>
 #include <QSignalMapper>
+
 #include "categorieswidget.h"
+#include "itemswidget.h"
+#include "sizewidget.h"
 
 namespace Ui {
     class MainWindow;
@@ -24,7 +27,10 @@ private:
     QSignalMapper *signalMapper;
     QWidget *headerWidget;
     QStackedWidget *stackedWidget;
+
     CategoriesWidget* categoriesWidget;
+    ItemsWidget* itemsWidget;
+    SizeWidget* sizeWidget;
 
     QLabel *versionLabel;
     QLabel *helpLabel;
@@ -41,6 +47,7 @@ private slots:
 
 public slots:
     void selectCategorySlot(int id);
+    void selectItemSlot(int id);
 };
 
 #endif // MAINWINDOW_H
