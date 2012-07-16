@@ -55,7 +55,8 @@ void MainWindow::setWindowSize() {
     this->setGeometry(windowRect);
     this->setMinimumSize(80, 60);
     this->setFixedSize(this->size().width(), this->size().height());
-    this->setStyleSheet("MainWindow {background-image: url(:/images/dialog.png);}");
+    this->setWindowState(Qt::WindowMaximized); // WindowFullScreen
+    //this->setStyleSheet("MainWindow {background-image: url(:/images/dialog.png);}");
     this->setMaximumSize(QSize(this->width(), this->height()));
 }
 
