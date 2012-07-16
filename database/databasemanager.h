@@ -8,6 +8,7 @@
 #include "model/category.h"
 #include "model/item.h"
 #include "model/component.h"
+#include "model/itemdetail.h"
 
 using namespace Model;
 
@@ -20,7 +21,7 @@ namespace Database
         ~DatabaseManager();
         std::vector<Category> getCategories();
         std::vector<Item> getItemsInCategory(int categoryId);
-        Item getItemDetails(int itemId);
+        std::vector<ItemDetail> getItemDetails(int itemId);
         std::vector<Component> getAllCompnents();
         std::vector<Component> getCompnentsInItem(int itemId);
         Component getComponentById(int componentId);
