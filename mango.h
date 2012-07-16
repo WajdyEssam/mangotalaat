@@ -111,7 +111,7 @@ public:
 
     std::vector<Mango::Item> getItemsInCategory(int categoryId) {
         std::vector<Mango::Item> items;
-        QSqlQuery query(QString("SELECT * FROM items WHERE categories_id = %1").arg(categoryId));
+        QSqlQuery query(QString("SELECT * FROM items WHERE categories_id = %1 AND size_id = %2").arg(categoryId).arg(1));
 
         while(query.next()) {
             int id = query.value(0).toInt();
