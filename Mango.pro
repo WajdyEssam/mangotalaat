@@ -11,22 +11,28 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    mango.cpp \
-    itemswidget.cpp \
-    sizewidget.cpp \
-    categorieswidget.cpp
+    model/category.cpp \
+    model/component.cpp \
+    model/item.cpp \
+    database/databasemanager.cpp \
+    ui/categorieswidget.cpp \
+    ui/mainwindow.cpp \
+    ui/sizewidget.cpp \
+    ui/itemswidget.cpp
 
-HEADERS  += mainwindow.h \
-    mango.h \
-    itemswidget.h \
-    sizewidget.h \
-    categorieswidget.h
+HEADERS  += model/category.h \
+    model/component.h \
+    model/item.h \
+    database/databasemanager.h \
+    ui/categorieswidget.h \
+    ui/mainwindow.h \
+    ui/sizewidget.h \
+    ui/itemswidget.h
 
-FORMS    += mainwindow.ui \
-    itemswidget.ui \
-    sizewidget.ui \
-    categorieswidget.ui
+FORMS    += ui/categorieswidget.ui \
+    ui/mainwindow.ui \
+    ui/sizewidget.ui \
+    ui/itemswidget.ui
 
 RESOURCES += \
     resources.qrc

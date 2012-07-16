@@ -1,8 +1,8 @@
+#include <QDebug>
+
 #include "categorieswidget.h"
 #include "ui_categorieswidget.h"
-
-#include "mango.h"
-#include <QDebug>
+#include "database/databasemanager.h"
 
 CategoriesWidget::CategoriesWidget(QWidget *parent) :
     QWidget(parent),
@@ -24,14 +24,14 @@ void CategoriesWidget::addWidgets(){
     QGridLayout *layout = new QGridLayout;
 
     // get all categories
-    Mango::DatabaseManager databaseManager;
-    std::vector<Mango::Category> categories = databaseManager.getCategories();
+    Database::DatabaseManager databaseManager;
+    std::vector<Category> categories = databaseManager.getCategories();
 
     int i=0, col = 0, row = 1;
-    for(std::vector<Mango::Category>::iterator p = categories.begin();
+    for(std::vector<Category>::iterator p = categories.begin();
             p != categories.end(); ++p ) {
 
-        buttons[i] = new QPushButton(QString::fromStdString(p->getEnglishName()));
+        buttons[i] = new QPushButton(p->getEnglishName());
         buttons[i]->setObjectName(QString("%1_toolButton").arg(p->getId()));
         connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(buttons[i], p->getId());

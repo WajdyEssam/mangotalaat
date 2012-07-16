@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "mango.h"
 #include <vector>
 #include <QDebug>
 
@@ -109,7 +108,7 @@ void MainWindow::addButtons() {
 
 //    QPushButton *manageUsersButton = new QPushButton(this);
 //    manageUsersButton->setText("Manage Users");
-//    manageUsersButton->setCheckable(true);
+//    manageUsersButton->setCheckable(true);‏‪(11:06:00 PM)‬‏‬ ‪suda.nix2010‬‏‬: ‫وتستاهلي كل خير
 //    manageUsersButton->setGeometry(x,y,width,height);
 //    manageUsersButton->setObjectName("2_toolButton");
 //    manageUsersButton->setToolTip("Manage Users");

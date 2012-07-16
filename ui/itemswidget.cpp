@@ -1,8 +1,9 @@
+#include <QDebug>
+
 #include "itemswidget.h"
 #include "ui_itemswidget.h"
 
-#include "mango.h"
-#include <QDebug>
+#include "database/databasemanager.h"
 
 ItemsWidget::ItemsWidget(QWidget *parent) :
     QWidget(parent),
@@ -23,12 +24,12 @@ void ItemsWidget::addWidgets(int categoryId) {
     QGridLayout *layout = new QGridLayout;
 
     // get all items
-    Mango::DatabaseManager databaseManager;
-    std::vector<Mango::Item> items = databaseManager.getItemsInCategory(categoryId);
+    Database::DatabaseManager databaseManager;
+    std::vector<Item> items = databaseManager.getItemsInCategory(categoryId);
 
     int i=0, col = 0, row = 1;
-    for(std::vector<Mango::Item>::iterator p = items.begin(); p != items.end(); ++p ) {
-        buttons[i] = new QPushButton(QString::fromStdString(p->getEnglishName()));
+    for(std::vector<Item>::iterator p = items.begin(); p != items.end(); ++p ) {
+        buttons[i] = new QPushButton(p->getEnglishName());
         buttons[i]->setObjectName(QString("%1_toolButton").arg(p->getId()));
         connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(buttons[i], p->getId());
