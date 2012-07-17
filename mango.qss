@@ -1,0 +1,19 @@
+ 
+QPushButton
+{
+    background-image: url(:/images/home.png);
+    background-color: transparent;
+    height: 55;
+}
+
+QPushButton:hover
+{
+    background-image: url(:/images/home-hover.png);
+    background-color: transparent;
+}
+
+QPushButton:pressed,QPushButton:checked
+{
+    background-image: url(:/images/home-checked.png);
+    background-color: transparent;
+}

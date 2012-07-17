@@ -10,25 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-//    // get all categories
-//    Mango::DatabaseManager databaseManager;
-//    std::vector<Mango::Category> categories = databaseManager.getCategories();
-//    for(std::vector<Mango::Category>::iterator p = categories.begin();
-//            p != categories.end(); ++p ) {
-//        qDebug() << p->getId() << " : " << QString::fromStdString(p->getEnglishName());
-//    }
-
-//    // get all items in categories
-//    int categoryId = 3;
-//    std::vector<Mango::Item> items = databaseManager.getItemsInCategory(categoryId);
-//    for(std::vector<Mango::Item>::iterator p = items.begin(); p != items.end(); ++p ) {
-//        qDebug() << p->getId() << " : " << QString::fromStdString(p->getEnglishName()) << " " << p->getPrice();
-//    }
-
-//    // get item information
-//    Mango::Item item = databaseManager.getItemDetails(15);
-//    qDebug() << endl << item.getId() << " " << QString::fromStdString(item.getEnglishName()) << " " << item.getPrice();
-
     this->setWindowSize();
     this->addWidgets();
     this->addButtons();
@@ -41,7 +22,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setWindowSize() {
+void MainWindow::setWindowSize()
+{
     QRect screenRect = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     QRect windowRect(0, 0, 800, 600);
 
@@ -59,7 +41,8 @@ void MainWindow::setWindowSize() {
     this->setMaximumSize(QSize(this->width(), this->height()));
 }
 
-void MainWindow::addWidgets() {
+void MainWindow::addWidgets()
+{
     this->categoriesWidget = new CategoriesWidget;
     this->itemsWidget = new ItemsWidget;
     this->sizeWidget = new SizeWidget;
@@ -69,10 +52,12 @@ void MainWindow::addWidgets() {
     this->stackedWidget->addWidget(this->itemsWidget);
     this->stackedWidget->addWidget(this->sizeWidget);
 
+    this->stackedWidget->setCurrentWidget(this->categoriesWidget);
     this->setCentralWidget(this->stackedWidget);
 }
 
-void MainWindow::addButtons() {
+void MainWindow::addButtons()
+{
     this->signalMapper = new QSignalMapper(this);
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
@@ -85,53 +70,10 @@ void MainWindow::addButtons() {
     this->headerWidget = new QWidget;
     headerDockWidget->setWidget(this->headerWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, headerDockWidget);
-
-//    // buttons size
-//    int x = 19;
-//    int y = 160 ;
-//    int height = 72 ;
-//    int width = 175;
-//    int spaceBetweenButtons = 5 ;
-
-//    QPushButton *welcomeButton = new QPushButton(this);
-//    welcomeButton->setText("Registeration");
-//    welcomeButton->setCheckable(true);
-//    welcomeButton->setChecked(true);
-//    welcomeButton->setGeometry(x,y,width,height);
-//    welcomeButton->setObjectName("0_toolButton");
-//    welcomeButton->setToolTip("Main Application");
-//    welcomeButton->setStatusTip("QuickAuth");
-//    connect(welcomeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-//    this->signalMapper->setMapping(welcomeButton, Welcome);
-
-//    y += height + spaceBetweenButtons;
-
-//    QPushButton *manageUsersButton = new QPushButton(this);
-//    manageUsersButton->setText("Manage Users");
-//    manageUsersButton->setCheckable(true);‏‪(11:06:00 PM)‬‏‬ ‪suda.nix2010‬‏‬: ‫وتستاهلي كل خير
-//    manageUsersButton->setGeometry(x,y,width,height);
-//    manageUsersButton->setObjectName("2_toolButton");
-//    manageUsersButton->setToolTip("Manage Users");
-//    manageUsersButton->setStatusTip("View and Delete Users");
-//    connect(manageUsersButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-//    this->signalMapper->setMapping(manageUsersButton, Manage_User);
-
-//    y += height + spaceBetweenButtons;
-
-//    QPushButton *manageServiceButton = new QPushButton(this);
-//    manageServiceButton->setText("Manage Service");
-//    manageServiceButton->setGeometry(x,y,width,height);
-//    manageServiceButton->setCheckable(true);
-//    manageServiceButton->setObjectName("3_toolButton");
-//    manageServiceButton->setToolTip("Manage the Camera");
-//    manageServiceButton->setStatusTip("Start or Release the Camera");
-//    connect(manageServiceButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-//    this->signalMapper->setMapping(manageServiceButton, Manage_Service);
-
-//    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentWindow(int)));
 }
 
-void MainWindow::addStatusBar() {
+void MainWindow::addStatusBar()
+{
     this->versionLabel = new QLabel(this);
     this->statusBar()->showMessage("");
     this->statusBar()->addPermanentWidget(new QLabel("Mango Talaat - 2012"));
@@ -143,7 +85,8 @@ void MainWindow::addStatusBar() {
     this->statusBar()->addPermanentWidget(helpLabel);
 }
 
-void MainWindow::setCurrentWindow(int id){
+void MainWindow::setCurrentWindow(int id)
+{
     QString buttonName = QString::number(id) + "_toolButton";
     QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
     foreach (QPushButton* button,buttons) {
@@ -156,18 +99,21 @@ void MainWindow::setCurrentWindow(int id){
     this->stackedWidget->setCurrentIndex(id);
 }
 
-void MainWindow::addSignals(){
+void MainWindow::addSignals()
+{
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
 }
 
-void MainWindow::selectCategorySlot(int id) {
+void MainWindow::selectCategorySlot(int id)
+{
     qDebug() << "The Selected Category Id: " << id;
     this->itemsWidget->addWidgets(id);
     this->stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::selectItemSlot(int id) {
+void MainWindow::selectItemSlot(int id)
+{
     qDebug() << "The Selected Item Id: " << id;
     this->stackedWidget->setCurrentIndex(2);
 }

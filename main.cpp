@@ -4,6 +4,8 @@
 
 #include "ui/mainwindow.h"
 
+void loadStylesheet();
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -13,8 +15,18 @@ int main(int argc, char *argv[])
 
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
+    // load style sheet
+    loadStylesheet();
+
     MainWindow w;
     w.show();
 
     return a.exec();
+}
+
+void loadStylesheet() {
+    QFile file(":/mango.qss");
+    file.open(QFile::ReadOnly);
+    QString StyleSheet = QLatin1String(file.readAll());
+    qApp->setStyleSheet(StyleSheet);
 }

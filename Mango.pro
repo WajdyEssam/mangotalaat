@@ -37,6 +37,9 @@ FORMS    += ui/categorieswidget.ui \
 RESOURCES += \
     resources.qrc
 
+OTHER_FILES += \
+    mango.qss
+
 
 
 

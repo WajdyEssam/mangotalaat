@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>images/dialog.png</file>
+        <file>mango.qss</file>
+        <file>images/home-hover.png</file>
+        <file>images/home-checked.png</file>
+        <file>images/home.png</file>
     </qresource>
 </RCC>
