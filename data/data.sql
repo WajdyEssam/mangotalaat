@@ -1,4 +1,3 @@
-
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT,
@@ -109,6 +108,33 @@ INSERT INTO items(arabic_name, english_name, categories_id) values("الشايب
 INSERT INTO items(arabic_name, english_name, categories_id) values("سلاش توت", "Berries Slash", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("سلاش فراولة", "Strawberry Slash", 1);
 
+INSERT INTO items(arabic_name, english_name, categories_id) values("كوكتيل كويتي", "Kuwaiti Cocktail", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("كوكتيل طبيعي", "Natural Cocktail", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("إمبراطور", "Emperor", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ندى الشام", "Nada Al-Sham", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("شامي", "Shami", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("عوار القلب", "3war Qalb", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("أخو عزيز", "Akho Aziz", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("جعيص", "Go3ai9", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("حسون", "7soon", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("شحليلة", "Shahleela", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فورتي", "Fruity", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("بوبو", "Bobo", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("نصرواي", "Nasrawi", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("إيزي", "Easy", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ولمنة", "Walamenna", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("مناي", "Munaya", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("المنتخب السعودي", "Saudi National Team", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("سموزي", "Smozy", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("سلم", "Sallem", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("بكزبني", "Bugs Bunny", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("بلاك بيري", "BlackBerry", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ميمي", "Meme", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("إمبراطور الشام", "Emperor of Melon", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فورسيزونز", "4 Seasons", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("سفن آب", "7 UP", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("كوكتيل خاص", "Special Cocktail", 2);
+
 INSERT INTO items(arabic_name, english_name, categories_id) values("طبق كويتي", "Kuwaiti Dish", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("طبق طلعت", "Talaat Dish", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("أمازون", "Amazon", 3);
@@ -125,6 +151,48 @@ INSERT INTO items(arabic_name, english_name, categories_id) values("خلطة ر�
 INSERT INTO items(arabic_name, english_name, categories_id) values("براوني", "Brownie", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("هاي أناناس", "High Pineapple", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("الطبق الأحمر", "Red Dish", 3);
+
+INSERT INTO items(arabic_name, english_name, categories_id) values("فور آند وان", "4 & 1", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("أروما", "Arima", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("بيناكولادا", "Pina Colada", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("هاواي", "Hawaii", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("أناناس مكس", "Pineapple Mix", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("جريب أواي", "Grape Away", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("دايت لاي", "Diet Lay", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("4 * 4", "4 * 4", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("مكس", "Mix", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("دريم", "Dream", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("توتو", "Tutu", 4);
+INSERT INTO items(arabic_name, english_name, categories_id) values("الغدير", "Al-Ghadeer", 4);
+
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول رمان", "Red Bull Pomegranate", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول فراولة", "Red Bull Strawberry", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول ليمون", "Red Bull Lemon", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول توت", "Red Bull Barries", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول كرز", "Red Bull Cherries", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول مكس", "Red Bull Mix", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول هلالي - سلاش", "Red Bull Hilaly - Slash", 5);
+
+INSERT INTO items(arabic_name, english_name, categories_id) values("أبيض", "White", 6);
+INSERT INTO items(arabic_name, english_name, categories_id) values("وردي", "Pink", 6);
+INSERT INTO items(arabic_name, english_name, categories_id) values("مكس", "Mix", 6);
+
+INSERT INTO items(arabic_name, english_name, categories_id) values("مانجو", "Mango", 7);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فروالة", "Strawberry", 7);
+INSERT INTO items(arabic_name, english_name, categories_id) values("شوكولاته", "Chocolate", 7);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فستق", "Pistachio", 7);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ليمون", "Lemon", 7);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فانيلا", "Vanilla", 7);
+
+INSERT INTO items(arabic_name, english_name, categories_id) values("شوكولاته", "Chocolate", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فانيلا", "Vanilla", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فرواله", "Strawberry", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("سنيكرز", "Snickers", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("كيندر", "Kinder", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("مالتيزرز", "Maltesers", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("أوريو", "Oreo", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("كيت كات", "Kit Kat", 8);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فليك", "Flake", 8);
 
 CREATE TABLE item_details (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -220,6 +288,85 @@ INSERT INTO item_details(item_id, size_id, price)  values(28, 4, 13);
 INSERT INTO item_details(item_id, size_id, price)  values(29, 1, 4);
 INSERT INTO item_details(item_id, size_id, price)  values(29, 2, 9);
 INSERT INTO item_details(item_id, size_id, price)  values(29, 4, 13);
+
+
+INSERT INTO item_details(item_id, size_id, price)  values(30, 1, 5);
+INSERT INTO item_details(item_id, size_id, price)  values(30, 2, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(30, 4, 12);
+INSERT INTO item_details(item_id, size_id, price)  values(31, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(31, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(31, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(32, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(32, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(32, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(33, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(33, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(33, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(34, 1, 6);
+INSERT INTO item_details(item_id, size_id, price)  values(34, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(34, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(35, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(35, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(35, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(36, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(36, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(36, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(37, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(37, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(37, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(38, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(38, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(38, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(39, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(39, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(39, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(40, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(40, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(40, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(41, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(41, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(41, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(42, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(42, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(42, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(43, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(43, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(43, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(44, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(44, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(44, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(45, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(45, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(45, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(46, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(46, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(46, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(47, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(47, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(47, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(48, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(48, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(48, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(49, 1, 7);
+INSERT INTO item_details(item_id, size_id, price)  values(49, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(49, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(50, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(50, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(50, 4, 18);
+INSERT INTO item_details(item_id, size_id, price)  values(51, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(51, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(51, 4, 18);
+INSERT INTO item_details(item_id, size_id, price)  values(52, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(52, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(52, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(53, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(53, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(53, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(54, 2, 11);
+INSERT INTO item_details(item_id, size_id, price)  values(54, 4, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(55, 1, 0);
+INSERT INTO item_details(item_id, size_id, price)  values(55, 2, 0);
+INSERT INTO item_details(item_id, size_id, price)  values(55, 4, 0);
 
 
 INSERT INTO item_details(item_id, size_id, price)  values(56, 5, 16);
