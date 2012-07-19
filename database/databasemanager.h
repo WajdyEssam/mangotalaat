@@ -20,13 +20,17 @@ namespace Database
     public:
         DatabaseManager();
         ~DatabaseManager();
-        std::vector<Category> getCategories();
+
         std::vector<Item> getItemsInCategory(int categoryId);
-        std::vector<ItemDetail> getItemDetails(int itemId);
-        ItemDetail getItemDetailById(int itemDetialId);
-        std::vector<Component> getAllCompnents();
         std::vector<Component> getCompnentsInItem(int itemId);
+        std::vector<ItemDetail> getItemDetails(int itemId);
+
+        std::vector<Category> getCategories();
+        std::vector<Component> getAllCompnents();
         std::vector<Additionals> getAllAdditionals();
+
+        ItemDetail getItemDetailById(int itemDetialId);
+        Item getItemById(int itemId);
         Component getComponentById(int componentId);
 
         enum LAGNUAGE { ARABIC, ENGLISH };

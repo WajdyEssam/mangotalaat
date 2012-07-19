@@ -42,6 +42,11 @@ void ItemPropertiesDialog::fillComponentsAndAdditionals() {
     Model::ItemDetail itemDetial = database.getItemDetailById(this->itemDetialId);
     std::vector<Component> currentComponentInItem = database.getCompnentsInItem(itemDetial.getItemId());
 
+    // fill item description
+    Model::Item item = database.getItemById(itemDetial.getItemId());
+    QString sizeDescription = database.getItemSizeDescription(itemDetial.getSizeId(), database.ARABIC);
+    this->ui->orderLineEdit->setText(item.getArabicName() + " - " + sizeDescription);
+
     // fill all additionals
     for(std::vector<Additionals>::iterator p= additionals.begin();
             p != additionals.end(); ++p) {
@@ -62,5 +67,4 @@ void ItemPropertiesDialog::fillComponentsAndAdditionals() {
         QString name = p->getArabicName();
         this->ui->currentComponentsListWidget->addItem(name);
     }
-
 }

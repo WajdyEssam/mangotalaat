@@ -85,6 +85,22 @@ namespace Database
         return itemDetail;
     }
 
+    Item DatabaseManager::getItemById(int itemId) {
+        Item item;
+
+        QSqlQuery query(QString("SELECT * FROM items WHERE id = %1").arg(itemId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+            int categoryId = query.value(3).toInt();
+
+            item = Item(id, arabicName, englishName, categoryId);
+        }
+
+        return item;
+    }
+
     std::vector<Component> DatabaseManager::getAllCompnents()
     {
         std::vector<Component> components;
