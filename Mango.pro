@@ -9,7 +9,6 @@ QT       += core gui sql
 TARGET = Mango
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
     model/category.cpp \
     model/component.cpp \
@@ -21,7 +20,9 @@ SOURCES += main.cpp\
     ui/itemswidget.cpp \
     model/itemdetail.cpp \
     ui/headerwidget.cpp \
-    ui/orderwidget.cpp
+    ui/orderwidget.cpp \
+    ui/itempropertiesdialog.cpp \
+    model/additionals.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -33,16 +34,26 @@ HEADERS  += model/category.h \
     model/itemdetail.h \
     ui/itemswidget.h \
     ui/headerwidget.h \
-    ui/orderwidget.h
+    ui/orderwidget.h \
+    model/itemdetail.h \
+    ui/itempropertiesdialog.h \
+    model/additionals.h
 
-FORMS    += ui/categorieswidget.ui \
-    ui/sizewidget.ui
+FORMS += ui/categorieswidget.ui \
+    ui/sizewidget.ui \
+    ui/itempropertiesdialog.ui
+
 
 RESOURCES += \
     resources.qrc
 
 OTHER_FILES += \
     mango.qss
+
+
+
+
+
 
 
 

@@ -5,6 +5,7 @@ namespace Model {
     class ItemDetail
     {
     public:
+        ItemDetail() {}
         ItemDetail(int aId, int aItemId, int aSizeId, int aPrice);
 
         int getId() const { return this->id; }

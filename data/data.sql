@@ -17,6 +17,9 @@ INSERT INTO item_size(arabic_name, english_name) values("وسط", "medium");
 INSERT INTO item_size(arabic_name, english_name) values("كبير", "large");
 INSERT INTO item_size(arabic_name, english_name) values("جامبو", "jambo");
 INSERT INTO item_size(arabic_name, english_name) values("طبق", "dish");
+INSERT INTO item_size(arabic_name, english_name) values("جالون 1 لتر", "Gallon 1L");
+INSERT INTO item_size(arabic_name, english_name) values("جالون 5 لتر", "Gallon 5L");
+INSERT INTO item_size(arabic_name, english_name) values("جالون 10 لتر", "Gallon 10L");
 
 CREATE TABLE categories (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -266,3 +269,16 @@ CREATE TABLE item_components (
 	item_id INTEGER, 
 	component_id INTEGER
 );
+
+
+CREATE TABLE additionals (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	arabic_name TEXT,
+	english_name TEXT,
+	price INTEGER
+);
+
+INSERT INTO additionals(arabic_name, english_name, price) values("ايس كريم", "Ice cream", 1);
+INSERT INTO additionals(arabic_name, english_name, price) values("مكسرات", "Mocasrat", 1);
+INSERT INTO additionals(arabic_name, english_name, price) values("صوص فروالة", "Strawberry Soce", 1);
+INSERT INTO additionals(arabic_name, english_name, price) values("صوص شوكولاته", "Chocolate Soce", 1);

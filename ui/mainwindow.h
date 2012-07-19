@@ -8,6 +8,7 @@
 #include "categorieswidget.h"
 #include "itemswidget.h"
 #include "sizewidget.h"
+#include "itempropertiesdialog.h"
 
 class HeaderWidget;
 class OrderWidget;
@@ -46,8 +47,9 @@ private:
 private slots:
 
 public slots:
-    void selectCategorySlot(int id);
-    void selectItemSlot(int id);
+    void selectCategorySlot(int categoryId);
+    void selectItemSlot(int itemId);
+    void selectItemDetialSlot(int itemDetialId);
 };
 
 #endif // MAINWINDOW_H

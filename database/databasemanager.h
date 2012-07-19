@@ -9,6 +9,7 @@
 #include "model/item.h"
 #include "model/component.h"
 #include "model/itemdetail.h"
+#include "model/additionals.h"
 
 using namespace Model;
 
@@ -19,12 +20,21 @@ namespace Database
     public:
         DatabaseManager();
         ~DatabaseManager();
-        std::vector<Category> getCategories();
+
         std::vector<Item> getItemsInCategory(int categoryId);
-        std::vector<ItemDetail> getItemDetails(int itemId);
-        std::vector<Component> getAllCompnents();
         std::vector<Component> getCompnentsInItem(int itemId);
+        std::vector<ItemDetail> getItemDetails(int itemId);
+
+        std::vector<Category> getCategories();
+        std::vector<Component> getAllCompnents();
+        std::vector<Additionals> getAllAdditionals();
+
+        ItemDetail getItemDetailById(int itemDetialId);
+        Item getItemById(int itemId);
         Component getComponentById(int componentId);
+
+        enum LAGNUAGE { ARABIC, ENGLISH };
+        QString getItemSizeDescription(int sizeId, LAGNUAGE language);
 
     private:
         QSqlDatabase database;

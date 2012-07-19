@@ -66,6 +66,40 @@ namespace Database
         return itemDetails;
     }
 
+    ItemDetail DatabaseManager::getItemDetailById(int itemDetialId)
+    {
+        ItemDetail itemDetail;
+
+        QSqlQuery query(QString("SELECT * FROM item_details WHERE id = %1").arg(itemDetialId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            int itemId = query.value(1).toInt();
+            int sizeId = query.value(2).toInt();
+            int price = query.value(3).toInt();
+
+            itemDetail = ItemDetail(id, itemId, sizeId, price);
+            break;
+        }
+
+        return itemDetail;
+    }
+
+    Item DatabaseManager::getItemById(int itemId) {
+        Item item;
+
+        QSqlQuery query(QString("SELECT * FROM items WHERE id = %1").arg(itemId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+            int categoryId = query.value(3).toInt();
+
+            item = Item(id, arabicName, englishName, categoryId);
+        }
+
+        return item;
+    }
+
     std::vector<Component> DatabaseManager::getAllCompnents()
     {
         std::vector<Component> components;
@@ -110,5 +144,43 @@ namespace Database
         }
 
         return component;
+    }
+
+    std::vector<Additionals> DatabaseManager::getAllAdditionals()
+    {
+        std::vector<Additionals> additionals;
+
+        QSqlQuery query(QString("SELECT * FROM additionals"));
+        while(query.next()){
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+            int price = query.value(3).toInt();
+
+            Additionals additional(id, arabicName, englishName, price);
+            additionals.push_back(additional);
+        }
+
+        return additionals;
+    }
+
+    QString DatabaseManager::getItemSizeDescription(int sizeId, LAGNUAGE language) {
+        QString result = "";
+
+        QSqlQuery query(QString("SELECT * FROM item_size WHERE id = %1").arg(sizeId));
+        while(query.next()) {
+            //int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+
+            if ( language == ARABIC ) {
+                result = arabicName;
+            }
+            else {
+                result = englishName;
+            }
+        }
+
+        return result;
     }
 }

@@ -92,18 +92,31 @@ void MainWindow::establishConnections()
 {
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
+    connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
 }
 
-void MainWindow::selectCategorySlot(int id)
+void MainWindow::selectCategorySlot(int categorId)
 {
-    qDebug() << "The Selected Category Id: " << id;
-    this->itemsWidget->addWidgets(id);
+    qDebug() << "The Selected Category Id: " << categorId;
+    this->itemsWidget->addWidgets(categorId);
     this->stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::selectItemSlot(int id)
+void MainWindow::selectItemSlot(int itemId)
 {
-    qDebug() << "The Selected Item Id: " << id;
+    qDebug() << "The Selected Item Id: " << itemId;
+    this->sizeWidget->addWidgets(itemId);
     this->stackedWidget->setCurrentIndex(2);
 }
 
+void MainWindow::selectItemDetialSlot(int itemDetialId) {
+    qDebug() << "The Selected Item Detial Id: " << itemDetialId;
+
+    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(itemDetialId, this);
+    dialog->setModal(true);
+    dialog->exec();
+
+    if ( !dialog->isCancelled() ) {
+
+    }
+}
