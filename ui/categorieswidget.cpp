@@ -1,21 +1,17 @@
 #include <QDebug>
 
 #include "categorieswidget.h"
-#include "ui_categorieswidget.h"
 #include "database/databasemanager.h"
 
 CategoriesWidget::CategoriesWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::CategoriesWidget)
+    QWidget(parent)
 {
-    ui->setupUi(this);
     this->setObjectName("categoryWidget");
     this->addWidgets();
 }
 
 CategoriesWidget::~CategoriesWidget()
 {
-    delete ui;
 }
 
 void CategoriesWidget::addWidgets(){

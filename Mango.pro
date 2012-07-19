@@ -39,8 +39,7 @@ HEADERS  += model/category.h \
     ui/itempropertiesdialog.h \
     model/additionals.h
 
-FORMS += ui/categorieswidget.ui \
-    ui/sizewidget.ui \
+FORMS += \
     ui/itempropertiesdialog.ui
 
 

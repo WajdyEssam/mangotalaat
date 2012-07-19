@@ -1,18 +1,13 @@
 #include "sizewidget.h"
-#include "ui_sizewidget.h"
-
 #include "database/databasemanager.h"
 
 SizeWidget::SizeWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::SizeWidget)
+    QWidget(parent)
 {
-    ui->setupUi(this);
 }
 
 SizeWidget::~SizeWidget()
 {
-    delete ui;
 }
 
 void SizeWidget::addWidgets(int itemId) {

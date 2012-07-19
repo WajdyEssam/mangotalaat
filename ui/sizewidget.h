@@ -7,9 +7,6 @@
 #include <QPushButton>
 #include <QSignalMapper>
 
-namespace Ui {
-    class SizeWidget;
-}
 
 class SizeWidget : public QWidget
 {
@@ -18,9 +15,6 @@ class SizeWidget : public QWidget
 public:
     explicit SizeWidget(QWidget *parent = 0);
     ~SizeWidget();
-
-private:
-    Ui::SizeWidget *ui;
 
 public:
     void addWidgets(int itemId);

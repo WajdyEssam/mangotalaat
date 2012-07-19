@@ -7,10 +7,6 @@
 #include <QPushButton>
 #include <QSignalMapper>
 
-namespace Ui {
-    class CategoriesWidget;
-}
-
 class CategoriesWidget : public QWidget
 {
     Q_OBJECT
@@ -22,8 +18,6 @@ public:
 private:
     void addWidgets();
 
-private:
-    Ui::CategoriesWidget *ui;
 
 private:
     enum {
