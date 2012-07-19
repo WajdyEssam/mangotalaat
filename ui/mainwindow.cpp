@@ -114,7 +114,7 @@ void MainWindow::selectItemDetialSlot(int itemDetialId) {
     qDebug() << "The Selected Item Detial Id: " << itemDetialId;
 
     Model::Order order(itemDetialId);
-    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, this);
+    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, true, this);
     dialog->setModal(true);
     dialog->exec();
 

@@ -7,6 +7,7 @@ namespace Model {
     class Order
     {
     public:
+        Order() {}
         Order(int aItemDetaildId);
         Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds, int aCash);
 

@@ -13,11 +13,12 @@ class ItemPropertiesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ItemPropertiesDialog(Model::Order aOrder, QWidget *parent = 0);
+    explicit ItemPropertiesDialog(Model::Order aOrder, bool newOrder, QWidget *parent = 0);
     ~ItemPropertiesDialog();
 
 public :
     bool isCancelled() const { return isCancel; }
+    Model::Order getOrder() const { return this->modifiedOrder; }
 
 private slots:
     void on_buttonBox_accepted();
@@ -28,8 +29,15 @@ private:
 
 private:
     bool isCancel;
+    bool isNewOrder;
     Model::Order order;
-    void fillComponentsAndAdditionals();
+    Model::Order modifiedOrder;
+
+private:
+    void fillDefualtCurrentComponentsAndAdditionals();
+    void fillCurrentOrderComponentsAndAdditionals();
+    void fillAllComponentsAndAdditionals();
+    void fillItemDescription();
 };
 
 #endif // ITEMPROPERTIESDIALOG_H
