@@ -133,7 +133,6 @@ void MainWindow::selectItemDetialSlot(int itemDetialId) {
     if ( !dialog->isCancelled() ) {
         Model::Order order = dialog->getOrder();
         qDebug() << order.getItemDetialId() ;
+        this->stackedWidget->setCurrentIndex(0);
     }
-
-    this->stackedWidget->setCurrentIndex(0);
 }

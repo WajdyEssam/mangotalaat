@@ -45,9 +45,9 @@ void ItemPropertiesDialog::on_buttonBox_accepted()
 QStringList ItemPropertiesDialog::getNewComponentList() {
     QStringList componentList;
 
-//    foreach(QListWidgetItem *item, ui->currentComponentsListWidget->items) {
-//        componentList.append(item->text());
-//    }
+    for(int i=0; i<ui->currentComponentsListWidget->count(); i++) {
+        componentList.append(ui->currentComponentsListWidget->item(i)->text());
+    }
 
     return componentList;
 }
@@ -55,9 +55,9 @@ QStringList ItemPropertiesDialog::getNewComponentList() {
 QStringList ItemPropertiesDialog::getNewAdditionalList() {
     QStringList additionalList;
 
-//    foreach(QListWidgetItem *item, ui->currentAdditionalListWidget->items) {
-//        additionalList.append(item->text());
-//    }
+    for(int i=0; i<ui->currentAdditionalListWidget->count(); i++) {
+        additionalList.append(ui->currentAdditionalListWidget->item(i)->text());
+    }
 
     return additionalList;
 }
