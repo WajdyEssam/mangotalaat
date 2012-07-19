@@ -56,7 +56,18 @@ void ItemPropertiesDialog::fillDefualtCurrentComponentsAndAdditionals() {
 }
 
 void ItemPropertiesDialog::fillCurrentOrderComponentsAndAdditionals() {
+    Database::DatabaseManager database;
+    QStringList componentsList = this->order.getComponentsIds();
+    foreach(QString componentId, componentsList) {
+        Component component = database.getComponentById(componentId.toInt());
+        this->ui->currentComponentsListWidget->addItem(component.getArabicName());
+    }
 
+    QStringList additionalsList = this->order.getAdditionalsIds();
+    foreach(QString additionalId, additionalsList) {
+        Additionals additional = database.getAdditionalsById(additionalId.toInt());
+        this->ui->currentAdditionalListWidget->addItem(additional.getArabicName());
+    }
 }
 
 void ItemPropertiesDialog::fillItemDescription() {

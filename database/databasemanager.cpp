@@ -146,6 +146,24 @@ namespace Database
         return component;
     }
 
+    Additionals DatabaseManager::getAdditionalsById(int additionalsId)
+    {
+        Additionals additionals;
+
+        QSqlQuery query(QString("SELECT * FROM additionals WHERE id = %1").arg(additionalsId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+            int price = query.value(3).toInt();
+
+            additionals = Additionals(id, arabicName, englishName, price);
+            break;
+        }
+
+        return additionals;
+    }
+
     std::vector<Additionals> DatabaseManager::getAllAdditionals()
     {
         std::vector<Additionals> additionals;

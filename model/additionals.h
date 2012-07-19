@@ -7,6 +7,7 @@ namespace Model {
     class Additionals
     {
     public:
+        Additionals() {}
         Additionals(int aId, const QString& aArabicName, const QString& aEnglishName, int aPrice);
 
         int getId() const { return this->id; }
