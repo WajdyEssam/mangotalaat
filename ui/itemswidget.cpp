@@ -6,22 +6,29 @@
 ItemsWidget::ItemsWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->signalMapper = new QSignalMapper(this);
+    this->horizontalGroupBox = new QGroupBox(tr("Items"));
+    this->layout = new QGridLayout;
+
+    this->horizontalGroupBox->setLayout(layout);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(horizontalGroupBox);
+    this->setLayout(mainLayout);
+
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentItem(int)));
 }
 
 ItemsWidget::~ItemsWidget()
 {
 }
 
-void ItemsWidget::addWidgets(int categoryId) {
-    if (this->layout() != 0)
-        delete this->layout();
+void ItemsWidget::createItems(int categoryId)
+{
+    // Remove pervious buttons from grid layout
+    this->removeItems();
 
-    this->signalMapper = new QSignalMapper(this);
-
-    this->horizontalGroupBox = new QGroupBox(tr("Items"));
-    QGridLayout *layout = new QGridLayout;
-
-    // get all items
+    // Get all items
     Database::DatabaseManager databaseManager;
     std::vector<Item> items = databaseManager.getItemsInCategory(categoryId);
 
@@ -41,17 +48,10 @@ void ItemsWidget::addWidgets(int categoryId) {
             col = 0;
         }
     }
-
-    this->horizontalGroupBox->setLayout(layout);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(horizontalGroupBox);
-    this->setLayout(mainLayout);
-
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentItem(int)));
 }
 
-void ItemsWidget::setCurrentItem(int id){
+void ItemsWidget::setCurrentItem(int id)
+{
     QString buttonName = QString::number(id) + "_itemButton";
     QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
     foreach (QPushButton* button,buttons) {
@@ -62,4 +62,13 @@ void ItemsWidget::setCurrentItem(int id){
     }
 
     emit selectItem(id);
+}
+
+void ItemsWidget::removeItems()
+{
+    QLayoutItem* item;
+    while ((item = this->layout->takeAt(0)) != NULL ) {
+        delete item->widget();
+        delete item;
+    }
 }

@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QSignalMapper>
-
+#include <QGridLayout>
 
 class ItemsWidget : public QWidget
 {
@@ -17,7 +17,7 @@ public:
     ~ItemsWidget();
 
 public:
-    void addWidgets(int categoryId);
+    void createItems(int categoryId);
 
 private:
     enum {
@@ -27,6 +27,9 @@ private:
     QSignalMapper *signalMapper;
     QPushButton *buttons[NumButtons];
     QGroupBox *horizontalGroupBox;
+    QGridLayout *layout;
+
+    void removeItems();
 
 private slots:
     void setCurrentItem(int id);

@@ -4,17 +4,28 @@
 SizeWidget::SizeWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->signalMapper = new QSignalMapper(this);
+
+    this->horizontalGroupBox = new QGroupBox(tr("Items"));
+    this->layout = new QGridLayout;
+
+    this->horizontalGroupBox->setLayout(layout);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(horizontalGroupBox);
+    this->setLayout(mainLayout);
+
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentItemSize(int)));
 }
 
 SizeWidget::~SizeWidget()
 {
 }
 
-void SizeWidget::addWidgets(int itemId) {
-    this->signalMapper = new QSignalMapper(this);
-
-    this->horizontalGroupBox = new QGroupBox(tr("Items"));
-    QGridLayout *layout = new QGridLayout;
+void SizeWidget::createItemSizes(int itemId)
+{
+    // Remove pervious buttons from grid layout
+    this->removeItemSizes();
 
     // get all size
     Database::DatabaseManager databaseManager;
@@ -39,17 +50,9 @@ void SizeWidget::addWidgets(int itemId) {
             col = 0;
         }
     }
-
-    this->horizontalGroupBox->setLayout(layout);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(horizontalGroupBox);
-    this->setLayout(mainLayout);
-
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentItem(int)));
 }
 
-void SizeWidget::setCurrentItem(int id){
+void SizeWidget::setCurrentItemSize(int id){
     QString buttonName = QString::number(id) + "_toolButton";
     QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
     foreach (QPushButton* button,buttons) {
@@ -60,4 +63,13 @@ void SizeWidget::setCurrentItem(int id){
     }
 
     emit selectItemDetail(id);
+}
+
+void SizeWidget::removeItemSizes()
+{
+    QLayoutItem* item;
+    while ((item = this->layout->takeAt(0)) != NULL ) {
+        delete item->widget();
+        delete item;
+    }
 }

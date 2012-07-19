@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 #include <QSignalMapper>
+#include <QGridLayout>
 
 class CategoriesWidget : public QWidget
 {
@@ -16,7 +17,7 @@ public:
     ~CategoriesWidget();
 
 private:
-    void addWidgets();
+    void createCategories();
 
 
 private:
@@ -27,6 +28,9 @@ private:
     QSignalMapper *signalMapper;
     QPushButton *buttons[NumButtons];
     QGroupBox *horizontalGroupBox;
+    QGridLayout *layout ;
+
+    void removeCategories();
 
 private slots:
     void setCurrentCategory(int id);

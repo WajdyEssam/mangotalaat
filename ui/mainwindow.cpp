@@ -37,7 +37,7 @@ void MainWindow::createWidgetPages()
     this->stackedWidget->addWidget(this->itemsWidget);
     this->stackedWidget->addWidget(this->sizeWidget);
 
-    this->stackedWidget->setCurrentWidget(this->categoriesWidget);
+    this->setCurrentPage(CategoryPage);
     this->setCentralWidget(this->stackedWidget);
 }
 
@@ -80,10 +80,10 @@ void MainWindow::createOrderDockWidget()
 
 void MainWindow::ShowHomePage()
 {
-    this->setCurrentPage(MainWindow::CategoryPage);
+    this->setCurrentPage(CategoryPage);
 }
 
-void MainWindow::setCurrentPage(MainWindow::WidgetPage page)
+void MainWindow::setCurrentPage(WidgetPage page)
 {
     this->stackedWidget->setCurrentIndex(page);
 }
@@ -111,14 +111,14 @@ void MainWindow::establishConnections()
 void MainWindow::selectCategorySlot(int categorId)
 {
     qDebug() << "The Selected Category Id: " << categorId;
-    this->itemsWidget->addWidgets(categorId);
+    this->itemsWidget->createItems(categorId);
     this->setCurrentPage(ItemPage);
 }
 
 void MainWindow::selectItemSlot(int itemId)
 {
     qDebug() << "The Selected Item Id: " << itemId;
-    this->sizeWidget->addWidgets(itemId);
+    this->sizeWidget->createItemSizes(itemId);
     this->setCurrentPage(SizePage);
 }
 
