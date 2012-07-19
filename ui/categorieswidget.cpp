@@ -7,21 +7,30 @@ CategoriesWidget::CategoriesWidget(QWidget *parent) :
     QWidget(parent)
 {
     this->setObjectName("categoryWidget");
-    this->addWidgets();
+    this->signalMapper = new QSignalMapper(this);
+    this->horizontalGroupBox = new QGroupBox(tr("Categories"));
+    this->layout = new QGridLayout;
+
+    this->horizontalGroupBox->setLayout(layout);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(horizontalGroupBox);
+    this->setLayout(mainLayout);
+
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentCategory(int)));
+
+    this->createCategories();
+
 }
 
 CategoriesWidget::~CategoriesWidget()
 {
 }
 
-void CategoriesWidget::addWidgets(){
-    if (this->layout() != 0)
-        delete this->layout();
-
-    this->signalMapper = new QSignalMapper(this);
-
-    this->horizontalGroupBox = new QGroupBox(tr("Categories"));
-    QGridLayout *layout = new QGridLayout;
+void CategoriesWidget::createCategories()
+{
+    // Remove pervious buttons from grid layout
+    this->removeCategories();
 
     // get all categories
     Database::DatabaseManager databaseManager;
@@ -32,7 +41,7 @@ void CategoriesWidget::addWidgets(){
             p != categories.end(); ++p ) {
 
         buttons[i] = new QPushButton(p->getEnglishName());
-        buttons[i]->setObjectName(QString("%1_toolButton").arg(p->getId()));
+        buttons[i]->setObjectName(QString("%1_CategoryButton").arg(p->getId()));
         connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(buttons[i], p->getId());
         layout->addWidget(buttons[i], row, col);
@@ -45,18 +54,10 @@ void CategoriesWidget::addWidgets(){
             col = 0;
         }
     }
-
-    this->horizontalGroupBox->setLayout(layout);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(horizontalGroupBox);
-    this->setLayout(mainLayout);
-
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentCategory(int)));
 }
 
 void CategoriesWidget::setCurrentCategory(int id){
-    QString buttonName = QString::number(id) + "_toolButton";
+    QString buttonName = QString::number(id) + "_CategoryButton";
     QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
     foreach (QPushButton* button,buttons) {
         if (button->objectName() == buttonName)
@@ -67,3 +68,13 @@ void CategoriesWidget::setCurrentCategory(int id){
 
     emit selectCategory(id);
 }
+
+void CategoriesWidget::removeCategories()
+{
+    QLayoutItem* item;
+    while ((item = this->layout->takeAt(0)) != NULL ) {
+        delete item->widget();
+        delete item;
+    }
+}
+
