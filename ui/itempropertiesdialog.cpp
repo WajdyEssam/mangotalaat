@@ -42,5 +42,25 @@ void ItemPropertiesDialog::fillComponentsAndAdditionals() {
     Model::ItemDetail itemDetial = database.getItemDetailById(this->itemDetialId);
     std::vector<Component> currentComponentInItem = database.getCompnentsInItem(itemDetial.getItemId());
 
+    // fill all additionals
+    for(std::vector<Additionals>::iterator p= additionals.begin();
+            p != additionals.end(); ++p) {
+        QString name = p->getArabicName();
+        this->ui->allAdditionalListWidget->addItem(name);
+    }
+
+    // fill all components
+    for(std::vector<Component>::iterator p= components.begin();
+            p != components.end(); ++p) {
+        QString name = p->getArabicName();
+        this->ui->allComponentsListWidget->addItem(name);
+    }
+
+    // fill current item components
+    for(std::vector<Component>::iterator p= currentComponentInItem.begin();
+            p != currentComponentInItem.end(); ++p) {
+        QString name = p->getArabicName();
+        this->ui->currentComponentsListWidget->addItem(name);
+    }
 
 }
