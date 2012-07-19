@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     ui/headerwidget.cpp \
     ui/orderwidget.cpp \
     ui/itempropertiesdialog.cpp \
-    model/additionals.cpp
+    model/additionals.cpp \
+    model/order.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -37,7 +38,8 @@ HEADERS  += model/category.h \
     ui/orderwidget.h \
     model/itemdetail.h \
     ui/itempropertiesdialog.h \
-    model/additionals.h
+    model/additionals.h \
+    model/order.h
 
 FORMS += ui/categorieswidget.ui \
     ui/sizewidget.ui \
@@ -49,6 +51,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     mango.qss
+
+
 
 
 
