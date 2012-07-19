@@ -29,9 +29,10 @@ namespace Database
         std::vector<Component> getAllCompnents();
         std::vector<Additionals> getAllAdditionals();
 
-        ItemDetail getItemDetailById(int itemDetialId);
         Item getItemById(int itemId);
+        ItemDetail getItemDetailById(int itemDetialId);
         Component getComponentById(int componentId);
+        Additionals getAdditionalsById(int additionalsId);
 
         enum LAGNUAGE { ARABIC, ENGLISH };
         QString getItemSizeDescription(int sizeId, LAGNUAGE language);
