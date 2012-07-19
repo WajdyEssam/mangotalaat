@@ -41,33 +41,30 @@ namespace Database
             QString arabicName = query.value(1).toString();
             QString englishName = query.value(2).toString();
             int categoryId = query.value(3).toInt();
-            int sizeId = query.value(4).toInt();
-            int price = query.value(5).toInt();
 
-            Item item(id, arabicName, englishName, categoryId, sizeId, price);
+            Item item(id, arabicName, englishName, categoryId);
             items.push_back(item);
         }
 
         return items;
     }
 
-    Item DatabaseManager::getItemDetails(int itemId)
+    std::vector<ItemDetail> DatabaseManager::getItemDetails(int itemId)
     {
-        Item item;
+        std::vector<ItemDetail> itemDetails;
 
-        QSqlQuery query(QString("SELECT * FROM items WHERE id = %1").arg(itemId));
+        QSqlQuery query(QString("SELECT * FROM item_details WHERE item_id = %1").arg(itemId));
         while(query.next()) {
             int id = query.value(0).toInt();
-            QString arabicName = query.value(1).toString();
-            QString englishName = query.value(2).toString();
-            int categoryId = query.value(3).toInt();
-            int sizeId = query.value(4).toInt();
-            int price = query.value(5).toInt();
+            int itemId = query.value(1).toInt();
+            int sizeId = query.value(2).toInt();
+            int price = query.value(3).toInt();
 
-            item = Item(id, arabicName, englishName, categoryId, sizeId, price);
+            ItemDetail itemDetail = ItemDetail(id, itemId, sizeId, price);
+            itemDetails.push_back(itemDetail);
         }
 
-        return item;
+        return itemDetails;
     }
 
     std::vector<Component> DatabaseManager::getAllCompnents()

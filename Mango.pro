@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     ui/categorieswidget.cpp \
     ui/mainwindow.cpp \
     ui/sizewidget.cpp \
-    ui/itemswidget.cpp
+    ui/itemswidget.cpp \
+    model/itemdetail.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -27,7 +28,8 @@ HEADERS  += model/category.h \
     ui/categorieswidget.h \
     ui/mainwindow.h \
     ui/sizewidget.h \
-    ui/itemswidget.h
+    ui/itemswidget.h \
+    model/itemdetail.h
 
 FORMS    += ui/categorieswidget.ui \
     ui/mainwindow.ui \
@@ -39,6 +41,8 @@ RESOURCES += \
 
 OTHER_FILES += \
     mango.qss
+
+
 
 
 
