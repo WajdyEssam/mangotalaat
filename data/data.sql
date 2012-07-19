@@ -269,3 +269,16 @@ CREATE TABLE item_components (
 	item_id INTEGER, 
 	component_id INTEGER
 );
+
+
+CREATE TABLE additionals (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	arabic_name TEXT,
+	english_name TEXT,
+	price INTEGER
+);
+
+INSERT INTO additionals(arabic_name, english_name, price) values("ايس كريم", "Ice cream", 1);
+INSERT INTO additionals(arabic_name, english_name, price) values("مكسرات", "Mocasrat", 1);
+INSERT INTO additionals(arabic_name, english_name, price) values("صوص فروالة", "Strawberry Soce", 1);
+INSERT INTO additionals(arabic_name, english_name, price) values("صوص شوكولاته", "Chocolate Soce", 1);

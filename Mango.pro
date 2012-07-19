@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     ui/sizewidget.cpp \
     ui/itemswidget.cpp \
     model/itemdetail.cpp \
-    ui/itempropertiesdialog.cpp
+    ui/itempropertiesdialog.cpp \
+    model/additionals.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -31,7 +32,8 @@ HEADERS  += model/category.h \
     ui/sizewidget.h \
     ui/itemswidget.h \
     model/itemdetail.h \
-    ui/itempropertiesdialog.h
+    ui/itempropertiesdialog.h \
+    model/additionals.h
 
 FORMS    += ui/categorieswidget.ui \
     ui/mainwindow.ui \
@@ -41,6 +43,8 @@ FORMS    += ui/categorieswidget.ui \
 
 RESOURCES += \
     resources.qrc
+
+
 
 
 

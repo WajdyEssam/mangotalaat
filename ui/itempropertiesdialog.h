@@ -12,7 +12,7 @@ class ItemPropertiesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ItemPropertiesDialog(QWidget *parent = 0);
+    explicit ItemPropertiesDialog(int aItemDetialId, QWidget *parent = 0);
     ~ItemPropertiesDialog();
 
 public :
@@ -27,6 +27,8 @@ private:
 
 private:
     bool isCancel;
+    int itemDetialId;
+    void fillComponentsAndAdditionals();
 };
 
 #endif // ITEMPROPERTIESDIALOG_H

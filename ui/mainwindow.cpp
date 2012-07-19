@@ -114,7 +114,7 @@ void MainWindow::selectItemSlot(int itemId) {
 void MainWindow::selectItemDetialSlot(int itemDetialId) {
     qDebug() << "The Selected Item Detial Id: " << itemDetialId;
 
-    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(this);
+    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(itemDetialId, this);
     dialog->setModal(true);
     dialog->exec();
 

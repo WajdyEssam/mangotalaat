@@ -9,6 +9,7 @@
 #include "model/item.h"
 #include "model/component.h"
 #include "model/itemdetail.h"
+#include "model/additionals.h"
 
 using namespace Model;
 
@@ -22,8 +23,10 @@ namespace Database
         std::vector<Category> getCategories();
         std::vector<Item> getItemsInCategory(int categoryId);
         std::vector<ItemDetail> getItemDetails(int itemId);
+        ItemDetail getItemDetailById(int itemDetialId);
         std::vector<Component> getAllCompnents();
         std::vector<Component> getCompnentsInItem(int itemId);
+        std::vector<Additionals> getAllAdditionals();
         Component getComponentById(int componentId);
 
         enum LAGNUAGE { ARABIC, ENGLISH };
