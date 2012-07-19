@@ -7,9 +7,6 @@
 #include <QPushButton>
 #include <QSignalMapper>
 
-namespace Ui {
-    class ItemsWidget;
-}
 
 class ItemsWidget : public QWidget
 {
@@ -18,9 +15,6 @@ class ItemsWidget : public QWidget
 public:
     explicit ItemsWidget(QWidget *parent = 0);
     ~ItemsWidget();
-
-private:
-    Ui::ItemsWidget *ui;
 
 public:
     void addWidgets(int categoryId);

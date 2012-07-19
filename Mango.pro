@@ -19,7 +19,9 @@ SOURCES += main.cpp\
     ui/mainwindow.cpp \
     ui/sizewidget.cpp \
     ui/itemswidget.cpp \
-    model/itemdetail.cpp
+    model/itemdetail.cpp \
+    ui/headerwidget.cpp \
+    ui/orderwidget.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -28,13 +30,13 @@ HEADERS  += model/category.h \
     ui/categorieswidget.h \
     ui/mainwindow.h \
     ui/sizewidget.h \
+    model/itemdetail.h \
     ui/itemswidget.h \
-    model/itemdetail.h
+    ui/headerwidget.h \
+    ui/orderwidget.h
 
 FORMS    += ui/categorieswidget.ui \
-    ui/mainwindow.ui \
-    ui/sizewidget.ui \
-    ui/itemswidget.ui
+    ui/sizewidget.ui
 
 RESOURCES += \
     resources.qrc

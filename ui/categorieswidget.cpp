@@ -9,6 +9,7 @@ CategoriesWidget::CategoriesWidget(QWidget *parent) :
     ui(new Ui::CategoriesWidget)
 {
     ui->setupUi(this);
+    this->setObjectName("categoryWidget");
     this->addWidgets();
 }
 

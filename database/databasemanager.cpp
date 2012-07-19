@@ -4,8 +4,7 @@ namespace Database
 {
     DatabaseManager::DatabaseManager()
     {
-        database = QSqlDatabase::addDatabase("QSQLITE");
-        database.setDatabaseName("mango.db");
+        database = QSqlDatabase::database();
         database.open();
     }
 

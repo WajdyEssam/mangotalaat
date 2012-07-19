@@ -1,51 +1,31 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
+#include "headerwidget.h"
+#include "orderwidget.h"
 
 #include <vector>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent)
 {
-    ui->setupUi(this);
-<<<<<<< HEAD
-
-=======
->>>>>>> last
     this->setWindowSize();
-    this->addWidgets();
-    this->addButtons();
-    this->addStatusBar();
-    this->addSignals();
+    this->createWidgetPages();
+    this->createDockWidgets();
+    this->createStatusBar();
+    this->establishConnections();
 }
 
 MainWindow::~MainWindow()
 {
-    delete ui;
 }
 
 void MainWindow::setWindowSize()
 {
-    QRect screenRect = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    QRect windowRect(0, 0, 800, 600);
-
-    if (screenRect.width() < 800)
-        windowRect.setWidth(screenRect.width());
-    if (screenRect.height() < 600)
-        windowRect.setHeight(screenRect.height());
-
-    windowRect.moveCenter(screenRect.center());
-
-    this->setGeometry(windowRect);
-    this->setMinimumSize(80, 60);
-    this->setFixedSize(this->size().width(), this->size().height());
     this->setWindowState(Qt::WindowMaximized); // WindowFullScreen
-    //this->setStyleSheet("MainWindow {background-image: url(:/images/dialog.png);}");
-    this->setMaximumSize(QSize(this->width(), this->height()));
+    this->setStyleSheet("MainWindow {background-image: url(:/images/background.png);}");
 }
 
-void MainWindow::addWidgets()
+void MainWindow::createWidgetPages()
 {
     this->categoriesWidget = new CategoriesWidget;
     this->itemsWidget = new ItemsWidget;
@@ -60,23 +40,42 @@ void MainWindow::addWidgets()
     this->setCentralWidget(this->stackedWidget);
 }
 
-void MainWindow::addButtons()
+void MainWindow::createDockWidgets()
 {
-    this->signalMapper = new QSignalMapper(this);
+    createHeaderDockWidget();
+    createOrderDockWidget();
+}
 
+void MainWindow::createHeaderDockWidget()
+{
     QDockWidget *headerDockWidget = new QDockWidget(this);
     headerDockWidget->setObjectName("headerDockWidget");
     headerDockWidget->setFloating(false);
     headerDockWidget->setTitleBarWidget(new QWidget);
-    headerDockWidget->setFixedWidth(220);
-    headerDockWidget->setFixedHeight(490);
 
-    this->headerWidget = new QWidget;
+    //headerDockWidget->setFixedWidth(220);
+    //headerDockWidget->setFixedHeight(490);
+
+    this->headerWidget = new HeaderWidget;
     headerDockWidget->setWidget(this->headerWidget);
-    this->addDockWidget(Qt::LeftDockWidgetArea, headerDockWidget);
+    this->addDockWidget(Qt::TopDockWidgetArea, headerDockWidget);
 }
 
-void MainWindow::addStatusBar()
+void MainWindow::createOrderDockWidget()
+{
+    QDockWidget *orderDockWidget = new QDockWidget(this);
+    orderDockWidget->setObjectName("OrderDockWidget");
+    orderDockWidget->setFloating(false);
+    orderDockWidget->setTitleBarWidget(new QWidget);
+    orderDockWidget->setFixedWidth(220);
+    orderDockWidget->setFixedHeight(490);
+
+    this->orderWidget = new OrderWidget;
+    orderDockWidget->setWidget(this->orderWidget);
+    this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
+}
+
+void MainWindow::createStatusBar()
 {
     this->versionLabel = new QLabel(this);
     this->statusBar()->showMessage("");
@@ -89,21 +88,7 @@ void MainWindow::addStatusBar()
     this->statusBar()->addPermanentWidget(helpLabel);
 }
 
-void MainWindow::setCurrentWindow(int id)
-{
-    QString buttonName = QString::number(id) + "_toolButton";
-    QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
-    foreach (QPushButton* button,buttons) {
-        if (button->objectName() == buttonName)
-            button->setChecked(true);
-        else
-            button->setChecked(false);
-    }
-
-    this->stackedWidget->setCurrentIndex(id);
-}
-
-void MainWindow::addSignals()
+void MainWindow::establishConnections()
 {
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));

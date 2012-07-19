@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include <QtCore/QDir>
 #include <QtCore/QTextCodec>
+#include <QtSql/QSqlDatabase>
 
 #include "ui/mainwindow.h"
 
@@ -17,6 +18,10 @@ int main(int argc, char *argv[])
 
     // load style sheet
     loadStylesheet();
+
+    // Set Database name
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("mango.db");
 
     MainWindow w;
     w.show();

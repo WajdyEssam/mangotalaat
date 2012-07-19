@@ -9,9 +9,8 @@
 #include "itemswidget.h"
 #include "sizewidget.h"
 
-namespace Ui {
-    class MainWindow;
-}
+class HeaderWidget;
+class OrderWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -22,10 +21,9 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
-
     QSignalMapper *signalMapper;
-    QWidget *headerWidget;
+    HeaderWidget *headerWidget;
+    OrderWidget* orderWidget;
     QStackedWidget *stackedWidget;
 
     CategoriesWidget* categoriesWidget;
@@ -37,13 +35,15 @@ private:
 
 private:
     void setWindowSize();
-    void addWidgets();
-    void addButtons();
-    void addStatusBar();
-    void addSignals();
+    void createWidgetPages();
+    void createDockWidgets();
+    void createStatusBar();
+    void establishConnections();
+
+    void createHeaderDockWidget();
+    void createOrderDockWidget();
 
 private slots:
-    void setCurrentWindow(int id);
 
 public slots:
     void selectCategorySlot(int id);

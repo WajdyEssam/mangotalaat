@@ -1,19 +1,24 @@
  
-QPushButton
+#categoryWidget QPushButton
 {
-    background-image: url(:/images/home.png);
-    background-color: transparent;
-    height: 55;
+    border-width: 4px;
+    border-image: url(:/images/normal_button.png) 4 4 4 4 stretch stretch;
+    min-width: 128px;
+    min-height: 128px;
 }
 
-QPushButton:hover
+#categoryWidget QPushButton:hover
 {
-    background-image: url(:/images/home-hover.png);
-    background-color: transparent;
+    border-width: 4px;
+    border-image: url(:/images/hover_button.png) 4 4 4 4 stretch stretch;
+    min-width: 128px;
+    min-height: 128px;
 }
 
-QPushButton:pressed,QPushButton:checked
+#categoryWidget QPushButton:pressed, #categoryWidget QPushButton:checked
 {
-    background-image: url(:/images/home-checked.png);
-    background-color: transparent;
+    border-width: 4px;
+    border-image: url(:/images/pressed_button.png) 4 4 4 4 stretch stretch;
+    min-width: 128px;
+    min-height: 128px;
 }
