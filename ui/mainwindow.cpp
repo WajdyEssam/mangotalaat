@@ -96,16 +96,21 @@ void MainWindow::setCurrentWindow(int id){
 void MainWindow::addSignals(){
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
+    connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
 }
 
-void MainWindow::selectCategorySlot(int id) {
-    qDebug() << "The Selected Category Id: " << id;
-    this->itemsWidget->addWidgets(id);
+void MainWindow::selectCategorySlot(int categoryId) {
+    qDebug() << "The Selected Category Id: " << categoryId;
+    this->itemsWidget->addWidgets(categoryId);
     this->stackedWidget->setCurrentIndex(1);
 }
 
-void MainWindow::selectItemSlot(int id) {
-    qDebug() << "The Selected Item Id: " << id;
+void MainWindow::selectItemSlot(int itemId) {
+    qDebug() << "The Selected Item Id: " << itemId;
+    this->sizeWidget->addWidgets(itemId);
     this->stackedWidget->setCurrentIndex(2);
 }
 
+void MainWindow::selectItemDetialSlot(int itemDetialId) {
+    qDebug() << "The Selected Item Detial Id: " << itemDetialId;
+}

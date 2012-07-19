@@ -17,6 +17,9 @@ INSERT INTO item_size(arabic_name, english_name) values("وسط", "medium");
 INSERT INTO item_size(arabic_name, english_name) values("كبير", "large");
 INSERT INTO item_size(arabic_name, english_name) values("جامبو", "jambo");
 INSERT INTO item_size(arabic_name, english_name) values("طبق", "dish");
+INSERT INTO item_size(arabic_name, english_name) values("جالون 1 لتر", "Gallon 1L");
+INSERT INTO item_size(arabic_name, english_name) values("جالون 5 لتر", "Gallon 5L");
+INSERT INTO item_size(arabic_name, english_name) values("جالون 10 لتر", "Gallon 10L");
 
 CREATE TABLE categories (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,

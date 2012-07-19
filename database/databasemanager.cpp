@@ -112,4 +112,24 @@ namespace Database
 
         return component;
     }
+
+    QString DatabaseManager::getItemSizeDescription(int sizeId, LAGNUAGE language) {
+        QString result = "";
+
+        QSqlQuery query(QString("SELECT * FROM item_size WHERE id = %1").arg(sizeId));
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            QString arabicName = query.value(1).toString();
+            QString englishName = query.value(2).toString();
+
+            if ( language == ARABIC ) {
+                result = arabicName;
+            }
+            else {
+                result = englishName;
+            }
+        }
+
+        return result;
+    }
 }

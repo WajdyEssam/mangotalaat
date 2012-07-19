@@ -46,8 +46,9 @@ private slots:
     void setCurrentWindow(int id);
 
 public slots:
-    void selectCategorySlot(int id);
-    void selectItemSlot(int id);
+    void selectCategorySlot(int categoryId);
+    void selectItemSlot(int itemId);
+    void selectItemDetialSlot(int itemDetialId);
 };
 
 #endif // MAINWINDOW_H

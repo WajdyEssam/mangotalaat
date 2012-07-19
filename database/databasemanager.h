@@ -26,6 +26,9 @@ namespace Database
         std::vector<Component> getCompnentsInItem(int itemId);
         Component getComponentById(int componentId);
 
+        enum LAGNUAGE { ARABIC, ENGLISH };
+        QString getItemSizeDescription(int sizeId, LAGNUAGE language);
+
     private:
         QSqlDatabase database;
     };
