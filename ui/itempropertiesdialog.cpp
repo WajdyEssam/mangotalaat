@@ -6,12 +6,12 @@
 #include "model/component.h"
 #include "model/itemdetail.h"
 
-ItemPropertiesDialog::ItemPropertiesDialog(int aItemDetialId, QWidget *parent) :
+ItemPropertiesDialog::ItemPropertiesDialog(Model::Order aOrder, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ItemPropertiesDialog)
+    ui(new Ui::ItemPropertiesDialog),
+    order(aOrder)
 {
     ui->setupUi(this);
-    this->itemDetialId = aItemDetialId;
 
     fillComponentsAndAdditionals();
 }
@@ -39,7 +39,7 @@ void ItemPropertiesDialog::fillComponentsAndAdditionals() {
     std::vector<Additionals> additionals = database.getAllAdditionals();
     std::vector<Component> components = database.getAllCompnents();
 
-    Model::ItemDetail itemDetial = database.getItemDetailById(this->itemDetialId);
+    Model::ItemDetail itemDetial = database.getItemDetailById(this->order.getItemDetialId());
     std::vector<Component> currentComponentInItem = database.getCompnentsInItem(itemDetial.getItemId());
 
     // fill item description

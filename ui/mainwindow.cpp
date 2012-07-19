@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <QDebug>
+#include "model/order.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -112,7 +113,8 @@ void MainWindow::selectItemSlot(int itemId)
 void MainWindow::selectItemDetialSlot(int itemDetialId) {
     qDebug() << "The Selected Item Detial Id: " << itemDetialId;
 
-    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(itemDetialId, this);
+    Model::Order order(itemDetialId);
+    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, this);
     dialog->setModal(true);
     dialog->exec();
 

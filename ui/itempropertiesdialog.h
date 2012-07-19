@@ -2,6 +2,7 @@
 #define ITEMPROPERTIESDIALOG_H
 
 #include <QDialog>
+#include "model/order.h"
 
 namespace Ui {
     class ItemPropertiesDialog;
@@ -12,7 +13,7 @@ class ItemPropertiesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ItemPropertiesDialog(int aItemDetialId, QWidget *parent = 0);
+    explicit ItemPropertiesDialog(Model::Order aOrder, QWidget *parent = 0);
     ~ItemPropertiesDialog();
 
 public :
@@ -27,7 +28,7 @@ private:
 
 private:
     bool isCancel;
-    int itemDetialId;
+    Model::Order order;
     void fillComponentsAndAdditionals();
 };
 
