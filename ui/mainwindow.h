@@ -8,6 +8,7 @@
 #include "categorieswidget.h"
 #include "itemswidget.h"
 #include "sizewidget.h"
+#include "itempropertiesdialog.h"
 
 namespace Ui {
     class MainWindow;
