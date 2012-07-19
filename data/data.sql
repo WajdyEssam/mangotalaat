@@ -386,6 +386,60 @@ INSERT INTO item_details(item_id, size_id, price)  values(69, 5, 12);
 INSERT INTO item_details(item_id, size_id, price)  values(70, 5, 16);
 INSERT INTO item_details(item_id, size_id, price)  values(71, 5, 12);
 
+INSERT INTO item_details(item_id, size_id, price)  values(72, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(72, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(72, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(73, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(73, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(73, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(74, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(74, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(74, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(75, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(75, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(75, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(76, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(76, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(76, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(77, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(77, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(77, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(78, 1, 10);
+INSERT INTO item_details(item_id, size_id, price)  values(78, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(78, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(79, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(79, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(79, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(80, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(80, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(80, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(81, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(81, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(81, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(82, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(82, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(82, 4, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(83, 1, 8);
+INSERT INTO item_details(item_id, size_id, price)  values(83, 2, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(83, 4, 16);
+
+INSERT INTO item_details(item_id, size_id, price)  values(84, 3, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(84, 4, 19);
+INSERT INTO item_details(item_id, size_id, price)  values(85, 3, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(85, 4, 19);
+INSERT INTO item_details(item_id, size_id, price)  values(86, 3, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(86, 4, 19);
+INSERT INTO item_details(item_id, size_id, price)  values(87, 3, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(87, 4, 19);
+INSERT INTO item_details(item_id, size_id, price)  values(88, 3, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(88, 4, 19);
+INSERT INTO item_details(item_id, size_id, price)  values(89, 3, 13);
+INSERT INTO item_details(item_id, size_id, price)  values(89, 4, 19);
+INSERT INTO item_details(item_id, size_id, price)  values(90, 3, 16);
+INSERT INTO item_details(item_id, size_id, price)  values(90, 4, 23);
+
+
+
 CREATE TABLE components (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
 	arabic_name TEXT,
