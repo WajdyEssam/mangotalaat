@@ -6,5 +6,9 @@
         <file>images/hover_button.png</file>
         <file>images/normal_button.png</file>
         <file>images/pressed_button.png</file>
+        <file>images/logout.png</file>
+        <file>images/system.png</file>
+        <file>images/report.png</file>
+        <file>images/accounting.png</file>
     </qresource>
 </RCC>

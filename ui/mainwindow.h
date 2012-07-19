@@ -18,6 +18,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    enum WidgetPage {
+        CategoryPage = 0,
+        ItemPage = 1,
+        SizePage = 2
+    };
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
@@ -44,7 +50,10 @@ private:
     void createHeaderDockWidget();
     void createOrderDockWidget();
 
+    void setCurrentPage(WidgetPage page);
+
 private slots:
+    void ShowHomePage();
 
 public slots:
     void selectCategorySlot(int categoryId);

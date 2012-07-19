@@ -48,6 +48,9 @@ void MainWindow::createDockWidgets()
 
 void MainWindow::createHeaderDockWidget()
 {
+    this->headerWidget = new HeaderWidget;
+    connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
+
     QDockWidget *headerDockWidget = new QDockWidget(this);
     headerDockWidget->setObjectName("headerDockWidget");
     headerDockWidget->setFloating(false);
@@ -56,7 +59,7 @@ void MainWindow::createHeaderDockWidget()
     //headerDockWidget->setFixedWidth(220);
     //headerDockWidget->setFixedHeight(490);
 
-    this->headerWidget = new HeaderWidget;
+
     headerDockWidget->setWidget(this->headerWidget);
     this->addDockWidget(Qt::TopDockWidgetArea, headerDockWidget);
 }
@@ -73,6 +76,16 @@ void MainWindow::createOrderDockWidget()
     this->orderWidget = new OrderWidget;
     orderDockWidget->setWidget(this->orderWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
+}
+
+void MainWindow::ShowHomePage()
+{
+    this->setCurrentPage(MainWindow::CategoryPage);
+}
+
+void MainWindow::setCurrentPage(MainWindow::WidgetPage page)
+{
+    this->stackedWidget->setCurrentIndex(page);
 }
 
 void MainWindow::createStatusBar()
@@ -99,14 +112,14 @@ void MainWindow::selectCategorySlot(int categorId)
 {
     qDebug() << "The Selected Category Id: " << categorId;
     this->itemsWidget->addWidgets(categorId);
-    this->stackedWidget->setCurrentIndex(1);
+    this->setCurrentPage(ItemPage);
 }
 
 void MainWindow::selectItemSlot(int itemId)
 {
     qDebug() << "The Selected Item Id: " << itemId;
     this->sizeWidget->addWidgets(itemId);
-    this->stackedWidget->setCurrentIndex(2);
+    this->setCurrentPage(SizePage);
 }
 
 void MainWindow::selectItemDetialSlot(int itemDetialId) {

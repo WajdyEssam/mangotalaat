@@ -15,6 +15,9 @@ CategoriesWidget::~CategoriesWidget()
 }
 
 void CategoriesWidget::addWidgets(){
+    if (this->layout() != 0)
+        delete this->layout();
+
     this->signalMapper = new QSignalMapper(this);
 
     this->horizontalGroupBox = new QGroupBox(tr("Categories"));

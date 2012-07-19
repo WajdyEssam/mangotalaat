@@ -22,3 +22,37 @@
     min-width: 128px;
     min-height: 128px;
 }
+
+QToolButton
+{
+    background-color: transparent;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+QToolButton:hover, QToolButton:hover:checked
+{
+    background: qradialgradient(cx:0.5, cy:1, radius: 0.5, fx:0.5, fy:1.3,stop: 0 cyan, stop: 1.0 transparent);
+    color: yellow;
+    border-color: #0e536e;
+}
+
+QToolButton:pressed
+{
+    padding-top: 5px;
+}
+
+QHeaderView::section
+{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #616161, stop: 0.5 #505050,stop: 0.6 #434343, stop:1 #656565);
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+    font: bold
+}
