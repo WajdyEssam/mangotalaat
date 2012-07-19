@@ -44,6 +44,7 @@ CREATE TABLE orders_type (
 INSERT INTO orders_type(description) values("Cash");
 INSERT INTO orders_type(description) values("Cupon");
 INSERT INTO orders_type(description) values("Discount");
+INSERT INTO orders_type(description) values("Free");
 
 CREATE TABLE orders (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,10 +57,13 @@ CREATE TABLE orders (
 
 CREATE TABLE order_details(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	item_id INTEGER,
+	order_id INTEGER,
+	item_detial_id INTEGER,
 	quantity INTEGER,
-	arabic_description TEXT,
-	english_description TEXT
+	components_ids TEXT,
+	additionals_ids TEXT, 
+	sugar TEXT,
+	cash INTEGER
 );
 
 CREATE TABLE order_canceled (

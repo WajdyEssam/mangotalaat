@@ -2,6 +2,7 @@
 #define ITEMPROPERTIESDIALOG_H
 
 #include <QDialog>
+#include "model/order.h"
 
 namespace Ui {
     class ItemPropertiesDialog;
@@ -12,11 +13,12 @@ class ItemPropertiesDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ItemPropertiesDialog(int aItemDetialId, QWidget *parent = 0);
+    explicit ItemPropertiesDialog(Model::Order aOrder, bool newOrder, QWidget *parent = 0);
     ~ItemPropertiesDialog();
 
 public :
     bool isCancelled() const { return isCancel; }
+    Model::Order getOrder() const { return this->modifiedOrder; }
 
 private slots:
     void on_buttonBox_accepted();
@@ -27,8 +29,15 @@ private:
 
 private:
     bool isCancel;
-    int itemDetialId;
-    void fillComponentsAndAdditionals();
+    bool isNewOrder;
+    Model::Order order;
+    Model::Order modifiedOrder;
+
+private:
+    void fillDefualtCurrentComponentsAndAdditionals();
+    void fillCurrentOrderComponentsAndAdditionals();
+    void fillAllComponentsAndAdditionals();
+    void fillItemDescription();
 };
 
 #endif // ITEMPROPERTIESDIALOG_H
