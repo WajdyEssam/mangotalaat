@@ -41,7 +41,8 @@ namespace Database
         bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::Order> orders);
         bool cancelOrder(int orderId);
 
-        void closeTodayOrders();
+        bool closeTodayOrders(QDateTime time);
+        bool addLoginEventLogging(int userId, QDateTime time, int eventType); // 1 login, 2 logout
 
     private:
         QString fromListToText(QStringList ids);

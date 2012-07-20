@@ -21,5 +21,8 @@ namespace Model {
         Database::DatabaseManager database;
         Model::ItemDetail itemDetail = database.getItemDetailById(this->itemDetailId);
         this->cash = itemDetail.getPrice() * this->quantity;
+
+        // if item is special cocktail then the price will be the largest component price
+        // this is just for mango and avocado
     }
 }

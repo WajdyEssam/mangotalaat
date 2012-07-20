@@ -1,8 +1,21 @@
+
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT,
 	password TEXT,
 	register_time TEXT
+);
+
+CREATE TABLE events_logging (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	user_id INTEGER,
+	event_time DATETIME,
+	event_type INTEGER
+);
+
+CREATE TABLE system_checkout (
+	id INTEGER PRIMARY KEY AUTOINCREMENT, 
+	checkout_time DATATIME
 );
 
 CREATE TABLE item_size (

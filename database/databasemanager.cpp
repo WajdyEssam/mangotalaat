@@ -256,11 +256,26 @@ namespace Database
         }
 
         return ret;
-
     }
 
-    void DatabaseManager::closeTodayOrders() {
+    bool DatabaseManager::closeTodayOrders(QDateTime time) {
+        QSqlQuery query;
 
+        query.prepare("INSERT INTO system_checkout(checkout_time) VALUES(?)");
+        query.addBindValue(time);
+
+        return query.exec();
+    }
+
+    bool DatabaseManager::addLoginEventLogging(int userId, QDateTime time, int eventType) { // 1 login, 2 logout
+        QSqlQuery query;
+
+        query.praper("INSERT INTO events_logging(user_id, event_time, event_type) VALUES(?,?,?)");
+        query.addBindValue(userId);
+        query.addBindValue(time);
+        query.addBindValue(eventType);
+
+        return query.exec();
     }
 
     QString DatabaseManager::fromListToText(QStringList ids) {
