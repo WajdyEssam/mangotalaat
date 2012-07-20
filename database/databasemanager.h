@@ -10,6 +10,7 @@
 #include "model/component.h"
 #include "model/itemdetail.h"
 #include "model/additionals.h"
+#include "model/order.h"
 
 using namespace Model;
 
@@ -36,6 +37,12 @@ namespace Database
 
         enum LAGNUAGE { ARABIC, ENGLISH };
         QString getItemSizeDescription(int sizeId, LAGNUAGE language);
+
+        bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::Order> orders);
+
+    private:
+        QString fromListToText(QStringList ids);
+        QStringList fromTextToList(QString text);
 
     private:
         QSqlDatabase database;

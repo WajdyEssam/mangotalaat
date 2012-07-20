@@ -47,8 +47,9 @@ INSERT INTO orders_type(description) values("Free");
 
 CREATE TABLE orders (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	order_time NUMERIC,
+	order_time DATETIME,
 	order_type_id INTEGER,
+	cash INTEGER,
 	discount INTEGER,
 	total_cash INTEGER,
 	is_cancelled INTEGER

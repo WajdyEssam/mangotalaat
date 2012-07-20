@@ -5,7 +5,9 @@
 
 #include <vector>
 #include <QDebug>
+
 #include "model/order.h"
+#include "database/databasemanager.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -53,6 +55,7 @@ void MainWindow::createHeaderDockWidget()
 {
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
+    connect(this->headerWidget, SIGNAL(reportClicked()), SLOT(reportClickedSlot()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
     headerDockWidget->setObjectName("headerDockWidget");
@@ -82,6 +85,12 @@ void MainWindow::ShowHomePage()
 {
     this->setCurrentPage(CategoryPage);
 }
+
+void MainWindow::reportClickedSlot()
+{
+    computeTotalCash();
+}
+
 
 void MainWindow::setCurrentPage(WidgetPage page)
 {
@@ -132,7 +141,39 @@ void MainWindow::selectItemDetialSlot(int itemDetialId) {
 
     if ( !dialog->isCancelled() ) {
         Model::Order order = dialog->getOrder();
-        qDebug() << order.getItemDetialId() ;
+
+        this->orders.append(order);
         this->stackedWidget->setCurrentIndex(0);
     }
+}
+
+void MainWindow::computeTotalCash() {
+    this->discount = 0;
+
+    qDebug() << "you have a " << this->orders.size() << " Orders";
+    int cash = 0;
+
+    foreach(Model::Order order, this->orders) {
+        cash += order.getCash();
+    }
+
+    int totalCash = cash - this->discount;
+    QDateTime now = QDateTime::currentDateTime();
+
+    Database::DatabaseManager database;
+    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orders);
+
+    qDebug() << "New Order Status: " << ret;
+}
+
+void MainWindow::computeFree() {
+
+}
+
+void MainWindow::computeCupon() {
+
+}
+
+void MainWindow::setDiscount() {
+    this->discount = 0;
 }

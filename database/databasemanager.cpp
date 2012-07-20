@@ -201,4 +201,59 @@ namespace Database
 
         return result;
     }
+
+    bool DatabaseManager::addOrder(QDateTime currentTime, int orderTypeId, int cash,
+                                   int discount, int totalCash, QList<Model::Order> orders) {
+
+        QSqlQuery query;
+
+        query.prepare("INSERT INTO orders(order_time, order_type_id, cash, discount, total_cash, is_cancelled) VALUES(?,?,?,?,?,0)");
+        query.addBindValue(currentTime);
+        query.addBindValue(orderTypeId);
+        query.addBindValue(cash);
+        query.addBindValue(discount);
+        query.addBindValue(totalCash);
+
+        bool ret = query.exec();
+
+        if ( ret ) {
+            int orderId = query.lastInsertId().toInt();
+
+            foreach(Model::Order order, orders) {
+
+                QSqlQuery tmpQuery;
+
+                tmpQuery.prepare("INSERT INTO order_details(id, order_id, item_detial_id, quantity, components_ids, additionals_ids, sugar, cash) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)");
+                tmpQuery.addBindValue(orderId);
+                tmpQuery.addBindValue(order.getItemDetialId());
+                tmpQuery.addBindValue(order.getQunatity());
+                tmpQuery.addBindValue(fromListToText(order.getComponentsIds()));
+                tmpQuery.addBindValue(fromListToText(order.getAdditionalsIds()));
+                tmpQuery.addBindValue(order.getSugar());
+                tmpQuery.addBindValue(order.getCash());
+
+                qDebug() << " Insert Order: " << order.getItemDetialId() << " : " << tmpQuery.exec();
+            }
+        }
+
+        return ret;
+    }
+
+    QString DatabaseManager::fromListToText(QStringList ids) {
+        QString commaSeparatedId = "";
+
+        for(int i=0; i<ids.size(); i++) {
+            commaSeparatedId += ids.at(i);
+
+            if ( i < ids.size() - 1 ) {
+                commaSeparatedId += ",";
+            }
+        }
+
+        return commaSeparatedId;
+    }
+
+    QStringList DatabaseManager::fromTextToList(QString text) {
+        return text.split(",");
+    }
 }

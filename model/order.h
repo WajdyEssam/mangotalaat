@@ -17,8 +17,6 @@ namespace Model {
         QStringList getAdditionalsIds() const { return this->additionalsIds; }
         QString getSugar() const { return this->sugar; }
         int getCash() const { return this->cash; }
-        QString getArabicName() const { return this->arabicName ; }
-        QString getEnglishName() const { return this->englishName ; }
 
     private:
         void computeCash();
@@ -30,8 +28,6 @@ namespace Model {
         QStringList additionalsIds;
         QString sugar;
         int cash;
-        QString arabicName;
-        QString englishName;
     };
 }
 #endif // ORDER_H
