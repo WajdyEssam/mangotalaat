@@ -22,6 +22,7 @@ void HeaderWidget::paintEvent(QPaintEvent *) {
 
 void HeaderWidget::init()
 {
+    this->setObjectName("headerWidget");
     this->signalMapper = new QSignalMapper(this);
     this->setFixedHeight(120);
     this->createToolButtons();

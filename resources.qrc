@@ -10,5 +10,9 @@
         <file>images/system.png</file>
         <file>images/report.png</file>
         <file>images/accounting.png</file>
+        <file>images/juices/category_1.png</file>
+        <file>images/juices/category_2.png</file>
+        <file>images/juices/category_4.png</file>
+        <file>images/juices/category_5.png</file>
     </qresource>
 </RCC>

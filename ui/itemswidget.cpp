@@ -6,6 +6,7 @@
 ItemsWidget::ItemsWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->setObjectName("itemWidget");
     this->signalMapper = new QSignalMapper(this);
     this->horizontalGroupBox = new QGroupBox(tr("Items"));
     this->layout = new QGridLayout;

@@ -1,3 +1,10 @@
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolButton>
+#include <QSignalMapper>
+#include <QIcon>
 #include <QDebug>
 
 #include "categorieswidget.h"
@@ -9,9 +16,24 @@ CategoriesWidget::CategoriesWidget(QWidget *parent) :
     this->setObjectName("categoryWidget");
     this->signalMapper = new QSignalMapper(this);
     this->horizontalGroupBox = new QGroupBox(tr("Categories"));
+    this->containerLayout = new QHBoxLayout;
+    this->subContainerLayout = new QVBoxLayout;
     this->layout = new QGridLayout;
 
-    this->horizontalGroupBox->setLayout(layout);
+    this->containerLayout->addStretch();
+    this->containerLayout->addLayout(this->subContainerLayout);
+    this->containerLayout->addStretch();
+
+    this->subContainerLayout->addStretch();
+    this->subContainerLayout->addLayout(this->layout);
+    this->subContainerLayout->addStretch();
+
+    this->containerLayout->setSpacing(0);
+    this->layout->setVerticalSpacing(0);
+    this->layout->setHorizontalSpacing(0);
+    this->layout->setAlignment(Qt::AlignTop);
+
+    this->horizontalGroupBox->setLayout(containerLayout);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(horizontalGroupBox);
@@ -40,11 +62,18 @@ void CategoriesWidget::createCategories()
     for(std::vector<Category>::iterator p = categories.begin();
             p != categories.end(); ++p ) {
 
-        buttons[i] = new QPushButton(p->getEnglishName());
-        buttons[i]->setObjectName(QString("%1_CategoryButton").arg(p->getId()));
-        connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(buttons[i], p->getId());
-        layout->addWidget(buttons[i], row, col);
+        QToolButton* button = new QToolButton;
+        button->setObjectName(QString("%1_CategoryButton").arg(p->getId()));
+        button->setText(p->getEnglishName());
+        button->setIcon(QIcon(QString(":/images/juices/category_%1.png").arg(p->getId())));
+        button->setIconSize(QSize(100,100));
+        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        button->setToolTip(p->getEnglishName());
+        button->setStatusTip(p->getEnglishName());
+        button->setContentsMargins(0,0,0,0);
+        connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
+        this->signalMapper->setMapping(button, p->getId());
+        layout->addWidget(button, row, col);
 
         col++;
         i++;
@@ -58,8 +87,8 @@ void CategoriesWidget::createCategories()
 
 void CategoriesWidget::setCurrentCategory(int id){
     QString buttonName = QString::number(id) + "_CategoryButton";
-    QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
-    foreach (QPushButton* button,buttons) {
+    QList<QToolButton*> buttons = this->findChildren<QToolButton*>();
+    foreach (QToolButton* button,buttons) {
         if (button->objectName() == buttonName)
             button->setChecked(true);
         else

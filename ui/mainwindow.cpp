@@ -71,8 +71,8 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setObjectName("OrderDockWidget");
     orderDockWidget->setFloating(false);
     orderDockWidget->setTitleBarWidget(new QWidget);
-    orderDockWidget->setFixedWidth(220);
-    orderDockWidget->setFixedHeight(490);
+    orderDockWidget->setFixedWidth(420);
+    //orderDockWidget->setFixedHeight(490);
 
     this->orderWidget = new OrderWidget;
     orderDockWidget->setWidget(this->orderWidget);
