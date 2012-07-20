@@ -72,7 +72,7 @@ CREATE TABLE order_details(
 CREATE TABLE order_canceled (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	order_id INTEGER,
-	cancel_time NUMERIC
+	cancel_time DATETIME
 );
 
 CREATE TABLE items (

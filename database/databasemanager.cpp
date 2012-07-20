@@ -239,6 +239,30 @@ namespace Database
         return ret;
     }
 
+    bool DatabaseManager::cancelOrder(int orderId) {
+        QSqlQuery query;
+
+        query.prepare("UPDATE orders SET is_cancelled = 1 WHERE id = ?");
+        query.addBindValue(orderId);
+
+        bool ret = query.exec();
+
+        if ( ret ) {
+            query.prepare("INSERT INTO order_canceled(order_id, cancel_time) VALUES(?,?)");
+            query.addBindValue(orderId);
+            query.addBindValue(QDateTime::currentDateTime());
+
+            ret = query.exec();
+        }
+
+        return ret;
+
+    }
+
+    void DatabaseManager::closeTodayOrders() {
+
+    }
+
     QString DatabaseManager::fromListToText(QStringList ids) {
         QString commaSeparatedId = "";
 

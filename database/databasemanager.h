@@ -39,6 +39,9 @@ namespace Database
         QString getItemSizeDescription(int sizeId, LAGNUAGE language);
 
         bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::Order> orders);
+        bool cancelOrder(int orderId);
+
+        void closeTodayOrders();
 
     private:
         QString fromListToText(QStringList ids);

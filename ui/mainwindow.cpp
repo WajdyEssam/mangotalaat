@@ -119,21 +119,18 @@ void MainWindow::establishConnections()
 
 void MainWindow::selectCategorySlot(int categorId)
 {
-    qDebug() << "The Selected Category Id: " << categorId;
     this->itemsWidget->createItems(categorId);
     this->setCurrentPage(ItemPage);
 }
 
 void MainWindow::selectItemSlot(int itemId)
 {
-    qDebug() << "The Selected Item Id: " << itemId;
     this->sizeWidget->createItemSizes(itemId);
     this->setCurrentPage(SizePage);
 }
 
-void MainWindow::selectItemDetialSlot(int itemDetialId) {
-    qDebug() << "The Selected Item Detial Id: " << itemDetialId;
-
+void MainWindow::selectItemDetialSlot(int itemDetialId)
+{
     Model::Order order(itemDetialId);
     ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, true, this);
     dialog->setModal(true);
@@ -147,7 +144,8 @@ void MainWindow::selectItemDetialSlot(int itemDetialId) {
     }
 }
 
-void MainWindow::computeTotalCash() {
+void MainWindow::computeTotalCash()
+{
     this->discount = 0;
 
     qDebug() << "you have a " << this->orders.size() << " Orders";
@@ -170,18 +168,22 @@ void MainWindow::computeTotalCash() {
     }
 }
 
-void MainWindow::clearShoppingCart() {
+void MainWindow::clearShoppingCart()
+{
     this->orders.clear();
 }
 
-void MainWindow::computeFree() {
+void MainWindow::computeFree()
+{
 
 }
 
-void MainWindow::computeCupon() {
+void MainWindow::computeCupon()
+{
 
 }
 
-void MainWindow::setDiscount() {
+void MainWindow::setDiscount()
+{
     this->discount = 0;
 }
