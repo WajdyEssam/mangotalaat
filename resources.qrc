@@ -14,5 +14,12 @@
         <file>images/juices/category_2.png</file>
         <file>images/juices/category_4.png</file>
         <file>images/juices/category_5.png</file>
+        <file>ui/qml/orderlist.qml</file>
+        <file>images/cancel_order.png</file>
+        <file>images/cancel_order_pressed.png</file>
+        <file>images/cancel_order_hover.png</file>
+        <file>images/apply_order_pressed.png</file>
+        <file>images/apply_order_hover.png</file>
+        <file>images/apply_order.png</file>
     </qresource>
 </RCC>

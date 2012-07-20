@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql declarative
 
 TARGET = Mango
 TEMPLATE = app
@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     ui/orderwidget.cpp \
     ui/itempropertiesdialog.cpp \
     model/additionals.cpp \
-    model/order.cpp
+    model/order.cpp \
+    ui/SlidingStackedWidget.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -39,7 +40,8 @@ HEADERS  += model/category.h \
     model/itemdetail.h \
     ui/itempropertiesdialog.h \
     model/additionals.h \
-    model/order.h
+    model/order.h \
+    ui/SlidingStackedWidget.h
 
 FORMS += \
     ui/itempropertiesdialog.ui
@@ -49,7 +51,8 @@ RESOURCES += \
     resources.qrc
 
 OTHER_FILES += \
-    mango.qss
+    mango.qss \
+    ui/qml/orderlist.qml
 
 
 

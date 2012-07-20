@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "headerwidget.h"
 #include "orderwidget.h"
+#include "SlidingStackedWidget.h"
 
 #include <vector>
 #include <QDebug>
@@ -32,10 +33,11 @@ void MainWindow::createWidgetPages()
     this->itemsWidget = new ItemsWidget;
     this->sizeWidget = new SizeWidget;
 
-    this->stackedWidget =new QStackedWidget(this);
+    this->stackedWidget = new SlidingStackedWidget(this);
     this->stackedWidget->addWidget(this->categoriesWidget);
     this->stackedWidget->addWidget(this->itemsWidget);
     this->stackedWidget->addWidget(this->sizeWidget);
+    this->stackedWidget->setSpeed(700);
 
     this->setCurrentPage(CategoryPage);
     this->setCentralWidget(this->stackedWidget);
@@ -70,8 +72,6 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setObjectName("OrderDockWidget");
     orderDockWidget->setFloating(false);
     orderDockWidget->setTitleBarWidget(new QWidget);
-    orderDockWidget->setFixedWidth(420);
-    //orderDockWidget->setFixedHeight(490);
 
     this->orderWidget = new OrderWidget;
     orderDockWidget->setWidget(this->orderWidget);
@@ -85,7 +85,7 @@ void MainWindow::ShowHomePage()
 
 void MainWindow::setCurrentPage(WidgetPage page)
 {
-    this->stackedWidget->setCurrentIndex(page);
+    this->stackedWidget->slideInIdx(page);
 }
 
 void MainWindow::createStatusBar()

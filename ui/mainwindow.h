@@ -12,6 +12,7 @@
 
 class HeaderWidget;
 class OrderWidget;
+class SlidingStackedWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -31,7 +32,7 @@ private:
     QSignalMapper *signalMapper;
     HeaderWidget *headerWidget;
     OrderWidget* orderWidget;
-    QStackedWidget *stackedWidget;
+    SlidingStackedWidget *stackedWidget;
 
     CategoriesWidget* categoriesWidget;
     ItemsWidget* itemsWidget;

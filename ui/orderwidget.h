@@ -3,6 +3,10 @@
 
 #include <QWidget>
 
+
+class QDeclarativeView;
+class QVBoxLayout;
+
 class OrderWidget : public QWidget
 {
     Q_OBJECT
@@ -14,7 +18,11 @@ signals:
 public slots:
 
 private:
-    void init();
+    void initOrderList();
+    void initOrderCommand();
+
+    QVBoxLayout* layout;
+    QDeclarativeView* m_declarativeView;
 };
 
 #endif // ORDERWIDGET_H

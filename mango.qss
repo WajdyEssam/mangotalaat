@@ -50,6 +50,31 @@
     min-height: 32px;
 }
 
+
+#orderWidget QPushButton
+{
+    border-width: 4px;
+    border-image: url(:/images/apply_order.png) 4 4 4 4 stretch stretch;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+#orderWidget QPushButton:hover
+{
+    border-width: 4px;
+    border-image: url(:/images/apply_order_hover.png) 4 4 4 4 stretch stretch;
+    min-width: 32px;
+    min-height: 32px;
+}
+
+#orderWidget QPushButton:pressed, #orderWidget QPushButton:checked
+{
+    border-width: 4px;
+    border-image: url(:/images/apply_order_pressed.png) 4 4 4 4 stretch stretch;
+    min-width: 32px;
+    min-height: 32px;
+}
+
 #headerWidget QToolButton
 {
     background-color: transparent;
