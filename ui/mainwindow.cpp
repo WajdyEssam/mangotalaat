@@ -60,7 +60,6 @@ void MainWindow::createHeaderDockWidget()
     //headerDockWidget->setFixedWidth(220);
     //headerDockWidget->setFixedHeight(490);
 
-
     headerDockWidget->setWidget(this->headerWidget);
     this->addDockWidget(Qt::TopDockWidgetArea, headerDockWidget);
 }
@@ -132,6 +131,8 @@ void MainWindow::selectItemDetialSlot(int itemDetialId) {
     dialog->exec();
 
     if ( !dialog->isCancelled() ) {
-
+        Model::Order order = dialog->getOrder();
+        qDebug() << order.getItemDetialId() ;
+        this->stackedWidget->setCurrentIndex(0);
     }
 }

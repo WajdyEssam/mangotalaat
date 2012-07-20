@@ -31,10 +31,39 @@ ItemPropertiesDialog::~ItemPropertiesDialog()
 void ItemPropertiesDialog::on_buttonBox_accepted()
 {
     // build modified order here
+    QStringList newComponentsList = getNewComponentList();
+    QStringList newAdditionalsList = getNewAdditionalList();
+    QString sugar = getSugar();
+    int quantity = 1;
 
+    this->modifiedOrder = Model::Order(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList);
 
     this->isCancel = false;
     this->hide();
+}
+
+QStringList ItemPropertiesDialog::getNewComponentList() {
+    QStringList componentList;
+
+    for(int i=0; i<ui->currentComponentsListWidget->count(); i++) {
+        componentList.append(ui->currentComponentsListWidget->item(i)->text());
+    }
+
+    return componentList;
+}
+
+QStringList ItemPropertiesDialog::getNewAdditionalList() {
+    QStringList additionalList;
+
+    for(int i=0; i<ui->currentAdditionalListWidget->count(); i++) {
+        additionalList.append(ui->currentAdditionalListWidget->item(i)->text());
+    }
+
+    return additionalList;
+}
+
+QString ItemPropertiesDialog::getSugar() {
+    return "";
 }
 
 void ItemPropertiesDialog::on_buttonBox_rejected()

@@ -7,12 +7,11 @@ namespace Model {
         this->computeCash();
     }
 
-    Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds, int aCash) {
+    Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds) {
         this->itemDetailId = aItemDetailId;
         this->quantity = aQuantity;
         this->componentsIds = aComponentsIds;
         this->additionalsIds = aAdditionalsIds;
-        this->cash = aCash;
         this->computeCash();
     }
 

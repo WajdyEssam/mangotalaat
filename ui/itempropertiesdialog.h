@@ -38,6 +38,10 @@ private:
     void fillCurrentOrderComponentsAndAdditionals();
     void fillAllComponentsAndAdditionals();
     void fillItemDescription();
+
+    QString getSugar();
+    QStringList getNewAdditionalList();
+    QStringList getNewComponentList();
 };
 
 #endif // ITEMPROPERTIESDIALOG_H
