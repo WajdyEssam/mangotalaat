@@ -201,4 +201,45 @@ namespace Database
 
         return result;
     }
+
+    bool DatabaseManager::addOrder(QDateTime currentTime, int orderTypeId, int cash,
+                                   int discount, int totalCash, QList<Model::Order> orders) {
+        QSqlQuery query(QString("INSERT INTO orders(order_time, order_type_id, cash, discount, total_cash, is_cancelled) VALUES(%1, %2, %3, %4, %5, %6")
+                .arg(currentTime.toString()).arg(orderTypeId).arg(cash).arg(discount).arg(totalCash).arg(0));
+
+        bool ret = query.exec();
+        qDebug() << query.lastError();
+
+        if ( ret ) {
+            int orderId = query.lastInsertId().toInt();
+
+            foreach(Model::Order order, orders) {
+                QSqlQuery tmpQuery(QString("INSERT INTO order_details(order_id, item_detial_id, quantity, components_ids, additionals_ids, sugar, cash) VALUES(%1, %2, %3, %4, %5, %6, %7")
+                    .arg(orderId).arg(order.getItemDetialId()).arg(order.getQunatity()).arg(fromListToText(order.getComponentsIds()))
+                    .arg(fromListToText(order.getAdditionalsIds())).arg(order.getSugar()).arg(order.getCash()));
+
+                tmpQuery.exec();
+            }
+        }
+
+        return ret;
+    }
+
+    QString DatabaseManager::fromListToText(QStringList ids) {
+        QString commaSeparatedId = "";
+
+        for(int i=0; i<ids.size(); i++) {
+            commaSeparatedId += ids.at(i);
+
+            if ( i < ids.size() - 1 ) {
+                commaSeparatedId += ",";
+            }
+        }
+
+        return commaSeparatedId;
+    }
+
+    QStringList DatabaseManager::fromTextToList(QString text) {
+        return text.split(",");
+    }
 }

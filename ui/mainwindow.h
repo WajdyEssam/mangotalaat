@@ -54,11 +54,21 @@ private:
 
 private slots:
     void ShowHomePage();
+    void reportClickedSlot();
 
 public slots:
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
+
+private:
+    QList<Model::Order> orders;
+    int discount ;
+
+    void computeTotalCash();
+    void computeFree();
+    void computeCupon();
+    void setDiscount();
 };
 
 #endif // MAINWINDOW_H
