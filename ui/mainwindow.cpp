@@ -79,6 +79,8 @@ void MainWindow::createOrderDockWidget()
     this->orderWidget = new OrderWidget;
     orderDockWidget->setWidget(this->orderWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
+
+    connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
 }
 
 void MainWindow::ShowHomePage()
@@ -144,6 +146,7 @@ void MainWindow::selectItemDetialSlot(int itemDetialId) {
 
         this->orders.append(order);
         this->stackedWidget->setCurrentIndex(0);
+        emit orderAdded(this->orders);
     }
 }
 

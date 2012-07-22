@@ -53,6 +53,9 @@ private:
 
     void setCurrentPage(WidgetPage page);
 
+signals:
+    void orderAdded(QList<Model::Order> orders);
+
 private slots:
     void ShowHomePage();
     void reportClickedSlot();

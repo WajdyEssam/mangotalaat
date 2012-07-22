@@ -3,6 +3,7 @@
 
 #include <QWidget>
 
+#include "model/order.h"
 
 class QDeclarativeView;
 class QVBoxLayout;
@@ -16,13 +17,16 @@ public:
 signals:
     
 public slots:
+    void updateOrders(QList<Model::Order>);
 
 private:
+
     void initOrderList();
     void initOrderCommand();
 
     QVBoxLayout* layout;
     QDeclarativeView* m_declarativeView;
 };
+
 
 #endif // ORDERWIDGET_H

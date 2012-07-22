@@ -1,10 +1,13 @@
 #include <QtDeclarative/QDeclarativeView>
+#include <QtDeclarative/QDeclarativeContext>
 #include <QVBoxLayout>
 #include <QUrl>
 #include <QGroupBox>
 #include <QPushButton>
+#include <QDebug>
 
 #include "orderwidget.h"
+#include "model/orderobject.h"
 
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent)
@@ -21,6 +24,11 @@ OrderWidget::OrderWidget(QWidget *parent) :
 void OrderWidget::initOrderList()
 {
     m_declarativeView = new QDeclarativeView;
+
+    QDeclarativeContext* context = m_declarativeView->rootContext();
+    context->setContextProperty("mycolor", QString("lightblue"));
+    context->setContextProperty("ordersModel", QVariant::fromValue(QList<QObject*>()));
+
     m_declarativeView->setSource(QUrl("qrc:/ui/qml/orderlist.qml"));
     m_declarativeView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
@@ -54,4 +62,18 @@ void OrderWidget::initOrderCommand()
     lowerLayout->addWidget(box);
 
     layout->addLayout(lowerLayout);
+}
+
+void OrderWidget::updateOrders(QList<Model::Order> orders)
+{
+    QList<QObject*> orderList;
+
+    foreach (Model::Order order, orders) {
+        orderList.append(new OrderObject(1, QString("C++ item"), QString::number(order.getCash()), QString::number(order.getQunatity()), 5));
+    }
+
+    qDebug() << "Number of orders: " << orders.count();
+
+    QDeclarativeContext* context = m_declarativeView->rootContext();
+    context->setContextProperty("ordersModel", QVariant::fromValue(orderList));
 }

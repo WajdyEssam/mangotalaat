@@ -1,11 +1,13 @@
 #ifndef ORDER_H
 #define ORDER_H
 
+#include <QObject>
 #include <QStringList>
 
 namespace Model {
     class Order
     {
+
     public:
         Order() {}
         Order(int aItemDetaildId);
