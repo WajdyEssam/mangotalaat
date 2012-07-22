@@ -1,4 +1,6 @@
 #include "order.h"
+#include "database/databasemanager.h"
+#include "model/itemdetail.h"
 
 namespace Model {
     Order::Order(int aItemDetaildId) {
@@ -16,6 +18,11 @@ namespace Model {
     }
 
     void Order::computeCash() {
-        this->cash = 0;
+        Database::DatabaseManager database;
+        Model::ItemDetail itemDetail = database.getItemDetailById(this->itemDetailId);
+        this->cash = itemDetail.getPrice() * this->quantity;
+
+        // if item is special cocktail then the price will be the largest component price
+        // this is just for mango and avocado
     }
 }

@@ -73,6 +73,7 @@ private:
     void computeFree();
     void computeCupon();
     void setDiscount();
+    void clearShoppingCart();
 };
 
 #endif // MAINWINDOW_H
