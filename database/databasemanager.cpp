@@ -270,7 +270,7 @@ namespace Database
     bool DatabaseManager::addLoginEventLogging(int userId, QDateTime time, int eventType) { // 1 login, 2 logout
         QSqlQuery query;
 
-        query.praper("INSERT INTO events_logging(user_id, event_time, event_type) VALUES(?,?,?)");
+        query.prepare("INSERT INTO events_logging(user_id, event_time, event_type) VALUES(?,?,?)");
         query.addBindValue(userId);
         query.addBindValue(time);
         query.addBindValue(eventType);
