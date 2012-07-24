@@ -94,6 +94,7 @@ Rectangle {
                     width: 32; height: 32
                     anchors.left: parent.left
                     source: "qrc:/images/juices/category_" + model.modelData.orderCategory + ".png"
+                    smooth: true
                 }
 
                 Item {
