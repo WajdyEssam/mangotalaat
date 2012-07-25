@@ -20,8 +20,12 @@ namespace Model {
         QString getSugar() const { return this->sugar; }
         int getCash() const { return this->cash; }
 
+        QString getSizeDescription() {return this->sizeDescription;}
+        QString getArabicName() {return this->arabicName;}
+        int getCategoryId() {return this->categoryId;}
+
     private:
-        void computeCash();
+        void fillOtherInformation();
 
     private:
         int itemDetailId;
@@ -30,6 +34,11 @@ namespace Model {
         QStringList additionalsIds;
         QString sugar;
         int cash;
+
+    private:
+        QString sizeDescription;
+        int categoryId;
+        QString arabicName;
     };
 }
 #endif // ORDER_H

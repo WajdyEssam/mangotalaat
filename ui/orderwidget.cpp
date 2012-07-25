@@ -69,7 +69,8 @@ void OrderWidget::updateOrders(QList<Model::Order> orders)
     QList<QObject*> orderList;
 
     foreach (Model::Order order, orders) {
-        orderList.append(new OrderObject(1, QString("C++ item"), QString::number(order.getCash()), QString::number(order.getQunatity()), 5));
+        orderList.append(new OrderObject(order.getItemDetialId(),
+            order.getArabicName(), order.getSizeDescription(), QString::number(order.getCash()), order.getCategoryId()));
     }
 
     qDebug() << "Number of orders: " << orders.count();
