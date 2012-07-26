@@ -88,5 +88,33 @@
         <file>images/components/component_notactive_10.png</file>
         <file>images/components/component_notactive_11.png</file>
         <file>images/components/component_notactive_12.png</file>
+        <file>images/components/component_active_13.png</file>
+        <file>images/components/component_active_14.png</file>
+        <file>images/components/component_active_15.png</file>
+        <file>images/components/component_active_16.png</file>
+        <file>images/components/component_active_17.png</file>
+        <file>images/components/component_active_18.png</file>
+        <file>images/components/component_active_19.png</file>
+        <file>images/components/component_active_20.png</file>
+        <file>images/components/component_active_21.png</file>
+        <file>images/components/component_active_22.png</file>
+        <file>images/components/component_notactive_13.png</file>
+        <file>images/components/component_notactive_14.png</file>
+        <file>images/components/component_notactive_15.png</file>
+        <file>images/components/component_notactive_16.png</file>
+        <file>images/components/component_notactive_17.png</file>
+        <file>images/components/component_notactive_18.png</file>
+        <file>images/components/component_notactive_19.png</file>
+        <file>images/components/component_notactive_20.png</file>
+        <file>images/components/component_notactive_21.png</file>
+        <file>images/components/component_notactive_22.png</file>
+        <file>images/additionals/additional_active_1.png</file>
+        <file>images/additionals/additional_active_2.png</file>
+        <file>images/additionals/additional_active_3.png</file>
+        <file>images/additionals/additional_active_4.png</file>
+        <file>images/additionals/additional_notactive_1.png</file>
+        <file>images/additionals/additional_notactive_2.png</file>
+        <file>images/additionals/additional_notactive_3.png</file>
+        <file>images/additionals/additional_notactive_4.png</file>
     </qresource>
 </RCC>

@@ -2,6 +2,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QTextCodec>
 #include <QtSql/QSqlDatabase>
+#include <QFont>
 
 #include "ui/mainwindow.h"
 
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
     QDir::setCurrent(QCoreApplication::applicationDirPath());
+
+    //a.setFont(QFont("Droid Arabic Naskh"));
 
     // load style sheet
     loadStylesheet();

@@ -14,7 +14,9 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent)
 {
     this->setObjectName("propertyWidget");
-    this->signalMapper = new QSignalMapper(this);
+    this->componentSignalMapper = new QSignalMapper(this);
+    this->additionalSignalMapper = new QSignalMapper(this);
+
     orderGroupBox = new QGroupBox(tr("Order"));
     componentsGroupBox = new QGroupBox(tr("Components"));
     additionalsGroupBox = new QGroupBox(tr("Additionals"));
@@ -33,11 +35,12 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     mainVBoxLayout->addWidget(additionalsGroupBox);
     this->setLayout(mainVBoxLayout);
 
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentComponent(int)));
+    connect(this->componentSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentComponent(int)));
+    connect(this->additionalSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentAdditional(int)));
 
     //this->initOrder();
     this->initComponents();
-    //this->initAdditionals();
+    this->initAdditionals();
 }
 
 void PropertyWidget::setOrder(Model::Order order)
@@ -71,8 +74,8 @@ void PropertyWidget::initComponents()
         button->setToolTip(p->getArabicName());
         button->setStatusTip(p->getArabicName());
         button->setContentsMargins(0,0,0,0);
-        connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(button, p->getId());
+        connect(button, SIGNAL(clicked()), componentSignalMapper, SLOT(map()));
+        this->componentSignalMapper->setMapping(button, p->getId());
         componentsGridLayout->addWidget(button, row, col);
 
         col++;
@@ -85,9 +88,9 @@ void PropertyWidget::initComponents()
     }
 }
 
-/*void PropertyWidget::initAdditionals()
+void PropertyWidget::initAdditionals()
 {
-    // get all Components
+    // get all dditionals
     Database::DatabaseManager databaseManager;
     std::vector<Additionals> additionals = databaseManager.getAllAdditionals();
 
@@ -99,15 +102,16 @@ void PropertyWidget::initComponents()
         QToolButton* button = new QToolButton;
         button->setObjectName(QString("%1_AdditionalsButton").arg(p->getId()));
         button->setText(p->getArabicName());
-        button->setIcon(QIcon(QString(":/images/juices/additionals_%1.png").arg(p->getId())));
-        button->setIconSize(QSize(60,60));
-        button->setFixedSize(QSize(100,100));
+        button->setCheckable(true);
+        button->setChecked(false);
+        button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(p->getId())));
+        button->setIconSize(QSize(64,64));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(p->getArabicName());
         button->setStatusTip(p->getArabicName());
         button->setContentsMargins(0,0,0,0);
-        //connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
-        //this->signalMapper->setMapping(button, p->getId());
+        connect(button, SIGNAL(clicked()), additionalSignalMapper, SLOT(map()));
+        this->additionalSignalMapper->setMapping(button, p->getId());
         additionalsGridLayout->addWidget(button, row, col);
 
         col++;
@@ -119,8 +123,6 @@ void PropertyWidget::initComponents()
         }
     }
 }
-*/
-
 
 void PropertyWidget::setCurrentComponent(int id)
 {
@@ -128,12 +130,24 @@ void PropertyWidget::setCurrentComponent(int id)
     QToolButton* button = this->findChild<QToolButton*>(buttonName);
 
     if ( !button->isChecked()) {
-        qDebug() << button->objectName() + " is checked";
         button->setChecked(false);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(id)));
-    } else if ( button->isChecked() ){
-        qDebug() << button->objectName() + " is not checked";
+    } else if ( button->isChecked() ) {
         button->setChecked(true);
         button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
+    }
+}
+
+void PropertyWidget::setCurrentAdditional(int id)
+{
+    QString buttonName = QString::number(id) + "_AdditionalsButton";
+    QToolButton* button = this->findChild<QToolButton*>(buttonName);
+
+    if ( !button->isChecked()) {
+        button->setChecked(false);
+        button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(id)));
+    } else if ( button->isChecked() ) {
+        button->setChecked(true);
+        button->setIcon(QIcon(QString(":/images/additionals/additional_active_%1.png").arg(id)));
     }
 }

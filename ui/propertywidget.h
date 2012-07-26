@@ -23,13 +23,15 @@ signals:
 public slots:
     void setOrder(Model::Order order);
     void setCurrentComponent(int);
+    void setCurrentAdditional(int);
 
 private:
     enum {
         NumButtons = 8 , ButtonsPerLine = 8
     };
 
-    QSignalMapper *signalMapper;
+    QSignalMapper *componentSignalMapper;
+    QSignalMapper *additionalSignalMapper;
 
     QGroupBox *orderGroupBox;
     QGroupBox *componentsGroupBox;
