@@ -16,6 +16,8 @@ public:
     
 signals:
     void orderItemClick(QString);
+    void applyClicked();
+    void cancelClicked();
 
 public slots:
     void updateOrders(QList<Model::Order>);

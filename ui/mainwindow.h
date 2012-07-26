@@ -27,7 +27,7 @@ public:
         PropertyPage = 3
     };
 
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(int aUserId, QWidget *parent = 0);
     ~MainWindow();
 
 signals:
@@ -38,8 +38,9 @@ private slots:
     void reportClickedSlot();
     void orderItemClicked(QString orderIndexId);
     void systemClickedSlot();
-
-public slots:
+    void logoutClickedSlot();
+    void applyOrderClickedSlot();
+    void cancelOrderClickedSlot();
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
@@ -61,21 +62,20 @@ private:
 
     QList<Model::Order> orders;
     int discount ;
+    int userId;
+    Model::Order getOrderByIndexId(QString indexId);
 
     void setWindowSize();
     void createWidgetPages();
     void createDockWidgets();
     void createStatusBar();
     void establishConnections();
-
     void createHeaderDockWidget();
     void createOrderDockWidget();
-
     void setCurrentPage(WidgetPage page);
-
-    Model::Order getOrderByIndexId(QString indexId);
+    void addLoginEvent();
+    void AddLogoutEvent();
     void updateOrder(Model::Order oldOrder, Model::Order newOrder);
-
     void computeTotalCash();
     void computeFree();
     void computeCupon();

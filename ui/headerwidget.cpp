@@ -78,7 +78,6 @@ void HeaderWidget::createToolButtons()
     connect(reportsButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(systemButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(signOutButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-
 }
 
 void HeaderWidget::emitSignal(int id)
@@ -94,7 +93,8 @@ void HeaderWidget::emitSignal(int id)
         emit systemClicked();
         break;
     case 4:
-        qApp->quit();
+        emit logoutClicked();
+        break;
     }
 }
 

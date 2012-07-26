@@ -23,7 +23,10 @@ int main(int argc, char *argv[])
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("mango.db");
 
-    MainWindow w;
+    // ask for authentication
+    int userId = 1; // admin
+
+    MainWindow w(userId);
     w.show();
 
     return a.exec();

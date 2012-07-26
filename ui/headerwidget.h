@@ -15,6 +15,8 @@ signals:
     void homeClicked();
     void reportClicked();
     void systemClicked();
+    void logoutClicked();
+
 public slots:
     void emitSignal(int id);
 

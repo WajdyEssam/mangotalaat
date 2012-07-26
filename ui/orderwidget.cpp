@@ -57,6 +57,9 @@ void OrderWidget::initOrderCommand()
     QPushButton* applyButton = new QPushButton;
     QPushButton* cancelButton = new QPushButton;
 
+    connect(applyButton, SIGNAL(clicked()), this, SIGNAL(applyClicked()));
+    connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
+
     contentLayout->addWidget(applyButton);
     contentLayout->addWidget(cancelButton);
 
