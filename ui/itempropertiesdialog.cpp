@@ -34,7 +34,7 @@ void ItemPropertiesDialog::on_buttonBox_accepted()
     QStringList newComponentsList = getNewComponentList();
     QStringList newAdditionalsList = getNewAdditionalList();
     QString sugar = getSugar();
-    int quantity = 1;
+    int quantity = ui->quantitySpinBox->value();
 
     this->modifiedOrder = Model::Order(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
                                        sugar,this->order.getOrderIndexId() );
