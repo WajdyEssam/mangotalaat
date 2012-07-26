@@ -82,7 +82,7 @@ void MainWindow::createOrderDockWidget()
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
     connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
-    connect(orderWidget, SIGNAL(orderItemClick(int)), SLOT(orderItemClicked(int)));
+    connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
 }
 
 void MainWindow::ShowHomePage()
