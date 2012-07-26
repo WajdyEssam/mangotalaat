@@ -94,7 +94,8 @@ void HeaderWidget::emitSignal(int id)
         emit systemClicked();
         break;
     case 4:
-        qApp->quit();
+        emit logoutClicked();
+        break;
     }
 }
 

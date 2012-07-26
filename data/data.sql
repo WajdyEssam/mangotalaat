@@ -6,6 +6,9 @@ CREATE TABLE users (
 	register_time TEXT
 );
 
+INSERT INTO users(username, password, register_time) values("admin", "123", "1/8/2012");
+INSERT INTO users(username, password, register_time) values("user", "123", "1/8/2012");
+
 CREATE TABLE events_logging (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
 	user_id INTEGER,

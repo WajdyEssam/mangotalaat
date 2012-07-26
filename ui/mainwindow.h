@@ -25,7 +25,7 @@ public:
         SizePage = 2
     };
 
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(int aUserId, QWidget *parent = 0);
     ~MainWindow();
 
 private:
@@ -53,6 +53,9 @@ private:
 
     void setCurrentPage(WidgetPage page);
 
+    void addLoginEvent();
+    void AddLogoutEvent();
+
 signals:
     void orderAdded(QList<Model::Order> orders);
 
@@ -61,6 +64,7 @@ private slots:
     void reportClickedSlot();
     void orderItemClicked(QString orderIndexId);
     void systemClickedSlot();
+    void logoutClickedSlot();
 
 public slots:
     void selectCategorySlot(int categoryId);
@@ -71,6 +75,7 @@ public slots:
 private:
     QList<Model::Order> orders;
     int discount ;
+    int userId;
 
     Model::Order getOrderByIndexId(QString indexId);
     void updateOrder(Model::Order oldOrder, Model::Order newOrder);

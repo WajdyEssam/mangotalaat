@@ -9,14 +9,17 @@
 #include "model/order.h"
 #include "database/databasemanager.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(int aUserId, QWidget *parent) :
     QMainWindow(parent)
 {
+    this->userId = aUserId;
+
     this->setWindowSize();
     this->createWidgetPages();
     this->createDockWidgets();
     this->createStatusBar();
     this->establishConnections();
+    this->addLoginEvent();
 }
 
 MainWindow::~MainWindow()
@@ -57,6 +60,7 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
     connect(this->headerWidget, SIGNAL(reportClicked()), SLOT(reportClickedSlot()));
     connect(this->headerWidget, SIGNAL(systemClicked()), SLOT(systemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(logoutClickedSlot()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
     headerDockWidget->setObjectName("headerDockWidget");
@@ -83,6 +87,16 @@ void MainWindow::createOrderDockWidget()
 
     connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
+}
+
+void MainWindow::addLoginEvent() {
+    Database::DatabaseManager database;
+    database.addLoginEventLogging(this->userId, QDateTime::currentDateTime(), 1);
+}
+
+void MainWindow::AddLogoutEvent() {
+    Database::DatabaseManager database;
+    database.addLoginEventLogging(this->userId, QDateTime::currentDateTime(), 2);
 }
 
 void MainWindow::ShowHomePage()
@@ -112,6 +126,12 @@ Model::Order MainWindow::getOrderByIndexId(QString indexId) {
 void MainWindow::systemClickedSlot()
 {
     clearShoppingCart();
+}
+
+void MainWindow::logoutClickedSlot()
+{
+    this->AddLogoutEvent();
+    qApp->quit();
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
@@ -198,7 +218,9 @@ void MainWindow::computeTotalCash()
 {
     this->discount = 0;
 
-    qDebug() << "you have a " << this->orders.size() << " Orders";
+    if ( this->orders.isEmpty() )
+        return;
+
     int cash = 0;
 
     foreach(Model::Order order, this->orders) {
