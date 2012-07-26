@@ -111,7 +111,7 @@ Model::Order MainWindow::getOrderByIndexId(QString indexId) {
 
 void MainWindow::systemClickedSlot()
 {
-
+    clearShoppingCart();
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
@@ -176,11 +176,22 @@ void MainWindow::updateItemDetialSlot(Model::Order order) {
 
     if ( !dialog->isCancelled() ) {
         Model::Order newOrder = dialog->getOrder();
-
-        //this->orders.append(order);
-        //this->stackedWidget->setCurrentIndex(0);
-        //emit orderAdded(this->orders);
+        updateOrder(order, newOrder);
     }
+}
+
+void MainWindow::updateOrder(Model::Order oldOrder, Model::Order newOrder) {
+    for(int i=0; i<this->orders.size(); i++) {
+        Model::Order order = this->orders.at(i);
+
+        if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
+            this->orders.removeAt(i);
+            break;
+        }
+    }
+
+    this->orders.append(newOrder);
+    emit orderAdded(this->orders);
 }
 
 void MainWindow::computeTotalCash()

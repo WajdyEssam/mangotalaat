@@ -34,10 +34,10 @@ private:
     Model::Order modifiedOrder;
 
 private:
-    void fillDefualtCurrentComponentsAndAdditionals();
-    void fillCurrentOrderComponentsAndAdditionals();
-    void fillAllComponentsAndAdditionals();
-    void fillItemDescription();
+    void fillDefualtComponentsAndAdditionalsForThisOrder();
+    void fillModifiedComponentsAndAdditionalsForThisOrder();
+    void fillAllComponentsAndAdditionalsFromStore();
+    void fillCurrentItemDescriptionAndQuantity();
 
     QString getSugar();
     QStringList getNewAdditionalList();

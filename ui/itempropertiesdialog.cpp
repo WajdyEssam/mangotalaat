@@ -14,13 +14,13 @@ ItemPropertiesDialog::ItemPropertiesDialog(Model::Order aOrder, bool newOrder, Q
     ui->setupUi(this);
     this->isNewOrder = newOrder;
 
-    fillAllComponentsAndAdditionals();
-    fillItemDescription();
+    fillAllComponentsAndAdditionalsFromStore();
+    fillCurrentItemDescriptionAndQuantity();
 
     if ( newOrder )
-        fillDefualtCurrentComponentsAndAdditionals();
+        fillDefualtComponentsAndAdditionalsForThisOrder();
     else
-        fillCurrentOrderComponentsAndAdditionals();
+        fillModifiedComponentsAndAdditionalsForThisOrder();
 }
 
 ItemPropertiesDialog::~ItemPropertiesDialog()
@@ -73,7 +73,7 @@ void ItemPropertiesDialog::on_buttonBox_rejected()
     this->hide();
 }
 
-void ItemPropertiesDialog::fillDefualtCurrentComponentsAndAdditionals() {
+void ItemPropertiesDialog::fillDefualtComponentsAndAdditionalsForThisOrder() {
     Database::DatabaseManager database;
     Model::ItemDetail itemDetial = database.getItemDetailById(this->order.getItemDetialId());
     std::vector<Component> currentComponentInItem = database.getCompnentsInItem(itemDetial.getItemId());
@@ -85,7 +85,7 @@ void ItemPropertiesDialog::fillDefualtCurrentComponentsAndAdditionals() {
     }
 }
 
-void ItemPropertiesDialog::fillCurrentOrderComponentsAndAdditionals() {
+void ItemPropertiesDialog::fillModifiedComponentsAndAdditionalsForThisOrder() {
     Database::DatabaseManager database;
     QStringList componentsList = this->order.getComponentsIds();
     foreach(QString componentId, componentsList) {
@@ -100,16 +100,17 @@ void ItemPropertiesDialog::fillCurrentOrderComponentsAndAdditionals() {
     }
 }
 
-void ItemPropertiesDialog::fillItemDescription() {
+void ItemPropertiesDialog::fillCurrentItemDescriptionAndQuantity() {
     Database::DatabaseManager database;
-
     Model::ItemDetail itemDetial = database.getItemDetailById(this->order.getItemDetialId());
     Model::Item item = database.getItemById(itemDetial.getItemId());
     QString sizeDescription = database.getItemSizeDescription(itemDetial.getSizeId(), database.ARABIC);
+
     this->ui->orderLineEdit->setText(item.getArabicName() + " - " + sizeDescription);
+    this->ui->quantitySpinBox->setValue(this->order.getQunatity());
 }
 
-void ItemPropertiesDialog::fillAllComponentsAndAdditionals() {
+void ItemPropertiesDialog::fillAllComponentsAndAdditionalsFromStore() {
     Database::DatabaseManager database;
 
     std::vector<Additionals> additionals = database.getAllAdditionals();

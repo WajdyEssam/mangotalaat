@@ -73,6 +73,7 @@ private:
     int discount ;
 
     Model::Order getOrderByIndexId(QString indexId);
+    void updateOrder(Model::Order oldOrder, Model::Order newOrder);
 
     void computeTotalCash();
     void computeFree();
