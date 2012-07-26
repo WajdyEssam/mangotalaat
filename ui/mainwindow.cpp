@@ -108,15 +108,17 @@ void MainWindow::ShowHomePage()
 
 void MainWindow::reportClickedSlot()
 {
-}
+    // show reports
+    // event logging table, order table, cancel table, summary table
 
-void MainWindow::orderItemClicked(QString orderIndexId)
-{
-    updateItemDetialSlot(getOrderByIndexId(orderIndexId));
+    // from points to points
+    // from last point to current time
 }
 
 void MainWindow::systemClickedSlot()
 {
+    Database::DatabaseManager database;
+    database.closeTodayOrders(QDateTime::currentDateTime());
 }
 
 void MainWindow::logoutClickedSlot()
@@ -133,6 +135,11 @@ void MainWindow::applyOrderClickedSlot()
 void MainWindow::cancelOrderClickedSlot()
 {
     clearShoppingCart();
+}
+
+void MainWindow::orderItemClicked(QString orderIndexId)
+{
+    updateItemDetialSlot(getOrderByIndexId(orderIndexId));
 }
 
 Model::Order MainWindow::getOrderByIndexId(QString indexId) {
