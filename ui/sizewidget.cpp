@@ -62,12 +62,12 @@ void SizeWidget::createItemSizes(int itemId)
         QString description = databaseManager.getItemSizeDescription(p->getSizeId(), Database::DatabaseManager::ENGLISH);
         button->setObjectName(QString("%1_SizeButton").arg(p->getId()));
         button->setText(description);
-        button->setIcon(QIcon(QString(":/images/prices/price_%1.png").arg(p->getId())));
+
+        button->setIcon(QIcon(QString(":/images/prices/%1_%2_%3.png").arg(p->getSizeId()).arg(p->getPrice()).arg("en")));
         button->setIconSize(QSize(135,135));
-        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(description);
         button->setStatusTip(description);
-        button->setContentsMargins(0,0,0,0);
+        //button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(button, p->getId());
         layout->addWidget(button, row, col);
