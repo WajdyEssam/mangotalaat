@@ -81,6 +81,7 @@ void MainWindow::createOrderDockWidget()
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
     connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(orderWidget, SIGNAL(orderItemClick(int)), SLOT(orderItemClicked(int)));
 }
 
 void MainWindow::ShowHomePage()
@@ -91,6 +92,11 @@ void MainWindow::ShowHomePage()
 void MainWindow::reportClickedSlot()
 {
     computeTotalCash();
+}
+
+void MainWindow::orderItemClicked(int id)
+{
+    qDebug() << "Main Window Item id is: " << id;
 }
 
 

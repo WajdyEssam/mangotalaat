@@ -59,6 +59,7 @@ signals:
 private slots:
     void ShowHomePage();
     void reportClickedSlot();
+    void orderItemClicked(int id);
 
 public slots:
     void selectCategorySlot(int categoryId);

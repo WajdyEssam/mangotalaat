@@ -1,15 +1,39 @@
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolButton>
+#include <QSignalMapper>
+#include <QIcon>
+#include <QDebug>
+
 #include "sizewidget.h"
 #include "database/databasemanager.h"
 
 SizeWidget::SizeWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->setObjectName("sizeWidget");
     this->signalMapper = new QSignalMapper(this);
-
     this->horizontalGroupBox = new QGroupBox(tr("Items"));
+    this->containerLayout = new QHBoxLayout;
+    this->subContainerLayout = new QVBoxLayout;
     this->layout = new QGridLayout;
 
-    this->horizontalGroupBox->setLayout(layout);
+    this->containerLayout->addStretch();
+    this->containerLayout->addLayout(this->subContainerLayout);
+    this->containerLayout->addStretch();
+
+    this->subContainerLayout->addStretch();
+    this->subContainerLayout->addLayout(this->layout);
+    this->subContainerLayout->addStretch();
+
+    this->containerLayout->setSpacing(0);
+    this->layout->setVerticalSpacing(0);
+    this->layout->setHorizontalSpacing(0);
+    this->layout->setAlignment(Qt::AlignTop);
+
+    this->horizontalGroupBox->setLayout(containerLayout);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(horizontalGroupBox);
@@ -33,14 +57,20 @@ void SizeWidget::createItemSizes(int itemId)
 
     int i=0, col = 0, row = 1;
     for(std::vector<ItemDetail>::iterator p = itemsDetial.begin(); p != itemsDetial.end(); ++p ) {
-        int sizeId = p->getSizeId();
-        QString description = databaseManager.getItemSizeDescription(sizeId, Database::DatabaseManager::ENGLISH);
 
-        buttons[i] = new QPushButton(description);
-        buttons[i]->setObjectName(QString("%1_toolButton").arg(p->getId()));
-        connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(buttons[i], p->getId());
-        layout->addWidget(buttons[i], row, col);
+        QToolButton* button = new QToolButton;
+        QString description = databaseManager.getItemSizeDescription(p->getSizeId(), Database::DatabaseManager::ENGLISH);
+        button->setObjectName(QString("%1_SizeButton").arg(p->getId()));
+        button->setText(description);
+        button->setIcon(QIcon(QString(":/images/prices/price_%1.png").arg(p->getId())));
+        button->setIconSize(QSize(135,135));
+        button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+        button->setToolTip(description);
+        button->setStatusTip(description);
+        button->setContentsMargins(0,0,0,0);
+        connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
+        this->signalMapper->setMapping(button, p->getId());
+        layout->addWidget(button, row, col);
 
         col++;
         i++;
@@ -52,10 +82,11 @@ void SizeWidget::createItemSizes(int itemId)
     }
 }
 
-void SizeWidget::setCurrentItemSize(int id){
-    QString buttonName = QString::number(id) + "_toolButton";
-    QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
-    foreach (QPushButton* button,buttons) {
+void SizeWidget::setCurrentItemSize(int id)
+{
+    QString buttonName = QString::number(id) + "_SizeButton";
+    QList<QToolButton*> buttons = this->findChildren<QToolButton*>();
+    foreach (QToolButton* button,buttons) {
         if (button->objectName() == buttonName)
             button->setChecked(true);
         else

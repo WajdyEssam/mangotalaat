@@ -15,12 +15,12 @@ public:
     explicit OrderWidget(QWidget *parent = 0);
     
 signals:
-    
+    void orderItemClick(int);
+
 public slots:
     void updateOrders(QList<Model::Order>);
 
 private:
-
     void initOrderList();
     void initOrderCommand();
 

@@ -1,8 +1,9 @@
 import QtQuick 1.0
 
 Rectangle {
+    id: order_window
     color: mycolor
-
+    signal itemClick(int item_id)
 
     ListView {
         id: orderView
@@ -74,6 +75,8 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     console.debug("item: " + model.modelData.orderId + " is clicked");
+                    order_window.itemClick(1);
+
                 }
                 onPressed: {
                     console.debug("item: " + model.modelData.orderId + " is pressed");
@@ -120,7 +123,7 @@ Rectangle {
                     }
 
                     Text {
-                        text: model.modelData.orderName + model.modelData.orderDescription
+                        text: model.modelData.orderName + " -- " + model.modelData.orderDescription
                         anchors.top: orderLabel.bottom
                         anchors.topMargin: 2
                     }

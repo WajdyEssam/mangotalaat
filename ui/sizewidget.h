@@ -2,11 +2,13 @@
 #define SIZEWIDGET_H
 
 #include <QWidget>
-#include <QGroupBox>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QSignalMapper>
-#include <QGridLayout>
+
+class QGroupBox;
+class QHBoxLayout;
+class QSignalMapper;
+class QGridLayout;
+class QToolButton;
+class QVBoxLayout;
 
 class SizeWidget : public QWidget
 {
@@ -25,9 +27,10 @@ private:
     };
 
     QSignalMapper *signalMapper;
-    QPushButton *buttons[NumButtons];
     QGroupBox *horizontalGroupBox;
     QGridLayout *layout;
+    QHBoxLayout* containerLayout;
+    QVBoxLayout* subContainerLayout;
 
     void removeItemSizes();
 

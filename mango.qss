@@ -108,3 +108,25 @@ QHeaderView::section
     border: 1px solid #6c6c6c;
     font: bold
 }
+
+
+#sizeWidget QToolButton
+{
+    background-color: transparent;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    font-weight: bold;
+    text-align: center;
+}
+
+#sizeWidget QToolButton:hover, #headerWidget QToolButton:hover:checked
+{
+}
+
+#sizeWidget QToolButton:pressed
+{
+    padding-top: 5px;
+}

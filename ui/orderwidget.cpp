@@ -1,5 +1,6 @@
 #include <QtDeclarative/QDeclarativeView>
 #include <QtDeclarative/QDeclarativeContext>
+#include <QtDeclarative/QDeclarativeItem>
 #include <QVBoxLayout>
 #include <QUrl>
 #include <QGroupBox>
@@ -31,6 +32,9 @@ void OrderWidget::initOrderList()
 
     m_declarativeView->setSource(QUrl("qrc:/ui/qml/orderlist.qml"));
     m_declarativeView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
+
+    QDeclarativeItem *item = qobject_cast<QDeclarativeItem *>(m_declarativeView->rootObject());
+    connect(item, SIGNAL(itemClick(int)), SIGNAL(orderItemClick(int)));
 
     QGroupBox* box = new QGroupBox;
     box->setTitle("Shopping Cart");
