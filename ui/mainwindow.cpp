@@ -111,7 +111,7 @@ Model::Order MainWindow::getOrderByIndexId(QString indexId) {
 
 void MainWindow::systemClickedSlot()
 {
-
+    clearShoppingCart();
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
