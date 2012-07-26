@@ -87,6 +87,8 @@ void MainWindow::createOrderDockWidget()
 
     connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
+    connect(this->orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
+    connect(this->orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
 }
 
 void MainWindow::addLoginEvent() {
@@ -106,12 +108,31 @@ void MainWindow::ShowHomePage()
 
 void MainWindow::reportClickedSlot()
 {
-    computeTotalCash();
 }
 
 void MainWindow::orderItemClicked(QString orderIndexId)
 {
     updateItemDetialSlot(getOrderByIndexId(orderIndexId));
+}
+
+void MainWindow::systemClickedSlot()
+{
+}
+
+void MainWindow::logoutClickedSlot()
+{
+    this->AddLogoutEvent();
+    qApp->quit();
+}
+
+void MainWindow::applyOrderClickedSlot()
+{
+    computeTotalCash();
+}
+
+void MainWindow::cancelOrderClickedSlot()
+{
+    clearShoppingCart();
 }
 
 Model::Order MainWindow::getOrderByIndexId(QString indexId) {
@@ -121,17 +142,6 @@ Model::Order MainWindow::getOrderByIndexId(QString indexId) {
     }
 
     return this->orders.at(0);
-}
-
-void MainWindow::systemClickedSlot()
-{
-    clearShoppingCart();
-}
-
-void MainWindow::logoutClickedSlot()
-{
-    this->AddLogoutEvent();
-    qApp->quit();
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)

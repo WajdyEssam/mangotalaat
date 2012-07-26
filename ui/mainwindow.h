@@ -65,6 +65,8 @@ private slots:
     void orderItemClicked(QString orderIndexId);
     void systemClickedSlot();
     void logoutClickedSlot();
+    void applyOrderClickedSlot();
+    void cancelOrderClickedSlot();
 
 public slots:
     void selectCategorySlot(int categoryId);
