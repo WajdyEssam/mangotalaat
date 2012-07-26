@@ -15,8 +15,7 @@ ItemPropertiesDialog::ItemPropertiesDialog(Model::Order aOrder, bool newOrder, Q
     this->isNewOrder = newOrder;
 
     fillAllComponentsAndAdditionalsFromStore();
-
-    fillCurrentItemDescription();
+    fillCurrentItemDescriptionAndQuantity();
 
     if ( newOrder )
         fillDefualtComponentsAndAdditionalsForThisOrder();
@@ -99,17 +98,16 @@ void ItemPropertiesDialog::fillModifiedComponentsAndAdditionalsForThisOrder() {
         Additionals additional = database.getAdditionalsById(additionalId.toInt());
         this->ui->currentAdditionalListWidget->addItem(additional.getArabicName());
     }
-
-    this->ui->quantitySpinBox->setValue(this->order.getQunatity());
 }
 
-void ItemPropertiesDialog::fillCurrentItemDescription() {
+void ItemPropertiesDialog::fillCurrentItemDescriptionAndQuantity() {
     Database::DatabaseManager database;
-
     Model::ItemDetail itemDetial = database.getItemDetailById(this->order.getItemDetialId());
     Model::Item item = database.getItemById(itemDetial.getItemId());
     QString sizeDescription = database.getItemSizeDescription(itemDetial.getSizeId(), database.ARABIC);
+
     this->ui->orderLineEdit->setText(item.getArabicName() + " - " + sizeDescription);
+    this->ui->quantitySpinBox->setValue(this->order.getQunatity());
 }
 
 void ItemPropertiesDialog::fillAllComponentsAndAdditionalsFromStore() {

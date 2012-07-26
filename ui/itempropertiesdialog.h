@@ -37,7 +37,7 @@ private:
     void fillDefualtComponentsAndAdditionalsForThisOrder();
     void fillModifiedComponentsAndAdditionalsForThisOrder();
     void fillAllComponentsAndAdditionalsFromStore();
-    void fillCurrentItemDescription();
+    void fillCurrentItemDescriptionAndQuantity();
 
     QString getSugar();
     QStringList getNewAdditionalList();
