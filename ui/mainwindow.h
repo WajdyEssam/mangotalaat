@@ -59,11 +59,13 @@ signals:
 private slots:
     void ShowHomePage();
     void reportClickedSlot();
+    void systemClickedSlot();
 
 public slots:
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
+    void updateItemDetialSlot(int itemDetialId);
 
 private:
     QList<Model::Order> orders;
