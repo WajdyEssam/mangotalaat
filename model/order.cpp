@@ -12,7 +12,7 @@ namespace Model {
     }
 
     Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
-                 QString aSugar, long long aOrderIndexId) {
+                 QString aSugar, QString aOrderIndexId) {
         this->itemDetailId = aItemDetailId;
         this->quantity = aQuantity;
         this->componentsIds = aComponentsIds;
@@ -38,8 +38,8 @@ namespace Model {
         this->arabicName = item.getArabicName();
     }
 
-    long long Order::getTimeStamp() {
-        return QDateTime::currentMSecsSinceEpoch();
+    QString Order::getTimeStamp() {
+        return QString::number(QDateTime::currentMSecsSinceEpoch());
     }
 }
 

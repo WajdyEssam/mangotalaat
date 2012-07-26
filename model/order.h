@@ -11,7 +11,7 @@ namespace Model {
         Order() {}
         Order(int aItemDetaildId);
         Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
-              QString aSugar, long long aOrderIndexId);
+              QString aSugar, QString aOrderIndexId);
 
         int getItemDetialId() const { return this->itemDetailId; }
         int getQunatity()const { return this->quantity; }
@@ -22,13 +22,13 @@ namespace Model {
         QString getSizeDescription() {return this->sizeDescription;}
         QString getArabicName() {return this->arabicName;}
         int getCategoryId() {return this->categoryId;}
-        long long getOrderIndexId() const { return this->orderIndexId; }
+        QString getOrderIndexId() const { return this->orderIndexId; }
 
     private:
         void fillOtherInformation();
-        long long getTimeStamp();
+        QString getTimeStamp();
 
-        long long orderIndexId;
+        QString orderIndexId;
         int itemDetailId;
         int quantity;
         QStringList componentsIds;
