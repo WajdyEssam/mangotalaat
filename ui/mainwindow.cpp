@@ -164,7 +164,7 @@ void MainWindow::computeTotalCash()
     Database::DatabaseManager database;
     bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orders);
 
-    qDebug() << "New Order Status: " << ret;
+    qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
 
     if ( ret ) {
         clearShoppingCart();
@@ -174,6 +174,7 @@ void MainWindow::computeTotalCash()
 void MainWindow::clearShoppingCart()
 {
     this->orders.clear();
+    emit orderAdded(this->orders);
 }
 
 void MainWindow::computeFree()

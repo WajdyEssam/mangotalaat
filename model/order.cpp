@@ -6,7 +6,7 @@ namespace Model {
     Order::Order(int aItemDetaildId) {
         this->itemDetailId = aItemDetaildId;
         this->quantity = 1;
-        this->computeCash();
+        this->fillOtherInformation();
     }
 
     Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds) {
@@ -14,15 +14,24 @@ namespace Model {
         this->quantity = aQuantity;
         this->componentsIds = aComponentsIds;
         this->additionalsIds = aAdditionalsIds;
-        this->computeCash();
+        this->fillOtherInformation();
     }
 
-    void Order::computeCash() {
+    void Order::fillOtherInformation() {
         Database::DatabaseManager database;
         Model::ItemDetail itemDetail = database.getItemDetailById(this->itemDetailId);
-        this->cash = itemDetail.getPrice() * this->quantity;
+        Model::Item item = database.getItemById(itemDetail.getItemId());
 
         // if item is special cocktail then the price will be the largest component price
         // this is just for mango and avocado
+        int price = itemDetail.getPrice();
+        int sizeId = itemDetail.getSizeId();
+
+        this->sizeDescription = database.getItemSizeDescription(sizeId, Database::DatabaseManager::ARABIC);
+        this->cash = price * this->quantity;
+        this->categoryId = item.getCategoryId();
+        this->arabicName = item.getArabicName();
     }
 }
+
+

@@ -7,7 +7,7 @@ class OrderObject : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString orderId READ orderId)
+    Q_PROPERTY(int orderId READ orderId)
     Q_PROPERTY(QString orderName READ orderName)
     Q_PROPERTY(QString orderDescription READ orderDescription)
     Q_PROPERTY(QString orderCost READ orderCost)
