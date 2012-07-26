@@ -16,13 +16,9 @@ class CategoriesWidget : public QWidget
 
 public:
     explicit CategoriesWidget(QWidget *parent = 0);
-    ~CategoriesWidget();
 
 private:
-    void createCategories();
 
-
-private:
     enum {
         NumButtons = 8 , ButtonsPerLine = 4
     };
@@ -33,10 +29,8 @@ private:
     QHBoxLayout* containerLayout;
     QVBoxLayout* subContainerLayout;
 
+    void createCategories();
     void removeCategories();
-
-private slots:
-    void setCurrentCategory(int id);
 
 signals:
     void selectCategory(int id);

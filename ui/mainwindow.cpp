@@ -34,11 +34,14 @@ void MainWindow::createWidgetPages()
     this->categoriesWidget = new CategoriesWidget;
     this->itemsWidget = new ItemsWidget;
     this->sizeWidget = new SizeWidget;
+    this->propertyWidget = new PropertyWidget;
 
     this->stackedWidget = new SlidingStackedWidget(this);
     this->stackedWidget->addWidget(this->categoriesWidget);
     this->stackedWidget->addWidget(this->itemsWidget);
     this->stackedWidget->addWidget(this->sizeWidget);
+    this->stackedWidget->addWidget(this->propertyWidget);
+
     this->stackedWidget->setSpeed(700);
 
     this->setCurrentPage(CategoryPage);
@@ -156,17 +159,20 @@ void MainWindow::selectItemSlot(int itemId)
 void MainWindow::selectItemDetialSlot(int itemDetialId)
 {
     Model::Order order(itemDetialId);
-    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, true, this);
-    dialog->setModal(true);
-    dialog->exec();
+    this->propertyWidget->setOrder(order);
+    this->setCurrentPage(PropertyPage);
 
-    if ( !dialog->isCancelled() ) {
-        Model::Order order = dialog->getOrder();
+//    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, true, this);
+//    dialog->setModal(true);
+//    dialog->exec();
 
-        this->orders.append(order);
-        this->stackedWidget->setCurrentIndex(0);
-        emit orderAdded(this->orders);
-    }
+//    if ( !dialog->isCancelled() ) {
+//        Model::Order order = dialog->getOrder();
+
+//        this->orders.append(order);
+//        this->stackedWidget->setCurrentIndex(0);
+//        emit orderAdded(this->orders);
+//    }
 }
 
 void MainWindow::updateItemDetialSlot(Model::Order order) {

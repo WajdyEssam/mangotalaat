@@ -524,7 +524,7 @@ INSERT INTO components(arabic_name, english_name) values("جزر", "Carrots");
 INSERT INTO components(arabic_name, english_name) values("برتقال", "Orange");
 INSERT INTO components(arabic_name, english_name) values("آيس كريم", "Ice cream");
 INSERT INTO components(arabic_name, english_name) values("تفاح", "Apple");
-INSERT INTO components(arabic_name, english_name) values("عصير رقي مع القطع", "Watermelon Juice with Pieces");
+INSERT INTO components(arabic_name, english_name) values("رقي مع القطع", "Watermelon - Pieces");
 INSERT INTO components(arabic_name, english_name) values("توت", "Barries");
 INSERT INTO components(arabic_name, english_name) values("أناناس", "Pinapple");
 INSERT INTO components(arabic_name, english_name) values("خوخ", "Peach");

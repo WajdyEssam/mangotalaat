@@ -8,6 +8,7 @@
 #include "categorieswidget.h"
 #include "itemswidget.h"
 #include "sizewidget.h"
+#include "propertywidget.h"
 #include "itempropertiesdialog.h"
 
 class HeaderWidget;
@@ -22,36 +23,12 @@ public:
     enum WidgetPage {
         CategoryPage = 0,
         ItemPage = 1,
-        SizePage = 2
+        SizePage = 2,
+        PropertyPage = 3
     };
 
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
-private:
-    QSignalMapper *signalMapper;
-    HeaderWidget *headerWidget;
-    OrderWidget* orderWidget;
-    SlidingStackedWidget *stackedWidget;
-
-    CategoriesWidget* categoriesWidget;
-    ItemsWidget* itemsWidget;
-    SizeWidget* sizeWidget;
-
-    QLabel *versionLabel;
-    QLabel *helpLabel;
-
-private:
-    void setWindowSize();
-    void createWidgetPages();
-    void createDockWidgets();
-    void createStatusBar();
-    void establishConnections();
-
-    void createHeaderDockWidget();
-    void createOrderDockWidget();
-
-    void setCurrentPage(WidgetPage page);
 
 signals:
     void orderAdded(QList<Model::Order> orders);
@@ -69,8 +46,32 @@ public slots:
     void updateItemDetialSlot(Model::Order order);
 
 private:
+    QSignalMapper *signalMapper;
+    HeaderWidget *headerWidget;
+    OrderWidget* orderWidget;
+    SlidingStackedWidget *stackedWidget;
+
+    CategoriesWidget* categoriesWidget;
+    ItemsWidget* itemsWidget;
+    SizeWidget* sizeWidget;
+    PropertyWidget* propertyWidget;
+
+    QLabel *versionLabel;
+    QLabel *helpLabel;
+
     QList<Model::Order> orders;
     int discount ;
+
+    void setWindowSize();
+    void createWidgetPages();
+    void createDockWidgets();
+    void createStatusBar();
+    void establishConnections();
+
+    void createHeaderDockWidget();
+    void createOrderDockWidget();
+
+    void setCurrentPage(WidgetPage page);
 
     Model::Order getOrderByIndexId(QString indexId);
     void updateOrder(Model::Order oldOrder, Model::Order newOrder);

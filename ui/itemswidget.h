@@ -16,8 +16,10 @@ public:
     explicit ItemsWidget(QWidget *parent = 0);
     ~ItemsWidget();
 
-public:
     void createItems(int categoryId);
+
+signals:
+    void selectItem(int id);
 
 private:
     enum {
@@ -31,11 +33,6 @@ private:
 
     void removeItems();
 
-private slots:
-    void setCurrentItem(int id);
-
-signals:
-    void selectItem(int id);
 };
 
 #endif // ITEMSWIDGET_H

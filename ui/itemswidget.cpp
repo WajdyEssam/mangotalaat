@@ -17,7 +17,7 @@ ItemsWidget::ItemsWidget(QWidget *parent) :
     mainLayout->addWidget(horizontalGroupBox);
     this->setLayout(mainLayout);
 
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentItem(int)));
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SIGNAL(selectItem(int)));
 }
 
 ItemsWidget::~ItemsWidget()
@@ -49,20 +49,6 @@ void ItemsWidget::createItems(int categoryId)
             col = 0;
         }
     }
-}
-
-void ItemsWidget::setCurrentItem(int id)
-{
-    QString buttonName = QString::number(id) + "_itemButton";
-    QList<QPushButton*> buttons = this->findChildren<QPushButton*>();
-    foreach (QPushButton* button,buttons) {
-        if (button->objectName() == buttonName)
-            button->setChecked(true);
-        else
-            button->setChecked(false);
-    }
-
-    emit selectItem(id);
 }
 
 void ItemsWidget::removeItems()

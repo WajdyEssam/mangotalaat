@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     model/additionals.cpp \
     model/order.cpp \
     ui/SlidingStackedWidget.cpp \
-    model/orderobject.cpp
+    model/orderobject.cpp \
+    ui/propertywidget.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -43,7 +44,8 @@ HEADERS  += model/category.h \
     model/additionals.h \
     model/order.h \
     ui/SlidingStackedWidget.h \
-    model/orderobject.h
+    model/orderobject.h \
+    ui/propertywidget.h
 
 FORMS += \
     ui/itempropertiesdialog.ui

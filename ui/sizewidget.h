@@ -34,9 +34,6 @@ private:
 
     void removeItemSizes();
 
-private slots:
-    void setCurrentItemSize(int id);
-
 signals:
     void selectItemDetail(int id);
 };
