@@ -56,6 +56,7 @@ void MainWindow::createHeaderDockWidget()
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
     connect(this->headerWidget, SIGNAL(reportClicked()), SLOT(reportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(systemClicked()), SLOT(systemClickedSlot()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
     headerDockWidget->setObjectName("headerDockWidget");
@@ -94,11 +95,15 @@ void MainWindow::reportClickedSlot()
     computeTotalCash();
 }
 
-void MainWindow::orderItemClicked(int id)
+void MainWindow::orderItemClicked(QString id)
 {
     qDebug() << "Main Window Item id is: " << id;
 }
 
+void MainWindow::systemClickedSlot()
+{
+    updateItemDetialSlot(1);
+}
 
 void MainWindow::setCurrentPage(WidgetPage page)
 {
@@ -123,6 +128,8 @@ void MainWindow::establishConnections()
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
+
+    connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
 }
 
 void MainWindow::selectCategorySlot(int categorId)
@@ -150,6 +157,22 @@ void MainWindow::selectItemDetialSlot(int itemDetialId)
         this->orders.append(order);
         this->stackedWidget->setCurrentIndex(0);
         emit orderAdded(this->orders);
+    }
+}
+
+void MainWindow::updateItemDetialSlot(int itemDetialId) {
+    Model::Order order(itemDetialId);
+
+    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, false, this);
+    dialog->setModal(true);
+    dialog->exec();
+
+    if ( !dialog->isCancelled() ) {
+        Model::Order order = dialog->getOrder();
+
+        //this->orders.append(order);
+        //this->stackedWidget->setCurrentIndex(0);
+        //emit orderAdded(this->orders);
     }
 }
 

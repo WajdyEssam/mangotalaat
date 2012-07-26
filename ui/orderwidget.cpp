@@ -34,7 +34,7 @@ void OrderWidget::initOrderList()
     m_declarativeView->setResizeMode(QDeclarativeView::SizeRootObjectToView);
 
     QDeclarativeItem *item = qobject_cast<QDeclarativeItem *>(m_declarativeView->rootObject());
-    connect(item, SIGNAL(itemClick(int)), SIGNAL(orderItemClick(int)));
+    connect(item, SIGNAL(itemClick(QString)), SIGNAL(orderItemClick(QString)));
 
     QGroupBox* box = new QGroupBox;
     box->setTitle("Shopping Cart");
@@ -73,7 +73,7 @@ void OrderWidget::updateOrders(QList<Model::Order> orders)
     QList<QObject*> orderList;
 
     foreach (Model::Order order, orders) {
-        orderList.append(new OrderObject(order.getItemDetialId(),
+        orderList.append(new OrderObject(order.getItemDetialId(), order.getOrderIndexId(),
             order.getArabicName(), order.getSizeDescription(), QString::number(order.getCash()), order.getCategoryId()));
     }
 

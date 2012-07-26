@@ -36,7 +36,8 @@ void ItemPropertiesDialog::on_buttonBox_accepted()
     QString sugar = getSugar();
     int quantity = 1;
 
-    this->modifiedOrder = Model::Order(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList);
+    this->modifiedOrder = Model::Order(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
+                                       sugar,this->order.getOrderIndexId() );
 
     this->isCancel = false;
     this->hide();

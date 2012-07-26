@@ -15,7 +15,7 @@ public:
     explicit OrderWidget(QWidget *parent = 0);
     
 signals:
-    void orderItemClick(int);
+    void orderItemClick(QString);
 
 public slots:
     void updateOrders(QList<Model::Order>);

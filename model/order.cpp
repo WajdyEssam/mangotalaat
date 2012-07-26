@@ -3,17 +3,22 @@
 #include "model/itemdetail.h"
 
 namespace Model {
+
     Order::Order(int aItemDetaildId) {
         this->itemDetailId = aItemDetaildId;
         this->quantity = 1;
+        this->orderIndexId = getTimeStamp();
         this->fillOtherInformation();
     }
 
-    Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds) {
+    Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
+                 QString aSugar, long long aOrderIndexId) {
         this->itemDetailId = aItemDetailId;
         this->quantity = aQuantity;
         this->componentsIds = aComponentsIds;
         this->additionalsIds = aAdditionalsIds;
+        this->sugar = aSugar;
+        this->orderIndexId = aOrderIndexId;
         this->fillOtherInformation();
     }
 
@@ -31,6 +36,10 @@ namespace Model {
         this->cash = price * this->quantity;
         this->categoryId = item.getCategoryId();
         this->arabicName = item.getArabicName();
+    }
+
+    long long Order::getTimeStamp() {
+        return QDateTime::currentMSecsSinceEpoch();
     }
 }
 
