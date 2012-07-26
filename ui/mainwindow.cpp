@@ -95,14 +95,23 @@ void MainWindow::reportClickedSlot()
     computeTotalCash();
 }
 
-void MainWindow::orderItemClicked(QString id)
+void MainWindow::orderItemClicked(QString orderIndexId)
 {
-    qDebug() << "Main Window Item id is: " << id;
+    updateItemDetialSlot(getOrderByIndexId(orderIndexId));
+}
+
+Model::Order MainWindow::getOrderByIndexId(QString indexId) {
+    foreach(Model::Order order, this->orders) {
+        if ( order.getOrderIndexId() == indexId )
+            return order;
+    }
+
+    return this->orders.at(0);
 }
 
 void MainWindow::systemClickedSlot()
 {
-    updateItemDetialSlot(1);
+
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
@@ -160,15 +169,13 @@ void MainWindow::selectItemDetialSlot(int itemDetialId)
     }
 }
 
-void MainWindow::updateItemDetialSlot(int itemDetialId) {
-    Model::Order order(itemDetialId);
-
+void MainWindow::updateItemDetialSlot(Model::Order order) {
     ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, false, this);
     dialog->setModal(true);
     dialog->exec();
 
     if ( !dialog->isCancelled() ) {
-        Model::Order order = dialog->getOrder();
+        Model::Order newOrder = dialog->getOrder();
 
         //this->orders.append(order);
         //this->stackedWidget->setCurrentIndex(0);
