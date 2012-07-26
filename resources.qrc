@@ -68,5 +68,25 @@
         <file>images/components/component_active_2.png</file>
         <file>images/components/component_notactive_1.png</file>
         <file>images/components/component_notactive_2.png</file>
+        <file>images/components/component_active_3.png</file>
+        <file>images/components/component_active_4.png</file>
+        <file>images/components/component_active_5.png</file>
+        <file>images/components/component_active_6.png</file>
+        <file>images/components/component_active_7.png</file>
+        <file>images/components/component_active_8.png</file>
+        <file>images/components/component_active_9.png</file>
+        <file>images/components/component_active_10.png</file>
+        <file>images/components/component_active_11.png</file>
+        <file>images/components/component_active_12.png</file>
+        <file>images/components/component_notactive_3.png</file>
+        <file>images/components/component_notactive_4.png</file>
+        <file>images/components/component_notactive_5.png</file>
+        <file>images/components/component_notactive_6.png</file>
+        <file>images/components/component_notactive_7.png</file>
+        <file>images/components/component_notactive_8.png</file>
+        <file>images/components/component_notactive_9.png</file>
+        <file>images/components/component_notactive_10.png</file>
+        <file>images/components/component_notactive_11.png</file>
+        <file>images/components/component_notactive_12.png</file>
     </qresource>
 </RCC>
