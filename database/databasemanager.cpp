@@ -299,9 +299,7 @@ namespace Database
     User DatabaseManager::getUserById(int id) {
         User user ;
 
-        QSqlQuery query(QString("SELECT * FROM users WHERE id = ?"));
-        query.addBindValue(id);
-
+        QSqlQuery query(QString("SELECT * FROM users WHERE id = %1").arg(id));
         while(query.next()){
             int id = query.value(0).toInt();
             QString username = query.value(1).toString();
@@ -318,7 +316,7 @@ namespace Database
     QList<LoginReport> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
         QList<LoginReport> logins;
 
-        QSqlQuery query(QString("SELECT * FROM events_logging"));
+        QSqlQuery query(QString("SELECT * FROM events_logging WHERE event_time BETWEEN (?) AND (?)"));
         query.addBindValue(from);
         query.addBindValue(to);
 

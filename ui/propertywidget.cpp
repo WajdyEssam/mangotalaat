@@ -124,15 +124,6 @@ void PropertyWidget::initComponents()
 
 void PropertyWidget::setCurrentComponent(int id)
 {
-//    QToolButton* senderButton = (QToolButton*) sender();
-//    senderButton->toggle();
-
-//    if (senderButton->isChecked()) {
-//        qDebug() << senderButton->objectName() + " is checked after toggle";
-//    } else {
-//        qDebug() << senderButton->objectName() + " is not checked after toggle";
-//    }
-
     QString buttonName = QString::number(id) + "_ComponentButton";
     QToolButton* button = this->findChild<QToolButton*>(buttonName);
 
