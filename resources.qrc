@@ -63,5 +63,10 @@
         <file>images/prices/5_14_en.png</file>
         <file>images/prices/5_16_en.png</file>
         <file>images/prices/5_17_en.png</file>
+        <file>images/prices/4_23_en.png</file>
+        <file>images/components/component_active_1.png</file>
+        <file>images/components/component_active_2.png</file>
+        <file>images/components/component_notactive_1.png</file>
+        <file>images/components/component_notactive_2.png</file>
     </qresource>
 </RCC>

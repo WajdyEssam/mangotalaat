@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     report/loginreport.cpp \
     report/orderreport.cpp \
     report/cancelreport.cpp \
-    report/user.cpp
+    report/user.cpp \
+    ui/propertywidget.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -51,7 +52,8 @@ HEADERS  += model/category.h \
     report/loginreport.h \
     report/orderreport.h \
     report/cancelreport.h \
-    report/user.h
+    report/user.h \
+    ui/propertywidget.h
 
 FORMS += \
     ui/itempropertiesdialog.ui

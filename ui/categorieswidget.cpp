@@ -39,14 +39,10 @@ CategoriesWidget::CategoriesWidget(QWidget *parent) :
     mainLayout->addWidget(horizontalGroupBox);
     this->setLayout(mainLayout);
 
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentCategory(int)));
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SIGNAL(selectCategory(int)));
 
     this->createCategories();
 
-}
-
-CategoriesWidget::~CategoriesWidget()
-{
 }
 
 void CategoriesWidget::createCategories()
@@ -83,19 +79,6 @@ void CategoriesWidget::createCategories()
             col = 0;
         }
     }
-}
-
-void CategoriesWidget::setCurrentCategory(int id){
-    QString buttonName = QString::number(id) + "_CategoryButton";
-    QList<QToolButton*> buttons = this->findChildren<QToolButton*>();
-    foreach (QToolButton* button,buttons) {
-        if (button->objectName() == buttonName)
-            button->setChecked(true);
-        else
-            button->setChecked(false);
-    }
-
-    emit selectCategory(id);
 }
 
 void CategoriesWidget::removeCategories()

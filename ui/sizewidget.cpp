@@ -39,7 +39,7 @@ SizeWidget::SizeWidget(QWidget *parent) :
     mainLayout->addWidget(horizontalGroupBox);
     this->setLayout(mainLayout);
 
-    connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentItemSize(int)));
+    connect(this->signalMapper, SIGNAL(mapped(int)), this, SIGNAL(selectItemDetail(int)));
 }
 
 SizeWidget::~SizeWidget()
@@ -80,20 +80,6 @@ void SizeWidget::createItemSizes(int itemId)
             col = 0;
         }
     }
-}
-
-void SizeWidget::setCurrentItemSize(int id)
-{
-    QString buttonName = QString::number(id) + "_SizeButton";
-    QList<QToolButton*> buttons = this->findChildren<QToolButton*>();
-    foreach (QToolButton* button,buttons) {
-        if (button->objectName() == buttonName)
-            button->setChecked(true);
-        else
-            button->setChecked(false);
-    }
-
-    emit selectItemDetail(id);
 }
 
 void SizeWidget::removeItemSizes()
