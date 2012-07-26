@@ -3,11 +3,11 @@ CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	username TEXT,
 	password TEXT,
-	register_time TEXT
+	register_time DATETIME
 );
 
-INSERT INTO users(username, password, register_time) values("admin", "123", "1/8/2012");
-INSERT INTO users(username, password, register_time) values("user", "123", "1/8/2012");
+INSERT INTO users(username, password, register_time) values("admin", "123", "Thu Jul 26 14:08:49 2012");
+INSERT INTO users(username, password, register_time) values("user", "123", "Thu Jul 26 10:08:49 2012");
 
 CREATE TABLE events_logging (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 

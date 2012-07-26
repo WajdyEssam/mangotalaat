@@ -295,4 +295,43 @@ namespace Database
     QStringList DatabaseManager::fromTextToList(QString text) {
         return text.split(",");
     }
+
+    User DatabaseManager::getUserById(int id) {
+        User user ;
+
+        QSqlQuery query(QString("SELECT * FROM users WHERE id = ?"));
+        query.addBindValue(id);
+
+        while(query.next()){
+            int id = query.value(0).toInt();
+            QString username = query.value(1).toString();
+            QString password = query.value(2).toString();
+            QDateTime registerTime = query.value(3).toDateTime();
+
+            user = User(id, username, password, registerTime);
+            break;
+        }
+
+        return user;
+    }
+
+    QList<LoginReport> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
+        QList<LoginReport> logins;
+
+        QSqlQuery query(QString("SELECT * FROM events_logging"));
+        query.addBindValue(from);
+        query.addBindValue(to);
+
+        while(query.next()){
+            int id = query.value(0).toInt();
+            User user = getUserById(query.value(1).toInt());
+            QDateTime eventTime = query.value(2).toDateTime();
+            int eventType = query.value(3).toInt();
+
+            LoginReport login(id, user, eventTime, eventType);
+            logins.append(login);
+        }
+
+        return logins;
+    }
 }

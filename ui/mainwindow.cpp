@@ -9,6 +9,8 @@
 #include "model/order.h"
 #include "database/databasemanager.h"
 
+#include "report/loginreport.h"
+
 MainWindow::MainWindow(int aUserId, QWidget *parent) :
     QMainWindow(parent)
 {
@@ -110,6 +112,13 @@ void MainWindow::reportClickedSlot()
 {
     // show reports
     // event logging table, order table, cancel table, summary table
+    Database::DatabaseManager database;
+    QList<LoginReport> logins = database.getLoginReport(QDateTime::currentDateTime().addDays(-1), QDateTime::currentDateTime());
+
+    foreach(LoginReport login, logins) {
+        qDebug() << login.getId() << " , " << login.getUser().getUsername() << " , " << login.getEventTime() <<  " , "
+                 << login.getEventType();
+    }
 
     // from points to points
     // from last point to current time
