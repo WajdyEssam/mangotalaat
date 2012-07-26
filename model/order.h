@@ -7,11 +7,11 @@
 namespace Model {
     class Order
     {
-
     public:
         Order() {}
         Order(int aItemDetaildId);
-        Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds);
+        Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
+              QString aSugar, long long aOrderIndexId);
 
         int getItemDetialId() const { return this->itemDetailId; }
         int getQunatity()const { return this->quantity; }
@@ -19,23 +19,22 @@ namespace Model {
         QStringList getAdditionalsIds() const { return this->additionalsIds; }
         QString getSugar() const { return this->sugar; }
         int getCash() const { return this->cash; }
-
         QString getSizeDescription() {return this->sizeDescription;}
         QString getArabicName() {return this->arabicName;}
         int getCategoryId() {return this->categoryId;}
+        long long getOrderIndexId() const { return this->orderIndexId; }
 
     private:
         void fillOtherInformation();
+        long long getTimeStamp();
 
-    private:
+        long long orderIndexId;
         int itemDetailId;
         int quantity;
         QStringList componentsIds;
         QStringList additionalsIds;
         QString sugar;
         int cash;
-
-    private:
         QString sizeDescription;
         int categoryId;
         QString arabicName;
