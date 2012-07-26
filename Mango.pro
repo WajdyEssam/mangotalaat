@@ -26,6 +26,10 @@ SOURCES += main.cpp\
     model/order.cpp \
     ui/SlidingStackedWidget.cpp \
     model/orderobject.cpp \
+    report/loginreport.cpp \
+    report/orderreport.cpp \
+    report/cancelreport.cpp \
+    report/user.cpp \
     ui/propertywidget.cpp
 
 HEADERS  += model/category.h \
@@ -45,6 +49,10 @@ HEADERS  += model/category.h \
     model/order.h \
     ui/SlidingStackedWidget.h \
     model/orderobject.h \
+    report/loginreport.h \
+    report/orderreport.h \
+    report/cancelreport.h \
+    report/user.h \
     ui/propertywidget.h
 
 FORMS += \
@@ -57,6 +65,14 @@ RESOURCES += \
 OTHER_FILES += \
     mango.qss \
     ui/qml/orderlist.qml
+
+
+
+
+
+
+
+
 
 
 

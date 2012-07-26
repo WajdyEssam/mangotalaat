@@ -64,7 +64,7 @@ void PropertyWidget::initComponents()
         button->setObjectName(QString("%1_ComponentButton").arg(p->getId()));
         button->setText(p->getArabicName());
         button->setCheckable(true);
-        button->setChecked(true);
+        button->setChecked(false);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(p->getId())));
         button->setIconSize(QSize(64,64));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -124,31 +124,16 @@ void PropertyWidget::initComponents()
 
 void PropertyWidget::setCurrentComponent(int id)
 {
-//    QToolButton* senderButton = (QToolButton*) sender();
-//    senderButton->toggle();
-
-//    if (senderButton->isChecked()) {
-//        qDebug() << senderButton->objectName() + " is checked after toggle";
-//    } else {
-//        qDebug() << senderButton->objectName() + " is not checked after toggle";
-//    }
-
     QString buttonName = QString::number(id) + "_ComponentButton";
-    QList<QToolButton*> buttons = this->findChildren<QToolButton*>();
+    QToolButton* button = this->findChild<QToolButton*>(buttonName);
 
-    foreach (QToolButton* button,buttons) {
-        if (button->objectName() == buttonName) {
-
-
-            if (button->isChecked()) {
-                qDebug() << button->objectName() + " is checked";
-                button->setChecked(false);
-                button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(id)));
-            } else {
-                qDebug() << button->objectName() + " is not checked";
-                button->setChecked(true);
-                button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
-            }
-        }
+    if ( !button->isChecked()) {
+        qDebug() << button->objectName() + " is checked";
+        button->setChecked(false);
+        button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(id)));
+    } else if ( button->isChecked() ){
+        qDebug() << button->objectName() + " is not checked";
+        button->setChecked(true);
+        button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
     }
 }
