@@ -2,8 +2,16 @@ import QtQuick 1.0
 
 Rectangle {
     id: order_window
-    color: mycolor
+    //color: mycolor
     signal itemClick(string item_id)
+
+    Image {
+        id: itemImage
+        source: "qrc:/images/backgrounds/bg1.png"
+        anchors.fill: parent
+        smooth: true;
+        //fillMode: Image.PreserveAspectCrop
+    }
 
     ListView {
         id: orderView

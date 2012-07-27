@@ -5,6 +5,8 @@
 #include <QToolButton>
 #include <QSignalMapper>
 #include <QIcon>
+#include <QLabel>
+#include <QPixmap>
 #include <QDebug>
 
 #include "categorieswidget.h"
@@ -13,36 +15,15 @@
 CategoriesWidget::CategoriesWidget(QWidget *parent) :
     QWidget(parent)
 {
+    initCategoryGroupBox();
+    //initNavigationGroupBox();
+    initUi();
+
     this->setObjectName("categoryWidget");
     this->signalMapper = new QSignalMapper(this);
-    this->horizontalGroupBox = new QGroupBox(tr("Categories"));
-    this->containerLayout = new QHBoxLayout;
-    this->subContainerLayout = new QVBoxLayout;
-    this->layout = new QGridLayout;
-
-    this->containerLayout->addStretch();
-    this->containerLayout->addLayout(this->subContainerLayout);
-    this->containerLayout->addStretch();
-
-    this->subContainerLayout->addStretch();
-    this->subContainerLayout->addLayout(this->layout);
-    this->subContainerLayout->addStretch();
-
-    this->containerLayout->setSpacing(0);
-    this->layout->setVerticalSpacing(0);
-    this->layout->setHorizontalSpacing(0);
-    this->layout->setAlignment(Qt::AlignTop);
-
-    this->horizontalGroupBox->setLayout(containerLayout);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(horizontalGroupBox);
-    this->setLayout(mainLayout);
-
     connect(this->signalMapper, SIGNAL(mapped(int)), this, SIGNAL(selectCategory(int)));
 
     this->createCategories();
-
 }
 
 void CategoriesWidget::createCategories()
@@ -69,7 +50,7 @@ void CategoriesWidget::createCategories()
         button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(button, p->getId());
-        layout->addWidget(button, row, col);
+        contentGridLayout->addWidget(button, row, col);
 
         col++;
         i++;
@@ -84,9 +65,54 @@ void CategoriesWidget::createCategories()
 void CategoriesWidget::removeCategories()
 {
     QLayoutItem* item;
-    while ((item = this->layout->takeAt(0)) != NULL ) {
+    while ((item = this->contentGridLayout->takeAt(0)) != NULL ) {
         delete item->widget();
         delete item;
     }
+}
+
+void CategoriesWidget::initCategoryGroupBox()
+{
+    this->categoryGroupBox = new QGroupBox(tr("Categories"));
+
+    this->containerHBoxLayout = new QHBoxLayout;
+    this->subContainerVBoxLayout = new QVBoxLayout;
+    this->contentGridLayout = new QGridLayout;
+
+    this->containerHBoxLayout->addStretch();
+    this->containerHBoxLayout->addLayout(this->subContainerVBoxLayout);
+    this->containerHBoxLayout->addStretch();
+
+    this->subContainerVBoxLayout->addStretch();
+    this->subContainerVBoxLayout->addLayout(this->contentGridLayout);
+    this->subContainerVBoxLayout->addStretch();
+
+    this->containerHBoxLayout->setSpacing(0);
+    this->contentGridLayout->setVerticalSpacing(0);
+    this->contentGridLayout->setHorizontalSpacing(0);
+    this->contentGridLayout->setAlignment(Qt::AlignTop);
+
+    this->categoryGroupBox->setLayout(containerHBoxLayout);
+}
+
+void CategoriesWidget::initNavigationGroupBox()
+{
+    this->navigationGroupBox = new QGroupBox(tr("Navigations"));
+    this->navigationContainerVBoxLayout = new QVBoxLayout;
+
+    QLabel* label = new QLabel;
+    label->setPixmap(QPixmap(":/images/steps/steps.png"));
+
+    this->navigationContainerVBoxLayout->addWidget(label);
+
+    this->navigationGroupBox->setLayout(navigationContainerVBoxLayout);
+}
+
+void CategoriesWidget::initUi()
+{
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    //mainLayout->addWidget(navigationGroupBox);
+    mainLayout->addWidget(categoryGroupBox);
+    this->setLayout(mainLayout);
 }
 

@@ -24,7 +24,7 @@ void HeaderWidget::init()
 {
     this->setObjectName("headerWidget");
     this->signalMapper = new QSignalMapper(this);
-    this->setFixedHeight(120);
+    this->setFixedHeight(100);
     this->createToolButtons();
     connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(emitSignal(int)));
 }
@@ -34,7 +34,7 @@ void HeaderWidget::createToolButtons()
     QToolButton* HomeButton = new QToolButton;
     HomeButton->setIcon(QIcon(":/images/system.png"));
     HomeButton->setText("Home");
-    HomeButton->setIconSize(QSize(70,70));
+    HomeButton->setIconSize(QSize(64,64));
     HomeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     HomeButton->setToolTip("Home");
     HomeButton->setStatusTip(HomeButton->toolTip());
@@ -42,7 +42,7 @@ void HeaderWidget::createToolButtons()
     QToolButton* reportsButton = new QToolButton;
     reportsButton->setIcon(QIcon(":/images/report.png"));
     reportsButton->setText("Report");
-    reportsButton->setIconSize(QSize(70,70));
+    reportsButton->setIconSize(QSize(64,64));
     reportsButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     reportsButton->setToolTip("Report");
     reportsButton->setStatusTip(reportsButton->toolTip());
@@ -50,7 +50,7 @@ void HeaderWidget::createToolButtons()
     QToolButton* systemButton = new QToolButton;
     systemButton->setIcon(QIcon(":/images/accounting.png"));
     systemButton->setText("System");
-    systemButton->setIconSize(QSize(70,70));
+    systemButton->setIconSize(QSize(64,64));
     systemButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     systemButton->setToolTip("System");
     systemButton->setStatusTip(systemButton->toolTip());
@@ -58,7 +58,7 @@ void HeaderWidget::createToolButtons()
     QToolButton* signOutButton = new QToolButton;
     signOutButton->setIcon(QIcon(":/images/logout.png"));
     signOutButton->setText("Logout");
-    signOutButton->setIconSize(QSize(70,70));
+    signOutButton->setIconSize(QSize(64,64));
     signOutButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     signOutButton->setToolTip("Logout");
     signOutButton->setStatusTip(signOutButton->toolTip());

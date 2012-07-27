@@ -24,11 +24,17 @@ private:
     };
 
     QSignalMapper *signalMapper;
-    QGroupBox *horizontalGroupBox;
-    QGridLayout *layout ;
-    QHBoxLayout* containerLayout;
-    QVBoxLayout* subContainerLayout;
+    QGroupBox *categoryGroupBox;
+    QGridLayout *contentGridLayout ;
+    QHBoxLayout* containerHBoxLayout;
+    QVBoxLayout* subContainerVBoxLayout;
 
+    QGroupBox* navigationGroupBox;
+    QVBoxLayout* navigationContainerVBoxLayout;
+
+    void initCategoryGroupBox();
+    void initNavigationGroupBox();
+    void initUi();
     void createCategories();
     void removeCategories();
 

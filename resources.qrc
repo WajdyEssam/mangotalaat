@@ -116,5 +116,12 @@
         <file>images/additionals/additional_notactive_2.png</file>
         <file>images/additionals/additional_notactive_3.png</file>
         <file>images/additionals/additional_notactive_4.png</file>
+        <file>images/steps/step_1.png</file>
+        <file>images/steps/step_2.png</file>
+        <file>images/steps/step_3.png</file>
+        <file>images/steps/steps.png</file>
+        <file>images/buttons/add_cart.png</file>
+        <file>images/backgrounds/bg2.png</file>
+        <file>images/backgrounds/bg1.png</file>
     </qresource>
 </RCC>

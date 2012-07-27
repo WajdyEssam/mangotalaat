@@ -3,6 +3,7 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QToolButton>
+#include <QPushButton>
 #include <QSignalMapper>
 #include <QIcon>
 #include <QDebug>
@@ -38,7 +39,7 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     connect(this->componentSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentComponent(int)));
     connect(this->additionalSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentAdditional(int)));
 
-    //this->initOrder();
+    this->initOrder();
     this->initComponents();
     this->initAdditionals();
 }
@@ -49,7 +50,16 @@ void PropertyWidget::setOrder(Model::Order order)
 
 void PropertyWidget::initOrder()
 {
+    QHBoxLayout* layout = new QHBoxLayout;
 
+    QPushButton* addToCartButton = new QPushButton;
+    addToCartButton->setFixedSize(177,50);
+    addToCartButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+
+    layout->addWidget(addToCartButton);
+    layout->addStretch();
+
+    orderGridLayout->addLayout(layout,0,0);
 }
 
 void PropertyWidget::initComponents()

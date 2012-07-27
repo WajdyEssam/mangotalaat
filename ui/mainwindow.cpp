@@ -72,9 +72,6 @@ void MainWindow::createHeaderDockWidget()
     headerDockWidget->setFloating(false);
     headerDockWidget->setTitleBarWidget(new QWidget);
 
-    //headerDockWidget->setFixedWidth(220);
-    //headerDockWidget->setFixedHeight(490);
-
     headerDockWidget->setWidget(this->headerWidget);
     this->addDockWidget(Qt::TopDockWidgetArea, headerDockWidget);
 }
