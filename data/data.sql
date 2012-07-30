@@ -83,7 +83,7 @@ CREATE TABLE order_details(
 	quantity INTEGER,
 	components_ids TEXT,
 	additionals_ids TEXT, 
-	sugar TEXT,
+	sugar INTEGER,
 	cash INTEGER
 );
 

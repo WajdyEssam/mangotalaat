@@ -1,6 +1,6 @@
 #include "login.h"
 
-Login::Login(int id, User user, QDateTime eventTime, int eventType)
+Login::Login(int id, User user, QDateTime eventTime, LOGIN_TYPE eventType)
 {
     this->m_id = id;
     this->m_user = user;

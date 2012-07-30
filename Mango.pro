@@ -51,7 +51,8 @@ HEADERS  += model/category.h \
     model/orderdetail.h \
     model/login.h \
     model/order.h \
-    model/user.h
+    model/user.h \
+    model/constants.h
 
 FORMS += \
     ui/itempropertiesdialog.ui

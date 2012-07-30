@@ -1,6 +1,6 @@
 #include "order.h"
 
-Order::Order(int id, QDateTime orderDate, int orderType, int cash, int discount, int totalCash, int isCancelled)
+Order::Order(int id, QDateTime orderDate, ORDER_TYPE orderType, int cash, int discount, int totalCash, int isCancelled)
 {
     this->m_id = id;
     this->m_orderDate = orderDate;

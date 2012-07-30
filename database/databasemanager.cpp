@@ -322,7 +322,7 @@ namespace Database
             int id = query.value(0).toInt();
             User user = getUserById(query.value(1).toInt());
             QDateTime eventTime = query.value(2).toDateTime();
-            int eventType = query.value(3).toInt();
+            LOGIN_TYPE eventType = getLoginType(query.value(3).toInt());
 
             Login login(id, user, eventTime, eventType);
 
@@ -342,7 +342,7 @@ namespace Database
         while(query.next()){
             int id = query.value(0).toInt();
             QDateTime orderDate = query.value(1).toDateTime();
-            int orderType = query.value(2).toInt();
+            ORDER_TYPE orderType = getOrderType(query.value(2).toInt());
             int cash = query.value(3).toInt();
             int discount = query.value(4).toInt();
             int totalCash = query.value(5).toInt();
@@ -385,7 +385,7 @@ namespace Database
             int quantity = query.value(3).toInt();
             QStringList componentList = fromTextToList(query.value(4).toString());
             QStringList additionalList = fromTextToList(query.value(5).toString());
-            QString sugar = query.value(6).toString();
+            SUGAR sugar = getSugar(query.value(6).toInt());
             int cash = query.value(7).toInt();
 
             OrderDetail orderDetail(itemDetailId, quantity, componentList, additionalList, sugar, 0);

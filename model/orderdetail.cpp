@@ -12,7 +12,7 @@ namespace Model {
     }
 
     OrderDetail::OrderDetail(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
-                 QString aSugar, QString aOrderIndexId) {
+                 SUGAR aSugar, QString aOrderIndexId) {
         this->itemDetailId = aItemDetailId;
         this->quantity = aQuantity;
         this->componentsIds = aComponentsIds;

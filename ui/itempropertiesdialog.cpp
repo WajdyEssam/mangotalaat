@@ -33,7 +33,7 @@ void ItemPropertiesDialog::on_buttonBox_accepted()
     // build modified order here
     QStringList newComponentsList = getNewComponentList();
     QStringList newAdditionalsList = getNewAdditionalList();
-    QString sugar = getSugar();
+    SUGAR sugar = NORMAL;
     int quantity = ui->quantitySpinBox->value();
 
     this->modifiedOrderDetail = Model::OrderDetail(this->orderDetail.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
@@ -61,10 +61,6 @@ QStringList ItemPropertiesDialog::getNewAdditionalList() {
     }
 
     return additionalList;
-}
-
-QString ItemPropertiesDialog::getSugar() {
-    return "";
 }
 
 void ItemPropertiesDialog::on_buttonBox_rejected()

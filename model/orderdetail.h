@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include "constants.h"
 
 namespace Model {
     class OrderDetail
@@ -11,13 +12,13 @@ namespace Model {
         OrderDetail() {}
         OrderDetail(int aItemDetaildId);
         OrderDetail(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
-              QString aSugar, QString aOrderIndexId);
+            SUGAR aSugar, QString aOrderIndexId);
 
         int getItemDetialId() const { return this->itemDetailId; }
         int getQunatity()const { return this->quantity; }
         QStringList getComponentsIds() const { return this->componentsIds; }
         QStringList getAdditionalsIds() const { return this->additionalsIds; }
-        QString getSugar() const { return this->sugar; }
+        SUGAR getSugar() const { return this->sugar; }
         int getCash() const { return this->cash; }
         QString getSizeDescription() {return this->sizeDescription;}
         QString getArabicName() {return this->arabicName;}
@@ -33,7 +34,7 @@ namespace Model {
         int quantity;
         QStringList componentsIds;
         QStringList additionalsIds;
-        QString sugar;
+        SUGAR sugar;
         int cash;
         QString sizeDescription;
         int categoryId;
