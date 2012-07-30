@@ -234,6 +234,7 @@ void MainWindow::updateItemInCart(OrderDetail oldOrder, OrderDetail newOrder)
     }
 
     this->orderDetails.append(newOrder);
+    this->setCurrentPage(CategoryPage);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -248,6 +249,7 @@ void MainWindow::removeItemFromCart(OrderDetail oldOrder)
         }
     }
 
+    this->setCurrentPage(CategoryPage);
     emit orderDetailUpdated(this->orderDetails);
 }
 
