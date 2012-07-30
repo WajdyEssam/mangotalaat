@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "model/order.h"
+#include "model/orderdetail.h"
 
 class QDeclarativeView;
 class QVBoxLayout;
@@ -20,7 +20,7 @@ signals:
     void cancelClicked();
 
 public slots:
-    void updateOrders(QList<Model::Order>);
+    void updateOrders(QList<Model::OrderDetail>);
 
 private:
     void initOrderList();

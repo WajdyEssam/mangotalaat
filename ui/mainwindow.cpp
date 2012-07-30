@@ -6,7 +6,7 @@
 #include <vector>
 #include <QDebug>
 
-#include "model/order.h"
+#include "model/orderdetail.h"
 #include "database/databasemanager.h"
 
 #include "report/loginreport.h"
@@ -87,7 +87,7 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setWidget(this->orderWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
-    connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(this, SIGNAL(orderAdded(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrders(QList<Model::OrderDetail>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(this->orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(this->orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
@@ -158,8 +158,8 @@ void MainWindow::orderItemClicked(QString orderIndexId)
     updateItemDetialSlot(getOrderByIndexId(orderIndexId));
 }
 
-Model::Order MainWindow::getOrderByIndexId(QString indexId) {
-    foreach(Model::Order order, this->orders) {
+Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
+    foreach(Model::OrderDetail order, this->orders) {
         if ( order.getOrderIndexId() == indexId )
             return order;
     }
@@ -191,7 +191,7 @@ void MainWindow::establishConnections()
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
 
-    connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(this, SIGNAL(orderAdded(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrders(QList<Model::OrderDetail>)));
 }
 
 void MainWindow::selectCategorySlot(int categorId)
@@ -208,7 +208,7 @@ void MainWindow::selectItemSlot(int itemId)
 
 void MainWindow::selectItemDetialSlot(int itemDetialId)
 {
-    Model::Order order(itemDetialId);
+    Model::OrderDetail order(itemDetialId);
     this->propertyWidget->setOrder(order);
     this->setCurrentPage(PropertyPage);
 
@@ -225,20 +225,20 @@ void MainWindow::selectItemDetialSlot(int itemDetialId)
 //    }
 }
 
-void MainWindow::updateItemDetialSlot(Model::Order order) {
+void MainWindow::updateItemDetialSlot(Model::OrderDetail order) {
     ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, false, this);
     dialog->setModal(true);
     dialog->exec();
 
     if ( !dialog->isCancelled() ) {
-        Model::Order newOrder = dialog->getOrder();
+        Model::OrderDetail newOrder = dialog->getOrder();
         updateOrder(order, newOrder);
     }
 }
 
-void MainWindow::updateOrder(Model::Order oldOrder, Model::Order newOrder) {
+void MainWindow::updateOrder(Model::OrderDetail oldOrder, Model::OrderDetail newOrder) {
     for(int i=0; i<this->orders.size(); i++) {
-        Model::Order order = this->orders.at(i);
+        Model::OrderDetail order = this->orders.at(i);
 
         if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
             this->orders.removeAt(i);
@@ -259,7 +259,7 @@ void MainWindow::computeTotalCash()
 
     int cash = 0;
 
-    foreach(Model::Order order, this->orders) {
+    foreach(Model::OrderDetail order, this->orders) {
         cash += order.getCash();
     }
 

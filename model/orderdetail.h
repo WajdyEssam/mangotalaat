@@ -5,12 +5,12 @@
 #include <QStringList>
 
 namespace Model {
-    class Order
+    class OrderDetail
     {
     public:
-        Order() {}
-        Order(int aItemDetaildId);
-        Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
+        OrderDetail() {}
+        OrderDetail(int aItemDetaildId);
+        OrderDetail(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
               QString aSugar, QString aOrderIndexId);
 
         int getItemDetialId() const { return this->itemDetailId; }

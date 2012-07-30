@@ -6,7 +6,7 @@
 #include "model/component.h"
 #include "model/itemdetail.h"
 
-ItemPropertiesDialog::ItemPropertiesDialog(Model::Order aOrder, bool newOrder, QWidget *parent) :
+ItemPropertiesDialog::ItemPropertiesDialog(Model::OrderDetail aOrder, bool newOrder, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemPropertiesDialog),
     order(aOrder)
@@ -36,7 +36,7 @@ void ItemPropertiesDialog::on_buttonBox_accepted()
     QString sugar = getSugar();
     int quantity = ui->quantitySpinBox->value();
 
-    this->modifiedOrder = Model::Order(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
+    this->modifiedOrder = Model::OrderDetail(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
                                        sugar,this->order.getOrderIndexId() );
 
     this->isCancel = false;

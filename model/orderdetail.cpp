@@ -1,17 +1,17 @@
-#include "order.h"
+#include "orderdetail.h"
 #include "database/databasemanager.h"
 #include "model/itemdetail.h"
 
 namespace Model {
 
-    Order::Order(int aItemDetaildId) {
+    OrderDetail::OrderDetail(int aItemDetaildId) {
         this->itemDetailId = aItemDetaildId;
         this->quantity = 1;
         this->orderIndexId = getTimeStamp();
         this->fillOtherInformation();
     }
 
-    Order::Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
+    OrderDetail::OrderDetail(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
                  QString aSugar, QString aOrderIndexId) {
         this->itemDetailId = aItemDetailId;
         this->quantity = aQuantity;
@@ -22,7 +22,7 @@ namespace Model {
         this->fillOtherInformation();
     }
 
-    void Order::fillOtherInformation() {
+    void OrderDetail::fillOtherInformation() {
         Database::DatabaseManager database;
         Model::ItemDetail itemDetail = database.getItemDetailById(this->itemDetailId);
         Model::Item item = database.getItemById(itemDetail.getItemId());
@@ -38,7 +38,7 @@ namespace Model {
         this->arabicName = item.getArabicName();
     }
 
-    QString Order::getTimeStamp() {
+    QString OrderDetail::getTimeStamp() {
         return QString::number(QDateTime::currentMSecsSinceEpoch());
     }
 }

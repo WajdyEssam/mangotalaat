@@ -44,7 +44,7 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     this->initAdditionals();
 }
 
-void PropertyWidget::setOrder(Model::Order order)
+void PropertyWidget::setOrder(Model::OrderDetail order)
 {
 }
 

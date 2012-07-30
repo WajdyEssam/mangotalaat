@@ -71,11 +71,11 @@ void OrderWidget::initOrderCommand()
     layout->addLayout(lowerLayout);
 }
 
-void OrderWidget::updateOrders(QList<Model::Order> orders)
+void OrderWidget::updateOrders(QList<Model::OrderDetail> orders)
 {
     QList<QObject*> orderList;
 
-    foreach (Model::Order order, orders) {
+    foreach (Model::OrderDetail order, orders) {
         orderList.append(new OrderObject(order.getItemDetialId(), order.getOrderIndexId(),
             order.getArabicName(), order.getSizeDescription(), QString::number(order.getCash()), order.getCategoryId()));
     }

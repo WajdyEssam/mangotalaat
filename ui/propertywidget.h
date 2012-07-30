@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "model/order.h"
+#include "model/orderdetail.h"
 
 class QGroupBox;
 class QHBoxLayout;
@@ -21,7 +21,7 @@ public:
 signals:
 
 public slots:
-    void setOrder(Model::Order order);
+    void setOrder(Model::OrderDetail order);
     void setCurrentComponent(int);
     void setCurrentAdditional(int);
 

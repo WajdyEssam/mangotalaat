@@ -10,7 +10,7 @@
 #include "model/component.h"
 #include "model/itemdetail.h"
 #include "model/additionals.h"
-#include "model/order.h"
+#include "model/orderdetail.h"
 
 #include "report/loginreport.h"
 #include "report/orderreport.h"
@@ -35,14 +35,14 @@ namespace Database
 
         Item getItemById(int itemId);
         ItemDetail getItemDetailById(int itemDetialId);
-        Order getOrderDetailByOrderId(int orderId);
+        QList<OrderDetail> getOrderDetailByOrderId(int orderId);
         Component getComponentById(int componentId);
         Additionals getAdditionalsById(int additionalsId);
 
         enum LAGNUAGE { ARABIC, ENGLISH };
         QString getItemSizeDescription(int sizeId, LAGNUAGE language);
 
-        bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::Order> orders);
+        bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::OrderDetail> orders);
         bool cancelOrder(int orderId);
 
         bool closeTodayOrders(QDateTime time);

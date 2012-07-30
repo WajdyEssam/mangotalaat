@@ -203,7 +203,7 @@ namespace Database
     }
 
     bool DatabaseManager::addOrder(QDateTime currentTime, int orderTypeId, int cash,
-                                   int discount, int totalCash, QList<Model::Order> orders) {
+                                   int discount, int totalCash, QList<Model::OrderDetail> orders) {
 
         QSqlQuery query;
 
@@ -219,7 +219,7 @@ namespace Database
         if ( ret ) {
             int orderId = query.lastInsertId().toInt();
 
-            foreach(Model::Order order, orders) {
+            foreach(Model::OrderDetail order, orders) {
 
                 QSqlQuery tmpQuery;
 
@@ -371,8 +371,10 @@ namespace Database
         return times;
     }
 
-    Order DatabaseManager::getOrderDetailByOrderId(int aOrderId)
+    QList<OrderDetail> DatabaseManager::getOrderDetailByOrderId(int aOrderId)
     {
+        QList<OrderDetail> orders;
+
         QSqlQuery query(QString("SELECT * FROM order_details WHERE order_id = ?"));
         query.addBindValue(aOrderId);
 
@@ -386,8 +388,10 @@ namespace Database
             QString sugar = query.value(6).toString();
             int cash = query.value(7).toInt();
 
-            Order order(itemDetailId, quantity, componentList, additionalList, sugar, 0);
-            return order;
+            OrderDetail order(itemDetailId, quantity, componentList, additionalList, sugar, 0);
+            orders.append(order);
         }
+
+        return orders;
     }
 }
