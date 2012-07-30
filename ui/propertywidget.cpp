@@ -2,7 +2,6 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QToolButton>
 #include <QPushButton>
 #include <QSignalMapper>
 #include <QIcon>
@@ -10,6 +9,7 @@
 
 #include "propertywidget.h"
 #include "database/databasemanager.h"
+#include "ui/toolbutton.h"
 
 PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent)
@@ -44,19 +44,44 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     this->initAdditionals();
 }
 
-void PropertyWidget::setOrder(Model::Order order)
+void PropertyWidget::setOrder(Model::Order order, bool isOpenedInEditMode)
 {
+    this->uncheckComponentsButtons();
+    this->uncheckAdditionalsButtons();
+
+    if (isOpenedInEditMode)
+        showEditButton();
+    else
+        showAddButton();
+
+    m_order = order;
+
+    this->recheckComponentsButtons();
+    this->recheckAdditionalsButtons();
 }
 
 void PropertyWidget::initOrder()
 {
     QHBoxLayout* layout = new QHBoxLayout;
 
-    QPushButton* addToCartButton = new QPushButton;
-    addToCartButton->setFixedSize(177,50);
-    addToCartButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    addButton = new QPushButton;
+    addButton->setFixedSize(161,56);
+    addButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    connect(addButton, SIGNAL(clicked()), this, SLOT(addItemClicked()));
 
-    layout->addWidget(addToCartButton);
+    updateButton = new QPushButton;
+    updateButton->setFixedSize(161,56);
+    updateButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/update_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    connect(updateButton, SIGNAL(clicked()), this, SLOT(updateItemClicked()));
+
+    removeButton = new QPushButton;
+    removeButton->setFixedSize(161,56);
+    removeButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/remove_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    connect(removeButton, SIGNAL(clicked()), this, SLOT(removeItemClicked()));
+
+    layout->addWidget(addButton);
+    layout->addWidget(updateButton);
+    layout->addWidget(removeButton);
     layout->addStretch();
 
     orderGridLayout->addLayout(layout,0,0);
@@ -73,11 +98,10 @@ void PropertyWidget::initComponents()
     for(std::vector<Component>::iterator p= components.begin();
             p != components.end(); ++p) {
 
-        QToolButton* button = new QToolButton;
+        ToolButton* button = new ToolButton;
         button->setObjectName(QString("%1_ComponentButton").arg(p->getId()));
         button->setText(p->getArabicName());
-        button->setCheckable(true);
-        button->setChecked(false);
+        button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(p->getId())));
         button->setIconSize(QSize(64,64));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -109,11 +133,10 @@ void PropertyWidget::initAdditionals()
     for(std::vector<Additionals>::iterator p= additionals.begin();
             p != additionals.end(); ++p) {
 
-        QToolButton* button = new QToolButton;
+        ToolButton* button = new ToolButton;
         button->setObjectName(QString("%1_AdditionalsButton").arg(p->getId()));
         button->setText(p->getArabicName());
-        button->setCheckable(true);
-        button->setChecked(false);
+        button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(p->getId())));
         button->setIconSize(QSize(64,64));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -134,16 +157,17 @@ void PropertyWidget::initAdditionals()
     }
 }
 
+
 void PropertyWidget::setCurrentComponent(int id)
 {
     QString buttonName = QString::number(id) + "_ComponentButton";
-    QToolButton* button = this->findChild<QToolButton*>(buttonName);
+    ToolButton* button = this->findChild<ToolButton*>(buttonName);
 
-    if ( !button->isChecked()) {
-        button->setChecked(false);
+    if (button->activeState() == ToolButton::Active) {
+        button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(id)));
-    } else if ( button->isChecked() ) {
-        button->setChecked(true);
+    } else {
+        button->setActiveState(ToolButton::Active);
         button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
     }
 }
@@ -151,13 +175,163 @@ void PropertyWidget::setCurrentComponent(int id)
 void PropertyWidget::setCurrentAdditional(int id)
 {
     QString buttonName = QString::number(id) + "_AdditionalsButton";
-    QToolButton* button = this->findChild<QToolButton*>(buttonName);
+    ToolButton* button = this->findChild<ToolButton*>(buttonName);
 
-    if ( !button->isChecked()) {
-        button->setChecked(false);
+    if (button->activeState() == ToolButton::Active) {
+        button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(id)));
-    } else if ( button->isChecked() ) {
-        button->setChecked(true);
+    } else {
+        button->setActiveState(ToolButton::Active);
         button->setIcon(QIcon(QString(":/images/additionals/additional_active_%1.png").arg(id)));
     }
+}
+
+void PropertyWidget::addItemClicked()
+{
+    int itemDetailId = this->m_order.getItemDetialId();
+    QStringList components = readActiveComponents();
+    QStringList additionals = readActiveAdditionals();
+    QString sugar = readSugar();
+    int quantity = readQunatity();
+    QString orderIndexId = this->m_order.getOrderIndexId();
+
+    Model::Order order(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
+
+    emit addItem(order);
+}
+
+void PropertyWidget::updateItemClicked()
+{
+    int itemDetailId = this->m_order.getItemDetialId();
+    QStringList components = readActiveComponents();
+    QStringList additionals = readActiveAdditionals();
+    QString sugar = readSugar();
+    int quantity = readQunatity();
+    QString orderIndexId = this->m_order.getOrderIndexId();
+
+    Model::Order order(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
+
+    emit updateItem(this->m_order, order);
+}
+
+void PropertyWidget::removeItemClicked()
+{
+}
+
+void PropertyWidget::uncheckComponentsButtons()
+{
+    QList<ToolButton*> buttons = this->componentsGroupBox->findChildren<ToolButton*>();
+
+    foreach (ToolButton* button, buttons) {
+
+        int id = button->objectName().split("_").first().toInt();
+
+        if ( button->activeState() == ToolButton::Active) {
+            button->setActiveState(ToolButton::NotActive);
+            button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(id)));
+        }
+    }
+}
+
+void PropertyWidget::uncheckAdditionalsButtons()
+{
+    QList<ToolButton*> buttons = this->additionalsGroupBox->findChildren<ToolButton*>();
+
+    foreach (ToolButton* button, buttons) {
+
+        int id = button->objectName().split("_").first().toInt();
+
+        if ( button->activeState() == ToolButton::Active) {
+            button->setActiveState(ToolButton::NotActive);
+            button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(id)));
+        }
+    }
+}
+
+void PropertyWidget::recheckComponentsButtons()
+{
+    Database::DatabaseManager databaseManager;
+    QStringList componentsList = this->m_order.getComponentsIds();
+
+    foreach(QString componentId, componentsList) {
+        Component component = databaseManager.getComponentById(componentId.toInt());
+        int id = component.getId();
+        QString buttonName = QString::number(id) + "_ComponentButton";
+        ToolButton* button = this->findChild<ToolButton*>(buttonName);
+        button->setActiveState(ToolButton::Active);
+        button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
+    }
+}
+
+void PropertyWidget::recheckAdditionalsButtons()
+{
+    Database::DatabaseManager databaseManager;
+    QStringList additionalsList = this->m_order.getAdditionalsIds();
+
+    foreach(QString additionalId, additionalsList) {
+        Additionals additional = databaseManager.getAdditionalsById(additionalId.toInt());
+        int id = additional.getId();
+        QString buttonName = QString::number(id) + "_ComponentButton";
+        ToolButton* button = this->findChild<ToolButton*>(buttonName);
+        button->setActiveState(ToolButton::Active);
+        button->setIcon(QIcon(QString(":/images/additionals/additional_active_%1.png").arg(id)));
+    }
+}
+
+void PropertyWidget::showEditButton()
+{
+    addButton->setVisible(false);
+    updateButton->setVisible(true);
+    removeButton->setVisible(true);
+}
+
+void PropertyWidget::showAddButton()
+{
+    addButton->setVisible(true);
+    updateButton->setVisible(false);
+    removeButton->setVisible(false);
+}
+
+QStringList PropertyWidget::readActiveComponents()
+{
+    QList<ToolButton*> buttons = this->componentsGroupBox->findChildren<ToolButton*>();
+    QStringList components;
+
+    foreach (ToolButton* button, buttons) {
+
+        int id = button->objectName().split("_").first().toInt();
+
+        if ( button->activeState() == ToolButton::Active) {
+            components.append(QString::number(id));
+        }
+    }
+
+    return components;
+}
+
+QStringList PropertyWidget::readActiveAdditionals()
+{
+    QList<ToolButton*> buttons = this->additionalsGroupBox->findChildren<ToolButton*>();
+    QStringList additionals;
+
+    foreach (ToolButton* button, buttons) {
+
+        int id = button->objectName().split("_").first().toInt();
+
+        if ( button->activeState() == ToolButton::Active) {
+            additionals.append(QString::number(id));
+        }
+    }
+
+    return additionals;
+}
+
+QString PropertyWidget::readSugar()
+{
+    return QString();
+}
+
+int PropertyWidget::readQunatity()
+{
+    return 1;
 }

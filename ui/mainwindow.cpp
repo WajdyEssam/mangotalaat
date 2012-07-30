@@ -87,7 +87,7 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setWidget(this->orderWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
-    connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(this, SIGNAL(orderUpdated(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(this->orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(this->orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
@@ -148,7 +148,9 @@ void MainWindow::cancelOrderClickedSlot()
 
 void MainWindow::orderItemClicked(QString orderIndexId)
 {
-    updateItemDetialSlot(getOrderByIndexId(orderIndexId));
+    Model::Order order = getOrderByIndexId(orderIndexId);
+    this->propertyWidget->setOrder(order, true);
+    this->setCurrentPage(PropertyPage);
 }
 
 Model::Order MainWindow::getOrderByIndexId(QString indexId) {
@@ -183,8 +185,11 @@ void MainWindow::establishConnections()
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
+    connect(this->propertyWidget, SIGNAL(addItem(Model::Order)), this, SLOT(addItemToCart(Model::Order)));
+    connect(this->propertyWidget, SIGNAL(updateItem(Model::Order,Model::Order)), this, SLOT(updateItemInCart(Model::Order,Model::Order)));
+    connect(this->propertyWidget, SIGNAL(removeItem(Model::Order)), this, SLOT(removeItemFromCart(Model::Order)));
 
-    connect(this, SIGNAL(orderAdded(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(this, SIGNAL(orderUpdated(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
 }
 
 void MainWindow::selectCategorySlot(int categorId)
@@ -202,7 +207,7 @@ void MainWindow::selectItemSlot(int itemId)
 void MainWindow::selectItemDetialSlot(int itemDetialId)
 {
     Model::Order order(itemDetialId);
-    this->propertyWidget->setOrder(order);
+    this->propertyWidget->setOrder(order, false);
     this->setCurrentPage(PropertyPage);
 
 //    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, true, this);
@@ -225,11 +230,19 @@ void MainWindow::updateItemDetialSlot(Model::Order order) {
 
     if ( !dialog->isCancelled() ) {
         Model::Order newOrder = dialog->getOrder();
-        updateOrder(order, newOrder);
+        //updateOrder(order, newOrder);
     }
 }
 
-void MainWindow::updateOrder(Model::Order oldOrder, Model::Order newOrder) {
+void MainWindow::addItemToCart(Model::Order order)
+{
+    this->orders.append(order);
+    this->setCurrentPage(CategoryPage);
+    emit orderUpdated(this->orders);
+}
+
+void MainWindow::updateItemInCart(Order oldOrder, Order newOrder)
+{
     for(int i=0; i<this->orders.size(); i++) {
         Model::Order order = this->orders.at(i);
 
@@ -240,8 +253,23 @@ void MainWindow::updateOrder(Model::Order oldOrder, Model::Order newOrder) {
     }
 
     this->orders.append(newOrder);
-    emit orderAdded(this->orders);
+    emit orderUpdated(this->orders);
 }
+
+void MainWindow::removeItemFromCart(Order oldOrder)
+{
+    for(int i=0; i<this->orders.size(); i++) {
+        Model::Order order = this->orders.at(i);
+
+        if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
+            this->orders.removeAt(i);
+            break;
+        }
+    }
+
+    emit orderUpdated(this->orders);
+}
+
 
 void MainWindow::computeTotalCash()
 {
@@ -272,7 +300,7 @@ void MainWindow::computeTotalCash()
 void MainWindow::clearShoppingCart()
 {
     this->orders.clear();
-    emit orderAdded(this->orders);
+    emit orderUpdated(this->orders);
 }
 
 void MainWindow::computeFree()

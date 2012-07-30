@@ -123,5 +123,8 @@
         <file>images/buttons/add_cart.png</file>
         <file>images/backgrounds/bg2.png</file>
         <file>images/backgrounds/bg1.png</file>
+        <file>images/buttons/update_cart_button.png</file>
+        <file>images/buttons/remove_cart_button.png</file>
+        <file>images/buttons/add_cart_button.png</file>
     </qresource>
 </RCC>

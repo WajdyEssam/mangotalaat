@@ -31,7 +31,7 @@ public:
     ~MainWindow();
 
 signals:
-    void orderAdded(QList<Model::Order> orders);
+    void orderUpdated(QList<Model::Order> orders);
 
 private slots:
     void ShowHomePage();
@@ -45,6 +45,9 @@ private slots:
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
     void updateItemDetialSlot(Model::Order order);
+    void addItemToCart(Model::Order);
+    void updateItemInCart(Model::Order, Model::Order);
+    void removeItemFromCart(Model::Order);
 
 private:
     QSignalMapper *signalMapper;
@@ -75,7 +78,7 @@ private:
     void setCurrentPage(WidgetPage page);
     void addLoginEvent();
     void AddLogoutEvent();
-    void updateOrder(Model::Order oldOrder, Model::Order newOrder);
+    //void updateOrder(Model::Order oldOrder, Model::Order newOrder);
     void computeTotalCash();
     void computeFree();
     void computeCupon();

@@ -11,6 +11,7 @@ class QSignalMapper;
 class QGridLayout;
 class QToolButton;
 class QVBoxLayout;
+class QPushButton;
 
 class PropertyWidget : public QWidget
 {
@@ -19,11 +20,17 @@ public:
     explicit PropertyWidget(QWidget *parent = 0);
     
 signals:
+    void addItem(Model::Order);
+    void updateItem(Model::Order, Model::Order);
+    void removeItem(Model::Order);
 
 public slots:
-    void setOrder(Model::Order order);
+    void setOrder(Model::Order order, bool isOpenedInEditMode);
     void setCurrentComponent(int);
     void setCurrentAdditional(int);
+    void addItemClicked();
+    void updateItemClicked();
+    void removeItemClicked();
 
 private:
     enum {
@@ -41,9 +48,29 @@ private:
     QGridLayout *componentsGridLayout;
     QGridLayout *additionalsGridLayout;
 
+    QPushButton* addButton;
+    QPushButton* updateButton;
+    QPushButton* removeButton;
+
+    Model::Order m_order;
+
     void initOrder();
     void initComponents();
     void initAdditionals();
+
+    void uncheckComponentsButtons();
+    void uncheckAdditionalsButtons();
+
+    void recheckComponentsButtons();
+    void recheckAdditionalsButtons();
+
+    void showEditButton();
+    void showAddButton();
+
+    QStringList readActiveComponents();
+    QStringList readActiveAdditionals();
+    QString readSugar();
+    int readQunatity();
 };
 
 #endif // PROPERTYWIDGET_H
