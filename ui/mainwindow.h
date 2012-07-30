@@ -31,7 +31,7 @@ public:
     ~MainWindow();
 
 signals:
-    void orderAdded(QList<Model::OrderDetail> orderDetails);
+    void orderDetailAdded(QList<Model::OrderDetail> orderDetails);
 
 private slots:
     void ShowHomePage();

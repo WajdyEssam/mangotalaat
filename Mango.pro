@@ -25,12 +25,11 @@ SOURCES += main.cpp\
     model/additionals.cpp \
     ui/SlidingStackedWidget.cpp \
     model/orderobject.cpp \
-    report/cancelreport.cpp \
-    report/user.cpp \
     ui/propertywidget.cpp \
     model/orderdetail.cpp \
-    report/login.cpp \
-    report/order.cpp
+    model/order.cpp \
+    model/login.cpp \
+    model/user.cpp
 
 HEADERS  += model/category.h \
     model/component.h \
@@ -48,12 +47,11 @@ HEADERS  += model/category.h \
     model/additionals.h \
     ui/SlidingStackedWidget.h \
     model/orderobject.h \
-    report/cancelreport.h \
-    report/user.h \
     ui/propertywidget.h \
     model/orderdetail.h \
-    report/login.h \
-    report/order.h
+    model/login.h \
+    model/order.h \
+    model/user.h
 
 FORMS += \
     ui/itempropertiesdialog.ui

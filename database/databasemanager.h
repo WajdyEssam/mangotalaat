@@ -11,9 +11,12 @@
 #include "model/itemdetail.h"
 #include "model/additionals.h"
 #include "model/orderdetail.h"
-
-#include "report/login.h"
-#include "report/order.h"
+#include "model/user.h"
+#include "model/login.h"
+#include "model/order.h"
+#include "model/user.h"
+#include "model/login.h"
+#include "model/order.h"
 
 using namespace Model;
 

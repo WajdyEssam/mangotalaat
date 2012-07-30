@@ -8,8 +8,7 @@
 
 #include "model/orderdetail.h"
 #include "database/databasemanager.h"
-
-#include "report/login.h"
+#include "model/login.h"
 
 MainWindow::MainWindow(int aUserId, QWidget *parent) :
     QMainWindow(parent)
@@ -87,7 +86,6 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setWidget(this->orderWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
-    connect(this, SIGNAL(orderAdded(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrders(QList<Model::OrderDetail>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(this->orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(this->orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
@@ -191,7 +189,7 @@ void MainWindow::establishConnections()
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
 
-    connect(this, SIGNAL(orderAdded(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrders(QList<Model::OrderDetail>)));
+    connect(this, SIGNAL(orderDetailAdded(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrderDetails(QList<Model::OrderDetail>)));
 }
 
 void MainWindow::selectCategorySlot(int categorId)
@@ -247,7 +245,7 @@ void MainWindow::updateOrder(Model::OrderDetail oldOrder, Model::OrderDetail new
     }
 
     this->orderDetails.append(newOrder);
-    emit orderAdded(this->orderDetails);
+    emit orderDetailAdded(this->orderDetails);
 }
 
 void MainWindow::computeTotalCash()
@@ -279,7 +277,7 @@ void MainWindow::computeTotalCash()
 void MainWindow::clearShoppingCart()
 {
     this->orderDetails.clear();
-    emit orderAdded(this->orderDetails);
+    emit orderDetailAdded(this->orderDetails);
 }
 
 void MainWindow::computeFree()
