@@ -313,8 +313,8 @@ namespace Database
         return user;
     }
 
-    QList<LoginReport> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
-        QList<LoginReport> logins;
+    QList<Login> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
+        QList<Login> logins;
 
         QSqlQuery query(QString("SELECT * FROM events_logging"));
 
@@ -324,7 +324,7 @@ namespace Database
             QDateTime eventTime = query.value(2).toDateTime();
             int eventType = query.value(3).toInt();
 
-            LoginReport login(id, user, eventTime, eventType);
+            Login login(id, user, eventTime, eventType);
 
             if ( eventTime >= from && eventTime <= to)
                 logins.append(login);
@@ -333,9 +333,9 @@ namespace Database
         return logins;
     }
 
-    QList<OrderReport> DatabaseManager::getOrderReport(QDateTime from, QDateTime to)
+    QList<Order> DatabaseManager::getOrderReport(QDateTime from, QDateTime to)
     {
-        QList<OrderReport> orders;
+        QList<Order> orders;
 
         QSqlQuery query(QString("SELECT * FROM orders WHERE is_cancelled = 1"));
 
@@ -348,7 +348,7 @@ namespace Database
             int totalCash = query.value(5).toInt();
             int isCancelled = query.value(6).toInt();
 
-            OrderReport order(id, orderDate, orderType, cash, discount, totalCash, isCancelled);
+            Order order(id, orderDate, orderType, cash, discount, totalCash, isCancelled);
 
             if ( orderDate >= from && orderDate <= to)
                 orders.append(order);

@@ -4,10 +4,10 @@
 #include <QDateTime>
 #include <QString>
 
-class OrderReport
+class Order
 {
 public:
-    OrderReport(int id, QDateTime orderDate, int orderType, int cash, int discount, int totalCash, int isCancelled);
+    Order(int id, QDateTime orderDate, int orderType, int cash, int discount, int totalCash, int isCancelled);
 
     int getId() const { return this->m_id ;}
     QDateTime getOrderDate() const { return this->m_orderDate; }

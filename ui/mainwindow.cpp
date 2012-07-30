@@ -9,7 +9,7 @@
 #include "model/orderdetail.h"
 #include "database/databasemanager.h"
 
-#include "report/loginreport.h"
+#include "report/login.h"
 
 MainWindow::MainWindow(int aUserId, QWidget *parent) :
     QMainWindow(parent)
@@ -115,15 +115,15 @@ void MainWindow::reportClickedSlot()
     Database::DatabaseManager database;
     QList<QDateTime> times = database.getCheckoutTimes();
 
-    QList<LoginReport> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
+    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
 
-    foreach(LoginReport login, logins) {
+    foreach(Login login, logins) {
         qDebug() << login.getId() << " , " << login.getUser().getUsername() << " , " << login.getEventTime() <<  " , "
                  << login.getEventType();
     }
 
-    QList<OrderReport> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
-    foreach(OrderReport order, orderReports) {
+    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
+    foreach(Order order, orderReports) {
         qDebug() << order.getId() << " , " << order.getCash() << " , " << order.getOrderDate() ;
     }
 

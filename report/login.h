@@ -3,10 +3,10 @@
 
 #include "user.h"
 
-class LoginReport
+class Login
 {
 public:
-    LoginReport(int id, User user, QDateTime eventTime, int eventType);
+    Login(int id, User user, QDateTime eventTime, int eventType);
 
     int getId() const { return this->m_id; }
     User getUser() const { return this->m_user; }

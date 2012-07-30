@@ -12,8 +12,8 @@
 #include "model/additionals.h"
 #include "model/orderdetail.h"
 
-#include "report/loginreport.h"
-#include "report/orderreport.h"
+#include "report/login.h"
+#include "report/order.h"
 
 using namespace Model;
 
@@ -49,8 +49,8 @@ namespace Database
         bool addLoginEventLogging(int userId, QDateTime time, int eventType); // 1 login, 2 logout
 
         User getUserById(int id);
-        QList<LoginReport> getLoginReport(QDateTime from, QDateTime to);
-        QList<OrderReport> getOrderReport(QDateTime from, QDateTime to);
+        QList<Login> getLoginReport(QDateTime from, QDateTime to);
+        QList<Order> getOrderReport(QDateTime from, QDateTime to);
         QList<QDateTime> getCheckoutTimes();
 
     private:
