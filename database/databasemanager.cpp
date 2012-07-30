@@ -356,4 +356,38 @@ namespace Database
 
         return orders;
     }
+
+    QList<QDateTime> DatabaseManager::getCheckoutTimes()
+    {
+        QList<QDateTime> times;
+
+        QSqlQuery query(QString("SELECT * from system_checkout"));
+        while(query.next()) {
+            QDateTime time = query.value(1).toDateTime();
+
+            times.append(time);
+        }
+
+        return times;
+    }
+
+    Order DatabaseManager::getOrderDetailByOrderId(int aOrderId)
+    {
+        QSqlQuery query(QString("SELECT * FROM order_details WHERE order_id = ?"));
+        query.addBindValue(aOrderId);
+
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            int orderId = query.value(1).toInt();
+            int itemDetailId = query.value(2).toInt();
+            int quantity = query.value(3).toInt();
+            QStringList componentList = fromTextToList(query.value(4).toString());
+            QStringList additionalList = fromTextToList(query.value(5).toString());
+            QString sugar = query.value(6).toString();
+            int cash = query.value(7).toInt();
+
+            Order order(itemDetailId, quantity, componentList, additionalList, sugar, 0);
+            return order;
+        }
+    }
 }

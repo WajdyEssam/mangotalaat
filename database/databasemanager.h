@@ -35,6 +35,7 @@ namespace Database
 
         Item getItemById(int itemId);
         ItemDetail getItemDetailById(int itemDetialId);
+        Order getOrderDetailByOrderId(int orderId);
         Component getComponentById(int componentId);
         Additionals getAdditionalsById(int additionalsId);
 
@@ -50,6 +51,7 @@ namespace Database
         User getUserById(int id);
         QList<LoginReport> getLoginReport(QDateTime from, QDateTime to);
         QList<OrderReport> getOrderReport(QDateTime from, QDateTime to);
+        QList<QDateTime> getCheckoutTimes();
 
     private:
         QString fromListToText(QStringList ids);

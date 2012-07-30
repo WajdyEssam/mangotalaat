@@ -113,14 +113,16 @@ void MainWindow::reportClickedSlot()
     // show reports
     // event logging table, order table, cancel table, summary table
     Database::DatabaseManager database;
-    QList<LoginReport> logins = database.getLoginReport(QDateTime::currentDateTime().addSecs(-10000), QDateTime::currentDateTime());
+    QList<QDateTime> times = database.getCheckoutTimes();
+
+    QList<LoginReport> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
 
     foreach(LoginReport login, logins) {
         qDebug() << login.getId() << " , " << login.getUser().getUsername() << " , " << login.getEventTime() <<  " , "
                  << login.getEventType();
     }
 
-    QList<OrderReport> orderReports = database.getOrderReport(QDateTime::currentDateTime().addSecs(-10000), QDateTime::currentDateTime());
+    QList<OrderReport> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
     foreach(OrderReport order, orderReports) {
         qDebug() << order.getId() << " , " << order.getCash() << " , " << order.getOrderDate() ;
     }
