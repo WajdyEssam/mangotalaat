@@ -316,9 +316,7 @@ namespace Database
     QList<LoginReport> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
         QList<LoginReport> logins;
 
-        QSqlQuery query(QString("SELECT * FROM events_logging WHERE event_time BETWEEN (?) AND (?)"));
-        query.addBindValue(from);
-        query.addBindValue(to);
+        QSqlQuery query(QString("SELECT * FROM events_logging"));
 
         while(query.next()){
             int id = query.value(0).toInt();
@@ -327,9 +325,35 @@ namespace Database
             int eventType = query.value(3).toInt();
 
             LoginReport login(id, user, eventTime, eventType);
-            logins.append(login);
+
+            if ( eventTime >= from && eventTime <= to)
+                logins.append(login);
         }
 
         return logins;
+    }
+
+    QList<OrderReport> DatabaseManager::getOrderReport(QDateTime from, QDateTime to)
+    {
+        QList<OrderReport> orders;
+
+        QSqlQuery query(QString("SELECT * FROM orders WHERE is_cancelled = 1"));
+
+        while(query.next()){
+            int id = query.value(0).toInt();
+            QDateTime orderDate = query.value(1).toDateTime();
+            int orderType = query.value(2).toInt();
+            int cash = query.value(3).toInt();
+            int discount = query.value(4).toInt();
+            int totalCash = query.value(5).toInt();
+            int isCancelled = query.value(6).toInt();
+
+            OrderReport order(id, orderDate, orderType, cash, discount, totalCash, isCancelled);
+
+            if ( orderDate >= from && orderDate <= to)
+                orders.append(order);
+        }
+
+        return orders;
     }
 }

@@ -13,6 +13,7 @@
 #include "model/order.h"
 
 #include "report/loginreport.h"
+#include "report/orderreport.h"
 
 using namespace Model;
 
@@ -48,6 +49,7 @@ namespace Database
 
         User getUserById(int id);
         QList<LoginReport> getLoginReport(QDateTime from, QDateTime to);
+        QList<OrderReport> getOrderReport(QDateTime from, QDateTime to);
 
     private:
         QString fromListToText(QStringList ids);
