@@ -10,6 +10,7 @@
 #include "propertywidget.h"
 #include "database/databasemanager.h"
 #include "ui/toolbutton.h"
+#include "model/constants.h"
 
 PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent)
@@ -44,7 +45,7 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     this->initAdditionals();
 }
 
-void PropertyWidget::setOrder(Model::Order order, bool isOpenedInEditMode)
+void PropertyWidget::setOrder(Model::OrderDetail orderDetail, bool isOpenedInEditMode)
 {
     this->uncheckComponentsButtons();
     this->uncheckAdditionalsButtons();
@@ -54,7 +55,7 @@ void PropertyWidget::setOrder(Model::Order order, bool isOpenedInEditMode)
     else
         showAddButton();
 
-    m_order = order;
+    m_orderDetail = orderDetail;
 
     this->recheckComponentsButtons();
     this->recheckAdditionalsButtons();
@@ -188,34 +189,35 @@ void PropertyWidget::setCurrentAdditional(int id)
 
 void PropertyWidget::addItemClicked()
 {
-    int itemDetailId = this->m_order.getItemDetialId();
+    int itemDetailId = this->m_orderDetail.getItemDetialId();
     QStringList components = readActiveComponents();
     QStringList additionals = readActiveAdditionals();
-    QString sugar = readSugar();
+    SUGAR sugar = readSugar();
     int quantity = readQunatity();
-    QString orderIndexId = this->m_order.getOrderIndexId();
+    QString orderIndexId = this->m_orderDetail.getOrderIndexId();
 
-    Model::Order order(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
+    Model::OrderDetail orderDetail(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
 
-    emit addItem(order);
+    emit addItem(orderDetail);
 }
 
 void PropertyWidget::updateItemClicked()
 {
-    int itemDetailId = this->m_order.getItemDetialId();
+    int itemDetailId = this->m_orderDetail.getItemDetialId();
     QStringList components = readActiveComponents();
     QStringList additionals = readActiveAdditionals();
-    QString sugar = readSugar();
+    SUGAR sugar = readSugar();
     int quantity = readQunatity();
-    QString orderIndexId = this->m_order.getOrderIndexId();
+    QString orderIndexId = this->m_orderDetail.getOrderIndexId();
 
-    Model::Order order(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
+    Model::OrderDetail orderDetail(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
 
-    emit updateItem(this->m_order, order);
+    emit updateItem(this->m_orderDetail, orderDetail);
 }
 
 void PropertyWidget::removeItemClicked()
 {
+    emit removeItem(this->m_orderDetail);
 }
 
 void PropertyWidget::uncheckComponentsButtons()
@@ -251,7 +253,7 @@ void PropertyWidget::uncheckAdditionalsButtons()
 void PropertyWidget::recheckComponentsButtons()
 {
     Database::DatabaseManager databaseManager;
-    QStringList componentsList = this->m_order.getComponentsIds();
+    QStringList componentsList = this->m_orderDetail.getComponentsIds();
 
     foreach(QString componentId, componentsList) {
         Component component = databaseManager.getComponentById(componentId.toInt());
@@ -266,7 +268,7 @@ void PropertyWidget::recheckComponentsButtons()
 void PropertyWidget::recheckAdditionalsButtons()
 {
     Database::DatabaseManager databaseManager;
-    QStringList additionalsList = this->m_order.getAdditionalsIds();
+    QStringList additionalsList = this->m_orderDetail.getAdditionalsIds();
 
     foreach(QString additionalId, additionalsList) {
         Additionals additional = databaseManager.getAdditionalsById(additionalId.toInt());
@@ -326,9 +328,9 @@ QStringList PropertyWidget::readActiveAdditionals()
     return additionals;
 }
 
-QString PropertyWidget::readSugar()
+SUGAR PropertyWidget::readSugar()
 {
-    return QString();
+    return NORMAL;
 }
 
 int PropertyWidget::readQunatity()

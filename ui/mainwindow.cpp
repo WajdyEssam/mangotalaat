@@ -6,10 +6,9 @@
 #include <vector>
 #include <QDebug>
 
-#include "model/order.h"
+#include "model/orderdetail.h"
 #include "database/databasemanager.h"
-
-#include "report/loginreport.h"
+#include "model/login.h"
 
 MainWindow::MainWindow(int aUserId, QWidget *parent) :
     QMainWindow(parent)
@@ -87,7 +86,7 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setWidget(this->orderWidget);
     this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
-    connect(this, SIGNAL(orderUpdated(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(this, SIGNAL(orderDetailUpdated(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrderDetails(QList<Model::OrderDetail>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(this->orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(this->orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
@@ -113,11 +112,18 @@ void MainWindow::reportClickedSlot()
     // show reports
     // event logging table, order table, cancel table, summary table
     Database::DatabaseManager database;
-    QList<LoginReport> logins = database.getLoginReport(QDateTime::currentDateTime().addDays(-1), QDateTime::currentDateTime());
+    QList<QDateTime> times = database.getCheckoutTimes();
 
-    foreach(LoginReport login, logins) {
+    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
+
+    foreach(Login login, logins) {
         qDebug() << login.getId() << " , " << login.getUser().getUsername() << " , " << login.getEventTime() <<  " , "
                  << login.getEventType();
+    }
+
+    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
+    foreach(Order order, orderReports) {
+        qDebug() << order.getId() << " , " << order.getCash() << " , " << order.getOrderDate() ;
     }
 
     // from points to points
@@ -148,18 +154,18 @@ void MainWindow::cancelOrderClickedSlot()
 
 void MainWindow::orderItemClicked(QString orderIndexId)
 {
-    Model::Order order = getOrderByIndexId(orderIndexId);
-    this->propertyWidget->setOrder(order, true);
+    Model::OrderDetail orderDetail = getOrderByIndexId(orderIndexId);
+    this->propertyWidget->setOrder(orderDetail, true);
     this->setCurrentPage(PropertyPage);
 }
 
-Model::Order MainWindow::getOrderByIndexId(QString indexId) {
-    foreach(Model::Order order, this->orders) {
+Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
+    foreach(Model::OrderDetail order, this->orderDetails) {
         if ( order.getOrderIndexId() == indexId )
             return order;
     }
 
-    return this->orders.at(0);
+    return this->orderDetails.at(0);
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
@@ -185,11 +191,9 @@ void MainWindow::establishConnections()
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
-    connect(this->propertyWidget, SIGNAL(addItem(Model::Order)), this, SLOT(addItemToCart(Model::Order)));
-    connect(this->propertyWidget, SIGNAL(updateItem(Model::Order,Model::Order)), this, SLOT(updateItemInCart(Model::Order,Model::Order)));
-    connect(this->propertyWidget, SIGNAL(removeItem(Model::Order)), this, SLOT(removeItemFromCart(Model::Order)));
-
-    connect(this, SIGNAL(orderUpdated(QList<Model::Order>)), orderWidget, SLOT(updateOrders(QList<Model::Order>)));
+    connect(this->propertyWidget, SIGNAL(addItem(Model::OrderDetail)), this, SLOT(addItemToCart(Model::OrderDetail)));
+    connect(this->propertyWidget, SIGNAL(updateItem(Model::OrderDetail,Model::OrderDetail)), this, SLOT(updateItemInCart(Model::OrderDetail,Model::OrderDetail)));
+    connect(this->propertyWidget, SIGNAL(removeItem(Model::OrderDetail)), this, SLOT(removeItemFromCart(Model::OrderDetail)));
 }
 
 void MainWindow::selectCategorySlot(int categorId)
@@ -206,68 +210,45 @@ void MainWindow::selectItemSlot(int itemId)
 
 void MainWindow::selectItemDetialSlot(int itemDetialId)
 {
-    Model::Order order(itemDetialId);
-    this->propertyWidget->setOrder(order, false);
+    Model::OrderDetail orderDetail(itemDetialId);
+    this->propertyWidget->setOrder(orderDetail, false);
     this->setCurrentPage(PropertyPage);
-
-//    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, true, this);
-//    dialog->setModal(true);
-//    dialog->exec();
-
-//    if ( !dialog->isCancelled() ) {
-//        Model::Order order = dialog->getOrder();
-
-//        this->orders.append(order);
-//        this->stackedWidget->setCurrentIndex(0);
-//        emit orderAdded(this->orders);
-//    }
 }
 
-void MainWindow::updateItemDetialSlot(Model::Order order) {
-    ItemPropertiesDialog *dialog = new ItemPropertiesDialog(order, false, this);
-    dialog->setModal(true);
-    dialog->exec();
 
-    if ( !dialog->isCancelled() ) {
-        Model::Order newOrder = dialog->getOrder();
-        //updateOrder(order, newOrder);
-    }
-}
-
-void MainWindow::addItemToCart(Model::Order order)
+void MainWindow::addItemToCart(Model::OrderDetail order)
 {
-    this->orders.append(order);
+    this->orderDetails.append(order);
     this->setCurrentPage(CategoryPage);
-    emit orderUpdated(this->orders);
+    emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::updateItemInCart(Order oldOrder, Order newOrder)
+void MainWindow::updateItemInCart(OrderDetail oldOrder, OrderDetail newOrder)
 {
-    for(int i=0; i<this->orders.size(); i++) {
-        Model::Order order = this->orders.at(i);
-
+    for(int i=0; i<this->orderDetails.size(); i++) {
+        Model::OrderDetail order = this->orderDetails.at(i);
         if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
-            this->orders.removeAt(i);
+            this->orderDetails.removeAt(i);
             break;
         }
     }
 
-    this->orders.append(newOrder);
-    emit orderUpdated(this->orders);
+    this->orderDetails.append(newOrder);
+    emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::removeItemFromCart(Order oldOrder)
+void MainWindow::removeItemFromCart(OrderDetail oldOrder)
 {
-    for(int i=0; i<this->orders.size(); i++) {
-        Model::Order order = this->orders.at(i);
+    for(int i=0; i<this->orderDetails.size(); i++) {
+        Model::OrderDetail order = this->orderDetails.at(i);
 
         if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
-            this->orders.removeAt(i);
+            this->orderDetails.removeAt(i);
             break;
         }
     }
 
-    emit orderUpdated(this->orders);
+    emit orderDetailUpdated(this->orderDetails);
 }
 
 
@@ -275,12 +256,12 @@ void MainWindow::computeTotalCash()
 {
     this->discount = 0;
 
-    if ( this->orders.isEmpty() )
+    if ( this->orderDetails.isEmpty() )
         return;
 
     int cash = 0;
 
-    foreach(Model::Order order, this->orders) {
+    foreach(Model::OrderDetail order, this->orderDetails) {
         cash += order.getCash();
     }
 
@@ -288,7 +269,7 @@ void MainWindow::computeTotalCash()
     QDateTime now = QDateTime::currentDateTime();
 
     Database::DatabaseManager database;
-    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orders);
+    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orderDetails);
 
     qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
 
@@ -299,8 +280,8 @@ void MainWindow::computeTotalCash()
 
 void MainWindow::clearShoppingCart()
 {
-    this->orders.clear();
-    emit orderUpdated(this->orders);
+    this->orderDetails.clear();
+    emit orderDetailUpdated(this->orderDetails);
 }
 
 void MainWindow::computeFree()

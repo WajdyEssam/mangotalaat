@@ -203,7 +203,7 @@ namespace Database
     }
 
     bool DatabaseManager::addOrder(QDateTime currentTime, int orderTypeId, int cash,
-                                   int discount, int totalCash, QList<Model::Order> orders) {
+                                   int discount, int totalCash, QList<Model::OrderDetail> orderDetails) {
 
         QSqlQuery query;
 
@@ -219,20 +219,20 @@ namespace Database
         if ( ret ) {
             int orderId = query.lastInsertId().toInt();
 
-            foreach(Model::Order order, orders) {
+            foreach(Model::OrderDetail orderDetail, orderDetails) {
 
                 QSqlQuery tmpQuery;
 
                 tmpQuery.prepare("INSERT INTO order_details(id, order_id, item_detial_id, quantity, components_ids, additionals_ids, sugar, cash) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)");
                 tmpQuery.addBindValue(orderId);
-                tmpQuery.addBindValue(order.getItemDetialId());
-                tmpQuery.addBindValue(order.getQunatity());
-                tmpQuery.addBindValue(fromListToText(order.getComponentsIds()));
-                tmpQuery.addBindValue(fromListToText(order.getAdditionalsIds()));
-                tmpQuery.addBindValue(order.getSugar());
-                tmpQuery.addBindValue(order.getCash());
+                tmpQuery.addBindValue(orderDetail.getItemDetialId());
+                tmpQuery.addBindValue(orderDetail.getQunatity());
+                tmpQuery.addBindValue(fromListToText(orderDetail.getComponentsIds()));
+                tmpQuery.addBindValue(fromListToText(orderDetail.getAdditionalsIds()));
+                tmpQuery.addBindValue(orderDetail.getSugar());
+                tmpQuery.addBindValue(orderDetail.getCash());
 
-                qDebug() << " Insert Order: " << order.getItemDetialId() << " : " << tmpQuery.exec();
+                qDebug() << " Insert Order Detail: " << orderDetail.getItemDetialId() << " : " << tmpQuery.exec();
             }
         }
 
@@ -313,23 +313,85 @@ namespace Database
         return user;
     }
 
-    QList<LoginReport> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
-        QList<LoginReport> logins;
+    QList<Login> DatabaseManager::getLoginReport(QDateTime from, QDateTime to) {
+        QList<Login> logins;
 
-        QSqlQuery query(QString("SELECT * FROM events_logging WHERE event_time BETWEEN (?) AND (?)"));
-        query.addBindValue(from);
-        query.addBindValue(to);
+        QSqlQuery query(QString("SELECT * FROM events_logging"));
 
         while(query.next()){
             int id = query.value(0).toInt();
             User user = getUserById(query.value(1).toInt());
             QDateTime eventTime = query.value(2).toDateTime();
-            int eventType = query.value(3).toInt();
+            LOGIN_TYPE eventType = getLoginType(query.value(3).toInt());
 
-            LoginReport login(id, user, eventTime, eventType);
-            logins.append(login);
+            Login login(id, user, eventTime, eventType);
+
+            if ( eventTime >= from && eventTime <= to)
+                logins.append(login);
         }
 
         return logins;
+    }
+
+    QList<Order> DatabaseManager::getOrderReport(QDateTime from, QDateTime to)
+    {
+        QList<Order> orders;
+
+        QSqlQuery query(QString("SELECT * FROM orders WHERE is_cancelled = 1"));
+
+        while(query.next()){
+            int id = query.value(0).toInt();
+            QDateTime orderDate = query.value(1).toDateTime();
+            ORDER_TYPE orderType = getOrderType(query.value(2).toInt());
+            int cash = query.value(3).toInt();
+            int discount = query.value(4).toInt();
+            int totalCash = query.value(5).toInt();
+            int isCancelled = query.value(6).toInt();
+
+            Order order(id, orderDate, orderType, cash, discount, totalCash, isCancelled);
+
+            if ( orderDate >= from && orderDate <= to)
+                orders.append(order);
+        }
+
+        return orders;
+    }
+
+    QList<QDateTime> DatabaseManager::getCheckoutTimes()
+    {
+        QList<QDateTime> times;
+
+        QSqlQuery query(QString("SELECT * from system_checkout"));
+        while(query.next()) {
+            QDateTime time = query.value(1).toDateTime();
+
+            times.append(time);
+        }
+
+        return times;
+    }
+
+    QList<OrderDetail> DatabaseManager::getOrderDetailByOrderId(int aOrderId)
+    {
+        QList<OrderDetail> orders;
+
+        QSqlQuery query(QString("SELECT * FROM order_details WHERE order_id = ?"));
+        query.addBindValue(aOrderId);
+
+        while(query.next()) {
+            int id = query.value(0).toInt();
+            int orderId = query.value(1).toInt();
+            int itemDetailId = query.value(2).toInt();
+            int quantity = query.value(3).toInt();
+            QStringList componentList = fromTextToList(query.value(4).toString());
+            QStringList additionalList = fromTextToList(query.value(5).toString());
+            SUGAR sugar = getSugar(query.value(6).toInt());
+            int cash = query.value(7).toInt();
+
+            OrderDetail orderDetail(itemDetailId, quantity, componentList, additionalList, sugar, 0);
+            orders.append(orderDetail);
+        }
+
+        return orders;
     }
 }

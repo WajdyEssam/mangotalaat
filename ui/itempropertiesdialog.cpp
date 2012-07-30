@@ -6,10 +6,10 @@
 #include "model/component.h"
 #include "model/itemdetail.h"
 
-ItemPropertiesDialog::ItemPropertiesDialog(Model::Order aOrder, bool newOrder, QWidget *parent) :
+ItemPropertiesDialog::ItemPropertiesDialog(Model::OrderDetail aOrderDetail, bool newOrder, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ItemPropertiesDialog),
-    order(aOrder)
+    orderDetail(aOrderDetail)
 {
     ui->setupUi(this);
     this->isNewOrder = newOrder;
@@ -33,11 +33,11 @@ void ItemPropertiesDialog::on_buttonBox_accepted()
     // build modified order here
     QStringList newComponentsList = getNewComponentList();
     QStringList newAdditionalsList = getNewAdditionalList();
-    QString sugar = getSugar();
+    SUGAR sugar = NORMAL;
     int quantity = ui->quantitySpinBox->value();
 
-    this->modifiedOrder = Model::Order(this->order.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
-                                       sugar,this->order.getOrderIndexId() );
+    this->modifiedOrderDetail = Model::OrderDetail(this->orderDetail.getItemDetialId(), quantity, newComponentsList, newAdditionalsList,
+                                       sugar,this->orderDetail.getOrderIndexId() );
 
     this->isCancel = false;
     this->hide();
@@ -63,10 +63,6 @@ QStringList ItemPropertiesDialog::getNewAdditionalList() {
     return additionalList;
 }
 
-QString ItemPropertiesDialog::getSugar() {
-    return "";
-}
-
 void ItemPropertiesDialog::on_buttonBox_rejected()
 {
     this->isCancel = true;
@@ -75,7 +71,7 @@ void ItemPropertiesDialog::on_buttonBox_rejected()
 
 void ItemPropertiesDialog::fillDefualtComponentsAndAdditionalsForThisOrder() {
     Database::DatabaseManager database;
-    Model::ItemDetail itemDetial = database.getItemDetailById(this->order.getItemDetialId());
+    Model::ItemDetail itemDetial = database.getItemDetailById(this->orderDetail.getItemDetialId());
     std::vector<Component> currentComponentInItem = database.getCompnentsInItem(itemDetial.getItemId());
 
     for(std::vector<Component>::iterator p= currentComponentInItem.begin();
@@ -87,13 +83,13 @@ void ItemPropertiesDialog::fillDefualtComponentsAndAdditionalsForThisOrder() {
 
 void ItemPropertiesDialog::fillModifiedComponentsAndAdditionalsForThisOrder() {
     Database::DatabaseManager database;
-    QStringList componentsList = this->order.getComponentsIds();
+    QStringList componentsList = this->orderDetail.getComponentsIds();
     foreach(QString componentId, componentsList) {
         Component component = database.getComponentById(componentId.toInt());
         this->ui->currentComponentsListWidget->addItem(component.getArabicName());
     }
 
-    QStringList additionalsList = this->order.getAdditionalsIds();
+    QStringList additionalsList = this->orderDetail.getAdditionalsIds();
     foreach(QString additionalId, additionalsList) {
         Additionals additional = database.getAdditionalsById(additionalId.toInt());
         this->ui->currentAdditionalListWidget->addItem(additional.getArabicName());
@@ -102,12 +98,12 @@ void ItemPropertiesDialog::fillModifiedComponentsAndAdditionalsForThisOrder() {
 
 void ItemPropertiesDialog::fillCurrentItemDescriptionAndQuantity() {
     Database::DatabaseManager database;
-    Model::ItemDetail itemDetial = database.getItemDetailById(this->order.getItemDetialId());
+    Model::ItemDetail itemDetial = database.getItemDetailById(this->orderDetail.getItemDetialId());
     Model::Item item = database.getItemById(itemDetial.getItemId());
     QString sizeDescription = database.getItemSizeDescription(itemDetial.getSizeId(), database.ARABIC);
 
     this->ui->orderLineEdit->setText(item.getArabicName() + " - " + sizeDescription);
-    this->ui->quantitySpinBox->setValue(this->order.getQunatity());
+    this->ui->quantitySpinBox->setValue(this->orderDetail.getQunatity());
 }
 
 void ItemPropertiesDialog::fillAllComponentsAndAdditionalsFromStore() {

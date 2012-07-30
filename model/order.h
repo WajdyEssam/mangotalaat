@@ -1,43 +1,31 @@
-#ifndef ORDER_H
-#define ORDER_H
+#ifndef ORDERREPORT_H
+#define ORDERREPORT_H
 
-#include <QObject>
-#include <QStringList>
+#include <QDateTime>
+#include <QString>
+#include "constants.h"
 
-namespace Model {
-    class Order
-    {
-    public:
-        Order() {}
-        Order(int aItemDetaildId);
-        Order(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
-              QString aSugar, QString aOrderIndexId);
+class Order
+{
+public:
+    Order(int id, QDateTime orderDate, ORDER_TYPE orderType, int cash, int discount, int totalCash, int isCancelled);
 
-        int getItemDetialId() const { return this->itemDetailId; }
-        int getQunatity()const { return this->quantity; }
-        QStringList getComponentsIds() const { return this->componentsIds; }
-        QStringList getAdditionalsIds() const { return this->additionalsIds; }
-        QString getSugar() const { return this->sugar; }
-        int getCash() const { return this->cash; }
-        QString getSizeDescription() {return this->sizeDescription;}
-        QString getArabicName() {return this->arabicName;}
-        int getCategoryId() {return this->categoryId;}
-        QString getOrderIndexId() const { return this->orderIndexId; }
+    int getId() const { return this->m_id ;}
+    QDateTime getOrderDate() const { return this->m_orderDate; }
+    ORDER_TYPE getOrderType() const { return this->m_orderType; }
+    int getCash() const { return this->m_cash; }
+    int getDiscount() const { return this->m_discount; }
+    int getTotalCash() const { return this->m_totalCash; }
+    int isCancelled() const { return this->m_isCancelled; }
 
-    private:
-        void fillOtherInformation();
-        QString getTimeStamp();
+private:
+    int m_id;
+    QDateTime m_orderDate;
+    ORDER_TYPE m_orderType;
+    int m_cash;
+    int m_discount;
+    int m_totalCash;
+    bool m_isCancelled;
+};
 
-        QString orderIndexId;
-        int itemDetailId;
-        int quantity;
-        QStringList componentsIds;
-        QStringList additionalsIds;
-        QString sugar;
-        int cash;
-        QString sizeDescription;
-        int categoryId;
-        QString arabicName;
-    };
-}
-#endif // ORDER_H
+#endif // ORDERREPORT_H

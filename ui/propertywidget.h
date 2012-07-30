@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "model/order.h"
+#include "model/orderdetail.h"
 
 class QGroupBox;
 class QHBoxLayout;
@@ -20,12 +20,12 @@ public:
     explicit PropertyWidget(QWidget *parent = 0);
     
 signals:
-    void addItem(Model::Order);
-    void updateItem(Model::Order, Model::Order);
-    void removeItem(Model::Order);
+    void addItem(Model::OrderDetail);
+    void updateItem(Model::OrderDetail, Model::OrderDetail);
+    void removeItem(Model::OrderDetail);
 
 public slots:
-    void setOrder(Model::Order order, bool isOpenedInEditMode);
+    void setOrder(Model::OrderDetail order, bool isOpenedInEditMode);
     void setCurrentComponent(int);
     void setCurrentAdditional(int);
     void addItemClicked();
@@ -52,7 +52,7 @@ private:
     QPushButton* updateButton;
     QPushButton* removeButton;
 
-    Model::Order m_order;
+    Model::OrderDetail m_orderDetail;
 
     void initOrder();
     void initComponents();
@@ -69,7 +69,7 @@ private:
 
     QStringList readActiveComponents();
     QStringList readActiveAdditionals();
-    QString readSugar();
+    SUGAR readSugar();
     int readQunatity();
 };
 

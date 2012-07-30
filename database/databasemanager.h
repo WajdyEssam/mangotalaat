@@ -10,9 +10,13 @@
 #include "model/component.h"
 #include "model/itemdetail.h"
 #include "model/additionals.h"
+#include "model/orderdetail.h"
+#include "model/user.h"
+#include "model/login.h"
 #include "model/order.h"
-
-#include "report/loginreport.h"
+#include "model/user.h"
+#include "model/login.h"
+#include "model/order.h"
 
 using namespace Model;
 
@@ -34,20 +38,23 @@ namespace Database
 
         Item getItemById(int itemId);
         ItemDetail getItemDetailById(int itemDetialId);
+        QList<OrderDetail> getOrderDetailByOrderId(int orderId);
         Component getComponentById(int componentId);
         Additionals getAdditionalsById(int additionalsId);
 
         enum LAGNUAGE { ARABIC, ENGLISH };
         QString getItemSizeDescription(int sizeId, LAGNUAGE language);
 
-        bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::Order> orders);
+        bool addOrder(QDateTime currentTime, int orderTypeId, int cash, int discount, int totalCash, QList<Model::OrderDetail> orders);
         bool cancelOrder(int orderId);
 
         bool closeTodayOrders(QDateTime time);
         bool addLoginEventLogging(int userId, QDateTime time, int eventType); // 1 login, 2 logout
 
         User getUserById(int id);
-        QList<LoginReport> getLoginReport(QDateTime from, QDateTime to);
+        QList<Login> getLoginReport(QDateTime from, QDateTime to);
+        QList<Order> getOrderReport(QDateTime from, QDateTime to);
+        QList<QDateTime> getCheckoutTimes();
 
     private:
         QString fromListToText(QStringList ids);

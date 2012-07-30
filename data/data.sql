@@ -21,6 +21,8 @@ CREATE TABLE system_checkout (
 	checkout_time DATATIME
 );
 
+INSERT INTO system_checkout(checkout_time) values("Thu Jul 26 14:08:49 2012");
+
 CREATE TABLE item_size (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
 	arabic_name TEXT,
@@ -81,7 +83,7 @@ CREATE TABLE order_details(
 	quantity INTEGER,
 	components_ids TEXT,
 	additionals_ids TEXT, 
-	sugar TEXT,
+	sugar INTEGER,
 	cash INTEGER
 );
 
