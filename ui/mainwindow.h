@@ -31,7 +31,7 @@ public:
     ~MainWindow();
 
 signals:
-    void orderAdded(QList<Model::OrderDetail> orders);
+    void orderAdded(QList<Model::OrderDetail> orderDetails);
 
 private slots:
     void ShowHomePage();
@@ -60,7 +60,7 @@ private:
     QLabel *versionLabel;
     QLabel *helpLabel;
 
-    QList<Model::OrderDetail> orders;
+    QList<Model::OrderDetail> orderDetails;
     int discount ;
     int userId;
     Model::OrderDetail getOrderByIndexId(QString indexId);

@@ -21,7 +21,7 @@ public:
 signals:
 
 public slots:
-    void setOrder(Model::OrderDetail order);
+    void setOrder(Model::OrderDetail orderDetail);
     void setCurrentComponent(int);
     void setCurrentAdditional(int);
 

@@ -20,7 +20,7 @@ signals:
     void cancelClicked();
 
 public slots:
-    void updateOrders(QList<Model::OrderDetail>);
+    void updateOrderDetails(QList<Model::OrderDetail>);
 
 private:
     void initOrderList();

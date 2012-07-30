@@ -159,12 +159,12 @@ void MainWindow::orderItemClicked(QString orderIndexId)
 }
 
 Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
-    foreach(Model::OrderDetail order, this->orders) {
+    foreach(Model::OrderDetail order, this->orderDetails) {
         if ( order.getOrderIndexId() == indexId )
             return order;
     }
 
-    return this->orders.at(0);
+    return this->orderDetails.at(0);
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
@@ -237,29 +237,29 @@ void MainWindow::updateItemDetialSlot(Model::OrderDetail order) {
 }
 
 void MainWindow::updateOrder(Model::OrderDetail oldOrder, Model::OrderDetail newOrder) {
-    for(int i=0; i<this->orders.size(); i++) {
-        Model::OrderDetail order = this->orders.at(i);
+    for(int i=0; i<this->orderDetails.size(); i++) {
+        Model::OrderDetail order = this->orderDetails.at(i);
 
         if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
-            this->orders.removeAt(i);
+            this->orderDetails.removeAt(i);
             break;
         }
     }
 
-    this->orders.append(newOrder);
-    emit orderAdded(this->orders);
+    this->orderDetails.append(newOrder);
+    emit orderAdded(this->orderDetails);
 }
 
 void MainWindow::computeTotalCash()
 {
     this->discount = 0;
 
-    if ( this->orders.isEmpty() )
+    if ( this->orderDetails.isEmpty() )
         return;
 
     int cash = 0;
 
-    foreach(Model::OrderDetail order, this->orders) {
+    foreach(Model::OrderDetail order, this->orderDetails) {
         cash += order.getCash();
     }
 
@@ -267,7 +267,7 @@ void MainWindow::computeTotalCash()
     QDateTime now = QDateTime::currentDateTime();
 
     Database::DatabaseManager database;
-    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orders);
+    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orderDetails);
 
     qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
 
@@ -278,8 +278,8 @@ void MainWindow::computeTotalCash()
 
 void MainWindow::clearShoppingCart()
 {
-    this->orders.clear();
-    emit orderAdded(this->orders);
+    this->orderDetails.clear();
+    emit orderAdded(this->orderDetails);
 }
 
 void MainWindow::computeFree()
