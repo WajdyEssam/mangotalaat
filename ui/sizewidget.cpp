@@ -8,7 +8,9 @@
 #include <QDebug>
 
 #include "sizewidget.h"
-#include "database/databasemanager.h"
+
+#include "model/itemdetail.h"
+#include "services/itemdetail.h"
 
 SizeWidget::SizeWidget(QWidget *parent) :
     QWidget(parent)
@@ -52,24 +54,23 @@ void SizeWidget::createItemSizes(int itemId)
     this->removeItemSizes();
 
     // get all size
-    Database::DatabaseManager databaseManager;
-    std::vector<ItemDetail> itemsDetial = databaseManager.getItemDetails(itemId);
+    QList<Model::ItemDetail> itemsDetials = Services::ItemDetail::getByItemId(itemId);
 
     int i=0, col = 0, row = 1;
-    for(std::vector<ItemDetail>::iterator p = itemsDetial.begin(); p != itemsDetial.end(); ++p ) {
+    for(QList<Model::ItemDetail>::iterator p = itemsDetials.begin(); p != itemsDetials.end(); ++p ) {
 
         QToolButton* button = new QToolButton;
-        QString description = databaseManager.getItemSizeDescription(p->getSizeId(), Database::DatabaseManager::ENGLISH);
-        button->setObjectName(QString("%1_SizeButton").arg(p->getId()));
+        QString description = p->size().arabicName();
+        button->setObjectName(QString("%1_SizeButton").arg(p->id()));
         button->setText(description);
 
-        button->setIcon(QIcon(QString(":/images/prices/%1_%2_%3.png").arg(p->getSizeId()).arg(p->getPrice()).arg("en")));
+        button->setIcon(QIcon(QString(":/images/prices/%1_%2_%3.png").arg(p->size().id()).arg(p->price()).arg("en")));
         button->setIconSize(QSize(135,135));
         button->setToolTip(description);
         button->setStatusTip(description);
         //button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(button, p->getId());
+        this->signalMapper->setMapping(button, p->id());
         layout->addWidget(button, row, col);
 
         col++;

@@ -2,13 +2,13 @@
 
 namespace Model
 {
-    Component::Component()
-    {}
 
-    Component::Component(int aId, const QString& aArabicName, const QString& aEnglishName)
-    {
-        this->id = aId;
-        this->arabicName = aArabicName;
-        this->englishName = aEnglishName;
-    }
+Component::Component(int id) :
+    BaseItem(id)
+{}
+
+Component::Component(int id, const QString& arabicName, const QString& englishName) :
+    BaseItem(id, arabicName, englishName)
+{}
+
 }

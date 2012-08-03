@@ -1,27 +1,25 @@
-#ifndef ITEM_H
-#define ITEM_H
+#ifndef MODEL_ITEM_H
+#define MODEL_ITEM_H
 
 #include <QString>
+#include "baseitem.h"
+#include "category.h"
 
 namespace Model
 {
-    class Item
-    {
-    public:
-        Item();
-        Item(int aId, const QString& aArabicName, const QString& aEnglishName, int aCategoryId);
 
-        int getId() const { return this->id; }
-        QString getArabicName() const { return this->arabicName; }
-        QString getEnglishName() const { return this->englishName; }
-        int getCategoryId() const { return this->categoryId; }
+class Item : public BaseItem
+{
+public:
+    Item(int id);
+    Item(int id, Model::Category category, const QString& arabicName, const QString& englishName);
 
-    private:
-        int id;
-        QString arabicName;
-        QString englishName;
-        int categoryId;
-    };
+    void setCategory(Model::Category category);
+    Model::Category category() const { return m_category; }
+
+private:
+    Model::Category m_category;
+};
 
 }
-#endif // ITEM_H
+#endif // MODEL_ITEM_H

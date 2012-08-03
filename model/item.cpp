@@ -2,14 +2,18 @@
 
 namespace Model
 {
-    Item::Item()
-    {}
 
-    Item::Item(int aId, const QString& aArabicName, const QString& aEnglishName, int aCategoryId)
-    {
-        this->id = aId;
-        this->arabicName = aArabicName;
-        this->englishName = aEnglishName;
-        this->categoryId = aCategoryId;
-    }
+Item::Item(int id) :
+    BaseItem(id)
+{}
+
+Item::Item(int id, Model::Category category, const QString& arabicName, const QString& englishName) :
+    BaseItem(id, arabicName, englishName), m_category(category)
+{}
+
+void Item::setCategory(Category category)
+{
+    m_category = category;
+}
+
 }

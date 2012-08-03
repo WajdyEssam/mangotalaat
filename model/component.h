@@ -1,25 +1,19 @@
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#ifndef MODEL_COMPONENT_H
+#define MODEL_COMPONENT_H
 
 #include <QString>
+#include "baseitem.h"
 
 namespace Model
 {
-    class Component
-    {
-    public:
-        Component();
-        Component(int aId, const QString& aArabicName, const QString& aEnglishName);
 
-        int getId() const { return this->id; }
-        QString getArabicName() const { return this->arabicName; }
-        QString getEnglishName() const { return this->englishName; }
+class Component : public BaseItem
+{
+public:
+    Component(int id);
+    Component(int id, const QString& arabicName, const QString& englishName);
+};
 
-    private:
-        int id;
-        QString arabicName;
-        QString englishName;
-    };
 }
 
-#endif // COMPONENT_H
+#endif // MODEL_COMPONENT_H

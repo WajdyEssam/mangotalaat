@@ -4,43 +4,90 @@
 
 namespace Model {
 
-    OrderDetail::OrderDetail(int aItemDetaildId) {
-        this->itemDetailId = aItemDetaildId;
-        this->quantity = 1;
-        this->orderIndexId = getTimeStamp();
-        this->fillOtherInformation();
-    }
+OrderDetail::OrderDetail(int id) :
+    m_id(id)
+{
+    m_orderIndexId = getCurrentTimeStamp();
+}
 
-    OrderDetail::OrderDetail(int aItemDetailId, int aQuantity, QStringList aComponentsIds, QStringList aAdditionalsIds,
-                 SUGAR aSugar, QString aOrderIndexId) {
-        this->itemDetailId = aItemDetailId;
-        this->quantity = aQuantity;
-        this->componentsIds = aComponentsIds;
-        this->additionalsIds = aAdditionalsIds;
-        this->sugar = aSugar;
-        this->orderIndexId = aOrderIndexId;
-        this->fillOtherInformation();
-    }
+OrderDetail::OrderDetail(int id, Model::Order order, Model::ItemDetail itemDetail, int qunatity, QList<Model::Component> components,
+            QList<Model::Additional> additionals, int sugar, int cash) :
+    m_id(id), m_order(order), m_itemDetail(itemDetail), m_quantity(qunatity), m_components(components), m_additionals(additionals),
+    m_sugar(sugar), m_cash(cash)
+{
+    m_orderIndexId = getCurrentTimeStamp();
+}
 
-    void OrderDetail::fillOtherInformation() {
-        Database::DatabaseManager database;
-        Model::ItemDetail itemDetail = database.getItemDetailById(this->itemDetailId);
-        Model::Item item = database.getItemById(itemDetail.getItemId());
+int OrderDetail::id() const
+{
+    return m_id;
+}
 
-        // if item is special cocktail then the price will be the largest component price
-        // this is just for mango and avocado
-        int price = itemDetail.getPrice();
-        int sizeId = itemDetail.getSizeId();
+Model::Order OrderDetail::order() const
+{
+    return m_order;
+}
 
-        this->sizeDescription = database.getItemSizeDescription(sizeId, Database::DatabaseManager::ARABIC);
-        this->cash = price * this->quantity;
-        this->categoryId = item.getCategoryId();
-        this->arabicName = item.getArabicName();
-    }
+Model::ItemDetail OrderDetail::itemDetail() const
+{
+    return m_itemDetail;
+}
 
-    QString OrderDetail::getTimeStamp() {
-        return QString::number(QDateTime::currentMSecsSinceEpoch());
-    }
+int OrderDetail::qunatity() const
+{
+    return m_quantity;
+}
+
+QList<Model::Component> OrderDetail::components() const
+{
+    return m_components;
+}
+
+QList<Model::Additional> OrderDetail::additionals() const
+{
+    return m_additionals;
+}
+
+int OrderDetail::sugar() const
+{
+    return m_sugar;
+}
+
+int OrderDetail::cash() const
+{
+    return m_cash;
+}
+
+QString OrderDetail::orderIndexId() const
+{
+    return m_orderIndexId;
+}
+
+void OrderDetail::setOrder(Order order)
+{
+    m_order = order;
+}
+
+void OrderDetail::setItemDetail(ItemDetail itemDetail)
+{
+    m_itemDetail = itemDetail;
+}
+
+void OrderDetail::setComponent(QList<Component> components)
+{
+    m_components = components;
+}
+
+void OrderDetail::setAdditionals(QList<Additional> additionals)
+{
+    m_additionals = additionals;
+}
+
+QString OrderDetail::getCurrentTimeStamp()
+{
+    return QString::number(QDateTime::currentMSecsSinceEpoch());
+}
+
 }
 
 

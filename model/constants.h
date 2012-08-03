@@ -2,10 +2,6 @@
 #define CONSTANTS_H
 
 
-// order type constants
-enum ORDER_TYPE {
-    CASH=1, CUPON, DISCOUNT, FREE
-};
 
 // logging constant
 enum LOGIN_TYPE {
@@ -17,6 +13,9 @@ enum SUGAR {
     NO=1, LOW, NORMAL, MORE
 };
 
+enum ORDER_TYPE {
+    CASH = 1,CUPON,DISCOUNT,FREE
+};
 
 // conveter methods
 static inline SUGAR getSugar(int sugar) {

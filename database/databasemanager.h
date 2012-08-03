@@ -5,20 +5,6 @@
 #include <QString>
 #include <vector>
 
-#include "model/category.h"
-#include "model/item.h"
-#include "model/component.h"
-#include "model/itemdetail.h"
-#include "model/additionals.h"
-#include "model/orderdetail.h"
-#include "model/user.h"
-#include "model/login.h"
-#include "model/order.h"
-#include "model/user.h"
-#include "model/login.h"
-#include "model/order.h"
-
-using namespace Model;
 
 namespace Database
 {
@@ -28,19 +14,23 @@ namespace Database
         DatabaseManager();
         ~DatabaseManager();
 
+        static bool connect();
+        static void disconnect();
+
+        /*
         std::vector<Item> getItemsInCategory(int categoryId);
         std::vector<Component> getCompnentsInItem(int itemId);
         std::vector<ItemDetail> getItemDetails(int itemId);
 
         std::vector<Category> getCategories();
         std::vector<Component> getAllCompnents();
-        std::vector<Additionals> getAllAdditionals();
+        std::vector<Additional> getAllAdditionals();
 
         Item getItemById(int itemId);
         ItemDetail getItemDetailById(int itemDetialId);
         QList<OrderDetail> getOrderDetailByOrderId(int orderId);
         Component getComponentById(int componentId);
-        Additionals getAdditionalsById(int additionalsId);
+        Additional getAdditionalsById(int additionalsId);
 
         enum LAGNUAGE { ARABIC, ENGLISH };
         QString getItemSizeDescription(int sizeId, LAGNUAGE language);
@@ -59,6 +49,8 @@ namespace Database
     private:
         QString fromListToText(QStringList ids);
         QStringList fromTextToList(QString text);
+
+        */
 
     private:
         QSqlDatabase database;

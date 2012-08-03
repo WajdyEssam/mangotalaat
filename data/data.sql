@@ -58,13 +58,14 @@ INSERT INTO categories(arabic_name, english_name) values("ميلك شيك", "Mil
 
 CREATE TABLE orders_type (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	description TEXT
+	arabic_name TEXT,
+	english_name TEXT
 );
 
-INSERT INTO orders_type(description) values("Cash");
-INSERT INTO orders_type(description) values("Cupon");
-INSERT INTO orders_type(description) values("Discount");
-INSERT INTO orders_type(description) values("Free");
+INSERT INTO orders_type(description) values("Cash", "كاش");
+INSERT INTO orders_type(description) values("Cupon", "كوبون");
+INSERT INTO orders_type(description) values("Discount", "خصم");
+INSERT INTO orders_type(description) values("Free", "مجاني");
 
 CREATE TABLE orders (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,

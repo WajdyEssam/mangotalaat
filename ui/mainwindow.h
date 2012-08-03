@@ -9,7 +9,6 @@
 #include "itemswidget.h"
 #include "sizewidget.h"
 #include "propertywidget.h"
-#include "itempropertiesdialog.h"
 
 class HeaderWidget;
 class OrderWidget;
@@ -66,7 +65,7 @@ private:
 
     QList<Model::OrderDetail> orderDetails;
     int discount ;
-    int userId;
+    int m_userId;
     Model::OrderDetail getOrderByIndexId(QString indexId);
 
     void setWindowSize();

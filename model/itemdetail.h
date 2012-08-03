@@ -1,24 +1,32 @@
-#ifndef ITEMDETAIL_H
-#define ITEMDETAIL_H
+#ifndef MODEL_ITEMDETAIL_H
+#define MODEL_ITEMDETAIL_H
+
+#include "model/size.h"
+#include "model/item.h"
 
 namespace Model {
-    class ItemDetail
-    {
-    public:
-        ItemDetail() {}
-        ItemDetail(int aId, int aItemId, int aSizeId, int aPrice);
 
-        int getId() const { return this->id; }
-        int getItemId() const { return this->itemId; }
-        int getSizeId() const { return this->sizeId ;}
-        int getPrice() const { return this->price; }
+class ItemDetail
+{
+public:
+    ItemDetail();
+    ItemDetail(int id, Model::Item item, Model::Size size, int price);
 
-    private:
-        int id;
-        int itemId;
-        int sizeId;
-        int price;
-    };
+    int id() const;
+    Model::Item item() const ;
+    Model::Size size() const;
+    int price() const;
+
+    void setItem(Model::Item item);
+    void setSize(Model::Size size);
+
+private:
+    int m_id;
+    Model::Item m_item;
+    Model::Size m_size;
+    int m_price;
+};
+
 }
 
-#endif // ITEMDETAIL_H
+#endif // MODEL_ITEMDETAIL_H

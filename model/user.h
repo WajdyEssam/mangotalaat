@@ -1,20 +1,21 @@
-#ifndef USER_H
-#define USER_H
+#ifndef MODEL_USER_H
+#define MODEL_USER_H
 
 #include <QString>
 #include <QDateTime>
 
+namespace Model {
+
 class User
 {
 public:
-    User() { }
-
+    User(int id);
     User(int id, QString username, QString password, QDateTime registerTime);
 
-    int getId() const { return this->m_id; }
-    QString getUsername() const { return this->m_username; }
-    QString getPassword() const { return this->m_password; }
-    QDateTime getRegisterTime() const { return this->m_registerTime; }
+    int id() const;
+    QString userName() const;
+    QString password() const;
+    QDateTime registerDateTime() const;
 
 private:
     int m_id;
@@ -23,4 +24,6 @@ private:
     QDateTime m_registerTime;
 };
 
-#endif // USER_H
+}
+
+#endif // MODEL_USER_H

@@ -10,7 +10,10 @@
 #include <QDebug>
 
 #include "categorieswidget.h"
-#include "database/databasemanager.h"
+
+#include "model/category.h"
+
+#include "services/category.h"
 
 CategoriesWidget::CategoriesWidget(QWidget *parent) :
     QWidget(parent)
@@ -32,24 +35,23 @@ void CategoriesWidget::createCategories()
     this->removeCategories();
 
     // get all categories
-    Database::DatabaseManager databaseManager;
-    std::vector<Category> categories = databaseManager.getCategories();
+    QList<Model::Category> categories = Services::Category::getAll();
 
     int i=0, col = 0, row = 1;
-    for(std::vector<Category>::iterator p = categories.begin();
+    for(QList<Model::Category>::iterator p = categories.begin();
             p != categories.end(); ++p ) {
 
         QToolButton* button = new QToolButton;
-        button->setObjectName(QString("%1_CategoryButton").arg(p->getId()));
-        button->setText(p->getEnglishName());
-        button->setIcon(QIcon(QString(":/images/juices/category_%1.png").arg(p->getId())));
+        button->setObjectName(QString("%1_CategoryButton").arg(p->id()));
+        button->setText(p->arabicName());
+        button->setIcon(QIcon(QString(":/images/juices/category_%1.png").arg(p->id())));
         button->setIconSize(QSize(100,100));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        button->setToolTip(p->getEnglishName());
-        button->setStatusTip(p->getEnglishName());
+        button->setToolTip(p->arabicName());
+        button->setStatusTip(p->arabicName());
         button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(button, p->getId());
+        this->signalMapper->setMapping(button, p->id());
         contentGridLayout->addWidget(button, row, col);
 
         col++;

@@ -1,31 +1,39 @@
-#ifndef ORDERREPORT_H
-#define ORDERREPORT_H
+#ifndef MODEL_ORDER_H
+#define MODEL_ORDER_H
 
 #include <QDateTime>
 #include <QString>
-#include "constants.h"
+#include "model/ordertype.h"
+
+namespace Model {
 
 class Order
 {
 public:
-    Order(int id, QDateTime orderDate, ORDER_TYPE orderType, int cash, int discount, int totalCash, int isCancelled);
+    Order(int id);
+    Order(int id, QDateTime createdDateTime, OrderType orderType, int cash, int discount, int totalCash, int isCancelled);
 
-    int getId() const { return this->m_id ;}
-    QDateTime getOrderDate() const { return this->m_orderDate; }
-    ORDER_TYPE getOrderType() const { return this->m_orderType; }
-    int getCash() const { return this->m_cash; }
-    int getDiscount() const { return this->m_discount; }
-    int getTotalCash() const { return this->m_totalCash; }
-    int isCancelled() const { return this->m_isCancelled; }
+    int id() const;
+    QDateTime createdDateTime() const;
+    OrderType orderType() const;
+    int cash() const;
+    int discount() const ;
+    int totalCash() const ;
+    int isCancelled() const;
+
+    void setOrderType(OrderType orderType);
+    void setIsCancelled(bool isCancelled);
 
 private:
     int m_id;
-    QDateTime m_orderDate;
-    ORDER_TYPE m_orderType;
+    QDateTime m_createdDateTime;
+    OrderType m_orderType;
     int m_cash;
     int m_discount;
     int m_totalCash;
     bool m_isCancelled;
 };
 
-#endif // ORDERREPORT_H
+}
+
+#endif // MODEL_ORDER_H

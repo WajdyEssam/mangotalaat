@@ -12,6 +12,7 @@ class QGridLayout;
 class QToolButton;
 class QVBoxLayout;
 class QPushButton;
+class QLineEdit;
 
 class PropertyWidget : public QWidget
 {
@@ -31,6 +32,7 @@ public slots:
     void addItemClicked();
     void updateItemClicked();
     void removeItemClicked();
+    void openKeypadDialog();
 
 private:
     enum {
@@ -44,7 +46,8 @@ private:
     QGroupBox *componentsGroupBox;
     QGroupBox *additionalsGroupBox;
 
-    QGridLayout *orderGridLayout;
+    QHBoxLayout* commandButtonHBoxLayout;
+    QVBoxLayout *orderVBoxLayout;
     QGridLayout *componentsGridLayout;
     QGridLayout *additionalsGridLayout;
 
@@ -52,25 +55,41 @@ private:
     QPushButton* updateButton;
     QPushButton* removeButton;
 
+    QLineEdit* itemNameLineEdit;
+    QLineEdit* itemQuantityLineEdit;
+    QLineEdit* itemSizeLineEdit;
+    QLineEdit* itemPriceLineEdit;
+    QLineEdit* itemSugarLineEdit;
+    QLineEdit* itemComponentsLineEdit;
+    QLineEdit* itemAdditionalsLineEdit;
+    QLineEdit* totalPriceLineEdit;
+
     Model::OrderDetail m_orderDetail;
 
+    void initCommandButtons();
     void initOrder();
     void initComponents();
     void initAdditionals();
 
     void uncheckComponentsButtons();
     void uncheckAdditionalsButtons();
+    void clearItemDetailsLineEdit();
 
     void recheckComponentsButtons();
     void recheckAdditionalsButtons();
+    void fillItemDetialsLineEdit();
+    void calculateTotalPrice();
 
     void showEditButton();
     void showAddButton();
 
     QStringList readActiveComponents();
     QStringList readActiveAdditionals();
-    SUGAR readSugar();
+    int readSugar();
     int readQunatity();
+
+    void setActiveComponents();
+    void setActiveAdditionals();
 };
 
 #endif // PROPERTYWIDGET_H

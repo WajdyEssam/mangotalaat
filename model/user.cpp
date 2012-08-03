@@ -1,9 +1,33 @@
 #include "user.h"
 
-User::User(int id, QString username, QString password, QDateTime registerTime)
+namespace Model {
+
+User::User(int id) :
+    m_id(id)
+{}
+
+User::User(int id, QString username, QString password, QDateTime registerTime) :
+    m_(id), m_username(username), m_password(password), m_registerTime(registerTime)
+{}
+
+int User::id() const
 {
-    this->m_id = id;
-    this->m_username = username;
-    this->m_password = password;
-    this->m_registerTime = registerTime;
+    return this->m_id;
+}
+
+QString User::userName() const
+{
+    return this->m_username;
+}
+
+QString User::password() const
+{
+    return this->m_password;
+}
+
+QDateTime User::registerDateTime() const
+{
+    return this->m_registerTime;
+}
+
 }

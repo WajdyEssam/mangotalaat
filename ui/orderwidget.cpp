@@ -73,15 +73,15 @@ void OrderWidget::initOrderCommand()
 
 void OrderWidget::updateOrderDetails(QList<Model::OrderDetail> orderDetails)
 {
-    QList<QObject*> orderList;
+//    QList<QObject*> orderList;
 
-    foreach (Model::OrderDetail orderDetail, orderDetails) {
-        orderList.append(new OrderObject(orderDetail.getItemDetialId(), orderDetail.getOrderIndexId(),
-            orderDetail.getArabicName(), orderDetail.getSizeDescription(), QString::number(orderDetail.getCash()), orderDetail.getCategoryId()));
-    }
+//    foreach (Model::OrderDetail orderDetail, orderDetails) {
+//        orderList.append(new OrderObject(orderDetail.itemDetail(), orderDetail.orderIndexId(),
+//            orderDetail.arabicName(), orderDetail.getSizeDescription(), QString::number(orderDetail.cash()), orderDetail.getCategoryId()));
+//    }
 
-    qDebug() << "Number of orders: " << orderDetails.count();
+//    qDebug() << "Number of orders: " << orderDetails.count();
 
-    QDeclarativeContext* context = m_declarativeView->rootContext();
-    context->setContextProperty("ordersModel", QVariant::fromValue(orderList));
+//    QDeclarativeContext* context = m_declarativeView->rootContext();
+//    context->setContextProperty("ordersModel", QVariant::fromValue(orderList));
 }

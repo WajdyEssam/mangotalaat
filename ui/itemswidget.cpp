@@ -1,7 +1,9 @@
 #include <QDebug>
 
 #include "itemswidget.h"
-#include "database/databasemanager.h"
+
+#include "model/item.h"
+#include "services/item.h"
 
 ItemsWidget::ItemsWidget(QWidget *parent) :
     QWidget(parent)
@@ -30,15 +32,14 @@ void ItemsWidget::createItems(int categoryId)
     this->removeItems();
 
     // Get all items
-    Database::DatabaseManager databaseManager;
-    std::vector<Item> items = databaseManager.getItemsInCategory(categoryId);
+    QList<Model::Item> items = Services::Item::getByCategoryId(categoryId);
 
     int i=0, col = 0, row = 1;
-    for(std::vector<Item>::iterator p = items.begin(); p != items.end(); ++p ) {
-        buttons[i] = new QPushButton(p->getEnglishName());
-        buttons[i]->setObjectName(QString("%1_itemButton").arg(p->getId()));
+    for(QList<Model::Item>::iterator p = items.begin(); p != items.end(); ++p ) {
+        buttons[i] = new QPushButton(p->englishName());
+        buttons[i]->setObjectName(QString("%1_itemButton").arg(p->id()));
         connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(buttons[i], p->getId());
+        this->signalMapper->setMapping(buttons[i], p->id());
         layout->addWidget(buttons[i], row, col);
 
         col++;

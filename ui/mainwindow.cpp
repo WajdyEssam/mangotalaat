@@ -7,13 +7,15 @@
 #include <QDebug>
 
 #include "model/orderdetail.h"
-#include "database/databasemanager.h"
-#include "model/login.h"
+#include "model/event.h"
 
-MainWindow::MainWindow(int aUserId, QWidget *parent) :
+#include "services/event.h"
+#include "services/checkout.h"
+
+MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
 {
-    this->userId = aUserId;
+    m_userId = userId;
 
     this->setWindowSize();
     this->createWidgetPages();
@@ -92,14 +94,23 @@ void MainWindow::createOrderDockWidget()
     connect(this->orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
 }
 
-void MainWindow::addLoginEvent() {
-    Database::DatabaseManager database;
-    database.addLoginEventLogging(this->userId, QDateTime::currentDateTime(), 1);
+void MainWindow::addLoginEvent()
+{
+    Model::Event event;
+    event.setUser(Model::User(m_userId));
+    event.setCreatedDateTime(QDateTime::currentDateTime());
+    event.setEventType(Model::Event::Login);
+
+    Services::Event::add(event);
 }
 
 void MainWindow::AddLogoutEvent() {
-    Database::DatabaseManager database;
-    database.addLoginEventLogging(this->userId, QDateTime::currentDateTime(), 2);
+    Model::Event event;
+    event.setUser(Model::User(m_userId));
+    event.setCreatedDateTime(QDateTime::currentDateTime());
+    event.setEventType(Model::Event::Logout);
+
+    Services::Event::add(event);
 }
 
 void MainWindow::ShowHomePage()
@@ -111,20 +122,20 @@ void MainWindow::reportClickedSlot()
 {
     // show reports
     // event logging table, order table, cancel table, summary table
-    Database::DatabaseManager database;
-    QList<QDateTime> times = database.getCheckoutTimes();
+//    Database::DatabaseManager database;
+//    QList<QDateTime> times = database.getCheckoutTimes();
 
-    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
+//    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
 
-    foreach(Login login, logins) {
-        qDebug() << login.getId() << " , " << login.getUser().getUsername() << " , " << login.getEventTime() <<  " , "
-                 << login.getEventType();
-    }
+//    foreach(Login login, logins) {
+//        qDebug() << login.getId() << " , " << login.getUser().userName() << " , " << login.getEventTime() <<  " , "
+//                 << login.getEventType();
+//    }
 
-    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
-    foreach(Order order, orderReports) {
-        qDebug() << order.getId() << " , " << order.getCash() << " , " << order.getOrderDate() ;
-    }
+//    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
+//    foreach(Order order, orderReports) {
+//        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
+//    }
 
     // from points to points
     // from last point to current time
@@ -132,8 +143,7 @@ void MainWindow::reportClickedSlot()
 
 void MainWindow::systemClickedSlot()
 {
-    Database::DatabaseManager database;
-    database.closeTodayOrders(QDateTime::currentDateTime());
+    Services::Checkout::closeTodayOrders();
 }
 
 void MainWindow::logoutClickedSlot()
@@ -161,7 +171,7 @@ void MainWindow::orderItemClicked(QString orderIndexId)
 
 Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
     foreach(Model::OrderDetail order, this->orderDetails) {
-        if ( order.getOrderIndexId() == indexId )
+        if ( order.orderIndexId() == indexId )
             return order;
     }
 
@@ -223,11 +233,11 @@ void MainWindow::addItemToCart(Model::OrderDetail order)
     emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::updateItemInCart(OrderDetail oldOrder, OrderDetail newOrder)
+void MainWindow::updateItemInCart(Model::OrderDetail oldOrder, Model::OrderDetail newOrder)
 {
     for(int i=0; i<this->orderDetails.size(); i++) {
         Model::OrderDetail order = this->orderDetails.at(i);
-        if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
+        if ( order.orderIndexId() == oldOrder.orderIndexId() ) {
             this->orderDetails.removeAt(i);
             break;
         }
@@ -238,12 +248,12 @@ void MainWindow::updateItemInCart(OrderDetail oldOrder, OrderDetail newOrder)
     emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::removeItemFromCart(OrderDetail oldOrder)
+void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
 {
     for(int i=0; i<this->orderDetails.size(); i++) {
         Model::OrderDetail order = this->orderDetails.at(i);
 
-        if ( order.getOrderIndexId() == oldOrder.getOrderIndexId() ) {
+        if ( order.orderIndexId() == oldOrder.orderIndexId() ) {
             this->orderDetails.removeAt(i);
             break;
         }
@@ -256,28 +266,28 @@ void MainWindow::removeItemFromCart(OrderDetail oldOrder)
 
 void MainWindow::computeTotalCash()
 {
-    this->discount = 0;
+//    this->discount = 0;
 
-    if ( this->orderDetails.isEmpty() )
-        return;
+//    if ( this->orderDetails.isEmpty() )
+//        return;
 
-    int cash = 0;
+//    int cash = 0;
 
-    foreach(Model::OrderDetail order, this->orderDetails) {
-        cash += order.getCash();
-    }
+//    foreach(Model::OrderDetail order, this->orderDetails) {
+//        cash += order.cash();
+//    }
 
-    int totalCash = cash - this->discount;
-    QDateTime now = QDateTime::currentDateTime();
+//    int totalCash = cash - this->discount;
+//    QDateTime now = QDateTime::currentDateTime();
 
-    Database::DatabaseManager database;
-    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orderDetails);
+//    Database::DatabaseManager database;
+//    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orderDetails);
 
-    qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
+//    qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
 
-    if ( ret ) {
-        clearShoppingCart();
-    }
+//    if ( ret ) {
+//        clearShoppingCart();
+//    }
 }
 
 void MainWindow::clearShoppingCart()

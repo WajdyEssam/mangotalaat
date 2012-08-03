@@ -1,22 +1,31 @@
-#ifndef CATEGORY_H
-#define CATEGORY_H
+#ifndef MODEL_CATEGORY_H
+#define MODEL_CATEGORY_H
 
 #include <QString>
+#include "baseitem.h"
 
 namespace Model
 {
-    class Category
-    {
-    public:
-        Category(int aId, const QString& aArabicName, const QString& aEnglishName);
-        int getId() const { return this->id; }
-        QString getArabicName() const { return this->arabicName; }
-        QString getEnglishName() const { return this->englishName; }
-    private:
-        int id;
-        QString arabicName;
-        QString englishName;
+
+class Category : public BaseItem
+{
+public:
+    enum Categories {
+        Fresh_JUICES = 1,
+        Cocktails,
+        Special_Dishes,
+        Speical_Cocktial,
+        Red_Bull,
+        Frozen_Yogurt,
+        Ice_Cream,
+        Milk_Shake
     };
+
+    Category(int id);
+    Category(int id, const QString& arabicName, const QString& englishName);
+
+};
+
 }
 
-#endif // CATEGORY_H
+#endif // MODEL_CATEGORY_H

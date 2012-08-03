@@ -13,7 +13,21 @@ namespace Database
         database.close();
     }
 
-    std::vector<Category> DatabaseManager::getCategories()
+    bool DatabaseManager::connect()
+    {
+        if (QSqlDatabase::database().isOpen())
+            return false;
+
+        QSqlDatabase::database().open();
+        return true;
+    }
+
+    void DatabaseManager::disconnect()
+    {
+        QSqlDatabase::database().close();
+    }
+
+   /* std::vector<Category> DatabaseManager::getCategories()
     {
         std::vector<Category> categories;
 
@@ -146,9 +160,9 @@ namespace Database
         return component;
     }
 
-    Additionals DatabaseManager::getAdditionalsById(int additionalsId)
+    Additional DatabaseManager::getAdditionalsById(int additionalsId)
     {
-        Additionals additionals;
+        Additional additionals;
 
         QSqlQuery query(QString("SELECT * FROM additionals WHERE id = %1").arg(additionalsId));
         while(query.next()) {
@@ -157,16 +171,16 @@ namespace Database
             QString englishName = query.value(2).toString();
             int price = query.value(3).toInt();
 
-            additionals = Additionals(id, arabicName, englishName, price);
+            additionals = Additional(id, arabicName, englishName, price);
             break;
         }
 
         return additionals;
     }
 
-    std::vector<Additionals> DatabaseManager::getAllAdditionals()
+    std::vector<Additional> DatabaseManager::getAllAdditionals()
     {
-        std::vector<Additionals> additionals;
+        std::vector<Additional> additionals;
 
         QSqlQuery query(QString("SELECT * FROM additionals"));
         while(query.next()){
@@ -175,7 +189,7 @@ namespace Database
             QString englishName = query.value(2).toString();
             int price = query.value(3).toInt();
 
-            Additionals additional(id, arabicName, englishName, price);
+            Additional additional(id, arabicName, englishName, price);
             additionals.push_back(additional);
         }
 
@@ -225,14 +239,14 @@ namespace Database
 
                 tmpQuery.prepare("INSERT INTO order_details(id, order_id, item_detial_id, quantity, components_ids, additionals_ids, sugar, cash) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)");
                 tmpQuery.addBindValue(orderId);
-                tmpQuery.addBindValue(orderDetail.getItemDetialId());
-                tmpQuery.addBindValue(orderDetail.getQunatity());
-                tmpQuery.addBindValue(fromListToText(orderDetail.getComponentsIds()));
-                tmpQuery.addBindValue(fromListToText(orderDetail.getAdditionalsIds()));
-                tmpQuery.addBindValue(orderDetail.getSugar());
-                tmpQuery.addBindValue(orderDetail.getCash());
+                tmpQuery.addBindValue(orderDetail.itemDetail());
+                tmpQuery.addBindValue(orderDetail.qunatity());
+                tmpQuery.addBindValue(fromListToText(orderDetail.components()));
+                tmpQuery.addBindValue(fromListToText(orderDetail.additionals()));
+                tmpQuery.addBindValue(orderDetail.sugar());
+                tmpQuery.addBindValue(orderDetail.cash());
 
-                qDebug() << " Insert Order Detail: " << orderDetail.getItemDetialId() << " : " << tmpQuery.exec();
+                qDebug() << " Insert Order Detail: " << orderDetail.itemDetail() << " : " << tmpQuery.exec();
             }
         }
 
@@ -394,4 +408,5 @@ namespace Database
 
         return orders;
     }
+    */
 }
