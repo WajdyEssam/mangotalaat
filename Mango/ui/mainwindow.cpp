@@ -156,11 +156,31 @@ void MainWindow::logoutClickedSlot()
 
 void MainWindow::applyOrderClickedSlot()
 {
+    if (this->orderDetails.count() < 1) {
+            QMessageBox::information(this, "Cart is empty", "There is no items in the cart!");
+            return;
+    }
+
+    QMessageBox::StandardButton button = QMessageBox::information(this, "Apply Order", "Are you sure of applying the order and print the invoice?",
+                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    if (button == QMessageBox::No)
+        return;
+
     computeTotalCash();
 }
 
 void MainWindow::cancelOrderClickedSlot()
 {
+    if (this->orderDetails.count() < 1) {
+            QMessageBox::information(this, "Cart is already empty", "There is no items in the cart!");
+            return;
+    }
+
+    QMessageBox::StandardButton button = QMessageBox::warning(this, "Cancel Order", "Are you sure of canceling the whole order?",
+                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    if (button == QMessageBox::No)
+        return;
+
     clearShoppingCart();
 }
 
@@ -289,6 +309,8 @@ void MainWindow::computeTotalCash()
         qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
         clearShoppingCart();
     }
+
+   QMessageBox::information(this, "Successfull operation", "System is ready for accepting next order", QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void MainWindow::clearShoppingCart()

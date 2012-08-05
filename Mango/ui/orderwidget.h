@@ -7,6 +7,7 @@
 
 class QDeclarativeView;
 class QVBoxLayout;
+class QLCDNumber;
 
 class OrderWidget : public QWidget
 {
@@ -25,9 +26,11 @@ public slots:
 private:
     void initOrderList();
     void initOrderCommand();
+    void updateLCDTotalCash(QList<Model::OrderDetail> orderDetails);
 
     QVBoxLayout* layout;
     QDeclarativeView* m_declarativeView;
+    QLCDNumber* m_lcd;
 };
 
 

@@ -126,5 +126,11 @@
         <file>images/buttons/update_cart_button.png</file>
         <file>images/buttons/remove_cart_button.png</file>
         <file>images/buttons/add_cart_button.png</file>
+        <file>images/discount_order_hover.png</file>
+        <file>images/discount_order_pressed.png</file>
+        <file>images/discount_order.png</file>
+        <file>images/cobon_order_pressed.png</file>
+        <file>images/cobon_order_hover.png</file>
+        <file>images/cobon_order.png</file>
     </qresource>
 </RCC>

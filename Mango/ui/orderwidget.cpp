@@ -5,6 +5,8 @@
 #include <QUrl>
 #include <QGroupBox>
 #include <QPushButton>
+#include <QLCDNumber>
+
 #include <QDebug>
 
 #include "orderwidget.h"
@@ -18,6 +20,8 @@ OrderWidget::OrderWidget(QWidget *parent) :
     this->setObjectName("orderWidget");
 
     layout = new QVBoxLayout(this);
+
+    m_lcd = new QLCDNumber;
 
     initOrderList();
     initOrderCommand();
@@ -49,27 +53,53 @@ void OrderWidget::initOrderList()
 
 void OrderWidget::initOrderCommand()
 {
-    QHBoxLayout* lowerLayout = new QHBoxLayout;
     QGroupBox* box = new QGroupBox;
-    box->setTitle("Order Command");
+    box->setTitle("Order Checkout");
 
-    QHBoxLayout* contentLayout = new QHBoxLayout;
 
     QPushButton* applyButton = new QPushButton;
+    applyButton->setStyleSheet("QPushButton { border-width: 4px; border-image: url(:/images/apply_order.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px; } QPushButton:hover { border-width: 4px; border-image: url(:/images/apply_order_hover.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;} QPushButton:pressed, #orderWidget QPushButton:checked { border-width: 4px; border-image: url(:/images/apply_order_pressed.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;}");
+
     QPushButton* cancelButton = new QPushButton;
+    cancelButton->setStyleSheet("QPushButton { border-width: 4px; border-image: url(:/images/cancel_order.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px; } QPushButton:hover { border-width: 4px; border-image: url(:/images/cancel_order_hover.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;} QPushButton:pressed, #orderWidget QPushButton:checked { border-width: 4px; border-image: url(:/images/cancel_order_pressed.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;}");
+
+    QPushButton* discountButton = new QPushButton;
+    discountButton->setStyleSheet("QPushButton { border-width: 4px; border-image: url(:/images/discount_order.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px; } QPushButton:hover { border-width: 4px; border-image: url(:/images/discount_order_hover.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;} QPushButton:pressed, #orderWidget QPushButton:checked { border-width: 4px; border-image: url(:/images/discount_order_pressed.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;}");
+
+    QPushButton* cobonButton = new QPushButton;
+    cobonButton->setStyleSheet("QPushButton { border-width: 4px; border-image: url(:/images/cobon_order.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px; } QPushButton:hover { border-width: 4px; border-image: url(:/images/cobon_order_hover.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;} QPushButton:pressed, #orderWidget QPushButton:checked { border-width: 4px; border-image: url(:/images/cobon_order_pressed.png) 4 4 4 4 stretch stretch; min-width: 32px; min-height: 32px;}");
+
+
+    applyButton->setMaximumSize(163, 54);
+    cancelButton->setMaximumSize(163, 54);
+    discountButton->setMaximumSize(163, 54);
+    cobonButton->setMaximumSize(163, 54);
 
     connect(applyButton, SIGNAL(clicked()), this, SIGNAL(applyClicked()));
     connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
 
-    contentLayout->addWidget(applyButton);
-    contentLayout->addWidget(cancelButton);
+    QGridLayout* gridLayout = new QGridLayout;
+    gridLayout->addWidget(m_lcd, 0, 2, 2, 1);
+    gridLayout->addWidget(applyButton, 0, 0);
+    gridLayout->addWidget(cancelButton, 0 ,1);
+    gridLayout->addWidget(discountButton, 1, 0);
+    gridLayout->addWidget(cobonButton, 1, 1);
 
     box->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::Maximum);
+    box->setLayout(gridLayout);
 
-    box->setLayout(contentLayout);
-    lowerLayout->addWidget(box);
+    layout->addWidget(box);
+}
 
-    layout->addLayout(lowerLayout);
+void OrderWidget::updateLCDTotalCash(QList<Model::OrderDetail> orderDetails)
+{
+    int cash = 0;
+
+    foreach(Model::OrderDetail order, orderDetails) {
+        cash += order.cash();
+    }
+
+    m_lcd->display(cash);
 }
 
 void OrderWidget::updateOrderDetails(QList<Model::OrderDetail> orderDetails)
@@ -92,4 +122,7 @@ void OrderWidget::updateOrderDetails(QList<Model::OrderDetail> orderDetails)
 
     QDeclarativeContext* context = m_declarativeView->rootContext();
     context->setContextProperty("ordersModel", QVariant::fromValue(orderList));
+
+    updateLCDTotalCash(orderDetails);
+
 }
