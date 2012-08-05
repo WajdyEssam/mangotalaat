@@ -307,6 +307,7 @@ void MainWindow::computeTotalCash()
 
     if ( ret ) {
         qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
+        printReceipt();
         clearShoppingCart();
     }
 
@@ -332,4 +333,48 @@ void MainWindow::computeCupon()
 void MainWindow::setDiscount()
 {
     this->discount = 0;
+}
+
+void MainWindow::printReceipt() {
+    if ( this->orderDetails.empty())
+        return;
+
+    QString printApplicationPath = "ThermalPrinterTestApp.exe";
+    QString outputFilename = "Data.txt";
+
+    // write order detials to file
+    int totalCash = 0;
+    foreach(Model::OrderDetail order, this->orderDetails) {
+        totalCash += order.cash();
+    }
+
+    QString cash = QString::number(totalCash);
+    QString discount = "0.0";
+
+    QFile file(outputFilename);
+
+    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QTextStream stream(&file);
+
+        QString firstLine = cash + " @ " + discount;
+        stream << firstLine << endl;
+
+        foreach(Model::OrderDetail order, this->orderDetails) {
+            QString quantity = QString::number(order.qunatity());
+            QString size = order.itemDetail().size().englishName().at(0).toUpper();
+            QString itemName = order.itemDetail().item().englishName();
+            QString description = "testing";
+            QString price = QString::number(order.cash());
+
+            QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5").arg(quantity).arg(size).arg(itemName).arg(description).arg(price);
+            stream << itemLine << endl;
+        }
+
+        file.close();
+
+        QStringList arg;
+        arg << outputFilename;
+        QProcess *process = new QProcess(this);
+        process->start(printApplicationPath, arg);
+    }
 }
