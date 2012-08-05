@@ -3,7 +3,6 @@
 *.txt
 Debug
 Release
-/**/build/*
 *.xli
 *.dll
 *.exe
@@ -59,7 +58,7 @@ Makefile
 Makefile.Debug
 Makefile.Release
 object_script.*
-build/*
+build/
 release/*
 debug/*
 ui_*
