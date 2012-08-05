@@ -463,7 +463,8 @@ int PropertyWidget::readQunatity()
 void PropertyWidget::setActiveComponents()
 {
     foreach (Model::ItemComponent itemComponent, Services::ItemComponent::getByItemId(m_orderDetail.itemDetail().item().id())) {
-        Model::Component c = Services::Component::getById(itemComponent.id());
+
+        Model::Component c = Services::Component::getById(itemComponent.component().id());
         int id = c.id();
         QString buttonName = QString::number(id) + "_ComponentButton";
         ToolButton* button = this->findChild<ToolButton*>(buttonName);
