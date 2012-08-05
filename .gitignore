@@ -3,7 +3,7 @@
 *.txt
 Debug
 Release
-
+/**/build/*
 *.xli
 *.dll
 *.exe
