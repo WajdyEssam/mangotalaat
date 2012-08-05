@@ -14,6 +14,7 @@ namespace Model {
 class MANGOMODELSHARED_EXPORT OrderDetail
 {
 public:
+    OrderDetail();
     OrderDetail(int id);
     OrderDetail(int id, Model::Order order, Model::ItemDetail itemDetail, int qunatity, QList<Model::Component> components,
                 QList<Model::Additional> additionals, int sugar, int cash);
@@ -30,8 +31,11 @@ public:
 
     void setOrder(Model::Order order);
     void setItemDetail(Model::ItemDetail itemDetail);
+    void setQuantity(int quantity);
     void setComponent(QList<Model::Component> components);
     void setAdditionals(QList<Model::Additional> additionals);
+    void setSugar(int sugar);
+    void setCash(int cash);
 
 private:
     QString getCurrentTimeStamp();

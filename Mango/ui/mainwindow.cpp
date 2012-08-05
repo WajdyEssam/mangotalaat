@@ -12,6 +12,7 @@
 #include "../../MangoService/event.h"
 #include "../../MangoService/checkout.h"
 #include "../../MangoService/itemdetail.h"
+#include "../../MangoService/orderdetail.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -203,7 +204,7 @@ void MainWindow::establishConnections()
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
     connect(this->propertyWidget, SIGNAL(addItem(Model::OrderDetail)), this, SLOT(addItemToCart(Model::OrderDetail)));
-    connect(this->propertyWidget, SIGNAL(updateItem(Model::OrderDetail,Model::OrderDetail)), this, SLOT(updateItemInCart(Model::OrderDetail,Model::OrderDetail)));
+    connect(this->propertyWidget, SIGNAL(updateItem(Model::OrderDetail)), this, SLOT(updateItemInCart(Model::OrderDetail)));
     connect(this->propertyWidget, SIGNAL(removeItem(Model::OrderDetail)), this, SLOT(removeItemFromCart(Model::OrderDetail)));
 }
 
@@ -221,8 +222,7 @@ void MainWindow::selectItemSlot(int itemId)
 
 void MainWindow::selectItemDetialSlot(int itemDetialId)
 {
-    Model::OrderDetail orderDetail(itemDetialId);
-    orderDetail.setItemDetail(Services::ItemDetail::getById(itemDetialId));
+    Model::OrderDetail orderDetail = Services::OrderDetail::getEmptyOrderDetail(itemDetialId);
     this->propertyWidget->setOrder(orderDetail, false);
     this->setCurrentPage(PropertyPage);
 }
@@ -235,7 +235,7 @@ void MainWindow::addItemToCart(Model::OrderDetail order)
     emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::updateItemInCart(Model::OrderDetail oldOrder, Model::OrderDetail newOrder)
+void MainWindow::updateItemInCart(Model::OrderDetail oldOrder)
 {
     for(int i=0; i<this->orderDetails.size(); i++) {
         Model::OrderDetail order = this->orderDetails.at(i);
@@ -245,7 +245,7 @@ void MainWindow::updateItemInCart(Model::OrderDetail oldOrder, Model::OrderDetai
         }
     }
 
-    this->orderDetails.append(newOrder);
+    this->orderDetails.append(oldOrder);
     this->setCurrentPage(CategoryPage);
     emit orderDetailUpdated(this->orderDetails);
 }

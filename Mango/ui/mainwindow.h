@@ -48,7 +48,7 @@ private slots:
     void selectItemDetialSlot(int itemDetialId);
     //void updateItemDetialSlot(Model::OrderDetail order);
     void addItemToCart(Model::OrderDetail);
-    void updateItemInCart(Model::OrderDetail, Model::OrderDetail);
+    void updateItemInCart(Model::OrderDetail);
     void removeItemFromCart(Model::OrderDetail);
 
 private:

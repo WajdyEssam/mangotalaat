@@ -11,6 +11,7 @@ namespace Services {
 class MANGOSERVICESHARED_EXPORT OrderDetail
 {
 public:
+    static Model::OrderDetail getEmptyOrderDetail(int itemDetailId);
     static bool add(QList<Model::OrderDetail> orderDetails, int orderId);
     static QList<Model::OrderDetail> getByOrderId(int orderId);
 };

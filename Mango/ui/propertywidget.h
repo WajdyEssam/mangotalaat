@@ -22,7 +22,7 @@ public:
     
 signals:
     void addItem(Model::OrderDetail);
-    void updateItem(Model::OrderDetail, Model::OrderDetail);
+    void updateItem(Model::OrderDetail);
     void removeItem(Model::OrderDetail);
 
 public slots:
@@ -83,13 +83,13 @@ private:
     void showEditButton();
     void showAddButton();
 
-    QStringList readActiveComponents();
-    QStringList readActiveAdditionals();
+    QList<Model::Component> readActiveComponents();
+    QList<Model::Additional> readActiveAdditionals();
     int readSugar();
     int readQunatity();
 
-    void setActiveComponents();
-    void setActiveAdditionals();
+//    void setActiveComponents();
+//    void setActiveAdditionals();
 };
 
 #endif // PROPERTYWIDGET_H

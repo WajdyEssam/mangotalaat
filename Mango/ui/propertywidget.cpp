@@ -228,19 +228,16 @@ void PropertyWidget::setOrder(Model::OrderDetail orderDetail, bool isOpenedInEdi
     this->recheckAdditionalsButtons();
 
     int categoryId = m_orderDetail.itemDetail().item().category().id();
-
     if ( categoryId != Model::Category::Cocktails && categoryId != Model::Category::Speical_Cocktial ) {
         this->componentsGroupBox->setVisible(false);
     } else {
         this->componentsGroupBox->setVisible(true);
-        this->setActiveComponents();
-        this->setActiveAdditionals();
     }
 
     itemNameLineEdit->setText(m_orderDetail.itemDetail().item().arabicName());
     itemQuantityLineEdit->setText(QString::number(m_orderDetail.qunatity()));
     itemSizeLineEdit->setText(m_orderDetail.itemDetail().size().arabicName());
-    itemPriceLineEdit->setText(QString::number(m_orderDetail.cash()));
+    itemPriceLineEdit->setText(QString::number(m_orderDetail.itemDetail().price()));
     itemSugarLineEdit->setText(QString::number(m_orderDetail.sugar()));
 
     // Fill after set active components and additionals
@@ -286,35 +283,36 @@ void PropertyWidget::addItemClicked()
         return ;
     }
 
-    int id = this->m_orderDetail.itemDetail().id();
-    QStringList components = readActiveComponents();
-    QStringList additionals = readActiveAdditionals();
-    int sugar = readSugar();
-    int quantity = readQunatity();
-    QString orderIndexId = this->m_orderDetail.orderIndexId();
+    m_orderDetail.setComponent(readActiveComponents());
+    m_orderDetail.setAdditionals(readActiveAdditionals());
+    m_orderDetail.setSugar(this->readSugar());
+    m_orderDetail.setQuantity(this->readQunatity());
 
-    //Model::OrderDetail orderDetail(id, m_orderDetail.order(), m_orderDetail.itemDetail(), quantity, components, additionals, sugar, cash);
-
-    //emit addItem(orderDetail);
+    emit addItem(m_orderDetail);
 }
 
 void PropertyWidget::updateItemClicked()
 {
-    int itemDetailId = this->m_orderDetail.itemDetail().id();
-    QStringList components = readActiveComponents();
-    QStringList additionals = readActiveAdditionals();
-    int sugar = readSugar();
-    int quantity = readQunatity();
-    QString orderIndexId = this->m_orderDetail.orderIndexId();
+//    int itemDetailId = m_orderDetail.itemDetail().id();
+//    QStringList components = readActiveComponents();
+//    QStringList additionals = readActiveAdditionals();
+//    int sugar = readSugar();
+//    int quantity = readQunatity();
+//    QString orderIndexId = this->m_orderDetail.orderIndexId();
 
     //Model::OrderDetail orderDetail(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
 
-    //emit updateItem(this->m_orderDetail, orderDetail);
+    m_orderDetail.setComponent(readActiveComponents());
+    m_orderDetail.setAdditionals(readActiveAdditionals());
+    m_orderDetail.setSugar(this->readSugar());
+    m_orderDetail.setQuantity(this->readQunatity());
+
+    emit updateItem(m_orderDetail);
 }
 
 void PropertyWidget::removeItemClicked()
 {
-    emit removeItem(this->m_orderDetail);
+    emit removeItem(m_orderDetail);
 }
 
 void PropertyWidget::uncheckComponentsButtons()
@@ -361,7 +359,7 @@ void PropertyWidget::clearItemDetailsLineEdit()
 
 void PropertyWidget::recheckComponentsButtons()
 {
-    foreach(Model::Component component, this->m_orderDetail.components()) {
+    foreach(Model::Component component, m_orderDetail.components()) {
         int id = component.id();
         QString buttonName = QString::number(id) + "_ComponentButton";
         ToolButton* button = this->findChild<ToolButton*>(buttonName);
@@ -384,14 +382,14 @@ void PropertyWidget::recheckAdditionalsButtons()
 void PropertyWidget::fillItemDetialsLineEdit()
 {
     QStringList components;
-    foreach (QString id, readActiveComponents()) {
-        Model::Component component = Services::Component::getById(id.toInt());
+    foreach (Model::Component c, readActiveComponents()) {
+        Model::Component component = Services::Component::getById(c.id());
         components.append(component.arabicName());
     }
 
     QStringList additionals;
-    foreach (QString id, readActiveAdditionals()) {
-        Model::Additional additional = Services::Additional::getById(id.toInt());
+    foreach (Model::Additional a, readActiveAdditionals()) {
+        Model::Additional additional = Services::Additional::getById(a.id());
         additionals.append(additional.arabicName());
     }
 
@@ -416,34 +414,36 @@ void PropertyWidget::showAddButton()
     removeButton->setVisible(false);
 }
 
-QStringList PropertyWidget::readActiveComponents()
+QList<Model::Component> PropertyWidget::readActiveComponents()
 {
     QList<ToolButton*> buttons = this->componentsGroupBox->findChildren<ToolButton*>();
-    QStringList components;
+    QList<Model::Component> components;
 
     foreach (ToolButton* button, buttons) {
 
         int id = button->objectName().split("_").first().toInt();
 
         if ( button->activeState() == ToolButton::Active) {
-            components.append(QString::number(id));
+            Model::Component c(id);
+            components.append(c);
         }
     }
 
     return components;
 }
 
-QStringList PropertyWidget::readActiveAdditionals()
+QList<Model::Additional> PropertyWidget::readActiveAdditionals()
 {
     QList<ToolButton*> buttons = this->additionalsGroupBox->findChildren<ToolButton*>();
-    QStringList additionals;
+    QList<Model::Additional> additionals;
 
     foreach (ToolButton* button, buttons) {
 
         int id = button->objectName().split("_").first().toInt();
 
         if ( button->activeState() == ToolButton::Active) {
-            additionals.append(QString::number(id));
+            Model::Additional a(id);
+            additionals.append(a);
         }
     }
 
@@ -452,7 +452,7 @@ QStringList PropertyWidget::readActiveAdditionals()
 
 int PropertyWidget::readSugar()
 {
-    return 1;
+    return itemSugarLineEdit->text().toInt();
 }
 
 int PropertyWidget::readQunatity()
@@ -460,21 +460,21 @@ int PropertyWidget::readQunatity()
     return itemQuantityLineEdit->text().toInt();
 }
 
-void PropertyWidget::setActiveComponents()
-{
-    foreach (Model::ItemComponent itemComponent, Services::ItemComponent::getByItemId(m_orderDetail.itemDetail().item().id())) {
-        Model::Component c = Services::Component::getById(itemComponent.id());
-        int id = c.id();
-        QString buttonName = QString::number(id) + "_ComponentButton";
-        ToolButton* button = this->findChild<ToolButton*>(buttonName);
-        button->setActiveState(ToolButton::Active);
-        button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
-    }
-}
+//void PropertyWidget::setActiveComponents()
+//{
+//    foreach (Model::ItemComponent itemComponent, Services::ItemComponent::getByItemId(m_orderDetail.itemDetail().item().id())) {
+//        Model::Component c = Services::Component::getById(itemComponent.id());
+//        int id = c.id();
+//        QString buttonName = QString::number(id) + "_ComponentButton";
+//        ToolButton* button = this->findChild<ToolButton*>(buttonName);
+//        button->setActiveState(ToolButton::Active);
+//        button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
+//    }
+//}
 
-void PropertyWidget::setActiveAdditionals()
-{
-}
+//void PropertyWidget::setActiveAdditionals()
+//{
+//}
 
 void PropertyWidget::openKeypadDialog()
 {
@@ -493,7 +493,7 @@ void PropertyWidget::calculateTotalPrice()
     int addtionalCount = readActiveAdditionals().count();
     int itemPrice = itemPriceLineEdit->text().toInt();
     int totalPrice = itemPrice * quantity;
-    totalPrice = totalPrice + (componentsCount * 1);
+    //totalPrice = totalPrice + (componentsCount * 1);
     totalPrice = totalPrice + (addtionalCount * 1);
 
     totalPriceLineEdit->setText(QString::number(totalPrice));

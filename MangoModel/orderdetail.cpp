@@ -5,14 +5,16 @@ namespace Model {
 
 OrderDetail::OrderDetail(int id) :
     m_id(id), m_order(0), m_quantity(1), m_sugar(1), m_cash(0)
-{
-    m_orderIndexId = getCurrentTimeStamp();
-}
+{}
 
 OrderDetail::OrderDetail(int id, Model::Order order, Model::ItemDetail itemDetail, int qunatity, QList<Model::Component> components,
             QList<Model::Additional> additionals, int sugar, int cash) :
     m_id(id), m_order(order), m_itemDetail(itemDetail), m_quantity(qunatity), m_components(components), m_additionals(additionals),
     m_sugar(sugar), m_cash(cash)
+{}
+
+OrderDetail::OrderDetail() :
+    m_id(0), m_order(0), m_quantity(1), m_sugar(1), m_cash(0)
 {
     m_orderIndexId = getCurrentTimeStamp();
 }
@@ -72,6 +74,11 @@ void OrderDetail::setItemDetail(ItemDetail itemDetail)
     m_itemDetail = itemDetail;
 }
 
+void OrderDetail::setQuantity(int quantity)
+{
+    m_quantity = quantity;
+}
+
 void OrderDetail::setComponent(QList<Component> components)
 {
     m_components = components;
@@ -80,6 +87,16 @@ void OrderDetail::setComponent(QList<Component> components)
 void OrderDetail::setAdditionals(QList<Additional> additionals)
 {
     m_additionals = additionals;
+}
+
+void OrderDetail::setSugar(int sugar)
+{
+    m_sugar = sugar;
+}
+
+void OrderDetail::setCash(int cash)
+{
+    m_cash = cash;
 }
 
 QString OrderDetail::getCurrentTimeStamp()
