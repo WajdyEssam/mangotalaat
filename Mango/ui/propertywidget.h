@@ -88,8 +88,6 @@ private:
     int readSugar();
     int readQunatity();
 
-//    void setActiveComponents();
-//    void setActiveAdditionals();
 };
 
 #endif // PROPERTYWIDGET_H

@@ -460,21 +460,6 @@ int PropertyWidget::readQunatity()
     return itemQuantityLineEdit->text().toInt();
 }
 
-//void PropertyWidget::setActiveComponents()
-//{
-//    foreach (Model::ItemComponent itemComponent, Services::ItemComponent::getByItemId(m_orderDetail.itemDetail().item().id())) {
-//        Model::Component c = Services::Component::getById(itemComponent.id());
-//        int id = c.id();
-//        QString buttonName = QString::number(id) + "_ComponentButton";
-//        ToolButton* button = this->findChild<ToolButton*>(buttonName);
-//        button->setActiveState(ToolButton::Active);
-//        button->setIcon(QIcon(QString(":/images/components/component_active_%1.png").arg(id)));
-//    }
-//}
-
-//void PropertyWidget::setActiveAdditionals()
-//{
-//}
 
 void PropertyWidget::openKeypadDialog()
 {

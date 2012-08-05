@@ -549,6 +549,160 @@ CREATE TABLE item_components (
 	component_id INTEGER
 );
 
+INSERT INTO item_components(item_id, component_id)  values(30,1);
+INSERT INTO item_components(item_id, component_id)  values(30,2);
+INSERT INTO item_components(item_id, component_id)  values(30,3);
+
+INSERT INTO item_components(item_id, component_id)  values(31, 1);
+INSERT INTO item_components(item_id, component_id)  values(31, 2);
+INSERT INTO item_components(item_id, component_id)  values(31, 4);
+
+INSERT INTO item_components(item_id, component_id)  values(32, 5);
+INSERT INTO item_components(item_id, component_id)  values(32, 1);
+INSERT INTO item_components(item_id, component_id)  values(32, 6);
+
+INSERT INTO item_components(item_id, component_id)  values(33, 1);
+INSERT INTO item_components(item_id, component_id)  values(33, 2);
+INSERT INTO item_components(item_id, component_id)  values(33, 7);
+INSERT INTO item_components(item_id, component_id)  values(33, 8);
+INSERT INTO item_components(item_id, component_id)  values(33, 9);
+
+INSERT INTO item_components(item_id, component_id)  values(34, 10);
+INSERT INTO item_components(item_id, component_id)  values(34, 8);
+INSERT INTO item_components(item_id, component_id)  values(34, 7);
+
+INSERT INTO item_components(item_id, component_id)  values(35, 1);
+INSERT INTO item_components(item_id, component_id)  values(35, 2);
+INSERT INTO item_components(item_id, component_id)  values(35, 9);
+
+INSERT INTO item_components(item_id, component_id)  values(36, 1);
+INSERT INTO item_components(item_id, component_id)  values(36, 4);
+INSERT INTO item_components(item_id, component_id)  values(36, 9);
+
+INSERT INTO item_components(item_id, component_id)  values(37, 1);
+INSERT INTO item_components(item_id, component_id)  values(37, 2);
+INSERT INTO item_components(item_id, component_id)  values(37, 4);
+INSERT INTO item_components(item_id, component_id)  values(37, 9);
+
+INSERT INTO item_components(item_id, component_id)  values(38, 11);
+
+INSERT INTO item_components(item_id, component_id)  values(39, 12);
+INSERT INTO item_components(item_id, component_id)  values(39, 4);
+INSERT INTO item_components(item_id, component_id)  values(39, 2);
+
+INSERT INTO item_components(item_id, component_id)  values(40, 2);
+INSERT INTO item_components(item_id, component_id)  values(40, 13);
+INSERT INTO item_components(item_id, component_id)  values(40, 8);
+INSERT INTO item_components(item_id, component_id)  values(40, 4);
+
+INSERT INTO item_components(item_id, component_id)  values(41, 10);
+INSERT INTO item_components(item_id, component_id)  values(41, 1);
+INSERT INTO item_components(item_id, component_id)  values(41, 6);
+
+INSERT INTO item_components(item_id, component_id)  values(42, 14);
+INSERT INTO item_components(item_id, component_id)  values(42, 4);
+INSERT INTO item_components(item_id, component_id)  values(42, 13);
+INSERT INTO item_components(item_id, component_id)  values(42, 2);
+
+INSERT INTO item_components(item_id, component_id)  values(43, 8);
+INSERT INTO item_components(item_id, component_id)  values(43, 1);
+INSERT INTO item_components(item_id, component_id)  values(43, 2);
+INSERT INTO item_components(item_id, component_id)  values(43, 5);
+
+INSERT INTO item_components(item_id, component_id)  values(44, 2);
+INSERT INTO item_components(item_id, component_id)  values(44, 8);
+INSERT INTO item_components(item_id, component_id)  values(44, 10);
+INSERT INTO item_components(item_id, component_id)  values(44, 4);
+
+INSERT INTO item_components(item_id, component_id)  values(45, 10);
+INSERT INTO item_components(item_id, component_id)  values(45, 13);
+INSERT INTO item_components(item_id, component_id)  values(45, 12);
+INSERT INTO item_components(item_id, component_id)  values(45, 1);
+
+INSERT INTO item_components(item_id, component_id)  values(46, 15);
+INSERT INTO item_components(item_id, component_id)  values(46, 13);
+INSERT INTO item_components(item_id, component_id)  values(46, 16);
+
+INSERT INTO item_components(item_id, component_id)  values(47, 1);
+INSERT INTO item_components(item_id, component_id)  values(47, 14);
+INSERT INTO item_components(item_id, component_id)  values(47, 17);
+INSERT INTO item_components(item_id, component_id)  values(47, 12);
+
+INSERT INTO item_components(item_id, component_id)  values(48, 13);
+INSERT INTO item_components(item_id, component_id)  values(48, 15);
+
+INSERT INTO item_components(item_id, component_id)  values(49, 7);
+INSERT INTO item_components(item_id, component_id)  values(49, 8);
+INSERT INTO item_components(item_id, component_id)  values(49, 13);
+
+INSERT INTO item_components(item_id, component_id)  values(50, 18);
+INSERT INTO item_components(item_id, component_id)  values(50, 1);
+INSERT INTO item_components(item_id, component_id)  values(50, 9);
+INSERT INTO item_components(item_id, component_id)  values(50, 2);
+
+INSERT INTO item_components(item_id, component_id)  values(51, 18);
+INSERT INTO item_components(item_id, component_id)  values(51, 1);
+INSERT INTO item_components(item_id, component_id)  values(51, 2);
+INSERT INTO item_components(item_id, component_id)  values(51, 15);
+
+INSERT INTO item_components(item_id, component_id)  values(52, 19);
+INSERT INTO item_components(item_id, component_id)  values(52, 9);
+
+INSERT INTO item_components(item_id, component_id)  values(53, 13);
+INSERT INTO item_components(item_id, component_id)  values(53, 8);
+INSERT INTO item_components(item_id, component_id)  values(53, 20);
+INSERT INTO item_components(item_id, component_id)  values(53, 21);
+
+INSERT INTO item_components(item_id, component_id)  values(54, 12);
+INSERT INTO item_components(item_id, component_id)  values(54, 2);
+INSERT INTO item_components(item_id, component_id)  values(54, 21);
+INSERT INTO item_components(item_id, component_id)  values(54, 22);
+
+
+INSERT INTO item_components(item_id, component_id)  values(72, 1);
+INSERT INTO item_components(item_id, component_id)  values(72, 2);
+INSERT INTO item_components(item_id, component_id)  values(72, 15);
+
+INSERT INTO item_components(item_id, component_id)  values(73, 4);
+INSERT INTO item_components(item_id, component_id)  values(73, 8);
+INSERT INTO item_components(item_id, component_id)  values(73, 2);
+
+INSERT INTO item_components(item_id, component_id)  values(74, 13);
+INSERT INTO item_components(item_id, component_id)  values(74, 6);
+INSERT INTO item_components(item_id, component_id)  values(74, 17);
+
+INSERT INTO item_components(item_id, component_id)  values(75, 4);
+INSERT INTO item_components(item_id, component_id)  values(75, 21);
+INSERT INTO item_components(item_id, component_id)  values(75, 6);
+
+INSERT INTO item_components(item_id, component_id)  values(76, 13);
+INSERT INTO item_components(item_id, component_id)  values(76, 21);
+INSERT INTO item_components(item_id, component_id)  values(76, 6);
+
+INSERT INTO item_components(item_id, component_id)  values(77, 1);
+INSERT INTO item_components(item_id, component_id)  values(77, 2);
+
+INSERT INTO item_components(item_id, component_id)  values(78, 10);
+INSERT INTO item_components(item_id, component_id)  values(78, 19);
+INSERT INTO item_components(item_id, component_id)  values(78, 13);
+
+INSERT INTO item_components(item_id, component_id)  values(79, 8);
+INSERT INTO item_components(item_id, component_id)  values(79, 13);
+INSERT INTO item_components(item_id, component_id)  values(79, 1);
+
+INSERT INTO item_components(item_id, component_id)  values(80, 1);
+INSERT INTO item_components(item_id, component_id)  values(80, 2);
+INSERT INTO item_components(item_id, component_id)  values(80, 4);
+
+INSERT INTO item_components(item_id, component_id)  values(81, 3);
+INSERT INTO item_components(item_id, component_id)  values(81, 19);
+
+INSERT INTO item_components(item_id, component_id)  values(82, 21);
+
+INSERT INTO item_components(item_id, component_id)  values(83, 1);
+INSERT INTO item_components(item_id, component_id)  values(83, 2);
+INSERT INTO item_components(item_id, component_id)  values(83, 12);
+INSERT INTO item_components(item_id, component_id)  values(83, 9);
 
 CREATE TABLE additionals (
 	id INTEGER PRIMARY KEY AUTOINCREMENT, 
