@@ -8,7 +8,7 @@
 
 #include "../../MangoModel/event.h"
 #include "../../MangoModel/itemdetail.h"
-
+#include "../../MangoService/order.h"
 #include "../../MangoService/event.h"
 #include "../../MangoService/checkout.h"
 #include "../../MangoService/itemdetail.h"
@@ -268,28 +268,27 @@ void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
 
 void MainWindow::computeTotalCash()
 {
-//    this->discount = 0;
+    this->discount = 0;
 
-//    if ( this->orderDetails.isEmpty() )
-//        return;
+    if ( this->orderDetails.isEmpty() )
+        return;
 
-//    int cash = 0;
+    int cash = 0;
 
-//    foreach(Model::OrderDetail order, this->orderDetails) {
-//        cash += order.cash();
-//    }
+    foreach(Model::OrderDetail order, this->orderDetails) {
+        cash += order.cash();
+    }
 
-//    int totalCash = cash - this->discount;
-//    QDateTime now = QDateTime::currentDateTime();
+    int totalCash = cash - this->discount;
+    QDateTime now = QDateTime::currentDateTime();
 
-//    Database::DatabaseManager database;
-//    bool ret = database.addOrder(now, 1, cash, discount, totalCash, this->orderDetails);
+    Model::Order order(0, now, Model::OrderType::CASH, cash, discount, totalCash, 0);
+    bool ret = Services::Order::add(order, this->orderDetails);
 
-//    qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
-
-//    if ( ret ) {
-//        clearShoppingCart();
-//    }
+    if ( ret ) {
+        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
+        clearShoppingCart();
+    }
 }
 
 void MainWindow::clearShoppingCart()
