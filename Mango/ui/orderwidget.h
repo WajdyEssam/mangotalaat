@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include "../MangoModel/orderdetail.h"
+#include "../../MangoModel/orderdetail.h"
 
 class QDeclarativeView;
 class QVBoxLayout;

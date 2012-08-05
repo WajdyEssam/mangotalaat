@@ -12,8 +12,8 @@
 #include <QMessageBox>
 
 #include "propertywidget.h"
-#include "ui/toolbutton.h"
-#include "ui/keypaddialog.h"
+#include "toolbutton.h"
+#include "keypaddialog.h"
 #include "../../MangoModel/component.h"
 #include "../../MangoModel/additional.h"
 #include "../../MangoModel/category.h"

@@ -62,10 +62,10 @@ CREATE TABLE orders_type (
 	english_name TEXT
 );
 
-INSERT INTO orders_type(description) values("Cash", "كاش");
-INSERT INTO orders_type(description) values("Cupon", "كوبون");
-INSERT INTO orders_type(description) values("Discount", "خصم");
-INSERT INTO orders_type(description) values("Free", "مجاني");
+INSERT INTO orders_type(arabic_name, english_name) values("كاش", "Cash");
+INSERT INTO orders_type(arabic_name, english_name) values("كوبون", "Cupon");
+INSERT INTO orders_type(arabic_name, english_name) values("خصم", "Discount");
+INSERT INTO orders_type(arabic_name, english_name) values("مجاني", "Free");
 
 CREATE TABLE orders (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
