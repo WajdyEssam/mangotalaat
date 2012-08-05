@@ -287,6 +287,7 @@ void PropertyWidget::addItemClicked()
     m_orderDetail.setAdditionals(readActiveAdditionals());
     m_orderDetail.setSugar(this->readSugar());
     m_orderDetail.setQuantity(this->readQunatity());
+    m_orderDetail.setCash(totalPriceLineEdit->text().toInt());
 
     emit addItem(m_orderDetail);
 }
@@ -306,6 +307,7 @@ void PropertyWidget::updateItemClicked()
     m_orderDetail.setAdditionals(readActiveAdditionals());
     m_orderDetail.setSugar(this->readSugar());
     m_orderDetail.setQuantity(this->readQunatity());
+    m_orderDetail.setCash(totalPriceLineEdit->text().toInt());
 
     emit updateItem(m_orderDetail);
 }
