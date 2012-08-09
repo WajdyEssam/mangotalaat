@@ -2,11 +2,13 @@
 #define ITEMSWIDGET_H
 
 #include <QWidget>
-#include <QGroupBox>
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QSignalMapper>
-#include <QGridLayout>
+
+class QGroupBox;
+class QHBoxLayout;
+class QSignalMapper;
+class QGridLayout;
+class QToolButton;
+class QVBoxLayout;
 
 class ItemsWidget : public QWidget
 {
@@ -23,16 +25,16 @@ signals:
 
 private:
     enum {
-        NumButtons = 100 , ButtonsPerLine = 4
+        NumButtons = 100 , ButtonsPerLine = 6
     };
 
     QSignalMapper *signalMapper;
-    QPushButton *buttons[NumButtons];
     QGroupBox *horizontalGroupBox;
     QGridLayout *layout;
+    QHBoxLayout* containerLayout;
+    QVBoxLayout* subContainerLayout;
 
     void removeItems();
-
 };
 
 #endif // ITEMSWIDGET_H

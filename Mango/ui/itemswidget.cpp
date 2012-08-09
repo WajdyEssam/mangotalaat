@@ -1,3 +1,10 @@
+#include <QGroupBox>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolButton>
+#include <QSignalMapper>
+#include <QIcon>
 #include <QDebug>
 
 #include "itemswidget.h"
@@ -11,9 +18,24 @@ ItemsWidget::ItemsWidget(QWidget *parent) :
     this->setObjectName("itemWidget");
     this->signalMapper = new QSignalMapper(this);
     this->horizontalGroupBox = new QGroupBox(tr("Items"));
+    this->containerLayout = new QHBoxLayout;
+    this->subContainerLayout = new QVBoxLayout;
     this->layout = new QGridLayout;
 
-    this->horizontalGroupBox->setLayout(layout);
+    this->containerLayout->addStretch();
+    this->containerLayout->addLayout(this->subContainerLayout);
+    this->containerLayout->addStretch();
+
+    this->subContainerLayout->addStretch();
+    this->subContainerLayout->addLayout(this->layout);
+    this->subContainerLayout->addStretch();
+
+    this->containerLayout->setSpacing(0);
+    this->layout->setVerticalSpacing(0);
+    this->layout->setHorizontalSpacing(0);
+    this->layout->setAlignment(Qt::AlignTop);
+
+    this->horizontalGroupBox->setLayout(containerLayout);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(horizontalGroupBox);
@@ -36,11 +58,18 @@ void ItemsWidget::createItems(int categoryId)
 
     int i=0, col = 0, row = 1;
     for(QList<Model::Item>::iterator p = items.begin(); p != items.end(); ++p ) {
-        buttons[i] = new QPushButton(p->arabicName());
-        buttons[i]->setObjectName(QString("%1_itemButton").arg(p->id()));
-        connect(buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
-        this->signalMapper->setMapping(buttons[i], p->id());
-        layout->addWidget(buttons[i], row, col);
+        QToolButton* button = new QToolButton;
+        QString description = p->arabicName();
+        button->setObjectName(QString("%1_itemButton").arg(p->id()));
+        button->setText(description);
+        button->setFont(QFont("Droid Arabic Naskh", 12, QFont::Bold));
+        //button->setIcon(QIcon(QString(":/images/prices/%1_%2_%3.png").arg(p->size().id()).arg(p->price()).arg("en")));
+        button->setIconSize(QSize(135,135));
+        button->setToolTip(description);
+        button->setStatusTip(description);
+        connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
+        this->signalMapper->setMapping(button, p->id());
+        layout->addWidget(button, row, col);
 
         col++;
         i++;

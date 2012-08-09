@@ -17,7 +17,7 @@ SizeWidget::SizeWidget(QWidget *parent) :
 {
     this->setObjectName("sizeWidget");
     this->signalMapper = new QSignalMapper(this);
-    this->horizontalGroupBox = new QGroupBox(tr("Items"));
+    this->horizontalGroupBox = new QGroupBox(tr("Sizes"));
     this->containerLayout = new QHBoxLayout;
     this->subContainerLayout = new QVBoxLayout;
     this->layout = new QGridLayout;
@@ -63,12 +63,10 @@ void SizeWidget::createItemSizes(int itemId)
         QString description = p->size().arabicName();
         button->setObjectName(QString("%1_SizeButton").arg(p->id()));
         button->setText(description);
-
         button->setIcon(QIcon(QString(":/images/prices/%1_%2_%3.png").arg(p->size().id()).arg(p->price()).arg("en")));
         button->setIconSize(QSize(135,135));
         button->setToolTip(description);
         button->setStatusTip(description);
-        //button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(button, p->id());
         layout->addWidget(button, row, col);

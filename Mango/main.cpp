@@ -10,6 +10,8 @@ void loadStylesheet();
 
 int main(int argc, char *argv[])
 {
+    // TODO: Port to Qt5.
+
     QApplication a(argc, argv);
 
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
@@ -22,6 +24,7 @@ int main(int argc, char *argv[])
     // load style sheet
     loadStylesheet();
 
+    // NOTE: move db connection to db layer
     // Set Database name
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("mango.db");

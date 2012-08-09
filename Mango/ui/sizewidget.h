@@ -18,8 +18,10 @@ public:
     explicit SizeWidget(QWidget *parent = 0);
     ~SizeWidget();
 
-public:
     void createItemSizes(int itemId);
+
+signals:
+    void selectItemDetail(int id);
 
 private:
     enum {
@@ -33,9 +35,6 @@ private:
     QVBoxLayout* subContainerLayout;
 
     void removeItemSizes();
-
-signals:
-    void selectItemDetail(int id);
 };
 
 #endif // SIZEWIDGET_H

@@ -20,6 +20,7 @@ Rectangle {
         spacing: 5
         model: ordersModel
         delegate: orderDelegate
+        clip: true
     }
 
 //    ListModel {

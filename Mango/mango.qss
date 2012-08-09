@@ -3,8 +3,8 @@
 {
     border-width: 4px;
     border-image: url(:/images/normal_button.png) 4 4 4 4 stretch stretch;
-    min-width: 128px;
-    min-height: 128px;
+    min-width: 160px;
+    min-height: 160px;
     text-align: center;
     color: black;
 }
@@ -13,16 +13,16 @@
 {
     border-width: 4px;
     border-image: url(:/images/hover_button.png) 4 4 4 4 stretch stretch;
-    min-width: 128px;
-    min-height: 128px;
+    min-width: 160px;
+    min-height: 160px;
 }
 
 #categoryWidget QToolButton:pressed, #categoryWidget QToolButton:checked
 {
     border-width: 4px;
     border-image: url(:/images/pressed_button.png) 4 4 4 4 stretch stretch;
-    min-width: 128px;
-    min-height: 128px;
+    min-width: 160px;
+    min-height: 160px;
 }
 
 
@@ -53,28 +53,28 @@
 }
 
 
-#itemWidget QPushButton
+#itemWidget QToolButton
 {
     border-width: 4px;
     border-image: url(:/images/normal_button.png) 4 4 4 4 stretch stretch;
-    min-width: 32px;
-    min-height: 32px;
+    min-width: 128px;
+    min-height: 128px;
 }
 
-#itemWidget QPushButton:hover
+#itemWidget QToolButton:hover
 {
     border-width: 4px;
     border-image: url(:/images/hover_button.png) 4 4 4 4 stretch stretch;
-    min-width: 32px;
-    min-height: 32px;
+    min-width: 128px;
+    min-height: 128px;
 }
 
-#itemWidget QPushButton:pressed, #itemWidget QPushButton:checked
+#itemWidget QToolButton:pressed, #itemWidget QToolButton:checked
 {
     border-width: 4px;
     border-image: url(:/images/pressed_button.png) 4 4 4 4 stretch stretch;
-    min-width: 32px;
-    min-height: 32px;
+    min-width: 128px;
+    min-height: 128px;
 }
 
 
