@@ -3,6 +3,8 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QSignalMapper>
+#include <QAction>
+#include <QMenu>
 
 #include "headerwidget.h"
 
@@ -47,6 +49,20 @@ void HeaderWidget::createToolButtons()
     reportsButton->setToolTip("Report");
     reportsButton->setStatusTip(reportsButton->toolTip());
 
+    // add menu for report button
+    QAction *todayReportAction = new QAction(QIcon(":/images/find.png"),tr("التقرير اليومي"), this);
+    connect(todayReportAction, SIGNAL(triggered()), this, SIGNAL(todayReportActionClicked()));
+
+    QAction *generalReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير مخصص"), this);
+    connect(generalReportAction, SIGNAL(triggered()), this, SIGNAL(generalReportActionClicked()));
+
+    QMenu *reportMenu = new QMenu(this);
+    reportMenu->addAction(todayReportAction);
+    reportMenu->addAction(generalReportAction);
+
+    reportsButton->setMenu(reportMenu);
+    reportsButton->setPopupMode(QToolButton::InstantPopup);
+
     QToolButton* systemButton = new QToolButton;
     systemButton->setIcon(QIcon(":/images/accounting.png"));
     systemButton->setText("System");
@@ -54,6 +70,20 @@ void HeaderWidget::createToolButtons()
     systemButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     systemButton->setToolTip("System");
     systemButton->setStatusTip(systemButton->toolTip());
+
+    // add menu for system button
+    QAction *closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("اغلاق حساب اليوم"), this);
+    connect(closeSystemAction, SIGNAL(triggered()), this, SIGNAL(closeSystemActionClicked()));
+
+    QAction *aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("عن النظام"), this);
+    connect(aboutSystemAction, SIGNAL(triggered()), this, SIGNAL(aboutSystemActionClicked()));
+
+    QMenu *systemMenu = new QMenu(this);
+    systemMenu->addAction(closeSystemAction);
+    systemMenu->addAction(aboutSystemAction);
+
+    systemButton->setMenu(systemMenu);
+    systemButton->setPopupMode(QToolButton::InstantPopup);
 
     QToolButton* signOutButton = new QToolButton;
     signOutButton->setIcon(QIcon(":/images/logout.png"));
@@ -70,13 +100,9 @@ void HeaderWidget::createToolButtons()
     headerLayout->addWidget(signOutButton);
 
     this->signalMapper->setMapping(HomeButton, 1);
-    this->signalMapper->setMapping(reportsButton, 2);
-    this->signalMapper->setMapping(systemButton, 3);
-    this->signalMapper->setMapping(signOutButton, 4);
+    this->signalMapper->setMapping(signOutButton, 2);
 
     connect(HomeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    connect(reportsButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    connect(systemButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(signOutButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
 }
 
@@ -87,12 +113,6 @@ void HeaderWidget::emitSignal(int id)
         emit homeClicked();
         break;
     case 2:
-        emit reportClicked();
-        break;
-    case 3:
-        emit systemClicked();
-        break;
-    case 4:
         emit logoutClicked();
         break;
     }
