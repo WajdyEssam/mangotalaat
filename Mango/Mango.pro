@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     ui/SlidingStackedWidget.cpp \
     ui/propertywidget.cpp \
     ui/toolbutton.cpp \
-    ui/keypaddialog.cpp
+    ui/keypaddialog.cpp \
+    ui/aboutdialog.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -31,6 +32,7 @@ HEADERS  += ui/categorieswidget.h \
     ui/toolbutton.h \
     ui/propertywidget.h \
     ui/keypaddialog.h \
+    ui/aboutdialog.h
 
 RESOURCES += \
     resources.qrc
@@ -54,4 +56,7 @@ win32:UI_DIR = build/_ui
 LIBS += -L$$PWD/../bin/ -lMangoModel
 LIBS += -L$$PWD/../bin/ -lMangoDatabase
 LIBS += -L$$PWD/../bin/ -lMangoService
+
+FORMS += \
+    ui/aboutdialog.ui
 

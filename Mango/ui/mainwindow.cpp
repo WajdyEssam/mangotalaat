@@ -2,6 +2,7 @@
 #include "headerwidget.h"
 #include "orderwidget.h"
 #include "SlidingStackedWidget.h"
+#include "aboutdialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -151,11 +152,22 @@ void MainWindow::generalReportClickedSlot() {
 
 void MainWindow::closeSystemClickedSlot()
 {
+    QMessageBox::StandardButton button = QMessageBox::information(this,
+        "Close System",
+        "Are you sure of close the system?",
+        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
+    );
+
+    if (button == QMessageBox::No)
+        return;
+
     Services::Checkout::closeTodayOrders();
 }
 
 void MainWindow::aboutSystemClickedSlot()
 {
+    AboutDialog *aboutDlg = new AboutDialog(this);
+    aboutDlg->exec();
 }
 
 void MainWindow::logoutClickedSlot()
