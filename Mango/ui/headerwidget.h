@@ -13,9 +13,11 @@ public:
     
 signals:
     void homeClicked();
-    void reportClicked();
-    void systemClicked();
     void logoutClicked();
+    void todayReportActionClicked();
+    void generalReportActionClicked();
+    void closeSystemActionClicked();
+    void aboutSystemActionClicked();
 
 public slots:
     void emitSignal(int id);

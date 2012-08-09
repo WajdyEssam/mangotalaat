@@ -66,8 +66,10 @@ void MainWindow::createHeaderDockWidget()
 {
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
-    connect(this->headerWidget, SIGNAL(reportClicked()), SLOT(reportClickedSlot()));
-    connect(this->headerWidget, SIGNAL(systemClicked()), SLOT(systemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayReportActionClicked()), SLOT(todayReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(logoutClickedSlot()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
@@ -120,7 +122,7 @@ void MainWindow::ShowHomePage()
     this->setCurrentPage(CategoryPage);
 }
 
-void MainWindow::reportClickedSlot()
+void MainWindow::todayReportClickedSlot()
 {
     // show reports
     // event logging table, order table, cancel table, summary table
@@ -143,9 +145,17 @@ void MainWindow::reportClickedSlot()
     // from last point to current time
 }
 
-void MainWindow::systemClickedSlot()
+void MainWindow::generalReportClickedSlot() {
+
+}
+
+void MainWindow::closeSystemClickedSlot()
 {
     Services::Checkout::closeTodayOrders();
+}
+
+void MainWindow::aboutSystemClickedSlot()
+{
 }
 
 void MainWindow::logoutClickedSlot()
