@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql declarative
+QT       += core gui sql declarative webkit
 
 TARGET = Mango
 TEMPLATE = app
@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     ui/propertywidget.cpp \
     ui/toolbutton.cpp \
     ui/keypaddialog.cpp \
-    ui/aboutdialog.cpp
+    ui/aboutdialog.cpp \
+    ui/invoiceveiwerwidget.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -32,7 +33,8 @@ HEADERS  += ui/categorieswidget.h \
     ui/toolbutton.h \
     ui/propertywidget.h \
     ui/keypaddialog.h \
-    ui/aboutdialog.h
+    ui/aboutdialog.h \
+    ui/invoiceveiwerwidget.h
 
 RESOURCES += \
     resources.qrc
@@ -58,5 +60,6 @@ LIBS += -L$$PWD/../bin/ -lMangoDatabase
 LIBS += -L$$PWD/../bin/ -lMangoService
 
 FORMS += \
-    ui/aboutdialog.ui
+    ui/aboutdialog.ui \
+    ui/invoiceveiwerwidget.ui
 

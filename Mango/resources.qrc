@@ -134,5 +134,12 @@
         <file>images/cobon_order.png</file>
         <file>data/fonts/DroidNaskh-Regular.ttf</file>
         <file>data/fonts/DroidNaskh-Bold.ttf</file>
+        <file>images/find.png</file>
+        <file>images/ok.png</file>
+        <file>images/refresh.png</file>
+        <file>images/save.png</file>
+        <file>images/cancel.png</file>
+        <file>reports/logo.png</file>
+        <file>reports/LogginReport.html</file>
     </qresource>
 </RCC>
