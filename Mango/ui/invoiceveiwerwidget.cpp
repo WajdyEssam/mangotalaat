@@ -25,6 +25,7 @@ InvoiceVeiwerWidget::InvoiceVeiwerWidget(QWidget *parent) :
     this->connect(ui->printButton, SIGNAL(clicked()), this, SLOT(printReportSlot()));
 
     this->setWindowTitle("شاشة معاينة");
+    this->renderReport();
 }
 
 InvoiceVeiwerWidget::~InvoiceVeiwerWidget()
@@ -34,40 +35,35 @@ InvoiceVeiwerWidget::~InvoiceVeiwerWidget()
 
 
 void InvoiceVeiwerWidget::renderReport() {
-    ui->webView->setHtml("testing");
-
-    // **********************************debug: save html
-    QFile file("testing.html");
-    file.open(QIODevice::WriteOnly|QIODevice::Text);
-
-    QTextStream out(&file);
-    out.setCodec(QTextCodec::codecForCStrings());
-    out << htmlCode;
-
-    file.close();
+    this->htmlCode = getHtmlCode();
+    ui->webView->setHtml(htmlCode);
 }
 
-QString InvoiceVeiwerWidget:: getSellHTMLCode () {
-//    QFile *reportFile = new QFile(":/reports/sellReport.html");
+QString InvoiceVeiwerWidget:: getHtmlCode () {
+    QFile *reportFile = new QFile(":/reports/LogginReport.html");
 
-//    if ( ! reportFile->open(QIODevice::ReadOnly | QIODevice::Text) ) {
-//        qDebug() << "File Openining Problem";
-//        return "";
-//    }
+    if ( ! reportFile->open(QIODevice::ReadOnly | QIODevice::Text) ) {
+        qDebug() << "File Openining Problem";
+        return "Error";
+    }
 
-//    QString originalCode = reportFile->readAll();
+    QString originalCode = reportFile->readAll();
 
-//    QString price = "100";
+    QString price = "100";
 
-//    QString reportCode = originalCode.replace("%TITLE%", TITLE).replace("%COMPANY_NAME%",COMPANY_NAME_EN)
-//            .replace("%OWNER_NAME%", OWNER_NAME).replace("%COMPANY_ADDRESS%", COMPANY_ADDRESS)
-//            .replace("%COMPANY_MOBILE%", COMPANY_MOBILE).replace("%COMPANY_EMAIL%", COMPANY_EMAIL)
-//            .replace("%CLIENT_NAME%", sell.to)
-//            .replace("%DATE%", sell.date)
-//            .replace("%SUCC_NUM%", price).replace("%ADD_TABLE%", getSellTable());
+    QString TITLE = "Mango Talaat";
+    QString COMPANY_NAME_EN = "Mango Talaat";
+    QString OWNER_NAME = "Mohmmaed Allhowh";
+    QString COMPANY_ADDRESS = "Riyadh, KSA";
+    QString COMPANY_MOBILE = "0656444654";
+    QString COMPANY_EMAIL = "test@gmail.com";
 
-//    return (reportCode);
-    return "";
+    QString reportCode = originalCode.replace("%TITLE%", TITLE).replace("%COMPANY_NAME%",COMPANY_NAME_EN)
+            .replace("%OWNER_NAME%", OWNER_NAME).replace("%COMPANY_ADDRESS%", COMPANY_ADDRESS)
+            .replace("%COMPANY_MOBILE%", COMPANY_MOBILE).replace("%COMPANY_EMAIL%", COMPANY_EMAIL)
+            .replace("%SUCC_NUM%", price).replace("%ADD_TABLE%", getSellTable());
+
+    return (reportCode);
 }
 
 QString InvoiceVeiwerWidget::getSellTable () {

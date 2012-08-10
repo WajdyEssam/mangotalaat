@@ -19,7 +19,7 @@ private:
     void renderReport();
     QString generateHTML();
 
-    QString getSellHTMLCode();
+    QString getHtmlCode();
     QString getSellTable();
 
     QString getBillHTMLCode();

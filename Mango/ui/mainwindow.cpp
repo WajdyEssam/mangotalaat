@@ -3,6 +3,7 @@
 #include "orderwidget.h"
 #include "SlidingStackedWidget.h"
 #include "aboutdialog.h"
+#include "invoiceveiwerwidget.h"
 
 #include <vector>
 #include <QDebug>
@@ -125,6 +126,19 @@ void MainWindow::ShowHomePage()
 
 void MainWindow::todayReportClickedSlot()
 {
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget;
+    viewer->show();
+
+    QList<Model::Event> events = Services::Event::getAll();
+    foreach(Model::Event event, events) {
+        Model::Event::EventTypes type = event.eventType();
+        QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
+
+        qDebug() << event.id() << " " << event.user().userName() << " " << event.createdDateTime() << " "
+                 << eventType;
+    }
+
+
     // show reports
     // event logging table, order table, cancel table, summary table
 //    Database::DatabaseManager database;
@@ -132,18 +146,12 @@ void MainWindow::todayReportClickedSlot()
 
 //    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
 
-//    foreach(Login login, logins) {
-//        qDebug() << login.getId() << " , " << login.getUser().userName() << " , " << login.getEventTime() <<  " , "
-//                 << login.getEventType();
-//    }
+
 
 //    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
 //    foreach(Order order, orderReports) {
 //        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
 //    }
-
-    // from points to points
-    // from last point to current time
 }
 
 void MainWindow::generalReportClickedSlot() {

@@ -61,7 +61,7 @@
           <string>حفظ السند </string>
          </property>
          <property name="icon">
-          <iconset resource="BatteryManagement.qrc">
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/save.png</normaloff>:/images/save.png</iconset>
          </property>
         </widget>
@@ -72,7 +72,7 @@
           <string>طباعة السند</string>
          </property>
          <property name="icon">
-          <iconset resource="BatteryManagement.qrc">
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/find.png</normaloff>:/images/find.png</iconset>
          </property>
          <property name="default">
@@ -83,10 +83,10 @@
        <item>
         <widget class="QPushButton" name="cancelButton">
          <property name="text">
-          <string>إلغاء الأمر</string>
+          <string>اغلاق</string>
          </property>
          <property name="icon">
-          <iconset resource="BatteryManagement.qrc">
+          <iconset resource="../resources.qrc">
            <normaloff>:/images/cancel.png</normaloff>:/images/cancel.png</iconset>
          </property>
         </widget>
@@ -118,7 +118,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="BatteryManagement.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections/>
 </ui>

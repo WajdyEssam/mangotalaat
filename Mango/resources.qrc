@@ -137,5 +137,7 @@
         <file>images/refresh.png</file>
         <file>images/save.png</file>
         <file>images/cancel.png</file>
+        <file>reports/logo.png</file>
+        <file>reports/LogginReport.html</file>
     </qresource>
 </RCC>
