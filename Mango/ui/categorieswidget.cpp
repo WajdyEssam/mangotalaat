@@ -43,7 +43,7 @@ void CategoriesWidget::createCategories()
         QToolButton* button = new QToolButton;
         button->setObjectName(QString("%1_CategoryButton").arg(p->id()));
         button->setText(p->arabicName());
-        button->setFont(QFont("Droid Arabic Naskh", 16, QFont::Bold));
+        button->setFont(QFont("Droid Arabic Naskh", 12, QFont::Bold));
         button->setIcon(QIcon(QString(":/images/juices/category_%1.png").arg(p->id())));
         button->setIconSize(QSize(128,128));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
@@ -75,7 +75,7 @@ void CategoriesWidget::removeCategories()
 
 void CategoriesWidget::initCategoryGroupBox()
 {
-    this->categoryGroupBox = new QGroupBox(tr("Categories"));
+    this->categoryGroupBox = new QGroupBox(tr("الأصناف"));
 
     this->containerHBoxLayout = new QHBoxLayout;
     this->subContainerVBoxLayout = new QVBoxLayout;
@@ -85,14 +85,15 @@ void CategoriesWidget::initCategoryGroupBox()
     this->containerHBoxLayout->addLayout(this->subContainerVBoxLayout);
     this->containerHBoxLayout->addStretch();
 
-    this->subContainerVBoxLayout->addStretch();
+    //this->subContainerVBoxLayout->addStretch();
     this->subContainerVBoxLayout->addLayout(this->contentGridLayout);
-    this->subContainerVBoxLayout->addStretch();
+    //this->subContainerVBoxLayout->addStretch();
+    //this->subContainerVBoxLayout->setSizeConstraint(QLayout::SetMaximumSize);
 
-    this->containerHBoxLayout->setSpacing(0);
-    this->contentGridLayout->setVerticalSpacing(0);
-    this->contentGridLayout->setHorizontalSpacing(0);
-    this->contentGridLayout->setAlignment(Qt::AlignTop);
+    //this->containerHBoxLayout->setSpacing(0);
+    //this->contentGridLayout->setVerticalSpacing(0);
+    //this->contentGridLayout->setHorizontalSpacing(0);
+    //this->contentGridLayout->setAlignment(Qt::AlignTop);
 
     this->categoryGroupBox->setLayout(containerHBoxLayout);
 }

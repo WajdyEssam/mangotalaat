@@ -92,7 +92,7 @@ void MainWindow::createOrderDockWidget()
 
     orderWidget = new OrderWidget;
     orderDockWidget->setWidget(orderWidget);
-    this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
+    this->addDockWidget(Qt::RightDockWidgetArea, orderDockWidget);
 
     connect(this, SIGNAL(orderDetailUpdated(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrderDetails(QList<Model::OrderDetail>)));
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));

@@ -16,7 +16,7 @@
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent)
 {
-    this->setFixedWidth(420);
+    this->setFixedWidth(380);
     this->setObjectName("orderWidget");
 
     layout = new QVBoxLayout(this);

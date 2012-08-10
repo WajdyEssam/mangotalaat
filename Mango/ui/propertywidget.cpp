@@ -10,6 +10,7 @@
 #include <QFormLayout>
 #include <QDebug>
 #include <QMessageBox>
+#include <QLCDNumber>
 
 #include "propertywidget.h"
 #include "toolbutton.h"
@@ -35,33 +36,43 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     componentsGroupBox = new QGroupBox(tr("Components"));
     additionalsGroupBox = new QGroupBox(tr("Additionals"));
 
-    commandButtonHBoxLayout = new QHBoxLayout;
-    orderVBoxLayout = new QVBoxLayout;
+    commandButtonVBoxLayout = new QVBoxLayout;
+
+    orderDetailVBoxLayout = new QVBoxLayout;
+    orderDetailVBoxLayout->setSizeConstraint(QGridLayout::SetMinAndMaxSize);
+
     componentsGridLayout = new QGridLayout;
     additionalsGridLayout = new QGridLayout;
+//    additionalsGridLayout->setSizeConstraint(QGridLayout::SetMinAndMaxSize);
 
-    orderGroupBox->setLayout(orderVBoxLayout);
+    orderGroupBox->setLayout(orderDetailVBoxLayout);
     componentsGroupBox->setLayout(componentsGridLayout);
     additionalsGroupBox->setLayout(additionalsGridLayout);
 
-    QVBoxLayout *mainVBoxLayout = new QVBoxLayout;
-    mainVBoxLayout->addLayout(commandButtonHBoxLayout);
-    mainVBoxLayout->addWidget(orderGroupBox);
-    mainVBoxLayout->addWidget(componentsGroupBox);
-    mainVBoxLayout->addWidget(additionalsGroupBox);
-    this->setLayout(mainVBoxLayout);
+    QVBoxLayout *leftLayout = new QVBoxLayout;
+    leftLayout->addLayout(commandButtonVBoxLayout);
+    leftLayout->addWidget(componentsGroupBox);
+    leftLayout->addWidget(additionalsGroupBox);
+
+    QHBoxLayout* layout = new QHBoxLayout;
+    layout->addLayout(leftLayout);
+    layout->addWidget(orderGroupBox);
+    this->setLayout(layout);
 
     connect(this->componentSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentComponent(int)));
     connect(this->additionalSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentAdditional(int)));
 
-    this->initCommandButtons();
     this->initOrder();
+    this->initCommandButtons();
     this->initComponents();
     this->initAdditionals();
 }
 
 void PropertyWidget::initCommandButtons()
 {
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+
     addButton = new QPushButton;
     addButton->setFixedSize(161,56);
     addButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
@@ -77,25 +88,19 @@ void PropertyWidget::initCommandButtons()
     removeButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/remove_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removeItemClicked()));
 
-    commandButtonHBoxLayout->addWidget(addButton);
-    commandButtonHBoxLayout->addWidget(updateButton);
-    commandButtonHBoxLayout->addWidget(removeButton);
-    commandButtonHBoxLayout->addStretch();
+    layout->addWidget(addButton);
+    layout->addWidget(updateButton);
+    layout->addWidget(removeButton);
+    orderDetailVBoxLayout->addLayout(layout);
 }
 
 void PropertyWidget::initOrder()
 {
-    itemNameLineEdit = new QLineEdit;
-    itemNameLineEdit->setReadOnly(true);
+    itemNameLineEdit = new QLabel;
+    itemSizeLineEdit = new QLabel;
+    itemComponentsLineEdit = new QLabel;
+    itemAdditionalsLineEdit = new QLabel;
 
-    itemSizeLineEdit = new QLineEdit;
-    itemSizeLineEdit->setReadOnly(true);
-
-    itemComponentsLineEdit = new QLineEdit;
-    itemComponentsLineEdit->setReadOnly(true);
-
-    itemAdditionalsLineEdit = new QLineEdit;
-    itemAdditionalsLineEdit->setReadOnly(true);
 
     QFormLayout* leftLayout = new QFormLayout;
     leftLayout->addRow(tr("Item"), itemNameLineEdit);
@@ -104,44 +109,38 @@ void PropertyWidget::initOrder()
     leftLayout->addRow(tr("Additionals"), itemAdditionalsLineEdit);
 
     QLabel* itemQuantityLabel = new QLabel(tr("Quantity"));
-    itemQuantityLineEdit = new QLineEdit;
-    itemQuantityLineEdit->setReadOnly(true);
+    itemQuantityLCDNumber = new QLCDNumber;
     QPushButton* quantityButton = new QPushButton("+");
     connect(quantityButton, SIGNAL(clicked()), SLOT(openKeypadDialog()));
 
     QLabel* itemPriceLabel = new QLabel(tr("Item Price"));
-    itemPriceLineEdit = new QLineEdit;
-    itemPriceLineEdit->setReadOnly(true);
+    itemPriceLCDNumber = new QLCDNumber;
+
 
     QLabel* totalPriceLabel = new QLabel(tr("Total Price"));
-    totalPriceLineEdit = new QLineEdit;
-    totalPriceLineEdit->setReadOnly(true);
+    totalPriceLCDNumber = new QLCDNumber;
 
     QLabel* itemSugarLabel = new QLabel(tr("Sugar"));
-    itemSugarLineEdit = new QLineEdit;
-    itemSugarLineEdit->setReadOnly(true);
+    itemSugarLCDNumber = new QLCDNumber;
     QPushButton* sugarButton = new QPushButton("+");
 
     QGridLayout* rightLayout = new QGridLayout;
-    rightLayout->addWidget(itemQuantityLabel, 0, 0, 1, 1);
-    rightLayout->addWidget(itemQuantityLineEdit, 0, 1, 1, 5);
-    rightLayout->addWidget(quantityButton, 0, 6, 1 ,1);
+    rightLayout->addWidget(itemQuantityLabel, 0, 0);
+    rightLayout->addWidget(itemQuantityLCDNumber, 0, 1);
+    rightLayout->addWidget(quantityButton, 0, 2);
 
-    rightLayout->addWidget(itemSugarLabel, 1, 0, 1, 1);
-    rightLayout->addWidget(itemSugarLineEdit, 1, 1, 1, 5);
-    rightLayout->addWidget(sugarButton, 1, 6);
+    rightLayout->addWidget(itemSugarLabel, 1, 0);
+    rightLayout->addWidget(itemSugarLCDNumber, 1, 1);
+    rightLayout->addWidget(sugarButton, 1, 2);
 
-    rightLayout->addWidget(itemPriceLabel, 2, 0, 1, 1);
-    rightLayout->addWidget(itemPriceLineEdit, 2, 1, 1, 5);
+    rightLayout->addWidget(itemPriceLabel, 2, 0);
+    rightLayout->addWidget(itemPriceLCDNumber, 2, 1);
 
-    rightLayout->addWidget(totalPriceLabel, 3, 0, 1, 1);
-    rightLayout->addWidget(totalPriceLineEdit, 3, 1, 1, 5);
+    rightLayout->addWidget(totalPriceLabel, 3, 0);
+    rightLayout->addWidget(totalPriceLCDNumber, 3, 1);
 
-    QHBoxLayout* layout = new QHBoxLayout;
-    layout->addLayout(leftLayout, 1);
-    layout->addLayout(rightLayout, 1);
-
-    orderVBoxLayout->addLayout(layout);
+    orderDetailVBoxLayout->addLayout(rightLayout);
+    orderDetailVBoxLayout->addStretch();
 }
 
 void PropertyWidget::initComponents()
@@ -160,6 +159,7 @@ void PropertyWidget::initComponents()
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(p->id())));
         button->setIconSize(QSize(64,64));
+        button->setFont(QFont("Droid Arabic Naskh", 10, QFont::Bold));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(p->arabicName());
         button->setStatusTip(p->arabicName());
@@ -194,6 +194,7 @@ void PropertyWidget::initAdditionals()
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(p->id())));
         button->setIconSize(QSize(64,64));
+        button->setFont(QFont("Droid Arabic Naskh", 10, QFont::Bold));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(p->arabicName());
         button->setStatusTip(p->arabicName());
@@ -235,10 +236,10 @@ void PropertyWidget::setOrder(Model::OrderDetail orderDetail, bool isOpenedInEdi
     }
 
     itemNameLineEdit->setText(m_orderDetail.itemDetail().item().arabicName());
-    itemQuantityLineEdit->setText(QString::number(m_orderDetail.qunatity()));
+    itemQuantityLCDNumber->display(QString::number(m_orderDetail.qunatity()));
     itemSizeLineEdit->setText(m_orderDetail.itemDetail().size().arabicName());
-    itemPriceLineEdit->setText(QString::number(m_orderDetail.itemDetail().price()));
-    itemSugarLineEdit->setText(QString::number(m_orderDetail.sugar()));
+    itemPriceLCDNumber->display(QString::number(m_orderDetail.itemDetail().price()));
+    itemSugarLCDNumber->display(QString::number(m_orderDetail.sugar()));
 
     // Fill after set active components and additionals
     this->fillItemDetialsLineEdit();
@@ -278,7 +279,7 @@ void PropertyWidget::setCurrentAdditional(int id)
 
 void PropertyWidget::addItemClicked()
 {
-    if (itemQuantityLineEdit->text().toInt() <= 0) {
+    if ((int)itemQuantityLCDNumber->value() <= 0) {
         QMessageBox::warning(this, tr("Operation faild"), tr("Please enter the quantity"));
         return ;
     }
@@ -287,7 +288,7 @@ void PropertyWidget::addItemClicked()
     m_orderDetail.setAdditionals(readActiveAdditionals());
     m_orderDetail.setSugar(this->readSugar());
     m_orderDetail.setQuantity(this->readQunatity());
-    m_orderDetail.setCash(totalPriceLineEdit->text().toInt());
+    m_orderDetail.setCash((int)totalPriceLCDNumber->value());
 
     emit addItem(m_orderDetail);
 }
@@ -307,7 +308,7 @@ void PropertyWidget::updateItemClicked()
     m_orderDetail.setAdditionals(readActiveAdditionals());
     m_orderDetail.setSugar(this->readSugar());
     m_orderDetail.setQuantity(this->readQunatity());
-    m_orderDetail.setCash(totalPriceLineEdit->text().toInt());
+    m_orderDetail.setCash((int)totalPriceLCDNumber->value());
 
     emit updateItem(m_orderDetail);
 }
@@ -350,13 +351,13 @@ void PropertyWidget::uncheckAdditionalsButtons()
 void PropertyWidget::clearItemDetailsLineEdit()
 {
     itemNameLineEdit->clear();
-    itemQuantityLineEdit->clear();
+    itemQuantityLCDNumber->display(0);
     itemSizeLineEdit->clear();
-    itemPriceLineEdit->clear();
-    itemSugarLineEdit->clear();
+    itemPriceLCDNumber->display(0);
+    itemSugarLCDNumber->display(0);
     itemComponentsLineEdit->clear();
     itemAdditionalsLineEdit->clear();
-    totalPriceLineEdit->clear();
+    totalPriceLCDNumber->display(0);
 }
 
 void PropertyWidget::recheckComponentsButtons()
@@ -454,34 +455,34 @@ QList<Model::Additional> PropertyWidget::readActiveAdditionals()
 
 int PropertyWidget::readSugar()
 {
-    return itemSugarLineEdit->text().toInt();
+    return (int)itemSugarLCDNumber->value();
 }
 
 int PropertyWidget::readQunatity()
 {
-    return itemQuantityLineEdit->text().toInt();
+    return (int)itemQuantityLCDNumber->value();
 }
 
 
 void PropertyWidget::openKeypadDialog()
 {
     KeypadDialog keypadDialog;
-    keypadDialog.setValue(itemQuantityLineEdit->text().toInt());
+    keypadDialog.setValue((int)itemQuantityLCDNumber->value());
     if (keypadDialog.exec() == QDialog::Accepted) {
-        itemQuantityLineEdit->setText(QString::number(keypadDialog.value()));
+        itemQuantityLCDNumber->display(QString::number(keypadDialog.value()));
         calculateTotalPrice();
     }
 }
 
 void PropertyWidget::calculateTotalPrice()
 {
-    int quantity = itemQuantityLineEdit->text().toInt();
-    int componentsCount = readActiveComponents().count();
+    int quantity = (int)itemQuantityLCDNumber->value();
+    //int componentsCount = readActiveComponents().count();
     int addtionalCount = readActiveAdditionals().count();
-    int itemPrice = itemPriceLineEdit->text().toInt();
+    int itemPrice = (int)itemPriceLCDNumber->value();
     int totalPrice = itemPrice * quantity;
     //totalPrice = totalPrice + (componentsCount * 1);
     totalPrice = totalPrice + (addtionalCount * 1);
 
-    totalPriceLineEdit->setText(QString::number(totalPrice));
+    totalPriceLCDNumber->display(QString::number(totalPrice));
 }

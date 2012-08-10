@@ -19,7 +19,7 @@ void HeaderWidget::paintEvent(QPaintEvent *) {
     QLinearGradient background(0,0, 0,100);
     background.setColorAt(0, QColor(115,115,115));
     background.setColorAt(1, QColor(65,65,65));
-    p.fillRect(QRect(0,0,width(),120), QBrush(background));
+    p.fillRect(QRect(0,0,width(),100), QBrush(background));
 }
 
 void HeaderWidget::init()
@@ -28,26 +28,31 @@ void HeaderWidget::init()
     this->signalMapper = new QSignalMapper(this);
     this->setFixedHeight(100);
     this->createToolButtons();
+    this->setLayoutDirection(Qt::RightToLeft);
     connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(emitSignal(int)));
 }
 
 void HeaderWidget::createToolButtons()
 {
+    QFont font("Droid Arabic Naskh", 12, QFont::Bold);
+
     QToolButton* HomeButton = new QToolButton;
     HomeButton->setIcon(QIcon(":/images/system.png"));
-    HomeButton->setText("Home");
+    HomeButton->setText("البداية");
     HomeButton->setIconSize(QSize(64,64));
     HomeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    HomeButton->setToolTip("Home");
+    HomeButton->setToolTip("البداية");
     HomeButton->setStatusTip(HomeButton->toolTip());
+    HomeButton->setFont(font);
 
     QToolButton* reportsButton = new QToolButton;
     reportsButton->setIcon(QIcon(":/images/report.png"));
-    reportsButton->setText("Report");
+    reportsButton->setText("التقارير");
     reportsButton->setIconSize(QSize(64,64));
     reportsButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    reportsButton->setToolTip("Report");
+    reportsButton->setToolTip("التقارير");
     reportsButton->setStatusTip(reportsButton->toolTip());
+    reportsButton->setFont(font);
 
     // add menu for report button
     QAction *todayReportAction = new QAction(QIcon(":/images/find.png"),tr("التقرير اليومي"), this);
@@ -65,11 +70,12 @@ void HeaderWidget::createToolButtons()
 
     QToolButton* systemButton = new QToolButton;
     systemButton->setIcon(QIcon(":/images/accounting.png"));
-    systemButton->setText("System");
+    systemButton->setText("النظام");
     systemButton->setIconSize(QSize(64,64));
     systemButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    systemButton->setToolTip("System");
+    systemButton->setToolTip("النظام");
     systemButton->setStatusTip(systemButton->toolTip());
+    systemButton->setFont(font);
 
     // add menu for system button
     QAction *closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("اغلاق حساب اليوم"), this);
@@ -87,11 +93,12 @@ void HeaderWidget::createToolButtons()
 
     QToolButton* signOutButton = new QToolButton;
     signOutButton->setIcon(QIcon(":/images/logout.png"));
-    signOutButton->setText("Logout");
+    signOutButton->setText("خروج");
     signOutButton->setIconSize(QSize(64,64));
     signOutButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    signOutButton->setToolTip("Logout");
+    signOutButton->setToolTip("خروج");
     signOutButton->setStatusTip(signOutButton->toolTip());
+    signOutButton->setFont(font);
 
     QHBoxLayout* headerLayout = new QHBoxLayout(this);
     headerLayout->addWidget(HomeButton);
