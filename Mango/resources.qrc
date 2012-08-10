@@ -132,5 +132,10 @@
         <file>images/cobon_order_pressed.png</file>
         <file>images/cobon_order_hover.png</file>
         <file>images/cobon_order.png</file>
+        <file>images/find.png</file>
+        <file>images/ok.png</file>
+        <file>images/refresh.png</file>
+        <file>images/save.png</file>
+        <file>images/cancel.png</file>
     </qresource>
 </RCC>
