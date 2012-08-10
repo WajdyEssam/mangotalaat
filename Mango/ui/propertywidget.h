@@ -13,6 +13,8 @@ class QToolButton;
 class QVBoxLayout;
 class QPushButton;
 class QLineEdit;
+class QLabel;
+class QLCDNumber;
 
 class PropertyWidget : public QWidget
 {
@@ -36,7 +38,7 @@ public slots:
 
 private:
     enum {
-        NumButtons = 8 , ButtonsPerLine = 8
+        NumButtons = 8 , ButtonsPerLine = 6
     };
 
     QSignalMapper *componentSignalMapper;
@@ -46,8 +48,8 @@ private:
     QGroupBox *componentsGroupBox;
     QGroupBox *additionalsGroupBox;
 
-    QHBoxLayout* commandButtonHBoxLayout;
-    QVBoxLayout *orderVBoxLayout;
+    QVBoxLayout* commandButtonVBoxLayout;
+    QVBoxLayout *orderDetailVBoxLayout;
     QGridLayout *componentsGridLayout;
     QGridLayout *additionalsGridLayout;
 
@@ -55,14 +57,14 @@ private:
     QPushButton* updateButton;
     QPushButton* removeButton;
 
-    QLineEdit* itemNameLineEdit;
-    QLineEdit* itemQuantityLineEdit;
-    QLineEdit* itemSizeLineEdit;
-    QLineEdit* itemPriceLineEdit;
-    QLineEdit* itemSugarLineEdit;
-    QLineEdit* itemComponentsLineEdit;
-    QLineEdit* itemAdditionalsLineEdit;
-    QLineEdit* totalPriceLineEdit;
+    QLabel* itemNameLineEdit;
+    QLCDNumber* itemQuantityLCDNumber;
+    QLabel* itemSizeLineEdit;
+    QLCDNumber* itemPriceLCDNumber;
+    QLCDNumber* itemSugarLCDNumber;
+    QLabel* itemComponentsLineEdit;
+    QLabel* itemAdditionalsLineEdit;
+    QLCDNumber* totalPriceLCDNumber;
 
     Model::OrderDetail m_orderDetail;
 
