@@ -55,14 +55,22 @@ void HeaderWidget::createToolButtons()
     reportsButton->setFont(font);
 
     // add menu for report button
-    QAction *todayReportAction = new QAction(QIcon(":/images/find.png"),tr("التقرير اليومي"), this);
-    connect(todayReportAction, SIGNAL(triggered()), this, SIGNAL(todayReportActionClicked()));
+    QAction *todayLogginReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير يومي بعمليات الدخول"), this);
+    connect(todayLogginReportAction, SIGNAL(triggered()), this, SIGNAL(todayLogginReportActionClicked()));
 
-    QAction *generalReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير مخصص"), this);
+    QAction *todayOrdersReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير يومي بالطلبات"), this);
+    connect(todayOrdersReportAction, SIGNAL(triggered()), this, SIGNAL(todayOrdersReportActionClicked()));
+
+    QAction *todayOrdersDetailsReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير يومي بتفاصيل الطلبات"), this);
+    connect(todayOrdersDetailsReportAction, SIGNAL(triggered()), this, SIGNAL(todayOrdersDetailsReportActionClicked()));
+
+    QAction *generalReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير شامل"), this);
     connect(generalReportAction, SIGNAL(triggered()), this, SIGNAL(generalReportActionClicked()));
 
     QMenu *reportMenu = new QMenu(this);
-    reportMenu->addAction(todayReportAction);
+    reportMenu->addAction(todayLogginReportAction);
+    reportMenu->addAction(todayOrdersReportAction);
+    reportMenu->addAction(todayOrdersDetailsReportAction);
     reportMenu->addAction(generalReportAction);
 
     reportsButton->setMenu(reportMenu);

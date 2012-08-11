@@ -15,6 +15,11 @@
 #include "../../MangoService/checkout.h"
 #include "../../MangoService/itemdetail.h"
 #include "../../MangoService/orderdetail.h"
+#include "../../MangoReports/report.h"
+#include "../../MangoReports/logginreport.h"
+#include "../../MangoReports/ordersdetailsreport.h"
+#include "../../MangoReports/ordersreport.h"
+#include "../../MangoReports/generalreport.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -68,7 +73,9 @@ void MainWindow::createHeaderDockWidget()
 {
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
-    connect(this->headerWidget, SIGNAL(todayReportActionClicked()), SLOT(todayReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayLogginReportActionClicked()), SLOT(todayLogginReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
@@ -124,38 +131,47 @@ void MainWindow::ShowHomePage()
     this->setCurrentPage(CategoryPage);
 }
 
-void MainWindow::todayReportClickedSlot()
+void MainWindow::todayLogginReportClickedSlot()
 {
-    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget;
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
+
+    Report* report = new LogginReport(from, to);
+
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
+}
 
-    QList<Model::Event> events = Services::Event::getAll();
-    foreach(Model::Event event, events) {
-        Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
+void MainWindow::todayOrdersDetailsReportClickedSlot()
+{
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
-        qDebug() << event.id() << " " << event.user().userName() << " " << event.createdDateTime() << " "
-                 << eventType;
-    }
+    Report* report = new OrdersDetailsReport(from, to);
 
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
+}
 
-    // show reports
-    // event logging table, order table, cancel table, summary table
-//    Database::DatabaseManager database;
-//    QList<QDateTime> times = database.getCheckoutTimes();
+void MainWindow::todayOrdersReportClickedSlot()
+{
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
-//    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
+    Report* report = new OrdersReport(from, to);
 
-
-
-//    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
-//    foreach(Order order, orderReports) {
-//        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
-//    }
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 }
 
 void MainWindow::generalReportClickedSlot() {
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
+    Report* report = new GeneralReport(from, to);
+
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 }
 
 void MainWindow::closeSystemClickedSlot()

@@ -38,7 +38,9 @@ signals:
 private slots:
     void ShowHomePage();
     void orderItemClicked(QString orderIndexId);
-    void todayReportClickedSlot();
+    void todayLogginReportClickedSlot();
+    void todayOrdersReportClickedSlot();
+    void todayOrdersDetailsReportClickedSlot();
     void generalReportClickedSlot();
     void closeSystemClickedSlot();
     void aboutSystemClickedSlot();
