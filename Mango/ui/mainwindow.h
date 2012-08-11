@@ -39,6 +39,8 @@ private slots:
     void ShowHomePage();
     void orderItemClicked(QString orderIndexId);
     void todayLogginReportClickedSlot();
+    void todayOrdersReportClickedSlot();
+    void todayOrdersDetailsReportClickedSlot();
     void generalReportClickedSlot();
     void closeSystemClickedSlot();
     void aboutSystemClickedSlot();

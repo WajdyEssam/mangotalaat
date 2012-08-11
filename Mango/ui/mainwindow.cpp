@@ -69,6 +69,8 @@ void MainWindow::createHeaderDockWidget()
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
     connect(this->headerWidget, SIGNAL(todayLogginReportActionClicked()), SLOT(todayLogginReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
@@ -143,6 +145,16 @@ void MainWindow::todayLogginReportClickedSlot()
 //    foreach(Order order, orderReports) {
 //        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
 //    }
+}
+
+void MainWindow::todayOrdersDetailsReportClickedSlot()
+{
+
+}
+
+void MainWindow::todayOrdersReportClickedSlot()
+{
+
 }
 
 void MainWindow::generalReportClickedSlot() {

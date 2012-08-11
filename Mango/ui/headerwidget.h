@@ -15,6 +15,8 @@ signals:
     void homeClicked();
     void logoutClicked();
     void todayLogginReportActionClicked();
+    void todayOrdersReportActionClicked();
+    void todayOrdersDetailsReportActionClicked();
     void generalReportActionClicked();
     void closeSystemActionClicked();
     void aboutSystemActionClicked();
