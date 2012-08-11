@@ -12,11 +12,17 @@ TEMPLATE = lib
 DEFINES += MANGOREPORTS_LIBRARY
 
 SOURCES += report.cpp \
-        logginreport.cpp
+        logginreport.cpp \
+    ordersreport.cpp \
+    ordersdetailsreport.cpp \
+    generalreport.cpp
 
 HEADERS += report.h\
         MangoReports_global.h \
-        logginreport.h
+        logginreport.h \
+    ordersreport.h \
+    ordersdetailsreport.h \
+    generalreport.h
 
 unix:DESTDIR = ../bin
 unix:OBJECTS_DIR = build/_obj

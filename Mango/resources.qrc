@@ -141,5 +141,8 @@
         <file>images/cancel.png</file>
         <file>reports/logo.png</file>
         <file>reports/LogginReport.html</file>
+        <file>reports/GeneralReport.html</file>
+        <file>reports/OrdersDetailsReport.html</file>
+        <file>reports/OrdersReport.html</file>
     </qresource>
 </RCC>

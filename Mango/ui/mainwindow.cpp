@@ -17,6 +17,8 @@
 #include "../../MangoService/orderdetail.h"
 #include "../../MangoReports/report.h"
 #include "../../MangoReports/logginreport.h"
+#include "../../MangoReports/ordersdetailsreport.h"
+#include "../../MangoReports/ordersreport.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -137,30 +139,33 @@ void MainWindow::todayLogginReportClickedSlot()
 
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
-
-    // show reports
-    // event logging table, order table, cancel table, summary table
-//    Database::DatabaseManager database;
-//    QList<QDateTime> times = database.getCheckoutTimes();
-
-//    QList<Login> logins = database.getLoginReport(times.first(), QDateTime::currentDateTime());
-
-
-
-//    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
-//    foreach(Order order, orderReports) {
-//        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
-//    }
 }
 
 void MainWindow::todayOrdersDetailsReportClickedSlot()
 {
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
+    Report* report = new OrdersDetailsReport(from, to);
+
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 }
 
 void MainWindow::todayOrdersReportClickedSlot()
 {
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
+    Report* report = new OrdersReport(from, to);
+
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
+
+    //    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
+    //    foreach(Order order, orderReports) {
+    //        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
+    //    }
 }
 
 void MainWindow::generalReportClickedSlot() {
