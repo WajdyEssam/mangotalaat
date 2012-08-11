@@ -13,7 +13,7 @@ QString LogginReport::getHTML()
 {
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "Loging Report");
-    orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getTableData());
+    orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
 
     return orignalHTML;
 }
@@ -23,7 +23,7 @@ QString LogginReport::getReportTemplateName()
     return ":/reports/LogginReport.html";
 }
 
-QString LogginReport::getTableData()
+QString LogginReport::getLogginTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
            "<tr class=\"table_header\"><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";

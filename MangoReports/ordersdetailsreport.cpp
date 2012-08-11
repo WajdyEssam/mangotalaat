@@ -17,7 +17,7 @@ QString OrdersDetailsReport::getHTML()
 {
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
-    orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getTableData());
+    orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getOrdersDetailsTable());
 
     return orignalHTML;
 }
@@ -27,7 +27,7 @@ QString OrdersDetailsReport::getReportTemplateName()
     return ":/reports/OrdersDetailsReport.html";
 }
 
-QString OrdersDetailsReport::getTableData()
+QString OrdersDetailsReport::getOrdersDetailsTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
             "<tr class=\"table_header\"><th>رقم العملية</th><th>رقم الطلب</th><th>اسم الصنف</th><th>الكمية</th>"

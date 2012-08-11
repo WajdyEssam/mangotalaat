@@ -13,7 +13,9 @@ public:
     virtual QString getReportTemplateName();
 
 private:
-    QString getTableData();
+    QString getLogginTable();
+    QString getOrdersDetailsTable();
+    QString getOrdersTable();
 };
 
 #endif // GENERALREPORT_H

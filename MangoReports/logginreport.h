@@ -13,7 +13,7 @@ public:
     virtual QString getReportTemplateName();
 
 private:
-    QString getTableData();
+    QString getLogginTable();
 };
 
 #endif // LOGGINREPORT_H
