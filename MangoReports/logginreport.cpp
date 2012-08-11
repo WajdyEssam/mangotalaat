@@ -7,7 +7,10 @@ LogginReport::LogginReport(const QDateTime& from, const QDateTime& to)
 
 QString LogginReport::getHTML()
 {
+    QString orignalHTML = getTemplateFileContent();
+    originalHtml = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "Loging Report");
 
+    return orignalHTML;
 }
 
 QString LogginReport::getReportTemplateName()

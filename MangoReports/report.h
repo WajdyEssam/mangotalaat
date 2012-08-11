@@ -15,6 +15,7 @@ public:
     virtual QString getReportTemplateName() = 0;
 
 private:
+    QString replaceHeader(const QString& content);
     QDateTime m_from, m_to;
 };
 

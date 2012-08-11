@@ -58,6 +58,7 @@ win32:UI_DIR = build/_ui
 LIBS += -L$$PWD/../bin/ -lMangoModel
 LIBS += -L$$PWD/../bin/ -lMangoDatabase
 LIBS += -L$$PWD/../bin/ -lMangoService
+LIBS += -L$$PWD/../bin/ -lMangoReports
 
 FORMS += \
     ui/aboutdialog.ui \

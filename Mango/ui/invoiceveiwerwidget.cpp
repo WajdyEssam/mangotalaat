@@ -10,6 +10,8 @@
 #include <QTextBrowser>
 #include <QTextCodec>
 
+#include "../../MangoReports/report.h"
+#include "../../MangoReports/logginreport.h"
 
 InvoiceVeiwerWidget::InvoiceVeiwerWidget(QWidget *parent) :
     QWidget(parent),
@@ -40,30 +42,11 @@ void InvoiceVeiwerWidget::renderReport() {
 }
 
 QString InvoiceVeiwerWidget:: getHtmlCode () {
-    QFile *reportFile = new QFile(":/reports/LogginReport.html");
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime fto = QDateTime::currentDateTime();
 
-    if ( ! reportFile->open(QIODevice::ReadOnly | QIODevice::Text) ) {
-        qDebug() << "File Openining Problem";
-        return "Error";
-    }
-
-    QString originalCode = reportFile->readAll();
-
-    QString price = "100";
-
-    QString TITLE = "Mango Talaat";
-    QString COMPANY_NAME_EN = "Mango Talaat";
-    QString OWNER_NAME = "Mohmmaed Allhowh";
-    QString COMPANY_ADDRESS = "Riyadh, KSA";
-    QString COMPANY_MOBILE = "0656444654";
-    QString COMPANY_EMAIL = "test@gmail.com";
-
-    QString reportCode = originalCode.replace("%TITLE%", TITLE).replace("%COMPANY_NAME%",COMPANY_NAME_EN)
-            .replace("%OWNER_NAME%", OWNER_NAME).replace("%COMPANY_ADDRESS%", COMPANY_ADDRESS)
-            .replace("%COMPANY_MOBILE%", COMPANY_MOBILE).replace("%COMPANY_EMAIL%", COMPANY_EMAIL)
-            .replace("%SUCC_NUM%", price).replace("%ADD_TABLE%", getSellTable());
-
-    return (reportCode);
+    Report* report = new LogginReport(from, to);
+    return (report->getHTML());
 }
 
 QString InvoiceVeiwerWidget::getSellTable () {
