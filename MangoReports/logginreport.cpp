@@ -26,7 +26,7 @@ QString LogginReport::getReportTemplateName()
 QString LogginReport::getTableData()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
+           "<tr class=\"table_header\"><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
