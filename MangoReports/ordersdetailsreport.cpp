@@ -16,7 +16,7 @@ OrdersDetailsReport::OrdersDetailsReport(const QDateTime& from, const QDateTime&
 QString OrdersDetailsReport::getHTML()
 {
     QString orignalHTML = getTemplateFileContent();
-    orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "Orders Details Report");
+    orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
     orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getTableData());
 
     return orignalHTML;

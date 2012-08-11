@@ -7,6 +7,7 @@
 #include "component.h"
 #include "itemdetail.h"
 #include "itemcomponent.h"
+#include <QDebug>
 
 namespace Services {
 
@@ -46,16 +47,16 @@ QList<Model::OrderDetail> OrderDetail::getByOrderId(int orderId)
 
         QList<Model::Component> components;
         foreach (Model::Component c, i->components()) {
-            c = Services::Component::getById(c.id());
-            components.append(c);
+            Model::Component tmp = Services::Component::getById(c.id());
+            components.append(tmp);
         }
 
         i->setComponent(components);
 
         QList<Model::Additional> additional;
         foreach (Model::Additional a, i->additionals()) {
-            a = Services::Additional::getById(a.id());
-            additional.append(a);
+            Model::Additional tmp = Services::Additional::getById(a.id());
+            additional.append(tmp);
         }
 
         i->setAdditionals(additional);

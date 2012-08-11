@@ -4,7 +4,12 @@ namespace Database {
 
 QStringList Helper::fromTextToList(QString text)
 {
-    return text.split(",");
+    QStringList tmp;
+
+    if ( !text.isEmpty() )
+        tmp = text.split(",");
+
+    return tmp;
 }
 
 QString Helper::fromListToText(QStringList ids)
