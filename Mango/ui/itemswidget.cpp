@@ -63,9 +63,8 @@ void ItemsWidget::createItems(int categoryId)
         button->setObjectName(QString("%1_itemButton").arg(p->id()));
         button->setText(description);
         button->setFont(QFont("Droid Arabic Naskh", 10, QFont::Bold));
-        //button->setIcon(QIcon(QString(":/images/prices/%1_%2_%3.png").arg(p->size().id()).arg(p->price()).arg("en")));
-        //button->setIconSize(QSize(128,128));
-        button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        button->setIconSize(QSize(128,128));
+        //button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         button->setToolTip(description);
         button->setStatusTip(description);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
