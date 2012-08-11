@@ -10,14 +10,13 @@
 #include <QTextBrowser>
 #include <QTextCodec>
 
-#include "../../MangoReports/report.h"
-#include "../../MangoReports/logginreport.h"
-
-InvoiceVeiwerWidget::InvoiceVeiwerWidget(QWidget *parent) :
+InvoiceVeiwerWidget::InvoiceVeiwerWidget(Report* aReport, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::InvoiceVeiwerWidget)
 {
     ui->setupUi(this);
+    this->report = aReport;
+
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->showMaximized();
 
@@ -35,18 +34,9 @@ InvoiceVeiwerWidget::~InvoiceVeiwerWidget()
     delete ui;
 }
 
-
 void InvoiceVeiwerWidget::renderReport() {
-    this->htmlCode = getHtmlCode();
+    this->htmlCode = this->report->getHTML();
     ui->webView->setHtml(htmlCode);
-}
-
-QString InvoiceVeiwerWidget:: getHtmlCode () {
-    QDateTime from = QDateTime::currentDateTime();
-    QDateTime to = QDateTime::currentDateTime();
-
-    Report* report = new LogginReport(from, to);
-    return (report->getHTML());
 }
 
 void InvoiceVeiwerWidget::printReportSlot(){

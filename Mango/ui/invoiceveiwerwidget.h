@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "../../MangoReports/report.h"
+
 namespace Ui {
     class InvoiceVeiwerWidget;
 }
@@ -12,12 +14,11 @@ class InvoiceVeiwerWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit InvoiceVeiwerWidget(QWidget *parent = 0);
+    explicit InvoiceVeiwerWidget(Report* aReport, QWidget *parent = 0);
     ~InvoiceVeiwerWidget();
 
 private:
     void renderReport();
-    QString getHtmlCode();
 
 private slots:
     void saveReportSlot();
@@ -26,6 +27,7 @@ private slots:
 
 private:
     QString htmlCode;
+    Report* report;
     Ui::InvoiceVeiwerWidget *ui;
 };
 

@@ -15,6 +15,8 @@
 #include "../../MangoService/checkout.h"
 #include "../../MangoService/itemdetail.h"
 #include "../../MangoService/orderdetail.h"
+#include "../../MangoReports/report.h"
+#include "../../MangoReports/logginreport.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -128,9 +130,13 @@ void MainWindow::ShowHomePage()
 
 void MainWindow::todayLogginReportClickedSlot()
 {
-    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget;
-    viewer->show();
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
+    Report* report = new LogginReport(from, to);
+
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 
     // show reports
     // event logging table, order table, cancel table, summary table
