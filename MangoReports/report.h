@@ -5,6 +5,7 @@
 
 #include <QDateTime>
 #include <QFile>
+#include <QString>
 
 class MANGOREPORTSSHARED_EXPORT Report {
 public:
@@ -15,7 +16,7 @@ public:
     virtual QString getReportTemplateName() = 0;
 
 private:
-    QString replaceHeader(const QString& content);
+    QString replaceHeader(QString& content);
     QDateTime m_from, m_to;
 };
 

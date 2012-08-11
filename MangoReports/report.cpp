@@ -18,7 +18,7 @@ QString Report::getTemplateFileContent()
     return replaceHeader(htmlContent);
 }
 
-QString Report::replaceHeader(const QString& content) {
+QString Report::replaceHeader(QString& content) {
     QString TITLE = "Mango Talaat";
     QString COMPANY_NAME_EN = "Mango Talaat";
     QString OWNER_NAME = "Mohmmaed Allhowh";

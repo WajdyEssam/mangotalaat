@@ -11,6 +11,9 @@ public:
 
     virtual QString getHTML();
     virtual QString getReportTemplateName();
+
+private:
+    QString getTableData();
 };
 
 #endif // LOGGINREPORT_H

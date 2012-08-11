@@ -14,7 +14,7 @@ public:
 signals:
     void homeClicked();
     void logoutClicked();
-    void todayReportActionClicked();
+    void todayLogginReportActionClicked();
     void generalReportActionClicked();
     void closeSystemActionClicked();
     void aboutSystemActionClicked();

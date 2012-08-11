@@ -17,15 +17,7 @@ public:
 
 private:
     void renderReport();
-    QString generateHTML();
-
     QString getHtmlCode();
-    QString getSellTable();
-
-    QString getBillHTMLCode();
-    QString getBillTable();
-
-    void consolePrinting();
 
 private slots:
     void saveReportSlot();

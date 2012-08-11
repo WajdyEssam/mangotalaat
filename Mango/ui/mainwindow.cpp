@@ -68,7 +68,7 @@ void MainWindow::createHeaderDockWidget()
 {
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
-    connect(this->headerWidget, SIGNAL(todayReportActionClicked()), SLOT(todayReportClickedSlot()));
+    connect(this->headerWidget, SIGNAL(todayLogginReportActionClicked()), SLOT(todayLogginReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
@@ -124,19 +124,10 @@ void MainWindow::ShowHomePage()
     this->setCurrentPage(CategoryPage);
 }
 
-void MainWindow::todayReportClickedSlot()
+void MainWindow::todayLogginReportClickedSlot()
 {
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget;
     viewer->show();
-
-    QList<Model::Event> events = Services::Event::getAll();
-    foreach(Model::Event event, events) {
-        Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
-
-        qDebug() << event.id() << " " << event.user().userName() << " " << event.createdDateTime() << " "
-                 << eventType;
-    }
 
 
     // show reports

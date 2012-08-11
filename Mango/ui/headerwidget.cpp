@@ -55,14 +55,14 @@ void HeaderWidget::createToolButtons()
     reportsButton->setFont(font);
 
     // add menu for report button
-    QAction *todayReportAction = new QAction(QIcon(":/images/find.png"),tr("التقرير اليومي"), this);
-    connect(todayReportAction, SIGNAL(triggered()), this, SIGNAL(todayReportActionClicked()));
+    QAction *todayLogginReportAction = new QAction(QIcon(":/images/find.png"),tr("التقرير اليومي"), this);
+    connect(todayLogginReportAction, SIGNAL(triggered()), this, SIGNAL(todayLogginReportActionClicked()));
 
     QAction *generalReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير مخصص"), this);
     connect(generalReportAction, SIGNAL(triggered()), this, SIGNAL(generalReportActionClicked()));
 
     QMenu *reportMenu = new QMenu(this);
-    reportMenu->addAction(todayReportAction);
+    reportMenu->addAction(todayLogginReportAction);
     reportMenu->addAction(generalReportAction);
 
     reportsButton->setMenu(reportMenu);
