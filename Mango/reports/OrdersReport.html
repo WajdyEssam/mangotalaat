@@ -1,0 +1,216 @@
+﻿<html>
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+	<title>%TITLE%</title>
+	<style type="text/css">
+		* {
+			margin: 0px;
+		}
+
+		html, body {
+			height: 100%;
+			font-family: "Courier New", Times, serif;
+		}
+
+		.cls {
+			clear: both;
+		}
+
+		.cln {
+			clear: both;
+			height: 20px;
+		}
+
+		.wrapper {
+			width: 1000px;
+			min-height: 100%;
+			height: auto !important;
+			height: 100%;
+			margin: auto ;
+		}
+
+
+		.header {
+			height: 120px;
+			margin-left: 50px;
+			margin-right: 50px;
+		}
+
+		.content {
+			//background-color: gray;
+			height: 100px;
+			margin-left: 50px;
+			margin-right: 50px;
+			
+		}
+
+		.content_header {
+			//background-color: lightblue;
+			height: 40px;
+			text-align: center;
+		}
+
+		.content_body {
+
+		}
+		
+		.content_table {
+			margin: auto;
+			width: 604px;
+		}
+
+		.table_header {
+			height: 20px;
+			background-color: lightgray;
+			border: 1px solid gray;
+			text-align: center;
+		}
+		
+		.table_row {
+			height: 25px;
+			text-align: center;
+			border: 1px solid gray;
+		}
+		
+		.table_header_cell_left {
+			float: left;
+			width: 200px;
+		}
+		
+		.table_header_cell_right {
+			float: right;
+			width: 200px;
+		}
+		
+		.table_header_cell_center {
+			float: left;
+			width: 200px;
+		}
+
+		@media screen
+		{
+			.footer, push {
+				//background-color: darkgray;
+				height: 40px;
+				width: 1000px;
+				margin: auto;
+			}
+		}
+
+		@media print
+		{
+			.footer, push {
+				position: fixed;
+				bottom: 0;
+				height: 40px;
+				width: 1000px;
+				margin: auto;
+			}
+		}
+
+		.footer_content {
+			text-align: center;
+		}
+
+		.header_left {
+			float: left;
+			width: 70%;
+			margin-top: 30px;
+			margin-bottom: 50px;
+		}
+
+		.header_right {
+			float: right;
+			width: 30%;
+			margin-top: 30px;
+			margin-bottom: 50px;
+		}
+
+		.left_div {
+			float: left;
+		}
+
+		.right_div {
+			float: right;
+		}
+
+		#title {
+			font: 35px bold sans-serif;
+		}
+
+		.voucher {
+			text-align: center;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<div class="header">
+			<br /><br />
+			<div class="header_left">
+				<br />
+				<p id="title"> %COMPANY_NAME_EN% </p>
+				<p id="title"> مانجو طلعت </p>
+				<br /><br />
+				<p> %OWNER_NAME% </p>
+				<p> %COMPANY_MOBILE% </p>
+				<p> %COMPANY_FAX% </p>
+				<p> %COMPANY_EMAIL% </p>
+				<p> %COMPANY_ADDRESS% </p>
+			</div> <!-- close header_left -->
+
+			<div class="header_right">
+				<div class="right_div"> <img src="qrc:/reports/logo.png" /> </div>
+			</div> <!-- close header_right -->
+		</div> <!-- close header -->
+		<div class="cls"></div> <!-- close cls -->
+		
+		<div class="content">
+			<div class="content_header">
+				<p> Report From: <b>%FROM_DATE%</b> - TO: <b>%TO_DATE%</b></p>
+				<p> Generated on <b>%DATE%</b> , <b>%TIME%</b> </p>
+			</div> <!-- close content_header -->
+			
+			<div class="cln"></div> <!-- close cln -->
+			<hr /><br />
+			<div class="content_body">
+				<p class="voucher"> <b>%ORDER_REPORT_TYPE%</b></p><br />
+
+				<p> Details: </p>
+				<div class="cln"></div> <!-- close cln -->
+				
+				<div class="content_table">
+					<div class="table_header">
+						<div class="table_header_cell_left">
+							رقم العملية
+						</div> <!-- close table_header_cell -->
+						<div class="table_header_cell_right">
+							اسم المستخدم
+						</div> <!-- close table_header_cell -->
+						<div class="table_header_cell_left">
+							تاريخ العملية
+						</div> <!-- close table_header_cell -->
+						<div class="table_header_cell_left">
+							نوع العملية
+						</div> <!-- close table_header_cell -->
+					</div> <!-- close table_header -->				
+				
+					<div class="table_data">
+						%ORDER_TABLE% 
+					</div> <!-- close table_data -->
+				</div> <!-- close content_table -->
+			</div> <!-- close content_body -->
+		</div> <!-- close content -->
+
+	</div> <!-- close wrapper -->
+	<div class="push"></div> <!-- close push" -->
+	<div class="footer">
+		<div class="footer_content">
+			<!--<p> Kingdom of Saudi Arabia - P.O.Box: 1717 Riyadh 11311 - Tel:00000</p>-->
+			<!--<p> The rest of information goes here (c)</p>-->
+		</div>
+	</div> <!-- close footer" -->
+</body>
+</html>
