@@ -19,6 +19,7 @@
 #include "../../MangoReports/logginreport.h"
 #include "../../MangoReports/ordersdetailsreport.h"
 #include "../../MangoReports/ordersreport.h"
+#include "../../MangoReports/generalreport.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -161,15 +162,16 @@ void MainWindow::todayOrdersReportClickedSlot()
 
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
-
-    //    QList<Order> orderReports = database.getOrderReport(times.first(), QDateTime::currentDateTime());
-    //    foreach(Order order, orderReports) {
-    //        qDebug() << order.id() << " , " << order.cash() << " , " << order.createdDateTime() ;
-    //    }
 }
 
 void MainWindow::generalReportClickedSlot() {
+    QDateTime from = QDateTime::currentDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
+    Report* report = new GeneralReport(from, to);
+
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 }
 
 void MainWindow::closeSystemClickedSlot()
