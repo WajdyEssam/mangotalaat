@@ -14,7 +14,6 @@ public:
 
 private:
     QString getLogginTable();
-    QString summary;
 };
 
 #endif // LOGGINREPORT_H

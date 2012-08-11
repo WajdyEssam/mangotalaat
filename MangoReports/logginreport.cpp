@@ -14,7 +14,6 @@ QString LogginReport::getHTML()
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "Loging Report");
     orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
-    orignalHTML = orignalHTML.replace("%LOGIN_SUMMARY%", this->summary);
 
     return orignalHTML;
 }
@@ -58,13 +57,6 @@ QString LogginReport::getLogginTable()
     }
 
     htmlTableResult += tableEnd;
-
-    // build summary
-    summary = QString(
-            "<p><b>"
-            "عدد مرات الدخول: %1, عدد مرات الخروج: %2"
-            "</b></p>"
-    ).arg(loginCount).arg(logoutCount);
 
     return htmlTableResult;
 }
