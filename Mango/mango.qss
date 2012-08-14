@@ -133,3 +133,8 @@ QHeaderView::section
 {
     padding-top: 5px;
 }
+
+QStatusBar {
+    background: gray;
+    color:white;
+}

@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     a.setLayoutDirection(Qt::RightToLeft);
-    a.setFont(QFont("Droid Arabic Naskh", 8, QFont::Normal));
+    //a.setFont(QFont("Droid Arabic Naskh", 8, QFont::Normal));
+    a.setFont(QFont("Times New Roman", 12, QFont::Normal));
 
     // load style sheet
     loadStylesheet();
