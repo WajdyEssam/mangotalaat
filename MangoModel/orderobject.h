@@ -8,12 +8,12 @@ class MANGOMODELSHARED_EXPORT OrderObject : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int orderId READ orderId)
-    Q_PROPERTY(QString orderIndexId READ orderIndexId)
-    Q_PROPERTY(QString orderName READ orderName)
-    Q_PROPERTY(QString orderDescription READ orderDescription)
-    Q_PROPERTY(QString orderCost READ orderCost)
-    Q_PROPERTY(int orderCategory READ orderCategory)
+    Q_PROPERTY(int orderId READ orderId CONSTANT)
+    Q_PROPERTY(QString orderIndexId READ orderIndexId CONSTANT)
+    Q_PROPERTY(QString orderName READ orderName CONSTANT)
+    Q_PROPERTY(QString orderDescription READ orderDescription CONSTANT)
+    Q_PROPERTY(QString orderCost READ orderCost CONSTANT)
+    Q_PROPERTY(int orderCategory READ orderCategory CONSTANT)
 
 public:
     explicit OrderObject(QObject *parent = 0);

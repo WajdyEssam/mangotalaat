@@ -48,8 +48,8 @@ private:
     QGroupBox *componentsGroupBox;
     QGroupBox *additionalsGroupBox;
 
-    QVBoxLayout* commandButtonVBoxLayout;
-    QVBoxLayout *orderDetailVBoxLayout;
+    QVBoxLayout* orderDetailVBoxLayout;
+    QVBoxLayout *orderControlVBoxLayout;
     QGridLayout *componentsGridLayout;
     QGridLayout *additionalsGridLayout;
 
@@ -57,21 +57,22 @@ private:
     QPushButton* updateButton;
     QPushButton* removeButton;
 
-    QLabel* itemNameLineEdit;
+    QLabel* itemNameLabel;
+    QLabel* itemComponentsLabel;
+    QLabel* itemAdditionalsLabel;
+
     QLCDNumber* itemQuantityLCDNumber;
-    QLabel* itemSizeLineEdit;
     QLCDNumber* itemPriceLCDNumber;
     QLCDNumber* itemSugarLCDNumber;
-    QLabel* itemComponentsLineEdit;
-    QLabel* itemAdditionalsLineEdit;
     QLCDNumber* totalPriceLCDNumber;
 
     Model::OrderDetail m_orderDetail;
 
-    void initCommandButtons();
-    void initOrder();
-    void initComponents();
-    void initAdditionals();
+    void initOrderDetailsUI();
+    void initCommandButtonsUI();
+    void initOrderControlUI();
+    void initComponentsUI();
+    void initAdditionalsUI();
 
     void uncheckComponentsButtons();
     void uncheckAdditionalsButtons();

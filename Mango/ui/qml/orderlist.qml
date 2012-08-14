@@ -1,4 +1,4 @@
-import QtQuick 1.0
+import QtQuick 1.1
 
 Rectangle {
     id: order_window
@@ -23,95 +23,51 @@ Rectangle {
         clip: true
     }
 
-//    ListModel {
-//        id: orderModel
-
-//        ListElement {
-//            order_id: 1
-//            order_name: "item_1"
-//            order_cost: 16
-//            order_category: "category_1"
-//        }
-
-//        ListElement {
-//            order_id: 2
-//            order_name: "item_2"
-//            order_cost: 8
-//            order_category: "category_2"
-//        }
-
-//        ListElement {
-//            order_id: 4
-//            order_name: "item_4"
-//            order_cost: 23
-//            order_category: "category_4"
-//        }
-
-//        ListElement {
-//            order_id: 5
-//            order_name: "item_5"
-//            order_cost: 12
-//            order_category: "category_5"
-//        }
-//    }
-
     Component {
         id: orderDelegate
 
-        Item {
+        Rectangle {
 
-            id: orderItem
-            width: 380
+            id: orderRect
+            width: 340
             height: 50
 
             BorderImage {
                 id: itemImage
-                source: "qrc:/images/normal_button.png"
-                anchors.fill: parent
-                border.left: 2; border.top: 2
-                border.right: 2; border.bottom: 2
-
-                states: State {
-                    name: "pressed"
-                    PropertyChanges {
-                        target: itemImage
-                        source: "qrc:/images/pressed_button.png"
-                    }
-                }
+                width: 338; height: parent.height
+                source: mouseArea.containsMouse ? "qrc:/images/pressed_button.png" : "qrc:/images/normal_button.png" ;
+                border.left: 4; border.top: 4
+                border.right: 4; border.bottom: 4
             }
 
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
+
                 onClicked: {
                     console.debug("item: " + model.modelData.orderId + " is clicked");
                     order_window.itemClick(orderIndexId);
-
-                }
-                onPressed: {
-                    console.debug("item: " + model.modelData.orderId + " is pressed");
-                    itemImage.state = "pressed"
-                }
-                onReleased: {
-                    itemImage.state = ""
                 }
             }
 
             Item {
                 anchors.fill: parent
                 anchors.top: parent.top
-                anchors.topMargin: 10
+                anchors.topMargin: 1
 
                 Image {
                     id: iconImage
                     width: 32; height: 32
                     anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.topMargin: 5
                     source: "qrc:/images/juices/category_" + model.modelData.orderCategory + ".png"
                     smooth: true
                 }
 
                 Item {
                     height: parent.height
-                    width: 300
+                    width: 270
                     anchors.left: iconImage.right
                     anchors.leftMargin: 20
 
@@ -120,6 +76,12 @@ Rectangle {
                         text: orderName;
                         font.bold: true;
                         font.pointSize: 14;
+
+                        Text {
+                            text: model.modelData.orderName + " -- " + model.modelData.orderDescription
+                            anchors.top: parent.baseline
+                            anchors.topMargin: 2
+                        }
                     }
 
                     Text {
@@ -127,14 +89,8 @@ Rectangle {
                         font.pointSize: 14;
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.topMargin: 3
+                        anchors.topMargin: 9
                         color: "blue"
-                    }
-
-                    Text {
-                        text: model.modelData.orderName + " -- " + model.modelData.orderDescription
-                        anchors.top: orderLabel.bottom
-                        anchors.topMargin: 2
                     }
                 }
             }

@@ -36,14 +36,23 @@ void HeaderWidget::createToolButtons()
 {
     QFont font("Droid Arabic Naskh", 12, QFont::Bold);
 
-    QToolButton* HomeButton = new QToolButton;
-    HomeButton->setIcon(QIcon(":/images/system.png"));
-    HomeButton->setText("البداية");
-    HomeButton->setIconSize(QSize(64,64));
-    HomeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    HomeButton->setToolTip("البداية");
-    HomeButton->setStatusTip(HomeButton->toolTip());
-    HomeButton->setFont(font);
+    backButton = new QToolButton;
+    backButton->setIcon(QIcon(":/images/back_ar.png"));
+    backButton->setText("عودة");
+    backButton->setIconSize(QSize(64,64));
+    backButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    backButton->setToolTip("عودة");
+    backButton->setStatusTip(backButton->toolTip());
+    backButton->setFont(font);
+
+    QToolButton* homeButton = new QToolButton;
+    homeButton->setIcon(QIcon(":/images/system.png"));
+    homeButton->setText("البداية");
+    homeButton->setIconSize(QSize(64,64));
+    homeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    homeButton->setToolTip("البداية");
+    homeButton->setStatusTip(homeButton->toolTip());
+    homeButton->setFont(font);
 
     QToolButton* reportsButton = new QToolButton;
     reportsButton->setIcon(QIcon(":/images/report.png"));
@@ -109,15 +118,18 @@ void HeaderWidget::createToolButtons()
     signOutButton->setFont(font);
 
     QHBoxLayout* headerLayout = new QHBoxLayout(this);
-    headerLayout->addWidget(HomeButton);
+    headerLayout->addWidget(backButton);
+    headerLayout->addWidget(homeButton);
     headerLayout->addWidget(reportsButton);
     headerLayout->addWidget(systemButton);
     headerLayout->addWidget(signOutButton);
 
-    this->signalMapper->setMapping(HomeButton, 1);
-    this->signalMapper->setMapping(signOutButton, 2);
+    this->signalMapper->setMapping(backButton, 1);
+    this->signalMapper->setMapping(homeButton, 2);
+    this->signalMapper->setMapping(signOutButton, 3);
 
-    connect(HomeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    connect(backButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    connect(homeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(signOutButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
 }
 
@@ -125,12 +137,20 @@ void HeaderWidget::emitSignal(int id)
 {
     switch (id) {
     case 1:
-        emit homeClicked();
+        emit backClicked();
         break;
     case 2:
+        emit homeClicked();
+        break;
+    case 3:
         emit logoutClicked();
         break;
     }
+}
+
+void HeaderWidget::enableBackButton(bool value)
+{
+    backButton->setEnabled(value);
 }
 
 
