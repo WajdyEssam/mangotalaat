@@ -133,7 +133,7 @@ void MainWindow::ShowHomePage()
 
 void MainWindow::todayLogginReportClickedSlot()
 {
-    QDateTime from = QDateTime::currentDateTime();
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
 
     Report* report = new LogginReport(from, to);
@@ -144,7 +144,7 @@ void MainWindow::todayLogginReportClickedSlot()
 
 void MainWindow::todayOrdersDetailsReportClickedSlot()
 {
-    QDateTime from = QDateTime::currentDateTime();
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
 
     Report* report = new OrdersDetailsReport(from, to);
@@ -155,7 +155,7 @@ void MainWindow::todayOrdersDetailsReportClickedSlot()
 
 void MainWindow::todayOrdersReportClickedSlot()
 {
-    QDateTime from = QDateTime::currentDateTime();
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
 
     Report* report = new OrdersReport(from, to);
