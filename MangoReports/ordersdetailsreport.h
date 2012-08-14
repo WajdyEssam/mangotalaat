@@ -13,7 +13,7 @@ public:
     virtual QString getReportTemplateName();
 
 private:
-    QString getTableData();
+    QString getOrdersDetailsTable();
 };
 
 #endif // ORDERSDETAILSREPORT_H

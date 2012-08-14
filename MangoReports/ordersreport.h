@@ -2,6 +2,8 @@
 #define ORDERSREPORT_H
 
 #include "MangoReports_global.h"
+#include "../MangoModel/order.h"
+#include "../MangoService/order.h"
 #include "report.h"
 
 class MANGOREPORTSSHARED_EXPORT OrdersReport: public Report
@@ -13,7 +15,7 @@ public:
     virtual QString getReportTemplateName();
 
 private:
-    QString getTableData();
+    QString getOrdersTable();
 };
 
 #endif // ORDERSREPORT_H

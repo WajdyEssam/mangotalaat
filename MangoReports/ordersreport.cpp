@@ -1,8 +1,7 @@
 #include "ordersreport.h"
 
-#include "../MangoModel/event.h"
-#include "../MangoService/event.h"
 #include <QDebug>
+#include <QString>
 
 OrdersReport::OrdersReport(const QDateTime& from, const QDateTime& to)
     :Report(from, to)
@@ -12,8 +11,8 @@ OrdersReport::OrdersReport(const QDateTime& from, const QDateTime& to)
 QString OrdersReport::getHTML()
 {
     QString orignalHTML = getTemplateFileContent();
-    orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "Orders Report");
-    orignalHTML = orignalHTML.replace("%ORDER_TABLE%", getTableData());
+    orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "تقرير عن الطلبات");
+    orignalHTML = orignalHTML.replace("%ORDER_TABLE%", getOrdersTable());
 
     return orignalHTML;
 }
@@ -23,18 +22,18 @@ QString OrdersReport::getReportTemplateName()
     return ":/reports/OrdersReport.html";
 }
 
-QString OrdersReport::getTableData()
+QString OrdersReport::getOrdersTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
+            "<tr class=\"table_header\"><th>رقم العملية</th><th>وقت العملية</th><th>نوع العملية</th><th>المبلغ</th>"
+            "<th>الخصم</th><th>الاجمالي</th><th>ملاحظات</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Event> events = Services::Event::getAll();
-    foreach(Model::Event event, events) {
-        Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
+    QList<Model::Order> orders = Services::Order::getAll();
+    foreach(Model::Order order, orders) {
+        QString note = order.isCancelled() ? "ملغى": " ";
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
@@ -42,8 +41,17 @@ QString OrdersReport::getTableData()
             "<td align=\"center\"><font size=\"2\">%2</font></td> "
             "<td align=\"center\"><font size=\"2\">%3</font></td> "
             "<td align=\"center\"><font size=\"2\">%4</font></td> "
+            "<td align=\"center\"><font size=\"2\">%5</font></td> "
+            "<td align=\"center\"><font size=\"2\">%6</font></td> "
+            "<td align=\"center\"><font size=\"2\">%7</font></td> "
             "</tr>"
-        ).arg( QString::number(event.id()), event.user().userName(), event.createdDateTime().toString(), eventType);
+        ).arg( QString::number(order.id()),
+               order.createdDateTime().toString(),
+               order.orderType().arabicName(),
+               QString::number(order.cash()),
+               QString::number(order.discount()),
+               QString::number(order.totalCash()),
+               note);
 
         htmlTableResult += tableRaw ;
     }

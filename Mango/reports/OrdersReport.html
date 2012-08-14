@@ -43,6 +43,10 @@
 			margin-right: 50px;
 			
 		}
+		
+		.summary {
+			background-color: lightblue;
+		}
 
 		.content_header {
 			//background-color: lightblue;
@@ -56,7 +60,7 @@
 		
 		.content_table {
 			margin: auto;
-			width: 604px;
+			width: 100%;
 		}
 
 		.table_header {
@@ -170,33 +174,16 @@
 		<div class="content">
 			<div class="content_header">
 				<p> Report From: <b>%FROM_DATE%</b> - TO: <b>%TO_DATE%</b></p>
-				<p> Generated on <b>%DATE%</b> , <b>%TIME%</b> </p>
+				<p> Generated on <b>%DATE%</b> </p>
 			</div> <!-- close content_header -->
 			
 			<div class="cln"></div> <!-- close cln -->
 			<hr /><br />
 			<div class="content_body">
 				<p class="voucher"> <b>%ORDER_REPORT_TYPE%</b></p><br />
-
 				<p> Details: </p>
 				<div class="cln"></div> <!-- close cln -->
-				
 				<div class="content_table">
-					<div class="table_header">
-						<div class="table_header_cell_left">
-							رقم العملية
-						</div> <!-- close table_header_cell -->
-						<div class="table_header_cell_right">
-							اسم المستخدم
-						</div> <!-- close table_header_cell -->
-						<div class="table_header_cell_left">
-							تاريخ العملية
-						</div> <!-- close table_header_cell -->
-						<div class="table_header_cell_left">
-							نوع العملية
-						</div> <!-- close table_header_cell -->
-					</div> <!-- close table_header -->				
-				
 					<div class="table_data">
 						%ORDER_TABLE% 
 					</div> <!-- close table_data -->

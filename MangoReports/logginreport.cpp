@@ -13,7 +13,7 @@ QString LogginReport::getHTML()
 {
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "Loging Report");
-    orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getTableData());
+    orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
 
     return orignalHTML;
 }
@@ -23,18 +23,26 @@ QString LogginReport::getReportTemplateName()
     return ":/reports/LogginReport.html";
 }
 
-QString LogginReport::getTableData()
+QString LogginReport::getLogginTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
+           "<tr class=\"table_header\"><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
+
+    int loginCount = 0;
+    int logoutCount = 0;
 
     QList<Model::Event> events = Services::Event::getAll();
     foreach(Model::Event event, events) {
         Model::Event::EventTypes type = event.eventType();
         QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
+
+        if ( type == Model::Event::Login )
+            loginCount++;
+        else
+            logoutCount++;
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
