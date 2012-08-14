@@ -27,8 +27,8 @@ MainWindow::MainWindow(int userId, QWidget *parent) :
     m_userId = userId;
 
     this->setWindowSize();
-    this->createWidgetPages();
     this->createDockWidgets();
+    this->createWidgetPages();
     this->createStatusBar();
     this->establishConnections();
     this->addLoginEvent();
@@ -72,7 +72,8 @@ void MainWindow::createDockWidgets()
 void MainWindow::createHeaderDockWidget()
 {
     this->headerWidget = new HeaderWidget;
-    connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(ShowHomePage()));
+    connect(this->headerWidget, SIGNAL(backClicked()), SLOT(showPreviousPage()));
+    connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(showHomePage()));
     connect(this->headerWidget, SIGNAL(todayLogginReportActionClicked()), SLOT(todayLogginReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
@@ -126,7 +127,16 @@ void MainWindow::AddLogoutEvent() {
     Services::Event::add(event);
 }
 
-void MainWindow::ShowHomePage()
+void MainWindow::showPreviousPage()
+{
+    if (stackedWidget->currentIndex() > 0)
+    {
+        this->setCurrentPage((WidgetPage)(stackedWidget->currentIndex() - 1));
+    }
+}
+
+
+void MainWindow::showHomePage()
 {
     this->setCurrentPage(CategoryPage);
 }
@@ -235,6 +245,7 @@ void MainWindow::orderItemClicked(QString orderIndexId)
     Model::OrderDetail orderDetail = getOrderByIndexId(orderIndexId);
     this->propertyWidget->setOrder(orderDetail, true);
     this->setCurrentPage(PropertyPage);
+    headerWidget->enableBackButton(false);
 }
 
 Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
@@ -248,6 +259,11 @@ Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
 
 void MainWindow::setCurrentPage(WidgetPage page)
 {
+    if (page == CategoryPage)
+        headerWidget->enableBackButton(false);
+    else
+        headerWidget->enableBackButton(true);
+
     this->stackedWidget->slideInIdx(page);
 }
 

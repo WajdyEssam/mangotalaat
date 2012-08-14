@@ -36,21 +36,20 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     componentsGroupBox = new QGroupBox(tr("Components"));
     additionalsGroupBox = new QGroupBox(tr("Additionals"));
 
-    commandButtonVBoxLayout = new QVBoxLayout;
-
     orderDetailVBoxLayout = new QVBoxLayout;
-    orderDetailVBoxLayout->setSizeConstraint(QGridLayout::SetMinAndMaxSize);
+
+    orderControlVBoxLayout = new QVBoxLayout;
+    orderControlVBoxLayout->setSizeConstraint(QGridLayout::SetMinAndMaxSize);
 
     componentsGridLayout = new QGridLayout;
     additionalsGridLayout = new QGridLayout;
-//    additionalsGridLayout->setSizeConstraint(QGridLayout::SetMinAndMaxSize);
 
-    orderGroupBox->setLayout(orderDetailVBoxLayout);
+    orderGroupBox->setLayout(orderControlVBoxLayout);
     componentsGroupBox->setLayout(componentsGridLayout);
     additionalsGroupBox->setLayout(additionalsGridLayout);
 
     QVBoxLayout *leftLayout = new QVBoxLayout;
-    leftLayout->addLayout(commandButtonVBoxLayout);
+    leftLayout->addLayout(orderDetailVBoxLayout);
     leftLayout->addWidget(componentsGroupBox);
     leftLayout->addWidget(additionalsGroupBox);
 
@@ -62,13 +61,35 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     connect(this->componentSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentComponent(int)));
     connect(this->additionalSignalMapper, SIGNAL(mapped(int)), this, SLOT(setCurrentAdditional(int)));
 
-    this->initOrder();
-    this->initCommandButtons();
-    this->initComponents();
-    this->initAdditionals();
+    this->initOrderDetailsUI();
+    this->initOrderControlUI();
+    this->initCommandButtonsUI();
+    this->initComponentsUI();
+    this->initAdditionalsUI();
 }
 
-void PropertyWidget::initCommandButtons()
+void PropertyWidget::initOrderDetailsUI()
+{
+    itemNameLabel = new QLabel;
+    itemNameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+    itemNameLabel->setStyleSheet("color: blue; font-weight: bold; font-size: 22px;");
+
+    itemComponentsLabel = new QLabel;
+    itemComponentsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+
+    itemAdditionalsLabel = new QLabel;
+    itemAdditionalsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(itemNameLabel);
+    layout->addWidget(itemComponentsLabel);
+    layout->addWidget(itemAdditionalsLabel);
+
+    orderDetailVBoxLayout->addLayout(layout);
+}
+
+
+void PropertyWidget::initCommandButtonsUI()
 {
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSizeConstraint(QLayout::SetMinAndMaxSize);
@@ -91,23 +112,11 @@ void PropertyWidget::initCommandButtons()
     layout->addWidget(addButton);
     layout->addWidget(updateButton);
     layout->addWidget(removeButton);
-    orderDetailVBoxLayout->addLayout(layout);
+    orderControlVBoxLayout->addLayout(layout);
 }
 
-void PropertyWidget::initOrder()
+void PropertyWidget::initOrderControlUI()
 {
-    itemNameLineEdit = new QLabel;
-    itemSizeLineEdit = new QLabel;
-    itemComponentsLineEdit = new QLabel;
-    itemAdditionalsLineEdit = new QLabel;
-
-
-    QFormLayout* leftLayout = new QFormLayout;
-    leftLayout->addRow(tr("Item"), itemNameLineEdit);
-    leftLayout->addRow(tr("Size"), itemSizeLineEdit);
-    leftLayout->addRow(tr("Components"), itemComponentsLineEdit);
-    leftLayout->addRow(tr("Additionals"), itemAdditionalsLineEdit);
-
     QLabel* itemQuantityLabel = new QLabel(tr("Quantity"));
     itemQuantityLCDNumber = new QLCDNumber;
     QPushButton* quantityButton = new QPushButton("+");
@@ -115,10 +124,13 @@ void PropertyWidget::initOrder()
 
     QLabel* itemPriceLabel = new QLabel(tr("Item Price"));
     itemPriceLCDNumber = new QLCDNumber;
-
+    itemPriceLCDNumber->setFixedSize(70, 70);
 
     QLabel* totalPriceLabel = new QLabel(tr("Total Price"));
     totalPriceLCDNumber = new QLCDNumber;
+    totalPriceLCDNumber->setFixedSize(70, 70);
+    totalPriceLCDNumber->setStyleSheet("color: red");
+    totalPriceLCDNumber->setSegmentStyle(QLCDNumber::Filled);
 
     QLabel* itemSugarLabel = new QLabel(tr("Sugar"));
     itemSugarLCDNumber = new QLCDNumber;
@@ -126,24 +138,24 @@ void PropertyWidget::initOrder()
 
     QGridLayout* rightLayout = new QGridLayout;
     rightLayout->addWidget(itemQuantityLabel, 0, 0);
-    rightLayout->addWidget(itemQuantityLCDNumber, 0, 1);
+    rightLayout->addWidget(itemQuantityLCDNumber, 0, 1, 2, 1);
     rightLayout->addWidget(quantityButton, 0, 2);
 
-    rightLayout->addWidget(itemSugarLabel, 1, 0);
-    rightLayout->addWidget(itemSugarLCDNumber, 1, 1);
-    rightLayout->addWidget(sugarButton, 1, 2);
+    rightLayout->addWidget(itemSugarLabel, 2, 0);
+    rightLayout->addWidget(itemSugarLCDNumber, 2, 1, 2, 1);
+    rightLayout->addWidget(sugarButton, 2, 2);
 
-    rightLayout->addWidget(itemPriceLabel, 2, 0);
-    rightLayout->addWidget(itemPriceLCDNumber, 2, 1);
+    rightLayout->addWidget(itemPriceLabel, 4, 0);
+    rightLayout->addWidget(itemPriceLCDNumber, 4, 1);
 
-    rightLayout->addWidget(totalPriceLabel, 3, 0);
-    rightLayout->addWidget(totalPriceLCDNumber, 3, 1);
+    rightLayout->addWidget(totalPriceLabel, 5, 0);
+    rightLayout->addWidget(totalPriceLCDNumber, 5, 1);
 
-    orderDetailVBoxLayout->addLayout(rightLayout);
-    orderDetailVBoxLayout->addStretch();
+    orderControlVBoxLayout->addLayout(rightLayout);
+    orderControlVBoxLayout->addStretch();
 }
 
-void PropertyWidget::initComponents()
+void PropertyWidget::initComponentsUI()
 {
     // get all Components
     QList<Model::Component> components = Services::Component::getAll();
@@ -178,7 +190,7 @@ void PropertyWidget::initComponents()
     }
 }
 
-void PropertyWidget::initAdditionals()
+void PropertyWidget::initAdditionalsUI()
 {
     // get all dditionals
     QList<Model::Additional> additionals = Services::Additional::getAll();
@@ -235,9 +247,9 @@ void PropertyWidget::setOrder(Model::OrderDetail orderDetail, bool isOpenedInEdi
         this->componentsGroupBox->setVisible(true);
     }
 
-    itemNameLineEdit->setText(m_orderDetail.itemDetail().item().arabicName());
+    itemNameLabel->setText(m_orderDetail.itemDetail().item().arabicName());
+    itemNameLabel->setText(itemNameLabel->text() + " - " + m_orderDetail.itemDetail().size().arabicName());
     itemQuantityLCDNumber->display(QString::number(m_orderDetail.qunatity()));
-    itemSizeLineEdit->setText(m_orderDetail.itemDetail().size().arabicName());
     itemPriceLCDNumber->display(QString::number(m_orderDetail.itemDetail().price()));
     itemSugarLCDNumber->display(QString::number(m_orderDetail.sugar()));
 
@@ -350,13 +362,12 @@ void PropertyWidget::uncheckAdditionalsButtons()
 
 void PropertyWidget::clearItemDetailsLineEdit()
 {
-    itemNameLineEdit->clear();
+    itemNameLabel->clear();
     itemQuantityLCDNumber->display(0);
-    itemSizeLineEdit->clear();
     itemPriceLCDNumber->display(0);
     itemSugarLCDNumber->display(0);
-    itemComponentsLineEdit->clear();
-    itemAdditionalsLineEdit->clear();
+    itemComponentsLabel->clear();
+    itemAdditionalsLabel->clear();
     totalPriceLCDNumber->display(0);
 }
 
@@ -396,8 +407,15 @@ void PropertyWidget::fillItemDetialsLineEdit()
         additionals.append(additional.arabicName());
     }
 
-    itemComponentsLineEdit->setText(components.join(" , "));
-    itemAdditionalsLineEdit->setText(additionals.join(" , "));
+    if (components.count())
+        itemComponentsLabel->setText(components.join(" , "));
+    else
+        itemComponentsLabel->setText("<font color='red'>لا توجد مكونات</font>");
+
+    if (additionals.count())
+        itemAdditionalsLabel->setText(additionals.join(" , "));
+    else
+        itemAdditionalsLabel->setText("<font color='red'>لا توجد إضافات</font>");
 
     // Calculate total price
     calculateTotalPrice();
@@ -467,7 +485,7 @@ int PropertyWidget::readQunatity()
 void PropertyWidget::openKeypadDialog()
 {
     KeypadDialog keypadDialog;
-    keypadDialog.setValue((int)itemQuantityLCDNumber->value());
+    keypadDialog.setValue(0);
     if (keypadDialog.exec() == QDialog::Accepted) {
         itemQuantityLCDNumber->display(QString::number(keypadDialog.value()));
         calculateTotalPrice();
@@ -482,7 +500,7 @@ void PropertyWidget::calculateTotalPrice()
     int itemPrice = (int)itemPriceLCDNumber->value();
     int totalPrice = itemPrice * quantity;
     //totalPrice = totalPrice + (componentsCount * 1);
-    totalPrice = totalPrice + (addtionalCount * 1);
+    totalPrice = totalPrice + (addtionalCount * 1 * quantity);
 
     totalPriceLCDNumber->display(QString::number(totalPrice));
 }

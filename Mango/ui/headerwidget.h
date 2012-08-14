@@ -4,6 +4,7 @@
 #include <QWidget>
 
 class QSignalMapper;
+class QToolButton;
 
 class HeaderWidget : public QWidget
 {
@@ -12,6 +13,7 @@ public:
     explicit HeaderWidget(QWidget *parent = 0);
     
 signals:
+    void backClicked();
     void homeClicked();
     void logoutClicked();
     void todayLogginReportActionClicked();
@@ -23,9 +25,11 @@ signals:
 
 public slots:
     void emitSignal(int id);
+    void enableBackButton(bool value);
 
 private:
     QSignalMapper *signalMapper;
+    QToolButton* backButton;
 
     void init();
     void createToolButtons();
