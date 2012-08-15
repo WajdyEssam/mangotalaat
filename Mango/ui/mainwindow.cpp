@@ -4,6 +4,7 @@
 #include "SlidingStackedWidget.h"
 #include "aboutdialog.h"
 #include "invoiceveiwerwidget.h"
+#include "returnorderdialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -20,6 +21,7 @@
 #include "../../MangoReports/ordersdetailsreport.h"
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
+
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -197,7 +199,11 @@ void MainWindow::generalReportClickedSlot() {
 
 void MainWindow::returnOrderSystemClickedSlot()
 {
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
+    QDateTime to = QDateTime::currentDateTime();
 
+    ReturnOrderDialog dialog(from, to);
+    dialog.exec();
 }
 
 void MainWindow::closeSystemClickedSlot()

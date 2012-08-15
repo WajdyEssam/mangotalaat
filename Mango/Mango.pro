@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     ui/keypaddialog.cpp \
     ui/aboutdialog.cpp \
     ui/invoiceveiwerwidget.cpp \
-    ui/loggindialog.cpp
+    ui/loggindialog.cpp \
+    ui/returnorderdialog.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -36,7 +37,8 @@ HEADERS  += ui/categorieswidget.h \
     ui/keypaddialog.h \
     ui/aboutdialog.h \
     ui/invoiceveiwerwidget.h \
-    ui/loggindialog.h
+    ui/loggindialog.h \
+    ui/returnorderdialog.h
 
 RESOURCES += \
     resources.qrc
@@ -65,5 +67,6 @@ LIBS += -L$$PWD/../bin/ -lMangoReports
 FORMS += \
     ui/aboutdialog.ui \
     ui/invoiceveiwerwidget.ui \
-    ui/loggindialog.ui
+    ui/loggindialog.ui \
+    ui/returnorderdialog.ui
 
