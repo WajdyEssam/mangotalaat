@@ -15,7 +15,7 @@ int Order::add(Model::Order order)
     query.addBindValue(order.orderType().id());
     query.addBindValue(order.cash());
     query.addBindValue(order.discount());
-    query.addBindValue(order.isCancelled());
+    query.addBindValue(order.totalCash());
 
     bool ok = query.exec();
 
