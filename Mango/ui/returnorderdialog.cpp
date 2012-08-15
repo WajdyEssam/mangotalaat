@@ -1,5 +1,6 @@
 #include "returnorderdialog.h"
 #include "ui_returnorderdialog.h"
+#include <QDebug>
 
 ReturnOrderDialog::ReturnOrderDialog(const QDateTime& from, const QDateTime& to, QWidget *parent) :
     QDialog(parent),
@@ -9,6 +10,7 @@ ReturnOrderDialog::ReturnOrderDialog(const QDateTime& from, const QDateTime& to,
     this->m_to = to;
 
     ui->setupUi(this);
+    this->showMaximized();
     this->initTable();
 }
 
@@ -36,7 +38,7 @@ void ReturnOrderDialog::initTable() {
 }
 
 void ReturnOrderDialog::fillRows() {
-    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(m_from, m_to);
+    QList<Model::Order> orders = Services::Order::getNotCancelledOrdersBetweenDateTime(m_from, m_to);
 
     foreach(Model::Order order, orders) {
         int row = this->ui->tableWidget->rowCount();
@@ -62,7 +64,9 @@ void ReturnOrderDialog::on_removeButton_clicked()
     for( int i=0; i<selectedList.count(); i++) {
         int row = selectedList.at(i).row();
         int orderId = this->ui->tableWidget->item(row, 0)->text().toInt();
-        Services::Order::cancel(Services::Order::getById(orderId));
+        Model::Order order = Services::Order::getById(orderId);
+        bool state = Services::Order::cancel(order);
+        qDebug() << "State : " << state;
     }
 
     if ( selectedList.count() > 0) {

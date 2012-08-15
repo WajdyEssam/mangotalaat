@@ -3,6 +3,7 @@
 #include "ordertype.h"
 #include "orderdetail.h"
 #include "canceledorder.h"
+#include <QDebug>
 
 namespace Services {
 
@@ -62,4 +63,13 @@ QList<Model::Order> Order::getOrdersBetweenDateTime(QDateTime from, QDateTime to
     return orders;
 }
 
+QList<Model::Order> Order::getNotCancelledOrdersBetweenDateTime(QDateTime from, QDateTime to)
+{
+    QList<Model::Order> orders = Database::Order::getNotCancelledOrdersBetweenDateTime(from, to);
+    for (QList<Model::Order>::iterator i = orders.begin(); i != orders.end(); ++i) {
+        i->setOrderType(Services::OrderType::getById(i->orderType().id()));
+    }
+
+    return orders;
+}
 }
