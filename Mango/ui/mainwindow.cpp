@@ -5,6 +5,7 @@
 #include "aboutdialog.h"
 #include "invoiceveiwerwidget.h"
 #include "returnorderdialog.h"
+#include "selectperiddialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -158,9 +159,7 @@ void MainWindow::todayLogginReportClickedSlot()
 {
     QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     Report* report = new LogginReport(from, to);
-
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
 }
@@ -169,9 +168,7 @@ void MainWindow::todayOrdersDetailsReportClickedSlot()
 {
     QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     Report* report = new OrdersDetailsReport(from, to);
-
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
 }
@@ -180,28 +177,28 @@ void MainWindow::todayOrdersReportClickedSlot()
 {
     QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     Report* report = new OrdersReport(from, to);
-
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
 }
 
-void MainWindow::generalReportClickedSlot() {
-    QDateTime from = QDateTime::currentDateTime();
-    QDateTime to = QDateTime::currentDateTime();
-
-    Report* report = new GeneralReport(from, to);
-
-    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
-    viewer->show();
+void MainWindow::generalReportClickedSlot()
+{
+    SelectPeridDialog dialog;
+    dialog.exec();
+    if ( dialog.isAccepted() ) {
+        QDateTime from = dialog.from();
+        QDateTime to = dialog.to();
+        Report* report = new GeneralReport(from, to);
+        InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+        viewer->show();
+    }
 }
 
 void MainWindow::returnOrderSystemClickedSlot()
 {
     QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     ReturnOrderDialog dialog(from, to);
     dialog.exec();
 }

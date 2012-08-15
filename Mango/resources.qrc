@@ -147,5 +147,8 @@
         <file>reports/LogginReport.html</file>
         <file>reports/OrdersDetailsReport.html</file>
         <file>reports/OrdersReport.html</file>
+        <file>images/prices/1_0_en.png</file>
+        <file>images/prices/2_0_en.png</file>
+        <file>images/prices/4_0_en.png</file>
     </qresource>
 </RCC>

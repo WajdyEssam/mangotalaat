@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     ui/aboutdialog.cpp \
     ui/invoiceveiwerwidget.cpp \
     ui/loggindialog.cpp \
-    ui/returnorderdialog.cpp
+    ui/returnorderdialog.cpp \
+    ui/selectperiddialog.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -38,7 +39,8 @@ HEADERS  += ui/categorieswidget.h \
     ui/aboutdialog.h \
     ui/invoiceveiwerwidget.h \
     ui/loggindialog.h \
-    ui/returnorderdialog.h
+    ui/returnorderdialog.h \
+    ui/selectperiddialog.h
 
 RESOURCES += \
     resources.qrc
@@ -68,5 +70,6 @@ FORMS += \
     ui/aboutdialog.ui \
     ui/invoiceveiwerwidget.ui \
     ui/loggindialog.ui \
-    ui/returnorderdialog.ui
+    ui/returnorderdialog.ui \
+    ui/selectperiddialog.ui
 
