@@ -17,7 +17,7 @@ HeaderWidget::HeaderWidget(QWidget *parent) :
 void HeaderWidget::paintEvent(QPaintEvent *) {
     QPainter p(this);
     QLinearGradient background(0,0, 0,100);
-    background.setColorAt(0, QColor(115,115,115));
+    background.setColorAt(0, QColor("black"));
     background.setColorAt(1, QColor(65,65,65));
     p.fillRect(QRect(0,0,width(),100), QBrush(background));
 }

@@ -5,6 +5,7 @@
 #include <QFont>
 
 #include "ui/mainwindow.h"
+#include "ui/loggindialog.h"
 
 void loadStylesheet();
 void loadFonts();
@@ -33,8 +34,15 @@ int main(int argc, char *argv[])
     db.setDatabaseName("mango.db");
 
     // ask for authentication
-    int userId = 1; // admin
+    LogginDialog dialog;
+    dialog.exec();
 
+    if ( !dialog.isAccepted() ) {
+        QMessageBox::warning(0, "Invalid Data", "username and password is not correct");
+        return (0);
+    }
+
+    int userId = dialog.getUserID();
     MainWindow w(userId);
     w.show();
 

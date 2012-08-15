@@ -135,6 +135,6 @@ QHeaderView::section
 }
 
 QStatusBar {
-    background: gray;
+    background: black;
     color:white;
 }

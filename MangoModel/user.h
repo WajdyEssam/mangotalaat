@@ -10,6 +10,7 @@ namespace Model {
 class MANGOMODELSHARED_EXPORT User
 {
 public:
+    User() { }
     User(int id);
     User(int id, QString username, QString password, QDateTime registerTime);
 
