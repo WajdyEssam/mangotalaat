@@ -43,7 +43,7 @@ private slots:
     void todayOrdersReportClickedSlot();
     void todayOrdersDetailsReportClickedSlot();
     void generalReportClickedSlot();
-    void closeSystemClickedSlot();
+    void checkoutSystemClickedSlot();
     void aboutSystemClickedSlot();
     void logoutClickedSlot();
     void returnOrderSystemClickedSlot();

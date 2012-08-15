@@ -16,6 +16,8 @@ GeneralReport::GeneralReport(const QDateTime& from, const QDateTime& to)
 
 QString GeneralReport::getHTML()
 {
+    this->totalCash = 0;
+
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول");
     orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
@@ -25,6 +27,9 @@ QString GeneralReport::getHTML()
 
     orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
     orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getOrdersDetailsTable());
+
+    QString cashString = "<b>Total Cash: " + QString::number(this->totalCash) + " </b>";
+    orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
 }
@@ -119,6 +124,9 @@ QString GeneralReport::getOrdersTable()
     QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Order order, orders) {
         QString note = order.isCancelled() ? "ملغى": " ";
+
+        if ( !order.isCancelled() )
+            totalCash += order.totalCash();
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "

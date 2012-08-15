@@ -81,7 +81,7 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
-    connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(checkoutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(returnOrderSystemActionClicked()), SLOT(returnOrderSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(logoutClickedSlot()));
@@ -206,7 +206,7 @@ void MainWindow::returnOrderSystemClickedSlot()
     dialog.exec();
 }
 
-void MainWindow::closeSystemClickedSlot()
+void MainWindow::checkoutSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
         "اغلاق حساب اليوم",
