@@ -16,7 +16,7 @@ QString OrdersReport::getHTML()
     orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "تقرير عن الطلبات");
     orignalHTML = orignalHTML.replace("%ORDER_TABLE%", getOrdersTable());
 
-    QString cashString = "<b>Total Cash: " + QString::number(this->totalCash) + " </b>";
+    QString cashString = "<b>الإجمالي هو " + QString::number(this->totalCash) + " </b>";
     orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
@@ -54,7 +54,7 @@ QString OrdersReport::getOrdersTable()
             "<td align=\"center\"><font size=\"2\">%7</font></td> "
             "</tr>"
         ).arg( QString::number(order.id()),
-               order.createdDateTime().toString(),
+               order.createdDateTime().toString("dd/MM/yyyy h:m:s ap"),
                order.orderType().arabicName(),
                QString::number(order.cash()),
                QString::number(order.discount()),

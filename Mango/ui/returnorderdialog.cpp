@@ -45,7 +45,7 @@ void ReturnOrderDialog::fillRows() {
         this->ui->tableWidget->insertRow(row);
 
         this->ui->tableWidget->setItem(row, 0, new QTableWidgetItem(QString::number(order.id())));
-        this->ui->tableWidget->setItem(row, 1, new QTableWidgetItem(order.createdDateTime().toString()));
+        this->ui->tableWidget->setItem(row, 1, new QTableWidgetItem(order.createdDateTime().toString("dd/MM/yyyy h:m:s ap")));
         this->ui->tableWidget->setItem(row, 2, new QTableWidgetItem(order.orderType().arabicName()));
         this->ui->tableWidget->setItem(row, 3, new QTableWidgetItem(QString::number(order.cash())));
         this->ui->tableWidget->setItem(row, 4, new QTableWidgetItem(QString::number(order.discount())));
@@ -66,7 +66,6 @@ void ReturnOrderDialog::on_removeButton_clicked()
         int orderId = this->ui->tableWidget->item(row, 0)->text().toInt();
         Model::Order order = Services::Order::getById(orderId);
         bool state = Services::Order::cancel(order);
-        qDebug() << "State : " << state;
     }
 
     if ( selectedList.count() > 0) {

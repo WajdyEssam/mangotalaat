@@ -21,16 +21,16 @@ QString Report::getTemplateFileContent()
 QString Report::replaceHeader(QString& content) {
     QString TITLE = "Mango Talaat";
     QString COMPANY_NAME_EN = "Mango Talaat";
-    QString OWNER_NAME = "Mohmmaed Allhowh";
-    QString COMPANY_ADDRESS = "Riyadh, KSA";
-    QString COMPANY_MOBILE = "0656444654";
-    QString COMPANY_EMAIL = "test@gmail.com";
+    QString COMPANY_MOBILE = "0593613994";
+    QString COMPANY_EMAIL = "sales@mangotalaat.com";
+    QString COMPANY_ADDRESS = "الرياض - المملكة العربية السعودية";
+    QString COMPANY_LOCATION = "فرع حي الغدير";
 
-    QString reportCode = content.replace("%TITLE%", TITLE).replace("%COMPANY_NAME%",COMPANY_NAME_EN)
-            .replace("%OWNER_NAME%", OWNER_NAME).replace("%COMPANY_ADDRESS%", COMPANY_ADDRESS)
+    QString reportCode = content.replace("%TITLE%", TITLE).replace("%COMPANY_NAME_EN%",COMPANY_NAME_EN)
             .replace("%COMPANY_MOBILE%", COMPANY_MOBILE).replace("%COMPANY_EMAIL%", COMPANY_EMAIL)
-            .replace("%FROM_DATE%", this->m_from.toString()).replace("%TO_DATE%", this->m_to.toString())
-            .replace("%DATE%", QDateTime::currentDateTime().toString());
+            .replace("%COMPANY_ADDRESS%", COMPANY_ADDRESS).replace("%COMPANY_LOCATION%", COMPANY_LOCATION)
+            .replace("%FROM_DATE%", this->m_from.toString("dd/MM/yyyy h:m:s ap")).replace("%TO_DATE%", this->m_to.toString("dd/MM/yyyy h:m:s ap"))
+            .replace("%DATE%", QDateTime::currentDateTime().toString("dd/MM/yyyy h:m:s ap"));
 
     return reportCode;
 }

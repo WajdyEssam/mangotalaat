@@ -28,7 +28,7 @@ QString GeneralReport::getHTML()
     orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
     orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getOrdersDetailsTable());
 
-    QString cashString = "<b>Total Cash: " + QString::number(this->totalCash) + " </b>";
+    QString cashString = "<b> الإجمالي هو " + QString::number(this->totalCash) + " </b>";
     orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
@@ -42,7 +42,7 @@ QString GeneralReport::getReportTemplateName()
 QString GeneralReport::getLogginTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-           "<tr class=\"table_header\"><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
+           "<tr class=\"table_header\"><th>رقم العملية</th><th>اسم المستخدم</th><th>تاريخ العملية</th><th>نوع العملية</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
@@ -50,7 +50,7 @@ QString GeneralReport::getLogginTable()
     QList<Model::Event> events = Services::Event::getBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Event event, events) {
         Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
+        QString eventType = type == Model::Event::Login ? "تسجيل دخول" : " خروج";
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
@@ -59,7 +59,7 @@ QString GeneralReport::getLogginTable()
             "<td align=\"center\"><font size=\"2\">%3</font></td> "
             "<td align=\"center\"><font size=\"2\">%4</font></td> "
             "</tr>"
-        ).arg( QString::number(event.id()), event.user().userName(), event.createdDateTime().toString(), eventType);
+        ).arg( QString::number(event.id()), event.user().userName(), event.createdDateTime().toString("dd/MM/yyyy h:m:s ap"), eventType);
 
         htmlTableResult += tableRaw ;
     }
@@ -139,7 +139,7 @@ QString GeneralReport::getOrdersTable()
             "<td align=\"center\"><font size=\"2\">%7</font></td> "
             "</tr>"
         ).arg( QString::number(order.id()),
-               order.createdDateTime().toString(),
+               order.createdDateTime().toString("dd/MM/yyyy h:m:s ap"),
                order.orderType().arabicName(),
                QString::number(order.cash()),
                QString::number(order.discount()),
