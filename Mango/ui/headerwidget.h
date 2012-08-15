@@ -2,6 +2,13 @@
 #define HEADERWIDGET_H
 
 #include <QWidget>
+#include <QApplication>
+#include <QToolButton>
+#include <QHBoxLayout>
+#include <QPainter>
+#include <QSignalMapper>
+#include <QAction>
+#include <QMenu>
 
 class QSignalMapper;
 class QToolButton;
@@ -11,7 +18,9 @@ class HeaderWidget : public QWidget
     Q_OBJECT
 public:
     explicit HeaderWidget(QWidget *parent = 0);
-    
+    void enableUserButtons();
+    void enableAdminButtons();
+
 signals:
     void backClicked();
     void homeClicked();
@@ -22,6 +31,7 @@ signals:
     void generalReportActionClicked();
     void closeSystemActionClicked();
     void aboutSystemActionClicked();
+    void returnOrderSystemActionClicked();
 
 public slots:
     void emitSignal(int id);
@@ -30,6 +40,9 @@ public slots:
 private:
     QSignalMapper *signalMapper;
     QToolButton* backButton;
+    QToolButton* reportsButton;
+    QAction *aboutSystemAction;
+    QAction *closeSystemAction;
 
     void init();
     void createToolButtons();

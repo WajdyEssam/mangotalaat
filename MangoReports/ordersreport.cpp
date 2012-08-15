@@ -31,7 +31,7 @@ QString OrdersReport::getOrdersTable()
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Order> orders = Services::Order::getAll();
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Order order, orders) {
         QString note = order.isCancelled() ? "ملغى": " ";
 

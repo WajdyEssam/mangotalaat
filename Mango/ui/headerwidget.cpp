@@ -1,11 +1,3 @@
-#include <QApplication>
-#include <QToolButton>
-#include <QHBoxLayout>
-#include <QPainter>
-#include <QSignalMapper>
-#include <QAction>
-#include <QMenu>
-
 #include "headerwidget.h"
 
 HeaderWidget::HeaderWidget(QWidget *parent) :
@@ -54,7 +46,7 @@ void HeaderWidget::createToolButtons()
     homeButton->setStatusTip(homeButton->toolTip());
     homeButton->setFont(font);
 
-    QToolButton* reportsButton = new QToolButton;
+    reportsButton = new QToolButton;
     reportsButton->setIcon(QIcon(":/images/report.png"));
     reportsButton->setText("التقارير");
     reportsButton->setIconSize(QSize(64,64));
@@ -95,15 +87,19 @@ void HeaderWidget::createToolButtons()
     systemButton->setFont(font);
 
     // add menu for system button
-    QAction *closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("اغلاق حساب اليوم"), this);
+    closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("اغلاق حساب اليوم"), this);
     connect(closeSystemAction, SIGNAL(triggered()), this, SIGNAL(closeSystemActionClicked()));
 
-    QAction *aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("عن النظام"), this);
+    aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("عن النظام"), this);
     connect(aboutSystemAction, SIGNAL(triggered()), this, SIGNAL(aboutSystemActionClicked()));
+
+    QAction *returnOrderSystemAction = new QAction(QIcon(":/images/find.png"), tr("ارجاع الطلب"), this);
+    connect(returnOrderSystemAction, SIGNAL(triggered()), this, SIGNAL(returnOrderSystemActionClicked()));
 
     QMenu *systemMenu = new QMenu(this);
     systemMenu->addAction(closeSystemAction);
     systemMenu->addAction(aboutSystemAction);
+    systemMenu->addAction(returnOrderSystemAction);
 
     systemButton->setMenu(systemMenu);
     systemButton->setPopupMode(QToolButton::InstantPopup);
@@ -151,6 +147,18 @@ void HeaderWidget::emitSignal(int id)
 void HeaderWidget::enableBackButton(bool value)
 {
     backButton->setEnabled(value);
+}
+
+void HeaderWidget::enableUserButtons()
+{
+    reportsButton->setEnabled(false);
+    closeSystemAction->setEnabled(false);
+}
+
+void HeaderWidget::enableAdminButtons()
+{
+    reportsButton->setEnabled(true);
+    closeSystemAction->setEnabled(true);
 }
 
 

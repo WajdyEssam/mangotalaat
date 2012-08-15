@@ -36,7 +36,7 @@ QString OrdersDetailsReport::getOrdersDetailsTable()
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Order> orders = Services::Order::getAll();
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Order order, orders) {
         QList<Model::OrderDetail> details = Services::OrderDetail::getByOrderId(order.id());
         foreach(Model::OrderDetail detail, details) {

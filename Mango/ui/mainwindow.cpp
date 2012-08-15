@@ -32,6 +32,7 @@ MainWindow::MainWindow(int userId, QWidget *parent) :
     this->createStatusBar();
     this->establishConnections();
     this->addLoginEvent();
+    this->disableButtonsForNotAuthenticatedUser();
 }
 
 MainWindow::~MainWindow()
@@ -80,6 +81,7 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(returnOrderSystemActionClicked()), SLOT(returnOrderSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(logoutClickedSlot()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
@@ -108,6 +110,16 @@ void MainWindow::createOrderDockWidget()
     connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
 }
 
+void MainWindow::disableButtonsForNotAuthenticatedUser()
+{
+    if ( this->m_userId == 1 ) {
+        this->headerWidget->enableAdminButtons();
+    }
+    else {
+        this->headerWidget->enableUserButtons();
+    }
+}
+
 void MainWindow::addLoginEvent()
 {
     Model::Event event;
@@ -134,7 +146,6 @@ void MainWindow::showPreviousPage()
         this->setCurrentPage((WidgetPage)(stackedWidget->currentIndex() - 1));
     }
 }
-
 
 void MainWindow::showHomePage()
 {
@@ -184,18 +195,30 @@ void MainWindow::generalReportClickedSlot() {
     viewer->show();
 }
 
+void MainWindow::returnOrderSystemClickedSlot()
+{
+
+}
+
 void MainWindow::closeSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
-        "Close System",
-        "Are you sure of close the system?",
+        "اغلاق حساب اليوم",
+        "?هل تريد القيام باغلاق حساب اليومية",
         QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
     );
 
     if (button == QMessageBox::No)
         return;
 
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     Services::Checkout::closeTodayOrders();
+    QDateTime to = Services::Checkout::getAll().last().createdDateTime();
+
+    // display general reports
+    Report* report = new GeneralReport(from, to);
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 }
 
 void MainWindow::aboutSystemClickedSlot()
@@ -206,6 +229,13 @@ void MainWindow::aboutSystemClickedSlot()
 
 void MainWindow::logoutClickedSlot()
 {
+    QMessageBox::StandardButton button = QMessageBox::information(this,
+              "Close The Application", "Are you sure do you want to close the application?",
+              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+    if (button == QMessageBox::No)
+        return;
+
     this->AddLogoutEvent();
     qApp->quit();
 }

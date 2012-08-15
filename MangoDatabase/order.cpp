@@ -98,7 +98,7 @@ QList<Model::Order> Order::getOrdersBetweenDateTime(QDateTime from, QDateTime to
     QList<Model::Order> orders;
 
     DatabaseManager mgr;
-    QSqlQuery query(QString("SELECT * FROM orders WHERE is_cancelled = 0"));
+    QSqlQuery query(QString("SELECT * FROM orders"));
 
     while(query.next()){
         int id = query.value(0).toInt();

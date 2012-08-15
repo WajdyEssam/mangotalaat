@@ -17,6 +17,8 @@ public:
 
 private:
     QString replaceHeader(QString& content);
+
+protected:
     QDateTime m_from, m_to;
 };
 
