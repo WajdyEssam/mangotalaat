@@ -38,7 +38,8 @@ int main(int argc, char *argv[])
     dialog.exec();
 
     if ( !dialog.isAccepted() ) {
-        QMessageBox::warning(0, "Invalid Data", "username and password is not correct");
+        QMessageBox::warning(0, "Invalid Data", "username and password is not correct"
+                             " ,System will closed now!");
         return (0);
     }
 

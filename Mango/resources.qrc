@@ -146,5 +146,6 @@
         <file>reports/OrdersReport.html</file>
         <file>images/back_ar.png</file>
         <file>images/back_en.png</file>
+        <file>images/Administrator.png</file>
     </qresource>
 </RCC>
