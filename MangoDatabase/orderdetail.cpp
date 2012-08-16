@@ -20,7 +20,7 @@ bool OrderDetail::add(Model::OrderDetail orderDetail, int orderId)
 
     QSqlQuery query;
 
-    query.prepare("INSERT INTO order_details(id, order_id, item_detial_id, quantity, components_ids, additionals_ids, sugar, cash) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)");
+    query.prepare("INSERT INTO order_details(id, order_id, item_detial_id, quantity, components_ids, additionals_ids, sugar_id, cash) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?)");
     query.addBindValue(orderId);
     query.addBindValue(orderDetail.itemDetail().id());
     query.addBindValue(orderDetail.qunatity());

@@ -43,6 +43,7 @@ bool OrderDetail::add(QList<Model::OrderDetail> orderDetails, int orderId)
 QList<Model::OrderDetail> OrderDetail::getByOrderId(int orderId)
 {
     QList<Model::OrderDetail> orderDetails = Database::OrderDetail::getByOrderId(orderId);
+
     for (QList<Model::OrderDetail>::iterator i = orderDetails.begin(); i != orderDetails.end(); ++i) {
         i->setOrder(Services::Order::getById(i->order().id()));
         i->setItemDetail(Services::ItemDetail::getById(i->itemDetail().id()));

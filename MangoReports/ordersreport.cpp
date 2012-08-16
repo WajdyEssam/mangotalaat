@@ -30,7 +30,7 @@ QString OrdersReport::getReportTemplateName()
 QString OrdersReport::getOrdersTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr class=\"table_header\"><th>رقم العملية</th><th>وقت العملية</th><th>نوع العملية</th><th>المبلغ</th>"
+            "<tr class=\"table_header\"><th>رقم الطلب</th><th>وقت الطلب</th><th>نوع الطلب</th><th>المبلغ</th>"
             "<th>الخصم</th><th>الاجمالي</th><th>ملاحظات</th></tr>";
     QString tableEnd =  "</tbody></table>";
 

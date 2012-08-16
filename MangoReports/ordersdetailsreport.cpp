@@ -30,7 +30,7 @@ QString OrdersDetailsReport::getReportTemplateName()
 QString OrdersDetailsReport::getOrdersDetailsTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr class=\"table_header\"><th>رقم العملية</th><th>رقم الطلب</th><th>اسم الصنف</th><th>الكمية</th>"
+            "<tr class=\"table_header\"><th>رقم تسلسلي</th><th>رقم الطلب</th><th>اسم الصنف</th><th>الكمية</th>"
             "<th>المكونات</th><th>الاضافات</th><th>السكر</th><th>الاجمالي</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
@@ -57,7 +57,7 @@ QString OrdersDetailsReport::getOrdersDetailsTable()
                    QString::number(detail.qunatity()),
                    Services::Helper::fromComponentsToText(detail.components()),
                    Services::Helper::fromAdditionalsToText(detail.additionals()),
-                   QString::number(detail.sugar().id()),
+                   detail.sugar().arabicName(),
                    QString::number(detail.cash())
                    );
 

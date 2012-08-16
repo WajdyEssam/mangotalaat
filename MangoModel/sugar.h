@@ -12,10 +12,10 @@ class MANGOMODELSHARED_EXPORT Sugar : public BaseItem
 {
 public:
     enum Sugars {
-        WithoutSugar = 0,
-        LessSugar = 1,
-        NormalSugar = 2,
-        MoreSugar = 3
+        WithoutSugar = 1,
+        LessSugar,
+        NormalSugar,
+        MoreSugar
     };
 
     Sugar(int id);

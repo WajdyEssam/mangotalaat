@@ -28,7 +28,8 @@ SOURCES += mangomodel.cpp \
     orderobject.cpp \
     orderdetail.cpp \
     order.cpp \
-    sugar.cpp
+    sugar.cpp \
+    componentprice.cpp
 
 HEADERS += mangomodel.h\
         MangoModel_global.h \
@@ -48,7 +49,8 @@ HEADERS += mangomodel.h\
     orderobject.h \
     orderdetail.h \
     order.h \
-    sugar.h
+    sugar.h \
+    componentprice.h
 
 unix:DESTDIR = ../bin
 unix:OBJECTS_DIR = build/_obj

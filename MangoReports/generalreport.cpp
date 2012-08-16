@@ -19,7 +19,7 @@ QString GeneralReport::getHTML()
     this->totalCash = 0;
 
     QString orignalHTML = getTemplateFileContent();
-    orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول");
+    orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول للنظام");
     orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
 
     orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "تقرير عن الطلبات");
@@ -50,7 +50,7 @@ QString GeneralReport::getLogginTable()
     QList<Model::Event> events = Services::Event::getBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Event event, events) {
         Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "تسجيل دخول" : " خروج";
+        QString eventType = type == Model::Event::Login ? "دخول" : " خروج";
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
@@ -72,7 +72,7 @@ QString GeneralReport::getLogginTable()
 QString GeneralReport::getOrdersDetailsTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr class=\"table_header\"><th>رقم العملية</th><th>رقم الطلب</th><th>اسم الصنف</th><th>الكمية</th>"
+            "<tr class=\"table_header\"><th>رقم تسلسلي</th><th>رقم الطلب</th><th>اسم الصنف</th><th>الكمية</th>"
             "<th>المكونات</th><th>الاضافات</th><th>السكر</th><th>الاجمالي</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
@@ -99,7 +99,7 @@ QString GeneralReport::getOrdersDetailsTable()
                    QString::number(detail.qunatity()),
                    Services::Helper::fromComponentsToText(detail.components()),
                    Services::Helper::fromAdditionalsToText(detail.additionals()),
-                   QString::number(detail.sugar().id()),
+                   detail.sugar().arabicName(),
                    QString::number(detail.cash())
                    );
 
@@ -115,7 +115,7 @@ QString GeneralReport::getOrdersDetailsTable()
 QString GeneralReport::getOrdersTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr class=\"table_header\"><th>رقم العملية</th><th>وقت العملية</th><th>نوع العملية</th><th>المبلغ</th>"
+            "<tr class=\"table_header\"><th>رقم الطلب</th><th>وقت الطلب</th><th>نوع الطلب</th><th>المبلغ</th>"
             "<th>الخصم</th><th>الاجمالي</th><th>ملاحظات</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
