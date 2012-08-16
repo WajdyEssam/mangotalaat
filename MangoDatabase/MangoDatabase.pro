@@ -30,7 +30,8 @@ SOURCES += mangodatabase.cpp \
     canceledorder.cpp \
     additional.cpp \
     helper.cpp \
-    sugar.cpp
+    sugar.cpp \
+    componentprice.cpp
 
 HEADERS += mangodatabase.h\
         MangoDatabase_global.h \
@@ -50,7 +51,8 @@ HEADERS += mangodatabase.h\
     canceledorder.h \
     additional.h \
     helper.h \
-    sugar.h
+    sugar.h \
+    componentprice.h
 
 
 OTHER_FILES += \

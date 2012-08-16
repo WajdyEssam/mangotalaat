@@ -16,6 +16,7 @@
 #include "toolbutton.h"
 #include "keypaddialog.h"
 #include "sugardialog.h"
+
 #include "../../MangoModel/component.h"
 #include "../../MangoModel/additional.h"
 #include "../../MangoModel/category.h"
@@ -25,6 +26,7 @@
 #include "../../MangoService/additional.h"
 #include "../../MangoService/itemdetail.h"
 #include "../../MangoService/itemcomponent.h"
+#include "../../MangoService/componentprice.h"
 
 PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent), m_orderDetail(0)
@@ -519,15 +521,10 @@ void PropertyWidget::calculateTotalPrice()
 void PropertyWidget::updateItemPriceForSpecialCocktail()
 {
     if ( this->m_orderDetail.itemDetail().item().englishName() == "Special Cocktail" ) {
-        qDebug() << "Special Cocktail Selected!";
-
         Model::Size size = this->m_orderDetail.itemDetail().size();
-        qDebug() << "Size: " << size.englishName();
-
         QList<Model::Component> components = readActiveComponents();
         int itemPrice = getLargestComponentsPrice(components, size);
-
-        qDebug() << "Components Selected: " << components.size();
+        itemPriceLCDNumber->display(itemPrice);
     }
 }
 
@@ -535,7 +532,10 @@ int PropertyWidget::getLargestComponentsPrice(QList<Model::Component>& component
     int largePrice = 0;
 
     foreach(Model::Component component, components) {
-
+        int price = Services::ComponentPrice::getById(component.id(), size.id()).price();
+        if ( price > largePrice ) {
+            largePrice = price;
+        }
     }
 
     return largePrice;
