@@ -261,11 +261,11 @@ void MainWindow::logout()
 void MainWindow::applyOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "Cart is empty", "There is no items in the cart!");
+            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::information(this, "Apply Order", "Are you sure of applying the order and print the invoice?",
+    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الطلب", "هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة?",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
@@ -276,11 +276,11 @@ void MainWindow::applyOrderClickedSlot()
 void MainWindow::cancelOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "Cart is already empty", "There is no items in the cart!");
+            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::warning(this, "Cancel Order", "Are you sure of canceling the whole order?",
+    QMessageBox::StandardButton button = QMessageBox::warning(this, "إلغاء الطلب", "هل انت متأكد من إلغاء الطلب نهائيا?",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
@@ -291,7 +291,7 @@ void MainWindow::cancelOrderClickedSlot()
 void MainWindow::applyDiscountOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "Cart is empty", "There is no items in the cart!");
+            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
             return;
     }
 
@@ -303,9 +303,12 @@ void MainWindow::applyDiscountOrderClickedSlot()
     if (dlg.exec() == QDialog::Accepted) {
         discount = dlg.discount();
         orderType = dlg.orderType();
-    }
 
-    //computeTotalCash(discount, orderType);
+        qDebug() << "discount: " << discount;
+        qDebug() << "type: " << orderType;
+
+        computeTotalCash(discount, orderType);
+    }
 }
 
 void MainWindow::orderItemClicked(QString orderIndexId)
@@ -435,11 +438,11 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
     bool ret = Services::Order::add(order, this->orderDetails);
     if ( ret ) {
         qDebug() << "New Order Status: " << ret << " Total cash: " << totalCashAfterDiscount;
-        printReceipt();
+        printReceipt(discount);
         clearShoppingCart();
     }
 
-   QMessageBox::information(this, "Successfull operation", "System is ready for accepting next order", QMessageBox::Ok, QMessageBox::Ok);
+   QMessageBox::information(this, "تمت العملية بنجاح", "النظام جاهز لاستقبال طلب جديد", QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void MainWindow::clearShoppingCart()
@@ -459,7 +462,7 @@ void MainWindow::computeCupon()
 }
 
 
-void MainWindow::printReceipt() {
+void MainWindow::printReceipt(int totalDiscount) {
     if ( this->orderDetails.empty())
         return;
 
@@ -473,7 +476,7 @@ void MainWindow::printReceipt() {
     }
 
     QString cash = QString::number(totalCash);
-    QString discount = "0.0";
+    QString discount = QString::number(totalDiscount);
 
     QFile file(outputFilename);
 

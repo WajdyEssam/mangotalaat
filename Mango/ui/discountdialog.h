@@ -6,6 +6,7 @@
 
 class QLCDNumber;
 class QComboBox;
+class QPushButton;
 
 class DiscountDialog : public QDialog
 {
@@ -17,17 +18,21 @@ public:
     Model::OrderType::OrderTypes orderType() const;
 
 public slots:
-    
+    void changeWidget(int);
+    void openKeypadDialog();
+    void applyDiscount();
+
 private:
     void setupUi();
     Model::OrderType::OrderTypes m_orderType;
     int m_totalCashBeforeDiscount;
-    int m_totalCashAfterDiscount;
     int m_discount;
 
-    QLCDNumber* cashBeforeLCDNumber;
-    QLCDNumber* cashAfterLCDNumber;
+    QLCDNumber* cashBeforeDiscountLCDNumber;
+    QLCDNumber* cashAfterDiscountLCDNumber;
+    QLCDNumber* discountLCDNumber;
     QComboBox* discountComboBox;
+    QPushButton* discountButton;
 };
 
 #endif // DISCOUNTDIALOG_H

@@ -16,7 +16,7 @@ public:
         CASH=1,
         CUPON,
         DISCOUNT_VALUE,
-        DISCOUNT_DISCOUNT,
+        DISCOUNT_PERCENTAGE,
         FREE
     };
 
