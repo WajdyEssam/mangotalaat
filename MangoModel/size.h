@@ -12,7 +12,7 @@ class MANGOMODELSHARED_EXPORT Size : public BaseItem
 {
 public:
     enum Sizes {
-        SMALL,
+        SMALL=1,
         MEDIUM,
         LARGE,
         JAMBO,
