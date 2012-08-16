@@ -483,8 +483,15 @@ void MainWindow::printReceipt() {
             QString itemName = order.itemDetail().item().category().englishName() + "-" + order.itemDetail().item().englishName();
 
             // components:(,)  additional:(,) Sugar:
-            QString description = "components (" + Services::Helper::fromComponentsToTextEn(order.components()) + ") additionals ("
-                    + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + ") Sugar: " + order.sugar().englishName();
+            QString result = "";
+
+            if ( !order.components().empty() )
+                result += " components (" + Services::Helper::fromComponentsToTextEn(order.components()) + ")";
+
+            if ( !order.additionals().empty())
+                result += " additionals (" + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + ")";
+
+            QString description =  result +  " Sugar: " + order.sugar().englishName();
 
             QString price = QString::number(order.cash());
             QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5").arg(quantity).arg(size).arg(itemName).arg(description).arg(price);
