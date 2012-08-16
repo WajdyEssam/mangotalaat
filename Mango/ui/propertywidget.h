@@ -68,6 +68,9 @@ private:
 
     Model::OrderDetail m_orderDetail;
 
+    void updateItemPriceForSpecialCocktail();
+    void getLargestComponentsPrice(QList<Model::Component>& components, Model::Size size);
+
     void initOrderDetailsUI();
     void initCommandButtonsUI();
     void initOrderControlUI();

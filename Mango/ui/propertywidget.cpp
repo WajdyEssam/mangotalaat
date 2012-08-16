@@ -418,6 +418,7 @@ void PropertyWidget::fillItemDetialsLineEdit()
         itemAdditionalsLabel->setText("<font color='red'>لا توجد إضافات</font>");
 
     // Calculate total price
+    updateItemPriceForSpecialCocktail();
     calculateTotalPrice();
 }
 
@@ -503,4 +504,27 @@ void PropertyWidget::calculateTotalPrice()
     totalPrice = totalPrice + (addtionalCount * 1 * quantity);
 
     totalPriceLCDNumber->display(QString::number(totalPrice));
+}
+
+void PropertyWidget::updateItemPriceForSpecialCocktail()
+{
+    if ( this->m_orderDetail.itemDetail().item().englishName() == "Special Cocktail" ) {
+        qDebug() << "Special Cocktail Selected!";
+
+        Model::Size size = this->m_orderDetail.itemDetail().size();
+        qDebug() << "Size: " << size.englishName();
+
+        QList<Model::Component> components = readActiveComponents();
+        int itemPrice = getLargestComponentsPrice(components, size);
+
+        qDebug() << "Components Selected: " << components.size();
+    }
+}
+
+void PropertyWidget::getLargestComponentsPrice(QList<Model::Component>& components, Model::Size size) {
+    int largePrice = 0;
+
+    foreach(Model::Component component, components) {
+
+    }
 }
