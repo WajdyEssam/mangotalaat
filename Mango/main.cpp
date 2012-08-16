@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("mango.db");
 
+#if defined(NO_DEBUG)
     // ask for authentication
     LogginDialog dialog;
     dialog.exec();
@@ -42,8 +43,11 @@ int main(int argc, char *argv[])
                              " ,System will closed now!");
         return (0);
     }
-
     int userId = dialog.getUserID();
+#else
+    int userId = 1;
+#endif
+
     MainWindow w(userId);
     w.show();
 
