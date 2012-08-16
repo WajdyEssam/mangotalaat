@@ -60,6 +60,15 @@ void ReturnOrderDialog::on_cancelButton_clicked()
 
 void ReturnOrderDialog::on_removeButton_clicked()
 {
+    QMessageBox::StandardButton button = QMessageBox::information(this,
+        "ارجاع الطلب للنظام",
+        "هل تريد الغاء هذ الطلب من النظام",
+        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
+    );
+
+    if (button == QMessageBox::No)
+        return;
+
     QModelIndexList selectedList = ui->tableWidget->selectionModel()->selectedRows();
     for( int i=0; i<selectedList.count(); i++) {
         int row = selectedList.at(i).row();

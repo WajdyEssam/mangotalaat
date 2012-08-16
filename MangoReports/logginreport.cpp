@@ -37,7 +37,7 @@ QString LogginReport::getLogginTable()
     QList<Model::Event> events = Services::Event::getBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Event event, events) {
         Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "تسجيل دخول" : " خروج";
+        QString eventType = type == Model::Event::Login ? "دخول" : " خروج";
 
         if ( type == Model::Event::Login )
             loginCount++;

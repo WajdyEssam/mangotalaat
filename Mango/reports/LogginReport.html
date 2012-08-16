@@ -29,7 +29,6 @@
 			margin: auto ;
 		}
 
-
 		.header {
 			height: 120px;
 			margin-left: 50px;
@@ -41,13 +40,12 @@
 			height: 100px;
 			margin-left: 50px;
 			margin-right: 50px;
-			
 		}
-
+		
 		.summary {
 			background-color: lightblue;
 		}
-		
+
 		.content_header {
 			//background-color: lightblue;
 			height: 40px;
@@ -58,9 +56,15 @@
 
 		}
 		
+		table, td, th
+		{
+			border:1px solid gray;
+		}
+		
 		.content_table {
 			margin: auto;
-			width: 100%;
+			width: 90%;
+			border: 1px solid gray;
 		}
 
 		.table_header {
@@ -76,40 +80,9 @@
 			border: 1px solid gray;
 		}
 		
-		.table_header_cell_left {
-			float: left;
-			width: 200px;
-		}
-		
-		.table_header_cell_right {
-			float: right;
-			width: 200px;
-		}
-		
 		.table_header_cell_center {
 			float: left;
 			width: 200px;
-		}
-
-		@media screen
-		{
-			.footer, push {
-				//background-color: darkgray;
-				height: 40px;
-				width: 1000px;
-				margin: auto;
-			}
-		}
-
-		@media print
-		{
-			.footer, push {
-				position: fixed;
-				bottom: 0;
-				height: 40px;
-				width: 1000px;
-				margin: auto;
-			}
 		}
 
 		.footer_content {
@@ -145,7 +118,6 @@
 		.voucher {
 			text-align: center;
 		}
-
 	</style>
 </head>
 
@@ -189,6 +161,7 @@
 			</div> <!-- close content_body -->
 		</div> <!-- close content -->
 
+	<br /> <br /> 
 	</div> <!-- close wrapper -->
 	<div class="push"></div> <!-- close push" -->
 	<div class="footer">

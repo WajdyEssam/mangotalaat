@@ -74,7 +74,8 @@ CREATE TABLE orders_type (
 
 INSERT INTO orders_type(arabic_name, english_name) values("كاش", "Cash");
 INSERT INTO orders_type(arabic_name, english_name) values("كوبون", "Cupon");
-INSERT INTO orders_type(arabic_name, english_name) values("خصم", "Discount");
+INSERT INTO orders_type(arabic_name, english_name) values("خصم بالقيمة", "Discount With Value");
+INSERT INTO orders_type(arabic_name, english_name) values("خصم بالنسبة", "Discount With Value");
 INSERT INTO orders_type(arabic_name, english_name) values("مجاني", "Free");
 
 CREATE TABLE orders (
