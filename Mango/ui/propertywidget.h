@@ -35,6 +35,7 @@ public slots:
     void updateItemClicked();
     void removeItemClicked();
     void openKeypadDialog();
+    void openSugarDialog();
 
 private:
     enum {

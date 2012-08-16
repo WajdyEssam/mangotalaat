@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     ui/invoiceveiwerwidget.cpp \
     ui/loggindialog.cpp \
     ui/returnorderdialog.cpp \
-    ui/selectperiddialog.cpp
+    ui/selectperiddialog.cpp \
+    ui/sugardialog.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS  += ui/categorieswidget.h \
     ui/invoiceveiwerwidget.h \
     ui/loggindialog.h \
     ui/returnorderdialog.h \
-    ui/selectperiddialog.h
+    ui/selectperiddialog.h \
+    ui/sugardialog.h
 
 RESOURCES += \
     resources.qrc

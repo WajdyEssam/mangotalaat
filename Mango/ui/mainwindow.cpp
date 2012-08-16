@@ -232,12 +232,14 @@ void MainWindow::aboutSystemClickedSlot()
 
 void MainWindow::logoutClickedSlot()
 {
+#if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
               "Close The Application", "Are you sure do you want to close the application?",
               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
         return;
+#endif
 
     this->AddLogoutEvent();
     qApp->quit();
