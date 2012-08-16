@@ -149,7 +149,7 @@ void DiscountDialog::openKeypadDialog()
 
 void DiscountDialog::applyDiscount()
 {
-    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الخصم واغلاق الطلب", "هل أنت متأكد من تنفيذ الخصم وإغلاق الطلب وطباعة الفاتورة؟?",
+    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الخصم واغلاق الطلب", "هل أنت متأكد من تنفيذ الخصم وإغلاق الطلب وطباعة الفاتورة؟",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;

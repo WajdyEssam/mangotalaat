@@ -210,7 +210,7 @@ void MainWindow::checkoutSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
         "اغلاق حساب اليوم",
-        "?هل تريد القيام باغلاق حساب اليومية",
+        "هل تريد القيام باغلاق حساب اليومية؟",
         QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
     );
 
@@ -249,7 +249,7 @@ void MainWindow::logout()
 {
 #if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
-              "Close The Application", "Are you sure do you want to close the application?",
+              "الخروج من النظام", "هل تريد اغلاق النظام؟",
               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
@@ -266,7 +266,7 @@ void MainWindow::applyOrderClickedSlot()
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الطلب", "هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة?",
+    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الطلب", "هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة؟",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
@@ -281,7 +281,7 @@ void MainWindow::cancelOrderClickedSlot()
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::warning(this, "إلغاء الطلب", "هل انت متأكد من إلغاء الطلب نهائيا?",
+    QMessageBox::StandardButton button = QMessageBox::warning(this, "إلغاء الطلب", "هل انت متأكد من إلغاء الطلب نهائيا؟",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
