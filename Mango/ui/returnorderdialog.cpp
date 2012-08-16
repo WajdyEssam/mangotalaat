@@ -65,7 +65,7 @@ void ReturnOrderDialog::on_removeButton_clicked()
         int row = selectedList.at(i).row();
         int orderId = this->ui->tableWidget->item(row, 0)->text().toInt();
         Model::Order order = Services::Order::getById(orderId);
-        bool state = Services::Order::cancel(order);
+        Services::Order::cancel(order);
     }
 
     if ( selectedList.count() > 0) {

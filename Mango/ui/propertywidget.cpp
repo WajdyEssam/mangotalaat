@@ -487,7 +487,6 @@ int PropertyWidget::readQunatity()
     return (int)itemQuantityLCDNumber->value();
 }
 
-
 void PropertyWidget::openKeypadDialog()
 {
     KeypadDialog keypadDialog;
@@ -523,9 +522,16 @@ void PropertyWidget::updateItemPriceForSpecialCocktail()
 {
     if ( this->m_orderDetail.itemDetail().item().englishName() == "Special Cocktail" ) {
         Model::Size size = this->m_orderDetail.itemDetail().size();
-        QList<Model::Component> components = readActiveComponents();
-        int itemPrice = getLargestComponentsPrice(components, size);
-        itemPriceLCDNumber->display(itemPrice);
+
+        int id = size.id();
+        if ( id == (int)Model::Size::SMALL ||
+             id == (int)Model::Size::MEDIUM ||
+             id == (int)Model::Size::JAMBO ) {
+
+            QList<Model::Component> components = readActiveComponents();
+            int itemPrice = getLargestComponentsPrice(components, size);
+            itemPriceLCDNumber->display(itemPrice);
+        }
     }
 }
 
