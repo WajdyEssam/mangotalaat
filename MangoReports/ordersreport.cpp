@@ -10,9 +10,14 @@ OrdersReport::OrdersReport(const QDateTime& from, const QDateTime& to)
 
 QString OrdersReport::getHTML()
 {
+    this->totalCash = 0;
+
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "تقرير عن الطلبات");
     orignalHTML = orignalHTML.replace("%ORDER_TABLE%", getOrdersTable());
+
+    QString cashString = "<b>الإجمالي هو " + QString::number(this->totalCash) + " </b>";
+    orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
 }
@@ -31,9 +36,12 @@ QString OrdersReport::getOrdersTable()
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Order> orders = Services::Order::getAll();
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Order order, orders) {
         QString note = order.isCancelled() ? "ملغى": " ";
+
+        if ( !order.isCancelled() )
+            totalCash += order.totalCash();
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
@@ -46,7 +54,7 @@ QString OrdersReport::getOrdersTable()
             "<td align=\"center\"><font size=\"2\">%7</font></td> "
             "</tr>"
         ).arg( QString::number(order.id()),
-               order.createdDateTime().toString(),
+               order.createdDateTime().toString("dd/MM/yyyy h:m:s ap"),
                order.orderType().arabicName(),
                QString::number(order.cash()),
                QString::number(order.discount()),

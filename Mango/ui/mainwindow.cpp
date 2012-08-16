@@ -4,6 +4,8 @@
 #include "SlidingStackedWidget.h"
 #include "aboutdialog.h"
 #include "invoiceveiwerwidget.h"
+#include "returnorderdialog.h"
+#include "selectperiddialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -21,6 +23,7 @@
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
 
+
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
 {
@@ -32,6 +35,7 @@ MainWindow::MainWindow(int userId, QWidget *parent) :
     this->createStatusBar();
     this->establishConnections();
     this->addLoginEvent();
+    this->disableButtonsForNotAuthenticatedUser();
 }
 
 MainWindow::~MainWindow()
@@ -78,8 +82,9 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(generalReportActionClicked()), SLOT(generalReportClickedSlot()));
-    connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(closeSystemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(checkoutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(returnOrderSystemActionClicked()), SLOT(returnOrderSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(logoutClickedSlot()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
@@ -106,6 +111,16 @@ void MainWindow::createOrderDockWidget()
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
+}
+
+void MainWindow::disableButtonsForNotAuthenticatedUser()
+{
+    if ( this->m_userId == 1 ) {
+        this->headerWidget->enableAdminButtons();
+    }
+    else {
+        this->headerWidget->enableUserButtons();
+    }
 }
 
 void MainWindow::addLoginEvent()
@@ -135,7 +150,6 @@ void MainWindow::showPreviousPage()
     }
 }
 
-
 void MainWindow::showHomePage()
 {
     this->setCurrentPage(CategoryPage);
@@ -143,59 +157,71 @@ void MainWindow::showHomePage()
 
 void MainWindow::todayLogginReportClickedSlot()
 {
-    QDateTime from = QDateTime::currentDateTime();
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     Report* report = new LogginReport(from, to);
-
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
 }
 
 void MainWindow::todayOrdersDetailsReportClickedSlot()
 {
-    QDateTime from = QDateTime::currentDateTime();
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     Report* report = new OrdersDetailsReport(from, to);
-
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
 }
 
 void MainWindow::todayOrdersReportClickedSlot()
 {
-    QDateTime from = QDateTime::currentDateTime();
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
     Report* report = new OrdersReport(from, to);
-
     InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
     viewer->show();
 }
 
-void MainWindow::generalReportClickedSlot() {
-    QDateTime from = QDateTime::currentDateTime();
+void MainWindow::generalReportClickedSlot()
+{
+    SelectPeridDialog dialog;
+    dialog.exec();
+    if ( dialog.isAccepted() ) {
+        QDateTime from = dialog.from();
+        QDateTime to = dialog.to();
+        Report* report = new GeneralReport(from, to);
+        InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+        viewer->show();
+    }
+}
+
+void MainWindow::returnOrderSystemClickedSlot()
+{
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     QDateTime to = QDateTime::currentDateTime();
-
-    Report* report = new GeneralReport(from, to);
-
-    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
-    viewer->show();
+    ReturnOrderDialog dialog(from, to);
+    dialog.exec();
 }
 
-void MainWindow::closeSystemClickedSlot()
+void MainWindow::checkoutSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
-        "Close System",
-        "Are you sure of close the system?",
+        "اغلاق حساب اليوم",
+        "?هل تريد القيام باغلاق حساب اليومية",
         QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
     );
 
     if (button == QMessageBox::No)
         return;
 
+    QDateTime from = Services::Checkout::getAll().last().createdDateTime();
     Services::Checkout::closeTodayOrders();
+    QDateTime to = Services::Checkout::getAll().last().createdDateTime();
+
+    // display general reports
+    Report* report = new GeneralReport(from, to);
+    InvoiceVeiwerWidget *viewer = new InvoiceVeiwerWidget(report);
+    viewer->show();
 }
 
 void MainWindow::aboutSystemClickedSlot()
@@ -206,6 +232,13 @@ void MainWindow::aboutSystemClickedSlot()
 
 void MainWindow::logoutClickedSlot()
 {
+    QMessageBox::StandardButton button = QMessageBox::information(this,
+              "Close The Application", "Are you sure do you want to close the application?",
+              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+    if (button == QMessageBox::No)
+        return;
+
     this->AddLogoutEvent();
     qApp->quit();
 }

@@ -5,6 +5,7 @@
 #include <QFont>
 
 #include "ui/mainwindow.h"
+#include "ui/loggindialog.h"
 
 void loadStylesheet();
 void loadFonts();
@@ -21,7 +22,8 @@ int main(int argc, char *argv[])
     QDir::setCurrent(QCoreApplication::applicationDirPath());
 
     a.setLayoutDirection(Qt::RightToLeft);
-    a.setFont(QFont("Droid Arabic Naskh", 8, QFont::Normal));
+    //a.setFont(QFont("Droid Arabic Naskh", 8, QFont::Normal));
+    a.setFont(QFont("Times New Roman", 12, QFont::Normal));
 
     // load style sheet
     loadStylesheet();
@@ -32,8 +34,16 @@ int main(int argc, char *argv[])
     db.setDatabaseName("mango.db");
 
     // ask for authentication
-    int userId = 1; // admin
+    LogginDialog dialog;
+    dialog.exec();
 
+    if ( !dialog.isAccepted() ) {
+        QMessageBox::warning(0, "Invalid Data", "username and password is not correct"
+                             " ,System will closed now!");
+        return (0);
+    }
+
+    int userId = dialog.getUserID();
     MainWindow w(userId);
     w.show();
 

@@ -140,11 +140,15 @@
         <file>images/save.png</file>
         <file>images/cancel.png</file>
         <file>reports/logo.png</file>
+        <file>images/back_ar.png</file>
+        <file>images/back_en.png</file>
+        <file>images/Administrator.png</file>
         <file>reports/GeneralReport.html</file>
         <file>reports/LogginReport.html</file>
         <file>reports/OrdersDetailsReport.html</file>
         <file>reports/OrdersReport.html</file>
-        <file>images/back_ar.png</file>
-        <file>images/back_en.png</file>
+        <file>images/prices/1_0_en.png</file>
+        <file>images/prices/2_0_en.png</file>
+        <file>images/prices/4_0_en.png</file>
     </qresource>
 </RCC>

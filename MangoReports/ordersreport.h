@@ -16,6 +16,7 @@ public:
 
 private:
     QString getOrdersTable();
+    int totalCash;
 };
 
 #endif // ORDERSREPORT_H

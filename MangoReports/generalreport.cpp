@@ -16,6 +16,8 @@ GeneralReport::GeneralReport(const QDateTime& from, const QDateTime& to)
 
 QString GeneralReport::getHTML()
 {
+    this->totalCash = 0;
+
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول");
     orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
@@ -25,6 +27,9 @@ QString GeneralReport::getHTML()
 
     orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
     orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getOrdersDetailsTable());
+
+    QString cashString = "<b> الإجمالي هو " + QString::number(this->totalCash) + " </b>";
+    orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
 }
@@ -37,15 +42,15 @@ QString GeneralReport::getReportTemplateName()
 QString GeneralReport::getLogginTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-           "<tr class=\"table_header\"><th>Id</th><th>Username</th><th>Date</th><th>Actions</th></tr>";
+           "<tr class=\"table_header\"><th>رقم العملية</th><th>اسم المستخدم</th><th>تاريخ العملية</th><th>نوع العملية</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Event> events = Services::Event::getAll();
+    QList<Model::Event> events = Services::Event::getBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Event event, events) {
         Model::Event::EventTypes type = event.eventType();
-        QString eventType = type == Model::Event::Login ? "Loggin" : " Logout";
+        QString eventType = type == Model::Event::Login ? "تسجيل دخول" : " خروج";
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
@@ -54,7 +59,7 @@ QString GeneralReport::getLogginTable()
             "<td align=\"center\"><font size=\"2\">%3</font></td> "
             "<td align=\"center\"><font size=\"2\">%4</font></td> "
             "</tr>"
-        ).arg( QString::number(event.id()), event.user().userName(), event.createdDateTime().toString(), eventType);
+        ).arg( QString::number(event.id()), event.user().userName(), event.createdDateTime().toString("dd/MM/yyyy h:m:s ap"), eventType);
 
         htmlTableResult += tableRaw ;
     }
@@ -73,7 +78,7 @@ QString GeneralReport::getOrdersDetailsTable()
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Order> orders = Services::Order::getAll();
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Order order, orders) {
         QList<Model::OrderDetail> details = Services::OrderDetail::getByOrderId(order.id());
         foreach(Model::OrderDetail detail, details) {
@@ -116,9 +121,12 @@ QString GeneralReport::getOrdersTable()
 
     QString htmlTableResult = tableBegin;
 
-    QList<Model::Order> orders = Services::Order::getAll();
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
     foreach(Model::Order order, orders) {
         QString note = order.isCancelled() ? "ملغى": " ";
+
+        if ( !order.isCancelled() )
+            totalCash += order.totalCash();
 
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
@@ -131,7 +139,7 @@ QString GeneralReport::getOrdersTable()
             "<td align=\"center\"><font size=\"2\">%7</font></td> "
             "</tr>"
         ).arg( QString::number(order.id()),
-               order.createdDateTime().toString(),
+               order.createdDateTime().toString("dd/MM/yyyy h:m:s ap"),
                order.orderType().arabicName(),
                QString::number(order.cash()),
                QString::number(order.discount()),

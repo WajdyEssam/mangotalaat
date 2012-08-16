@@ -43,9 +43,10 @@ private slots:
     void todayOrdersReportClickedSlot();
     void todayOrdersDetailsReportClickedSlot();
     void generalReportClickedSlot();
-    void closeSystemClickedSlot();
+    void checkoutSystemClickedSlot();
     void aboutSystemClickedSlot();
     void logoutClickedSlot();
+    void returnOrderSystemClickedSlot();
     void applyOrderClickedSlot();
     void cancelOrderClickedSlot();
     void selectCategorySlot(int categoryId);
@@ -92,6 +93,7 @@ private:
     void computeCupon();
     void setDiscount();
     void clearShoppingCart();
+    void disableButtonsForNotAuthenticatedUser();
 };
 
 #endif // MAINWINDOW_H

@@ -15,7 +15,7 @@ int Order::add(Model::Order order)
     query.addBindValue(order.orderType().id());
     query.addBindValue(order.cash());
     query.addBindValue(order.discount());
-    query.addBindValue(order.isCancelled());
+    query.addBindValue(order.totalCash());
 
     bool ok = query.exec();
 
@@ -35,6 +35,7 @@ bool Order::update(Model::Order order)
     query.addBindValue(order.orderType().id());
     query.addBindValue(order.cash());
     query.addBindValue(order.discount());
+    query.addBindValue(order.totalCash());
     query.addBindValue(order.isCancelled());
     query.addBindValue(order.id());
 
@@ -98,7 +99,7 @@ QList<Model::Order> Order::getOrdersBetweenDateTime(QDateTime from, QDateTime to
     QList<Model::Order> orders;
 
     DatabaseManager mgr;
-    QSqlQuery query(QString("SELECT * FROM orders WHERE is_cancelled = 0"));
+    QSqlQuery query(QString("SELECT * FROM orders"));
 
     while(query.next()){
         int id = query.value(0).toInt();
@@ -118,4 +119,28 @@ QList<Model::Order> Order::getOrdersBetweenDateTime(QDateTime from, QDateTime to
     return orders;
 }
 
+QList<Model::Order> Order::getNotCancelledOrdersBetweenDateTime(QDateTime from, QDateTime to)
+{
+    QList<Model::Order> orders;
+
+    DatabaseManager mgr;
+    QSqlQuery query(QString("SELECT * FROM orders WHERE is_cancelled = 0"));
+
+    while(query.next()){
+        int id = query.value(0).toInt();
+        QDateTime orderDate = query.value(1).toDateTime();
+        Model::OrderType orderType = Model::OrderType(query.value(2).toInt());
+        int cash = query.value(3).toInt();
+        int discount = query.value(4).toInt();
+        int totalCash = query.value(5).toInt();
+        int isCancelled = query.value(6).toInt();
+
+        Model::Order order(id, orderDate, orderType, cash, discount, totalCash, isCancelled);
+
+        if ( orderDate >= from && orderDate <= to)
+            orders.append(order);
+    }
+
+    return orders;
+}
 }

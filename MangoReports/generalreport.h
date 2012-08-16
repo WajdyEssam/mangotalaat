@@ -16,6 +16,9 @@ private:
     QString getLogginTable();
     QString getOrdersDetailsTable();
     QString getOrdersTable();
+
+private:
+    int totalCash;
 };
 
 #endif // GENERALREPORT_H
