@@ -34,6 +34,8 @@ public:
 signals:
     void orderDetailUpdated(QList<Model::OrderDetail> orderDetails);
 
+protected:
+    void closeEvent(QCloseEvent *);
 
 private slots:
     void showPreviousPage();
@@ -45,7 +47,8 @@ private slots:
     void generalReportClickedSlot();
     void checkoutSystemClickedSlot();
     void aboutSystemClickedSlot();
-    void logoutClickedSlot();
+    void logout();
+    void exit();
     void returnOrderSystemClickedSlot();
     void applyOrderClickedSlot();
     void cancelOrderClickedSlot();

@@ -85,7 +85,7 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(checkoutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(returnOrderSystemActionClicked()), SLOT(returnOrderSystemClickedSlot()));
-    connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(logoutClickedSlot()));
+    connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(exit()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
     headerDockWidget->setObjectName("headerDockWidget");
@@ -230,7 +230,19 @@ void MainWindow::aboutSystemClickedSlot()
     aboutDlg->exec();
 }
 
-void MainWindow::logoutClickedSlot()
+void MainWindow::closeEvent(QCloseEvent * event)
+{
+    logout();
+    event->accept();
+}
+
+void MainWindow::exit()
+{
+    logout();
+    qApp->quit();
+}
+
+void MainWindow::logout()
 {
 #if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
@@ -242,7 +254,6 @@ void MainWindow::logoutClickedSlot()
 #endif
 
     this->AddLogoutEvent();
-    qApp->quit();
 }
 
 void MainWindow::applyOrderClickedSlot()
