@@ -150,5 +150,9 @@
         <file>images/prices/1_0_en.png</file>
         <file>images/prices/2_0_en.png</file>
         <file>images/prices/4_0_en.png</file>
+        <file>images/components/component_active_23.png</file>
+        <file>images/components/component_active_24.png</file>
+        <file>images/components/component_notactive_23.png</file>
+        <file>images/components/component_notactive_24.png</file>
     </qresource>
 </RCC>

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("mango.db");
 
-#if defined(NO_DEBUG)
+#if defined(DEBUG)
     // ask for authentication
     LogginDialog dialog;
     dialog.exec();

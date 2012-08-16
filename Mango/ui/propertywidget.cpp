@@ -15,6 +15,7 @@
 #include "propertywidget.h"
 #include "toolbutton.h"
 #include "keypaddialog.h"
+#include "sugardialog.h"
 #include "../../MangoModel/component.h"
 #include "../../MangoModel/additional.h"
 #include "../../MangoModel/category.h"
@@ -135,6 +136,7 @@ void PropertyWidget::initOrderControlUI()
     QLabel* itemSugarLabel = new QLabel(tr("Sugar"));
     itemSugarLCDNumber = new QLCDNumber;
     QPushButton* sugarButton = new QPushButton("+");
+    connect(sugarButton, SIGNAL(clicked()), SLOT(openSugarDialog()));
 
     QGridLayout* rightLayout = new QGridLayout;
     rightLayout->addWidget(itemQuantityLabel, 0, 0);
@@ -490,6 +492,14 @@ void PropertyWidget::openKeypadDialog()
     if (keypadDialog.exec() == QDialog::Accepted) {
         itemQuantityLCDNumber->display(QString::number(keypadDialog.value()));
         calculateTotalPrice();
+    }
+}
+
+void PropertyWidget::openSugarDialog()
+{
+    SugarDialog sugarDialog;
+    if (sugarDialog.exec() == QDialog::Accepted) {
+        itemSugarLCDNumber->display(QString::number(sugarDialog.value()));
     }
 }
 
