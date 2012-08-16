@@ -56,6 +56,12 @@ INSERT INTO categories(arabic_name, english_name) values("فروزون يوغو�
 INSERT INTO categories(arabic_name, english_name) values("آيس كريم", "Ice Cream");
 INSERT INTO categories(arabic_name, english_name) values("ميلك شيك", "Milk Shake");
 
+CREATE TABLE sugars (
+	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
+	arabic_name TEXT,
+	english_name TEXT
+);
+
 CREATE TABLE orders_type (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	arabic_name TEXT,
@@ -84,7 +90,7 @@ CREATE TABLE order_details(
 	quantity INTEGER,
 	components_ids TEXT,
 	additionals_ids TEXT, 
-	sugar INTEGER,
+	sugar_id INTEGER,
 	cash INTEGER
 );
 

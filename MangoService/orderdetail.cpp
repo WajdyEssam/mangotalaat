@@ -7,6 +7,8 @@
 #include "component.h"
 #include "itemdetail.h"
 #include "itemcomponent.h"
+#include "sugar.h"
+
 #include <QDebug>
 
 namespace Services {
@@ -44,6 +46,7 @@ QList<Model::OrderDetail> OrderDetail::getByOrderId(int orderId)
     for (QList<Model::OrderDetail>::iterator i = orderDetails.begin(); i != orderDetails.end(); ++i) {
         i->setOrder(Services::Order::getById(i->order().id()));
         i->setItemDetail(Services::ItemDetail::getById(i->itemDetail().id()));
+        i->setSugar(Services::Sugar::getById(i->sugar().id()));
 
         QList<Model::Component> components;
         foreach (Model::Component c, i->components()) {
