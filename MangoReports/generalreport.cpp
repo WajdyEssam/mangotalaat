@@ -99,7 +99,7 @@ QString GeneralReport::getOrdersDetailsTable()
                    QString::number(detail.qunatity()),
                    Services::Helper::fromComponentsToText(detail.components()),
                    Services::Helper::fromAdditionalsToText(detail.additionals()),
-                   QString::number(detail.sugar()),
+                   QString::number(detail.sugar().id()),
                    QString::number(detail.cash())
                    );
 
