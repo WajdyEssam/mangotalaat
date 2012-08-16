@@ -521,10 +521,12 @@ void PropertyWidget::updateItemPriceForSpecialCocktail()
     }
 }
 
-void PropertyWidget::getLargestComponentsPrice(QList<Model::Component>& components, Model::Size size) {
+int PropertyWidget::getLargestComponentsPrice(QList<Model::Component>& components, Model::Size size) {
     int largePrice = 0;
 
     foreach(Model::Component component, components) {
 
     }
+
+    return largePrice;
 }
