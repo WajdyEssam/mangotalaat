@@ -8,6 +8,7 @@
 #include "itemdetail.h"
 #include "component.h"
 #include "additional.h"
+#include "sugar.h"
 
 namespace Model {
 
@@ -17,7 +18,7 @@ public:
     OrderDetail();
     OrderDetail(int id);
     OrderDetail(int id, Model::Order order, Model::ItemDetail itemDetail, int qunatity, QList<Model::Component> components,
-                QList<Model::Additional> additionals, int sugar, int cash);
+                QList<Model::Additional> additionals, Model::Sugar sugar, int cash);
 
     int id() const;
     Model::Order order() const;
@@ -25,7 +26,7 @@ public:
     int qunatity()const;
     QList<Model::Component> components() const;
     QList<Model::Additional> additionals() const;
-    int sugar() const;
+    Model::Sugar sugar() const;
     int cash() const;
     QString orderIndexId() const;
 
@@ -34,7 +35,7 @@ public:
     void setQuantity(int quantity);
     void setComponent(QList<Model::Component> components);
     void setAdditionals(QList<Model::Additional> additionals);
-    void setSugar(int sugar);
+    void setSugar(Model::Sugar sugar);
     void setCash(int cash);
 
 private:
@@ -46,7 +47,7 @@ private:
     int m_quantity;
     QList<Model::Component> m_components;
     QList<Model::Additional> m_additionals;
-    int m_sugar;
+    Model::Sugar m_sugar;
     int m_cash;
     QString m_orderIndexId;
 };

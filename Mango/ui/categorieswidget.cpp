@@ -43,7 +43,7 @@ void CategoriesWidget::createCategories()
         QToolButton* button = new QToolButton;
         button->setObjectName(QString("%1_CategoryButton").arg(p->id()));
         button->setText(p->arabicName());
-        button->setFont(QFont("Droid Arabic Naskh", 12, QFont::Bold));
+        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setIcon(QIcon(QString(":/images/juices/category_%1.png").arg(p->id())));
         button->setIconSize(QSize(128,128));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);

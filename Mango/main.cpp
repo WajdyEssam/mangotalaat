@@ -8,7 +8,6 @@
 #include "ui/loggindialog.h"
 
 void loadStylesheet();
-void loadFonts();
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +32,7 @@ int main(int argc, char *argv[])
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("mango.db");
 
+#if defined(NO_DEBUG)
     // ask for authentication
     LogginDialog dialog;
     dialog.exec();
@@ -42,8 +42,11 @@ int main(int argc, char *argv[])
                              " ,System will closed now!");
         return (0);
     }
-
     int userId = dialog.getUserID();
+#else
+    int userId = 1;
+#endif
+
     MainWindow w(userId);
     w.show();
 
@@ -55,29 +58,4 @@ void loadStylesheet() {
     file.open(QFile::ReadOnly);
     QString StyleSheet = QLatin1String(file.readAll());
     qApp->setStyleSheet(StyleSheet);
-}
-
-void loadFonts() {
-
-    QStringList list;
-    list << "DroidNaskh-Regular.ttf" << "DroidNaskh-Bold.ttf" ;
-
-    int fontID = -1;
-    bool fontWarningShown = false;
-
-    for (QStringList::const_iterator constIterator = list.constBegin(); constIterator != list.constEnd(); ++constIterator) {
-        QFile res(":/data/fonts/" + *constIterator);
-        if (res.open(QIODevice::ReadOnly) == false) {
-            if (fontWarningShown == false) {
-                QMessageBox::warning(0, "Application", "Unable to load fonts");
-                fontWarningShown = true;
-            }
-        } else {
-            fontID = QFontDatabase::addApplicationFontFromData(res.readAll());
-            if (fontID == -1 && fontWarningShown == false) {
-                QMessageBox::warning(0, "Application", "Unable to load fonts");
-                fontWarningShown = true;
-            }
-        }
-    }
 }

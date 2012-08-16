@@ -4,17 +4,17 @@
 namespace Model {
 
 OrderDetail::OrderDetail(int id) :
-    m_id(id), m_order(0), m_quantity(1), m_sugar(1), m_cash(0)
+    m_id(id), m_order(0), m_quantity(1), m_sugar(Model::Sugar::NormalSugar), m_cash(0)
 {}
 
 OrderDetail::OrderDetail(int id, Model::Order order, Model::ItemDetail itemDetail, int qunatity, QList<Model::Component> components,
-            QList<Model::Additional> additionals, int sugar, int cash) :
+            QList<Model::Additional> additionals, Model::Sugar sugar, int cash) :
     m_id(id), m_order(order), m_itemDetail(itemDetail), m_quantity(qunatity), m_components(components), m_additionals(additionals),
     m_sugar(sugar), m_cash(cash)
 {}
 
 OrderDetail::OrderDetail() :
-    m_id(0), m_order(0), m_quantity(1), m_sugar(1), m_cash(0)
+    m_id(0), m_order(0), m_quantity(1), m_sugar(Model::Sugar::NormalSugar), m_cash(0)
 {
     m_orderIndexId = getCurrentTimeStamp();
 }
@@ -49,7 +49,7 @@ QList<Model::Additional> OrderDetail::additionals() const
     return m_additionals;
 }
 
-int OrderDetail::sugar() const
+Model::Sugar OrderDetail::sugar() const
 {
     return m_sugar;
 }
@@ -89,7 +89,7 @@ void OrderDetail::setAdditionals(QList<Additional> additionals)
     m_additionals = additionals;
 }
 
-void OrderDetail::setSugar(int sugar)
+void OrderDetail::setSugar(Model::Sugar sugar)
 {
     m_sugar = sugar;
 }

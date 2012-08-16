@@ -27,7 +27,7 @@ bool OrderDetail::add(Model::OrderDetail orderDetail, int orderId)
 
     query.addBindValue(componentsIds.join(","));
     query.addBindValue(additionalsIds.join(","));
-    query.addBindValue(orderDetail.sugar());
+    query.addBindValue(orderDetail.sugar().id());
     query.addBindValue(orderDetail.cash());
 
     return query.exec();
@@ -62,7 +62,7 @@ QList<Model::OrderDetail> OrderDetail::getByOrderId(int orderId)
         int quantity = query.value(3).toInt();
         QStringList componentList = Helper::fromTextToList(query.value(4).toString());
         QStringList additionalList = Helper::fromTextToList(query.value(5).toString());
-        int sugar = query.value(6).toInt();
+        int sugarId = query.value(6).toInt();
         int cash = query.value(7).toInt();
 
         Model::Order order(orderId);
@@ -77,6 +77,8 @@ QList<Model::OrderDetail> OrderDetail::getByOrderId(int orderId)
         foreach (QString a, additionalList) {
             additionals.append(Model::Additional(a.toInt()));
         }
+
+        Model::Sugar sugar(sugarId);
 
         Model::OrderDetail orderDetail(id, order, itemDetail, quantity, components, additionals, sugar, cash);
         orderDetails.append(orderDetail);

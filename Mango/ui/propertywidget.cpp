@@ -251,7 +251,7 @@ void PropertyWidget::setOrder(Model::OrderDetail orderDetail, bool isOpenedInEdi
     itemNameLabel->setText(itemNameLabel->text() + " - " + m_orderDetail.itemDetail().size().arabicName());
     itemQuantityLCDNumber->display(QString::number(m_orderDetail.qunatity()));
     itemPriceLCDNumber->display(QString::number(m_orderDetail.itemDetail().price()));
-    itemSugarLCDNumber->display(QString::number(m_orderDetail.sugar()));
+    itemSugarLCDNumber->display(QString::number(m_orderDetail.sugar().id()));
 
     // Fill after set active components and additionals
     this->fillItemDetialsLineEdit();
