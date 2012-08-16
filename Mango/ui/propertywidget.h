@@ -92,7 +92,7 @@ private:
 
     QList<Model::Component> readActiveComponents();
     QList<Model::Additional> readActiveAdditionals();
-    int readSugar();
+    Model::Sugar readSugar();
     int readQunatity();
 
 };

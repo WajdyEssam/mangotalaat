@@ -22,7 +22,7 @@
 #include "../../MangoReports/ordersdetailsreport.h"
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
-
+#include "../../MangoService/helper.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -470,11 +470,26 @@ void MainWindow::printReceipt() {
         foreach(Model::OrderDetail order, this->orderDetails) {
             QString quantity = QString::number(order.qunatity());
             QString size = order.itemDetail().size().englishName().at(0).toUpper();
-            QString itemName = order.itemDetail().item().englishName();
-            QString description = "testing";
-            QString price = QString::number(order.cash());
 
+            // handle GALLON size
+            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_1L )
+                size = "1L";
+            else if (order.itemDetail().size().id() == (int) Model::Size::GALLON_1_HALF_L)
+                size = "1.5L";
+            else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_10L )
+                size = "10L";
+
+            // category name - item name
+            QString itemName = order.itemDetail().item().category().englishName() + "-" + order.itemDetail().item().englishName();
+
+            // components:(,)  additional:(,) Sugar:
+            QString description = "components (" + Services::Helper::fromComponentsToTextEn(order.components()) + ") additionals ("
+                    + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + ") Sugar: " + order.sugar().englishName();
+
+            QString price = QString::number(order.cash());
             QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5").arg(quantity).arg(size).arg(itemName).arg(description).arg(price);
+
+
             stream << itemLine << endl;
         }
 

@@ -27,6 +27,7 @@
 #include "../../MangoService/itemdetail.h"
 #include "../../MangoService/itemcomponent.h"
 #include "../../MangoService/componentprice.h"
+#include "../../MangoService/sugar.h"
 
 PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent), m_orderDetail(0)
@@ -451,7 +452,7 @@ QList<Model::Component> PropertyWidget::readActiveComponents()
         int id = button->objectName().split("_").first().toInt();
 
         if ( button->activeState() == ToolButton::Active) {
-            Model::Component c(id);
+            Model::Component c = Services::Component::getById(id);
             components.append(c);
         }
     }
@@ -469,7 +470,7 @@ QList<Model::Additional> PropertyWidget::readActiveAdditionals()
         int id = button->objectName().split("_").first().toInt();
 
         if ( button->activeState() == ToolButton::Active) {
-            Model::Additional a(id);
+            Model::Additional a = Services::Additional::getById(id);
             additionals.append(a);
         }
     }
@@ -477,9 +478,10 @@ QList<Model::Additional> PropertyWidget::readActiveAdditionals()
     return additionals;
 }
 
-int PropertyWidget::readSugar()
+Model::Sugar PropertyWidget::readSugar()
 {
-    return (int)itemSugarLCDNumber->value();
+   int id = (int)itemSugarLCDNumber->value();
+   return Services::Sugar::getById(id);
 }
 
 int PropertyWidget::readQunatity()
