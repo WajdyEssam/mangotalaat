@@ -72,8 +72,8 @@ QString GeneralReport::getLogginTable()
 QString GeneralReport::getOrdersDetailsTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr class=\"table_header\"><th>رقم تسلسلي</th><th>رقم الطلب</th><th>اسم الصنف</th><th>الكمية</th>"
-            "<th>المكونات</th><th>الاضافات</th><th>السكر</th><th>الاجمالي</th></tr>";
+            "<tr class=\"table_header\"><th>رقم تسلسلي</th><th>رقم الطلب</th><th>النوع</th><th>اسم الصنف</th><th>الكمية</th>"
+            "<th>الحجم</th><th>المكونات</th><th>الاضافات</th><th>السكر</th><th>الاجمالي</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
@@ -92,23 +92,23 @@ QString GeneralReport::getOrdersDetailsTable()
                 "<td align=\"center\"><font size=\"2\">%6</font></td> "
                 "<td align=\"center\"><font size=\"2\">%7</font></td> "
                 "<td align=\"center\"><font size=\"2\">%8</font></td> "
+                "<td align=\"center\"><font size=\"2\">%9</font></td> "
+                "<td align=\"center\"><font size=\"2\">%10</font></td> "
                 "</tr>"
-            ).arg( QString::number(detail.id()),
+                ).arg(QString::number(detail.id()),
                    QString::number(detail.order().id()),
+                   detail.itemDetail().item().category().arabicName(),
                    detail.itemDetail().item().arabicName(),
                    QString::number(detail.qunatity()),
+                   detail.itemDetail().size().arabicName(),
                    Services::Helper::fromComponentsToText(detail.components()),
                    Services::Helper::fromAdditionalsToText(detail.additionals()),
-                   detail.sugar().arabicName(),
-                   QString::number(detail.cash())
-                   );
-
+                   detail.sugar().arabicName()).arg(QString::number(detail.cash()));
             htmlTableResult += tableRaw ;
         }
     }
 
     htmlTableResult += tableEnd;
-
     return htmlTableResult;
 }
 

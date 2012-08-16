@@ -17,6 +17,7 @@
 #include "../../MangoService/checkout.h"
 #include "../../MangoService/itemdetail.h"
 #include "../../MangoService/orderdetail.h"
+#include "../../MangoService/helper.h"
 #include "../../MangoReports/report.h"
 #include "../../MangoReports/logginreport.h"
 #include "../../MangoReports/ordersdetailsreport.h"
@@ -489,11 +490,33 @@ void MainWindow::printReceipt(int totalDiscount) {
         foreach(Model::OrderDetail order, this->orderDetails) {
             QString quantity = QString::number(order.qunatity());
             QString size = order.itemDetail().size().englishName().at(0).toUpper();
-            QString itemName = order.itemDetail().item().englishName();
-            QString description = "testing";
-            QString price = QString::number(order.cash());
 
+            // handle GALLON size
+            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_1L )
+                size = "1L";
+            else if (order.itemDetail().size().id() == (int) Model::Size::GALLON_1_HALF_L)
+                size = "1.5L";
+            else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_10L )
+                size = "10L";
+
+            // category name - item name
+            QString itemName = order.itemDetail().item().category().englishName() + "-" + order.itemDetail().item().englishName();
+
+            // components:(,)  additional:(,) Sugar:
+            QString result = "";
+
+            if ( !order.components().empty() )
+                result += " components (" + Services::Helper::fromComponentsToTextEn(order.components()) + ")";
+
+            if ( !order.additionals().empty())
+                result += " additionals (" + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + ")";
+
+            QString description =  result +  " Sugar: " + order.sugar().englishName();
+
+            QString price = QString::number(order.cash());
             QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5").arg(quantity).arg(size).arg(itemName).arg(description).arg(price);
+
+
             stream << itemLine << endl;
         }
 

@@ -17,6 +17,8 @@ public:
     static QString fromListToText(QStringList ids);
     static QString fromComponentsToText(QList<Model::Component> components);
     static QString fromAdditionalsToText(QList<Model::Additional> additionals);
+    static QString fromComponentsToTextEn(QList<Model::Component> components);
+    static QString fromAdditionalsToTextEn(QList<Model::Additional> additionals);
 };
 
 }
