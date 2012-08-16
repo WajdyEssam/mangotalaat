@@ -154,5 +154,9 @@
         <file>images/components/component_active_24.png</file>
         <file>images/components/component_notactive_23.png</file>
         <file>images/components/component_notactive_24.png</file>
+        <file>images/prices/6_20_en.png</file>
+        <file>images/prices/6_30_en.png</file>
+        <file>images/prices/7_60_en.png</file>
+        <file>images/prices/7_90_en.png</file>
     </qresource>
 </RCC>

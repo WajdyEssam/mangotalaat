@@ -76,6 +76,7 @@ void PropertyWidget::initOrderDetailsUI()
     itemNameLabel->setStyleSheet("color: blue; font-weight: bold; font-size: 22px;");
 
     itemComponentsLabel = new QLabel;
+    itemComponentsLabel->setWordWrap(true);
     itemComponentsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
     itemAdditionalsLabel = new QLabel;
