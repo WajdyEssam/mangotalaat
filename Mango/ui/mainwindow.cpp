@@ -23,6 +23,7 @@
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
 
+#include "ui/discountdialog.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -111,6 +112,7 @@ void MainWindow::createOrderDockWidget()
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
+    connect(orderWidget, SIGNAL(applyDiscountClicked()), SLOT(applyDiscountOrderClickedSlot()));
 }
 
 void MainWindow::disableButtonsForNotAuthenticatedUser()
@@ -257,7 +259,7 @@ void MainWindow::applyOrderClickedSlot()
     if (button == QMessageBox::No)
         return;
 
-    computeTotalCash();
+    computeTotalCash(0, Model::OrderType::CASH);
 }
 
 void MainWindow::cancelOrderClickedSlot()
@@ -273,6 +275,26 @@ void MainWindow::cancelOrderClickedSlot()
         return;
 
     clearShoppingCart();
+}
+
+void MainWindow::applyDiscountOrderClickedSlot()
+{
+    if (this->orderDetails.count() < 1) {
+            QMessageBox::information(this, "Cart is empty", "There is no items in the cart!");
+            return;
+    }
+
+    int discount = 0;
+    int totalCashBeforeDiscount = this->orderWidget->totalCash();
+    Model::OrderType::OrderTypes orderType = Model::OrderType::DISCOUNT_VALUE;
+
+    DiscountDialog dlg(totalCashBeforeDiscount);
+    if (dlg.exec() == QDialog::Accepted) {
+        discount = dlg.discount();
+        orderType = dlg.orderType();
+    }
+
+    //computeTotalCash(discount, orderType);
 }
 
 void MainWindow::orderItemClicked(QString orderIndexId)
@@ -300,6 +322,7 @@ void MainWindow::setCurrentPage(WidgetPage page)
         headerWidget->enableBackButton(true);
 
     this->stackedWidget->slideInIdx(page);
+    this->updateGeometry();
 }
 
 void MainWindow::createStatusBar()
@@ -383,27 +406,24 @@ void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
 }
 
 
-void MainWindow::computeTotalCash()
+void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes orderType)
 {
-    this->discount = 0;
-
     if ( this->orderDetails.isEmpty() )
         return;
 
-    int cash = 0;
+    int totalCashBeforeDiscount = 0;
 
     foreach(Model::OrderDetail order, this->orderDetails) {
-        cash += order.cash();
+        totalCashBeforeDiscount += order.cash();
     }
 
-    int totalCash = cash - this->discount;
-    QDateTime now = QDateTime::currentDateTime();
+    int totalCashAfterDiscount = totalCashBeforeDiscount - discount;
 
-    Model::Order order(0, now, Model::OrderType::CASH, cash, discount, totalCash, 0);
+    Model::Order order(0, QDateTime::currentDateTime(), orderType, totalCashBeforeDiscount, discount, totalCashAfterDiscount, 0);
+
     bool ret = Services::Order::add(order, this->orderDetails);
-
     if ( ret ) {
-        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
+        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCashAfterDiscount;
         printReceipt();
         clearShoppingCart();
     }
@@ -427,10 +447,6 @@ void MainWindow::computeCupon()
 
 }
 
-void MainWindow::setDiscount()
-{
-    this->discount = 0;
-}
 
 void MainWindow::printReceipt() {
     if ( this->orderDetails.empty())

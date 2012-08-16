@@ -22,9 +22,15 @@ OrderWidget::OrderWidget(QWidget *parent) :
     layout = new QVBoxLayout(this);
 
     m_lcd = new QLCDNumber;
+    m_lcd->display(0);
 
     initOrderList();
     initOrderCommand();
+}
+
+int OrderWidget::totalCash() const
+{
+    return (int)m_lcd->value();
 }
 
 void OrderWidget::initOrderList()
@@ -77,6 +83,7 @@ void OrderWidget::initOrderCommand()
 
     connect(applyButton, SIGNAL(clicked()), this, SIGNAL(applyClicked()));
     connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
+    connect(discountButton, SIGNAL(clicked()), this, SIGNAL(applyDiscountClicked()));
 
     QGridLayout* gridLayout = new QGridLayout;
     gridLayout->addWidget(m_lcd, 0, 2, 2, 1);

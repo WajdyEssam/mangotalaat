@@ -15,7 +15,8 @@ public:
     enum OrderTypes {
         CASH=1,
         CUPON,
-        DISCOUNT,
+        DISCOUNT_VALUE,
+        DISCOUNT_DISCOUNT,
         FREE
     };
 
