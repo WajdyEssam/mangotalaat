@@ -496,8 +496,8 @@ void MainWindow::printReceipt(int totalDiscount) {
             QString size = order.itemDetail().size().englishName().at(0).toUpper();
 
             // handle GALLON size
-            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_1L )
-                size = "1L";
+            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_5L )
+                size = "5L";
             else if (order.itemDetail().size().id() == (int) Model::Size::GALLON_1_HALF_L)
                 size = "1.5L";
             else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_10L )
