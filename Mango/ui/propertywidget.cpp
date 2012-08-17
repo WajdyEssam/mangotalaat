@@ -36,9 +36,9 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     this->componentSignalMapper = new QSignalMapper(this);
     this->additionalSignalMapper = new QSignalMapper(this);
 
-    orderGroupBox = new QGroupBox(tr("Order"));
-    componentsGroupBox = new QGroupBox(tr("Components"));
-    additionalsGroupBox = new QGroupBox(tr("Additionals"));
+    orderGroupBox = new QGroupBox(tr("خيارات الطلب"));
+    componentsGroupBox = new QGroupBox(tr("المكونات"));
+    additionalsGroupBox = new QGroupBox(tr("الإضافات"));
 
     orderDetailVBoxLayout = new QVBoxLayout;
 
@@ -76,10 +76,11 @@ void PropertyWidget::initOrderDetailsUI()
 {
     itemNameLabel = new QLabel;
     itemNameLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
-    itemNameLabel->setStyleSheet("color: blue; font-weight: bold; font-size: 22px;");
+    itemNameLabel->setStyleSheet("color: blue; font-weight: bold; font-size: 21px;");
 
     itemComponentsLabel = new QLabel;
     itemComponentsLabel->setWordWrap(true);
+    itemComponentsLabel->setMinimumHeight(35);
     itemComponentsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Maximum);
 
     itemAdditionalsLabel = new QLabel;
@@ -122,34 +123,32 @@ void PropertyWidget::initCommandButtonsUI()
 
 void PropertyWidget::initOrderControlUI()
 {
-    QLabel* itemQuantityLabel = new QLabel(tr("Quantity"));
-    itemQuantityLCDNumber = new QLCDNumber;
-    QPushButton* quantityButton = new QPushButton("+");
-    connect(quantityButton, SIGNAL(clicked()), SLOT(openKeypadDialog()));
+    QPushButton* itemQuantityButton = new QPushButton(tr("الكمية"));
+    connect(itemQuantityButton, SIGNAL(clicked()), SLOT(openKeypadDialog()));
 
-    QLabel* itemPriceLabel = new QLabel(tr("Item Price"));
+    itemQuantityLCDNumber = new QLCDNumber;
+
+    QLabel* itemPriceLabel = new QLabel(tr("سعر الحبة"));
     itemPriceLCDNumber = new QLCDNumber;
     itemPriceLCDNumber->setFixedSize(70, 70);
 
-    QLabel* totalPriceLabel = new QLabel(tr("Total Price"));
+    QLabel* totalPriceLabel = new QLabel(tr("السعر الإجمالي"));
     totalPriceLCDNumber = new QLCDNumber;
     totalPriceLCDNumber->setFixedSize(70, 70);
     totalPriceLCDNumber->setStyleSheet("color: red");
     totalPriceLCDNumber->setSegmentStyle(QLCDNumber::Filled);
 
-    QLabel* itemSugarLabel = new QLabel(tr("Sugar"));
+    QPushButton* itemSugarButton = new QPushButton(tr("السكر"));
+    connect(itemSugarButton, SIGNAL(clicked()), SLOT(openSugarDialog()));
+
     itemSugarLCDNumber = new QLCDNumber;
-    QPushButton* sugarButton = new QPushButton("+");
-    connect(sugarButton, SIGNAL(clicked()), SLOT(openSugarDialog()));
 
     QGridLayout* rightLayout = new QGridLayout;
-    rightLayout->addWidget(itemQuantityLabel, 0, 0);
+    rightLayout->addWidget(itemQuantityButton, 0, 0);
     rightLayout->addWidget(itemQuantityLCDNumber, 0, 1, 2, 1);
-    rightLayout->addWidget(quantityButton, 0, 2);
 
-    rightLayout->addWidget(itemSugarLabel, 2, 0);
+    rightLayout->addWidget(itemSugarButton, 2, 0);
     rightLayout->addWidget(itemSugarLCDNumber, 2, 1, 2, 1);
-    rightLayout->addWidget(sugarButton, 2, 2);
 
     rightLayout->addWidget(itemPriceLabel, 4, 0);
     rightLayout->addWidget(itemPriceLCDNumber, 4, 1);
@@ -177,7 +176,7 @@ void PropertyWidget::initComponentsUI()
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(p->id())));
         button->setIconSize(QSize(64,64));
-        button->setFont(QFont("Droid Arabic Naskh", 10, QFont::Bold));
+        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(p->arabicName());
         button->setStatusTip(p->arabicName());
@@ -212,7 +211,7 @@ void PropertyWidget::initAdditionalsUI()
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(p->id())));
         button->setIconSize(QSize(64,64));
-        button->setFont(QFont("Droid Arabic Naskh", 10, QFont::Bold));
+        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(p->arabicName());
         button->setStatusTip(p->arabicName());
@@ -298,7 +297,7 @@ void PropertyWidget::setCurrentAdditional(int id)
 void PropertyWidget::addItemClicked()
 {
     if ((int)itemQuantityLCDNumber->value() <= 0) {
-        QMessageBox::warning(this, tr("Operation faild"), tr("Please enter the quantity"));
+        QMessageBox::warning(this, tr("لا يمكن تنفيذ العملية"), tr("فصلا قم بتحديد الكمية!"));
         return ;
     }
 

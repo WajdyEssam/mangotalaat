@@ -11,7 +11,7 @@ KeypadDialog::KeypadDialog(QWidget* parent) :
     QDialog(parent)
 {
     setupUi();
-    this->setWindowTitle(tr("Keypad"));
+    this->setWindowTitle(tr("لوحة الإدخال"));
 }
 
 int KeypadDialog::value()

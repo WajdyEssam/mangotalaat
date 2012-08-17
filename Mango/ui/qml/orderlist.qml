@@ -76,21 +76,23 @@ Rectangle {
                         text: orderName;
                         font.bold: true;
                         font.pointSize: 14;
+                        font.family: "Hacen Liner Screen Bd";
 
                         Text {
                             text: model.modelData.orderName + " -- " + model.modelData.orderDescription
                             anchors.top: parent.baseline
-                            anchors.topMargin: 2
+                            anchors.topMargin: 4
                         }
                     }
 
                     Text {
                         text: orderCost + " SR"
-                        font.pointSize: 14;
+                        font.pointSize: 16;
+                        font.family: "ChunkFive";
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.topMargin: 9
-                        color: "blue"
+                        anchors.topMargin: 12
+                        color: "black"
                     }
                 }
             }

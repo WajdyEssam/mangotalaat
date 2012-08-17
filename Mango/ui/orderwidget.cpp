@@ -48,7 +48,7 @@ void OrderWidget::initOrderList()
     connect(item, SIGNAL(itemClick(QString)), SIGNAL(orderItemClick(QString)));
 
     QGroupBox* box = new QGroupBox;
-    box->setTitle("Shopping Cart");
+    box->setTitle("سلة المشتريات");
 
     QHBoxLayout* upperLayout = new QHBoxLayout;
     upperLayout->addWidget(m_declarativeView);
@@ -60,7 +60,7 @@ void OrderWidget::initOrderList()
 void OrderWidget::initOrderCommand()
 {
     QGroupBox* box = new QGroupBox;
-    box->setTitle("Order Checkout");
+    box->setTitle("حساب الطلب");
 
 
     QPushButton* applyButton = new QPushButton;

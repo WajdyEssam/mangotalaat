@@ -62,7 +62,7 @@ void ItemsWidget::createItems(int categoryId)
         QString description = p->arabicName();
         button->setObjectName(QString("%1_itemButton").arg(p->id()));
         button->setText(description);
-        button->setFont(QFont("Droid Arabic Naskh", 10, QFont::Bold));
+        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setIconSize(QSize(128,128));
         //button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         button->setToolTip(description);

@@ -443,7 +443,8 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
         clearShoppingCart();
     }
 
-   QMessageBox::information(this, "تمت العملية بنجاح", "النظام جاهز لاستقبال طلب جديد", QMessageBox::Ok, QMessageBox::Ok);
+    setCurrentPage(CategoryPage);
+    QMessageBox::information(this, "تمت العملية بنجاح", "النظام جاهز لاستقبال طلب جديد", QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void MainWindow::clearShoppingCart()

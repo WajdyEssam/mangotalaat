@@ -26,7 +26,7 @@ void HeaderWidget::init()
 
 void HeaderWidget::createToolButtons()
 {
-    QFont font("Droid Arabic Naskh", 12, QFont::Bold);
+    QFont font("Hacen Liner Print-out Light", 12, QFont::Normal);
 
     backButton = new QToolButton;
     backButton->setIcon(QIcon(":/images/back_ar.png"));
