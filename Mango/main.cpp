@@ -3,6 +3,9 @@
 #include <QtCore/QTextCodec>
 #include <QtSql/QSqlDatabase>
 #include <QFont>
+#include <QLocale>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 #include "ui/mainwindow.h"
 #include "ui/loggindialog.h"
@@ -22,6 +25,14 @@ int main(int argc, char *argv[])
 
     a.setLayoutDirection(Qt::RightToLeft);
     a.setFont(QFont("Tahoma", 8, QFont::Normal));
+
+    QLocale locale(QLocale::Arabic);
+    QLocale::setDefault(locale);
+
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + locale.name(),
+            QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
 
     // load style sheet
     loadStylesheet();
