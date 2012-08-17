@@ -164,5 +164,6 @@
         <file>sounds/clear.wav</file>
         <file>sounds/remove.wav</file>
         <file>sounds/tansition.wav</file>
+        <file>images/Kiwi.ico</file>
     </qresource>
 </RCC>
