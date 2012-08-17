@@ -46,7 +46,7 @@ CREATE TABLE categories (
 	english_name TEXT
 );
 
-INSERT INTO categories(arabic_name, english_name) values("العصائر الطازجة", "Fresh JUICES");
+INSERT INTO categories(arabic_name, english_name) values("العصائر الطازجة", "Fresh Juices");
 INSERT INTO categories(arabic_name, english_name) values("الكوكتيلات", "Cocktails");
 INSERT INTO categories(arabic_name, english_name) values("الأطباق المميزة", "Special Dishes");
 INSERT INTO categories(arabic_name, english_name) values("سبيشال كوكتيل", "Speical Cocktial");
@@ -114,15 +114,15 @@ CREATE TABLE items (
 
 -- Fresh JUICES عصائر الطازجة
 -- from id 1 to id 29
-INSERT INTO items(arabic_name, english_name, categories_id) values("مانجو - طلعت", "Mano - Talaat", 1);
-INSERT INTO items(arabic_name, english_name, categories_id) values("فراولة - طلعت", "Strawberry - Talaat", 1);
-INSERT INTO items(arabic_name, english_name, categories_id) values("مانجو - مثلج", "Mano - Iced", 1);
-INSERT INTO items(arabic_name, english_name, categories_id) values("فراولة - مثلج", "Strawberry - Iced", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("مانجو - طلعت", "Mano-Talaat", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فراولة - طلعت", "Strawberry-Talaat", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("مانجو - مثلج", "Mano-Iced", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("فراولة - مثلج", "Strawberry-Iced", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("برتقال", "Orange", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("جزر", "Carrot", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("ليمون", "Lemon", 1);
-INSERT INTO items(arabic_name, english_name, categories_id) values("ليمون بالنعناع", "Lemon With Mint", 1);
-INSERT INTO items(arabic_name, english_name, categories_id) values("موز بالحليب", "Banana With Milk", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ليمون بالنعناع", "Lemon-Mint", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("موز بالحليب", "Banana-Milk", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("تفاح", "Apple", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("أناناس", "Pineapple", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("خوخ", "Peach", 1);
@@ -140,7 +140,7 @@ INSERT INTO items(arabic_name, english_name, categories_id) values("جرجير",
 INSERT INTO items(arabic_name, english_name, categories_id) values("قصب سكر", "Sugar Cane", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("كركديه", "Roselle", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("فيمتو", "Vimto", 1);
-INSERT INTO items(arabic_name, english_name, categories_id) values("الشايب -بيذان", "Al-Shayep - Bizan", 1);
+INSERT INTO items(arabic_name, english_name, categories_id) values("الشايب -بيذان", "Shayep-Bizan", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("سلاش توت", "Berries Slash", 1);
 INSERT INTO items(arabic_name, english_name, categories_id) values("سلاش فراولة", "Strawberry Slash", 1);
 
@@ -162,13 +162,13 @@ INSERT INTO items(arabic_name, english_name, categories_id) values("نصرواي
 INSERT INTO items(arabic_name, english_name, categories_id) values("إيزي", "Easy", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("ولمنة", "Walamenna", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("مناي", "Munaya", 2);
-INSERT INTO items(arabic_name, english_name, categories_id) values("المنتخب السعودي", "Saudi National Team", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("المنتخب السعودي", "Saudi Team", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("سموزي", "Smozy", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("سلم", "Sallem", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("بكزبني", "Bugs Bunny", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("بلاك بيري", "BlackBerry", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("ميمي", "Meme", 2);
-INSERT INTO items(arabic_name, english_name, categories_id) values("إمبراطور الشام", "Emperor of Melon", 2);
+INSERT INTO items(arabic_name, english_name, categories_id) values("إمبراطور الشام", "Emperor-Melon", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("فورسيزونز", "4 Seasons", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("سفن آب", "7 UP", 2);
 INSERT INTO items(arabic_name, english_name, categories_id) values("كوكتيل خاص", "Special Cocktail", 2);
@@ -182,7 +182,7 @@ INSERT INTO items(arabic_name, english_name, categories_id) values("بنانا �
 INSERT INTO items(arabic_name, english_name, categories_id) values("كورن فليكس", "Corn Flakes", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("جاكو وويف", "Jaco Wave", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("شاكو ماني", "Chackomani", 3);
-INSERT INTO items(arabic_name, english_name, categories_id) values("كيك بالآيس كريم", "Ice Cream Cake", 3);
+INSERT INTO items(arabic_name, english_name, categories_id) values("كيك بالآيس كريم", "IceCream Cake", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("لولو", "Lulu", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("موكا", "Mocha", 3);
 INSERT INTO items(arabic_name, english_name, categories_id) values("صمدي", "Samadi", 3);

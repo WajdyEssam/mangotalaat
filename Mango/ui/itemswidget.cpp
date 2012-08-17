@@ -64,7 +64,14 @@ void ItemsWidget::createItems(int categoryId)
         QToolButton* button = new QToolButton;
         button->setObjectName(QString("%1_itemButton").arg(p->id()));
         button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
-        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
+
+        if ( Settings::Language::getCurrentLanguage() == Settings::Language::English ) {
+            if ( p->id() == 2 || p->id() == 29)
+            button->setFont(QFont("Hacen Liner Screen Bd", 12, QFont::Normal));
+        }
+        else
+            button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
+
         button->setIconSize(QSize(128,128));
         //button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         button->setToolTip(button->text());

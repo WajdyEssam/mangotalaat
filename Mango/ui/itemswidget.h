@@ -25,7 +25,7 @@ signals:
 
 private:
     enum {
-        NumButtons = 100 , ButtonsPerLine = 7
+        NumButtons = 100 , ButtonsPerLine = 6
     };
 
     QSignalMapper *signalMapper;
