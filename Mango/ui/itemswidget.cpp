@@ -5,12 +5,15 @@
 #include <QToolButton>
 #include <QSignalMapper>
 #include <QIcon>
+#include <QEvent>
 #include <QDebug>
 
 #include "itemswidget.h"
 
 #include "../../MangoModel/item.h"
 #include "../../MangoService/item.h"
+
+#include "../language.h"
 
 ItemsWidget::ItemsWidget(QWidget *parent) :
     QWidget(parent)
@@ -59,14 +62,13 @@ void ItemsWidget::createItems(int categoryId)
     int i=0, col = 0, row = 1;
     for(QList<Model::Item>::iterator p = items.begin(); p != items.end(); ++p ) {
         QToolButton* button = new QToolButton;
-        QString description = p->arabicName();
         button->setObjectName(QString("%1_itemButton").arg(p->id()));
-        button->setText(description);
+        button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
         button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setIconSize(QSize(128,128));
         //button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        button->setToolTip(description);
-        button->setStatusTip(description);
+        button->setToolTip(button->text());
+        button->setStatusTip(button->text());
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(button, p->id());
         layout->addWidget(button, row, col);
@@ -88,4 +90,13 @@ void ItemsWidget::removeItems()
         delete item->widget();
         delete item;
     }
+}
+
+void ItemsWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        //createItems();
+    }
+
+    QWidget::changeEvent(event);
 }

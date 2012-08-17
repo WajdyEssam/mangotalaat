@@ -35,6 +35,9 @@ private:
     QVBoxLayout* subContainerLayout;
 
     void removeItems();
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 #endif // ITEMSWIDGET_H

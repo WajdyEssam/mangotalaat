@@ -32,6 +32,8 @@ signals:
     void closeSystemActionClicked();
     void aboutSystemActionClicked();
     void returnOrderSystemActionClicked();
+    void arabicLocaleClicked();
+    void englishLocaleClicked();
 
 public slots:
     void emitSignal(int id);
@@ -40,15 +42,28 @@ public slots:
 private:
     QSignalMapper *signalMapper;
     QToolButton* backButton;
+    QToolButton* homeButton;
     QToolButton* reportsButton;
+    QToolButton* systemButton;
+    QToolButton* exitButton;
+
+    QAction *todayLogginReportAction;
+    QAction *todayOrdersReportAction;
+    QAction *todayOrdersDetailsReportAction;
+    QAction *generalReportAction;
     QAction *aboutSystemAction;
     QAction *closeSystemAction;
+    QAction *returnOrderSystemAction;
+    QAction* arabicLocaleAct;
+    QAction* englishLocaleAct;
 
     void init();
+    void retranslateUi();
     void createToolButtons();
 
 protected:
     void paintEvent(QPaintEvent *);
+    void changeEvent(QEvent *);
 };
 
 #endif // HEADERWIDGET_H

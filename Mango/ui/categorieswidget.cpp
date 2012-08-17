@@ -8,8 +8,11 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QDebug>
+#include <QLocale>
+#include <QEvent>
 
 #include "categorieswidget.h"
+#include "../language.h"
 
 #include "../../MangoModel/category.h"
 #include "../../MangoService/category.h"
@@ -42,13 +45,13 @@ void CategoriesWidget::createCategories()
 
         QToolButton* button = new QToolButton;
         button->setObjectName(QString("%1_CategoryButton").arg(p->id()));
-        button->setText(p->arabicName());
+        button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
         button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setIcon(QIcon(QString(":/images/juices/category_%1.png").arg(p->id())));
         button->setIconSize(QSize(128,128));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        button->setToolTip(p->arabicName());
-        button->setStatusTip(p->arabicName());
+        button->setToolTip(button->text());
+        button->setStatusTip(button->text());
         button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), signalMapper, SLOT(map()));
         this->signalMapper->setMapping(button, p->id());
@@ -75,7 +78,7 @@ void CategoriesWidget::removeCategories()
 
 void CategoriesWidget::initCategoryGroupBox()
 {
-    this->categoryGroupBox = new QGroupBox(tr("الأصناف"));
+    this->categoryGroupBox = new QGroupBox(tr("Cagtegories"));
 
     this->containerHBoxLayout = new QHBoxLayout;
     this->subContainerVBoxLayout = new QVBoxLayout;
@@ -119,3 +122,12 @@ void CategoriesWidget::initUi()
     this->setLayout(mainLayout);
 }
 
+
+void CategoriesWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        createCategories();
+    }
+
+    QWidget::changeEvent(event);
+}

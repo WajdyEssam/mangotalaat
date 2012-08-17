@@ -25,7 +25,7 @@ InvoiceVeiwerWidget::InvoiceVeiwerWidget(Report* aReport, QWidget *parent) :
     this->connect(ui->saveButton, SIGNAL(clicked()), this, SLOT(saveReportSlot()));
     this->connect(ui->printButton, SIGNAL(clicked()), this, SLOT(printReportSlot()));
 
-    this->setWindowTitle("شاشة معاينة");
+    this->setWindowTitle(tr("View Window"));
     this->renderReport();
 }
 

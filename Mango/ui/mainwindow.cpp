@@ -10,6 +10,8 @@
 
 #include <vector>
 #include <QDebug>
+#include <QLocale>
+#include <QTranslator>
 
 #include "../../MangoModel/event.h"
 #include "../../MangoModel/itemdetail.h"
@@ -24,6 +26,9 @@
 #include "../../MangoReports/ordersdetailsreport.h"
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
+
+#include "mangoapp.h"
+#include "../language.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -86,6 +91,9 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(closeSystemActionClicked()), SLOT(checkoutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(aboutSystemActionClicked()), SLOT(aboutSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(returnOrderSystemActionClicked()), SLOT(returnOrderSystemClickedSlot()));
+    connect(this->headerWidget, SIGNAL(arabicLocaleClicked()), SLOT(arabicLocaleClicked()));
+    connect(this->headerWidget, SIGNAL(englishLocaleClicked()), SLOT(englishLocaleClicked()));
+
     connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(exit()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
@@ -208,10 +216,9 @@ void MainWindow::returnOrderSystemClickedSlot()
 void MainWindow::checkoutSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
-        "اغلاق حساب اليوم",
-        "هل تريد القيام باغلاق حساب اليومية؟",
-        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
-    );
+                                                                  tr("Close Today Account"),
+                                                                  tr("Are you sure you want to close today accounts?"),
+                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
         return;
@@ -238,6 +245,17 @@ void MainWindow::closeEvent(QCloseEvent * event)
     event->accept();
 }
 
+void MainWindow::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        qDebug() << "chnage language";
+        QLocale l;
+        qDebug() << "locale: " << l.language();
+    }
+
+    QMainWindow::changeEvent(event);
+}
+
 void MainWindow::exit()
 {
     logout();
@@ -248,8 +266,9 @@ void MainWindow::logout()
 {
 #if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
-              "الخروج من النظام", "هل تريد اغلاق النظام؟",
-              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+                                                                  tr("Exit from application"),
+                                                                  tr("Are you sure you want to close the application"),
+                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
         return;
@@ -261,11 +280,13 @@ void MainWindow::logout()
 void MainWindow::applyOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
+        QMessageBox::information(this, tr("Shopping cart is empty"), tr("There is no item in the shopping cart!"));
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الطلب", "هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة؟",
+    QMessageBox::StandardButton button = QMessageBox::information(this,
+                                                                  tr("Apply the order"),
+                                                                  tr("Are you sure you want to apply the order and print the invoice?"),
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
@@ -276,12 +297,14 @@ void MainWindow::applyOrderClickedSlot()
 void MainWindow::cancelOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
+            QMessageBox::information(this, tr("Shopping cart is empty"), tr("There is no item in the shopping cart!"));
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::warning(this, "إلغاء الطلب", "هل انت متأكد من إلغاء الطلب نهائيا؟",
-                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    QMessageBox::StandardButton button = QMessageBox::warning(this,
+                                                              tr("Cancel the order"),
+                                                              tr("Are you sure you want to cancel the order?"),
+                                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
 
@@ -291,7 +314,7 @@ void MainWindow::cancelOrderClickedSlot()
 void MainWindow::applyDiscountOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
+            QMessageBox::information(this, tr("Shopping cart is empty"), tr("There is no item in the shopping cart!"));
             return;
     }
 
@@ -343,7 +366,7 @@ void MainWindow::createStatusBar()
 {
     this->versionLabel = new QLabel(this);
     this->statusBar()->showMessage("");
-    this->statusBar()->addPermanentWidget(new QLabel("Mango Talaat - 2012"));
+    this->statusBar()->addPermanentWidget(new QLabel(tr("Mango Talaat - 2012")));
     this->statusBar()->addPermanentWidget(versionLabel);
 
     this->helpLabel = new QLabel(this);
@@ -379,6 +402,18 @@ void MainWindow::selectItemDetialSlot(int itemDetialId)
     Model::OrderDetail orderDetail = Services::OrderDetail::getEmptyOrderDetail(itemDetialId);
     this->propertyWidget->setOrder(orderDetail, false);
     this->setCurrentPage(PropertyPage);
+}
+
+void MainWindow::arabicLocaleClicked()
+{
+    Settings::Language::setCurrentLanguage(Settings::Language::Arabic);
+    this->setCurrentPage(CategoryPage);
+}
+
+void MainWindow::englishLocaleClicked()
+{
+    Settings::Language::setCurrentLanguage(Settings::Language::English);
+    this->setCurrentPage(CategoryPage);
 }
 
 
@@ -443,7 +478,7 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
     }
 
     setCurrentPage(CategoryPage);
-    QMessageBox::information(this, "تمت العملية بنجاح", "النظام جاهز لاستقبال طلب جديد", QMessageBox::Ok, QMessageBox::Ok);
+    QMessageBox::information(this, tr("Operation done successully"), tr("System is ready to accept new orders"), QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void MainWindow::clearShoppingCart()

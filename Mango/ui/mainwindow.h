@@ -36,6 +36,7 @@ signals:
 
 protected:
     void closeEvent(QCloseEvent *);
+    void changeEvent(QEvent *);
 
 private slots:
     void showPreviousPage();
@@ -56,6 +57,8 @@ private slots:
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
+    void arabicLocaleClicked();
+    void englishLocaleClicked();
     //void updateItemDetialSlot(Model::OrderDetail order);
     void addItemToCart(Model::OrderDetail);
     void updateItemInCart(Model::OrderDetail);

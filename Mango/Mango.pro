@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     ui/returnorderdialog.cpp \
     ui/selectperiddialog.cpp \
     ui/sugardialog.cpp \
-    ui/discountdialog.cpp
+    ui/discountdialog.cpp \
+    language.cpp \
+    mangoapp.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -44,7 +46,9 @@ HEADERS  += ui/categorieswidget.h \
     ui/returnorderdialog.h \
     ui/selectperiddialog.h \
     ui/sugardialog.h \
-    ui/discountdialog.h
+    ui/discountdialog.h \
+    language.h \
+    mangoapp.h
 
 RESOURCES += \
     resources.qrc
@@ -52,6 +56,8 @@ RESOURCES += \
 OTHER_FILES += \
     mango.qss \
     ui/qml/orderlist.qml
+
+TRANSLATIONS = translations/Mango_ar_SA.ts
 
 unix:DESTDIR = ../bin
 unix:OBJECTS_DIR = build/_obj

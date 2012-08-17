@@ -67,6 +67,11 @@ private:
     QLCDNumber* itemSugarLCDNumber;
     QLCDNumber* totalPriceLCDNumber;
 
+    QPushButton* itemQuantityButton;
+    QPushButton* itemSugarButton;
+    QLabel* itemPriceLabel;
+    QLabel* totalPriceLabel;
+
     Model::OrderDetail m_orderDetail;
 
     void updateItemPriceForSpecialCocktail();
@@ -95,6 +100,10 @@ private:
     Model::Sugar readSugar();
     int readQunatity();
 
+    void retransilateUi();
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 #endif // PROPERTYWIDGET_H

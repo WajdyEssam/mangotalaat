@@ -25,7 +25,7 @@ DiscountDialog::DiscountDialog(int totalCashBeforeDiscount, QWidget *parent) :
     cashAfterDiscountLCDNumber->display(m_totalCashBeforeDiscount - m_discount);
     discountComboBox->setCurrentIndex(0);
 
-    this->setWindowTitle(tr("الخصم"));
+    this->setWindowTitle(tr("Discount"));
 }
 
 int DiscountDialog::discount() const
@@ -40,10 +40,10 @@ Model::OrderType::OrderTypes DiscountDialog::orderType() const
 
 void DiscountDialog::setupUi()
 {
-    QLabel* cashBeforeDiscountLabel = new QLabel(tr("الإجمالي قبل الخصم"));
-    QLabel* cashAfterDiscountLabel = new QLabel(tr("الإجمالي بعد الخصم"));
-    QLabel* discountTypeLabel = new QLabel(tr("نوع الخصم"));
-    QLabel* discountLabel = new QLabel(tr("الخصم"));
+    QLabel* cashBeforeDiscountLabel = new QLabel(tr("Total Before Discount"));
+    QLabel* cashAfterDiscountLabel = new QLabel(tr("Total After Discount"));
+    QLabel* discountTypeLabel = new QLabel(tr("Discount Type"));
+    QLabel* discountLabel = new QLabel(tr("Discount"));
 
     cashBeforeDiscountLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     cashAfterDiscountLabel->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -87,10 +87,10 @@ void DiscountDialog::setupUi()
     upperGridLayout->addWidget(discountLCDNumber, 3, 1);
     upperGridLayout->addWidget(discountButton, 3, 2);
 
-    QPushButton* okButton = new QPushButton(tr("تنفيذ الخصم وإغلاق الطلب"));
+    QPushButton* okButton = new QPushButton(tr("Apply discount and close the order"));
     connect(okButton, SIGNAL(clicked()), SLOT(applyDiscount()));
 
-    QPushButton* cancelButton = new QPushButton(tr("الغاء"));
+    QPushButton* cancelButton = new QPushButton(tr("Cancel"));
     connect(cancelButton, SIGNAL(clicked()), SLOT(reject()));
 
     QHBoxLayout* buttonsLayout = new QHBoxLayout;
@@ -149,7 +149,7 @@ void DiscountDialog::openKeypadDialog()
 
 void DiscountDialog::applyDiscount()
 {
-    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الخصم واغلاق الطلب", "هل أنت متأكد من تنفيذ الخصم وإغلاق الطلب وطباعة الفاتورة؟",
+    QMessageBox::StandardButton button = QMessageBox::information(this, tr("Apply Discount and Close the Order"), tr("Are you sure you want to apply the discount, close the order and print the invoice?"),
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;

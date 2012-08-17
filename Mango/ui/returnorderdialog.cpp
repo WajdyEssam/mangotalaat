@@ -25,8 +25,8 @@ void ReturnOrderDialog::initTable() {
 
     // table headers
     QStringList labels;
-    labels << tr("رقم الطلب") << tr("تاريخ الطلب") << tr("نوع الطلب")
-            << tr("المبلغ") << tr("الخصم") << tr("الاجمالي");
+    labels << tr("Order No") << tr("Order Date") << tr("Order Type")
+            << tr("Price") << tr("Discount") << tr("Total");
 
     // initialize the table with headers
     this->ui->tableWidget->setColumnCount(6);
@@ -61,10 +61,9 @@ void ReturnOrderDialog::on_cancelButton_clicked()
 void ReturnOrderDialog::on_removeButton_clicked()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
-        "ارجاع الطلب للنظام",
-        "هل تريد الغاء هذ الطلب من النظام",
-        QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
-    );
+                                                                  tr("Return Order from the system"),
+                                                                  tr("Are you sure you want to cancel the order?"),
+                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
         return;
@@ -78,8 +77,7 @@ void ReturnOrderDialog::on_removeButton_clicked()
     }
 
     if ( selectedList.count() > 0) {
-        QMessageBox::information(this,
-            "Successfull operation", "تم ارجاع الطلب بنجاح", QMessageBox::Ok, QMessageBox::Ok);
+        QMessageBox::information(this, tr("Operation done successfully"), tr("Order it returned successfully"), QMessageBox::Ok, QMessageBox::Ok);
     }
 
     initTable();

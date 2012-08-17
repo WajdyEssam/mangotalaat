@@ -1,9 +1,12 @@
 #include "headerwidget.h"
+#include "../language.h"
+#include <QDebug>
 
 HeaderWidget::HeaderWidget(QWidget *parent) :
     QWidget(parent)
 {
     init();
+    retranslateUi();
 }
 
 void HeaderWidget::paintEvent(QPaintEvent *) {
@@ -14,14 +17,56 @@ void HeaderWidget::paintEvent(QPaintEvent *) {
     p.fillRect(QRect(0,0,width(),100), QBrush(background));
 }
 
+void HeaderWidget::changeEvent(QEvent * event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retranslateUi();
+    }
+
+    QWidget::changeEvent(event);
+}
+
 void HeaderWidget::init()
 {
     this->setObjectName("headerWidget");
     this->signalMapper = new QSignalMapper(this);
     this->setFixedHeight(100);
     this->createToolButtons();
-    this->setLayoutDirection(Qt::RightToLeft);
     connect(this->signalMapper, SIGNAL(mapped(int)), this, SLOT(emitSignal(int)));
+}
+
+void HeaderWidget::retranslateUi()
+{
+    backButton->setText(tr("Back"));
+    backButton->setToolTip(backButton->text());
+    backButton->setStatusTip(backButton->toolTip());
+    backButton->setIcon((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? QIcon(":/images/back_ar.png") : QIcon(":/images/back_en.png"));
+
+    homeButton->setText(tr("Start"));
+    homeButton->setToolTip(homeButton->text());
+    homeButton->setStatusTip(homeButton->toolTip());
+
+    reportsButton->setText(tr("Reports"));
+    reportsButton->setToolTip(reportsButton->text());
+    reportsButton->setStatusTip(reportsButton->toolTip());
+
+    systemButton->setText(tr("System"));
+    systemButton->setToolTip(systemButton->text());
+    systemButton->setStatusTip(systemButton->toolTip());
+
+    exitButton->setText(tr("Exit"));
+    exitButton->setToolTip(exitButton->text());
+    exitButton->setStatusTip(exitButton->toolTip());
+
+    todayLogginReportAction->setText(tr("Logins daily report"));
+    todayOrdersReportAction->setText(tr("Orders daily report"));
+    todayOrdersDetailsReportAction->setText(tr("Order details daily report"));
+    generalReportAction->setText(tr("Complete report"));
+    closeSystemAction->setText(tr("Close today accounts"));
+    aboutSystemAction->setText(tr("About System"));
+    returnOrderSystemAction->setText(tr("Return Order"));
+    arabicLocaleAct->setText(tr("Arabic"));
+    englishLocaleAct->setText(tr("English"));
 }
 
 void HeaderWidget::createToolButtons()
@@ -30,103 +75,103 @@ void HeaderWidget::createToolButtons()
 
     backButton = new QToolButton;
     backButton->setIcon(QIcon(":/images/back_ar.png"));
-    backButton->setText("عودة");
     backButton->setIconSize(QSize(64,64));
     backButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    backButton->setToolTip("عودة");
-    backButton->setStatusTip(backButton->toolTip());
     backButton->setFont(font);
 
-    QToolButton* homeButton = new QToolButton;
+    homeButton = new QToolButton;
     homeButton->setIcon(QIcon(":/images/system.png"));
-    homeButton->setText("البداية");
     homeButton->setIconSize(QSize(64,64));
     homeButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    homeButton->setToolTip("البداية");
-    homeButton->setStatusTip(homeButton->toolTip());
     homeButton->setFont(font);
 
     reportsButton = new QToolButton;
     reportsButton->setIcon(QIcon(":/images/report.png"));
-    reportsButton->setText("التقارير");
     reportsButton->setIconSize(QSize(64,64));
     reportsButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    reportsButton->setToolTip("التقارير");
-    reportsButton->setStatusTip(reportsButton->toolTip());
     reportsButton->setFont(font);
 
     // add menu for report button
-    QAction *todayLogginReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير يومي بعمليات الدخول"), this);
+    todayLogginReportAction = new QAction(QIcon(":/images/find.png"),tr("Logins daily report"), this);
     connect(todayLogginReportAction, SIGNAL(triggered()), this, SIGNAL(todayLogginReportActionClicked()));
 
-    QAction *todayOrdersReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير يومي بالطلبات"), this);
+    todayOrdersReportAction = new QAction(QIcon(":/images/find.png"),tr("Orders daily report"), this);
     connect(todayOrdersReportAction, SIGNAL(triggered()), this, SIGNAL(todayOrdersReportActionClicked()));
 
-    QAction *todayOrdersDetailsReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير يومي بتفاصيل الطلبات"), this);
+    todayOrdersDetailsReportAction = new QAction(QIcon(":/images/find.png"),tr("Order details daily report"), this);
     connect(todayOrdersDetailsReportAction, SIGNAL(triggered()), this, SIGNAL(todayOrdersDetailsReportActionClicked()));
 
-    QAction *generalReportAction = new QAction(QIcon(":/images/find.png"),tr("تقرير شامل"), this);
+    generalReportAction = new QAction(QIcon(":/images/find.png"),tr("Complete report"), this);
     connect(generalReportAction, SIGNAL(triggered()), this, SIGNAL(generalReportActionClicked()));
 
     QMenu *reportMenu = new QMenu(this);
     reportMenu->addAction(todayLogginReportAction);
     reportMenu->addAction(todayOrdersReportAction);
     reportMenu->addAction(todayOrdersDetailsReportAction);
+    reportMenu->addSeparator();
     reportMenu->addAction(generalReportAction);
 
     reportsButton->setMenu(reportMenu);
     reportsButton->setPopupMode(QToolButton::InstantPopup);
 
-    QToolButton* systemButton = new QToolButton;
+    systemButton = new QToolButton;
     systemButton->setIcon(QIcon(":/images/accounting.png"));
-    systemButton->setText("النظام");
     systemButton->setIconSize(QSize(64,64));
     systemButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    systemButton->setToolTip("النظام");
-    systemButton->setStatusTip(systemButton->toolTip());
     systemButton->setFont(font);
 
     // add menu for system button
-    closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("اغلاق حساب اليوم"), this);
+    closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("Close today accounts"), this);
     connect(closeSystemAction, SIGNAL(triggered()), this, SIGNAL(closeSystemActionClicked()));
 
-    aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("عن النظام"), this);
+    aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("About System"), this);
     connect(aboutSystemAction, SIGNAL(triggered()), this, SIGNAL(aboutSystemActionClicked()));
 
-    QAction *returnOrderSystemAction = new QAction(QIcon(":/images/find.png"), tr("ارجاع الطلب"), this);
+    returnOrderSystemAction = new QAction(QIcon(":/images/find.png"), tr("Return Order"), this);
     connect(returnOrderSystemAction, SIGNAL(triggered()), this, SIGNAL(returnOrderSystemActionClicked()));
+
+    QActionGroup* localeGroup = new QActionGroup(this);
+
+    arabicLocaleAct = new QAction(QIcon(":/images/ar.png"), tr("Arabic"), localeGroup);
+    arabicLocaleAct->setCheckable(true);
+    connect(arabicLocaleAct, SIGNAL(triggered()), this, SIGNAL(arabicLocaleClicked()));
+
+    englishLocaleAct = new QAction(QIcon(":/images/en.png"), tr("English"), localeGroup);
+    englishLocaleAct->setCheckable(true);
+    connect(englishLocaleAct, SIGNAL(triggered()), this, SIGNAL(englishLocaleClicked()));
 
     QMenu *systemMenu = new QMenu(this);
     systemMenu->addAction(closeSystemAction);
-    systemMenu->addAction(aboutSystemAction);
     systemMenu->addAction(returnOrderSystemAction);
+    systemMenu->addSeparator();
+    systemMenu->addAction(arabicLocaleAct);
+    systemMenu->addAction(englishLocaleAct);
+    systemMenu->addSeparator();
+    systemMenu->addAction(aboutSystemAction);
 
     systemButton->setMenu(systemMenu);
     systemButton->setPopupMode(QToolButton::InstantPopup);
 
-    QToolButton* signOutButton = new QToolButton;
-    signOutButton->setIcon(QIcon(":/images/logout.png"));
-    signOutButton->setText("خروج");
-    signOutButton->setIconSize(QSize(64,64));
-    signOutButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-    signOutButton->setToolTip("خروج");
-    signOutButton->setStatusTip(signOutButton->toolTip());
-    signOutButton->setFont(font);
+    exitButton = new QToolButton;
+    exitButton->setIcon(QIcon(":/images/logout.png"));
+    exitButton->setIconSize(QSize(64,64));
+    exitButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    exitButton->setFont(font);
 
     QHBoxLayout* headerLayout = new QHBoxLayout(this);
     headerLayout->addWidget(backButton);
     headerLayout->addWidget(homeButton);
     headerLayout->addWidget(reportsButton);
     headerLayout->addWidget(systemButton);
-    headerLayout->addWidget(signOutButton);
+    headerLayout->addWidget(exitButton);
 
     this->signalMapper->setMapping(backButton, 1);
     this->signalMapper->setMapping(homeButton, 2);
-    this->signalMapper->setMapping(signOutButton, 3);
+    this->signalMapper->setMapping(exitButton, 3);
 
     connect(backButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(homeButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
-    connect(signOutButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    connect(exitButton, SIGNAL(clicked()), signalMapper, SLOT(map()));
 }
 
 void HeaderWidget::emitSignal(int id)

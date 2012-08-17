@@ -40,6 +40,9 @@ private:
 
 signals:
     void selectCategory(int id);
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 #endif // CATEGORIESWIDGET_H

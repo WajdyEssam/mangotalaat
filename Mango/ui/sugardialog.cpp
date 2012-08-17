@@ -9,7 +9,7 @@ SugarDialog::SugarDialog(QWidget *parent) :
     QDialog(parent), m_value(Model::Sugar::NormalSugar)
 {
     setupUi();
-    this->setWindowTitle(tr("السكر"));
+    this->setWindowTitle(tr("Sugar"));
 }
 
 void SugarDialog::setupUi()
@@ -19,22 +19,22 @@ void SugarDialog::setupUi()
 
     QToolButton* withoutSugarButton = new QToolButton;
     withoutSugarButton->setFixedSize(100, 100);
-    withoutSugarButton->setText(tr("بدون سكر"));
+    withoutSugarButton->setText(tr("Without Sugar"));
     connect(withoutSugarButton, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 
     QToolButton* lessSugarButton = new QToolButton;
     lessSugarButton->setFixedSize(100, 100);
-    lessSugarButton->setText(tr("سكر قليل"));
+    lessSugarButton->setText(tr("Little Sugar"));
     connect(lessSugarButton, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 
     QToolButton* normalSugarButton = new QToolButton;
     normalSugarButton->setFixedSize(100, 100);
-    normalSugarButton->setText(tr("سكر عادي"));
+    normalSugarButton->setText(tr("Normal Sugar"));
     connect(normalSugarButton, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 
     QToolButton* moreSugarButton = new QToolButton;
     moreSugarButton->setFixedSize(100, 100);
-    moreSugarButton->setText(tr("سكر زيادة"));
+    moreSugarButton->setText(tr("Much Sugar"));
     connect(moreSugarButton, SIGNAL(clicked()), m_signalMapper, SLOT(map()));
 
     m_signalMapper->setMapping(withoutSugarButton, Model::Sugar::WithoutSugar);

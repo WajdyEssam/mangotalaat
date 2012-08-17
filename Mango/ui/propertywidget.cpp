@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QLCDNumber>
+#include <QEvent>
 
 #include "propertywidget.h"
 #include "toolbutton.h"
@@ -29,6 +30,8 @@
 #include "../../MangoService/componentprice.h"
 #include "../../MangoService/sugar.h"
 
+#include "../language.h"
+
 PropertyWidget::PropertyWidget(QWidget *parent) :
     QWidget(parent), m_orderDetail(0)
 {
@@ -36,9 +39,9 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     this->componentSignalMapper = new QSignalMapper(this);
     this->additionalSignalMapper = new QSignalMapper(this);
 
-    orderGroupBox = new QGroupBox(tr("خيارات الطلب"));
-    componentsGroupBox = new QGroupBox(tr("المكونات"));
-    additionalsGroupBox = new QGroupBox(tr("الإضافات"));
+    orderGroupBox = new QGroupBox(tr("Order Options"));
+    componentsGroupBox = new QGroupBox(tr("Components"));
+    additionalsGroupBox = new QGroupBox(tr("Additionals"));
 
     orderDetailVBoxLayout = new QVBoxLayout;
 
@@ -70,6 +73,18 @@ PropertyWidget::PropertyWidget(QWidget *parent) :
     this->initCommandButtonsUI();
     this->initComponentsUI();
     this->initAdditionalsUI();
+}
+
+void PropertyWidget::retransilateUi()
+{
+    orderGroupBox->setTitle(tr("Order Options"));
+    componentsGroupBox->setTitle(tr("Components"));
+    additionalsGroupBox->setTitle(tr("Additionals"));
+
+    itemQuantityButton->setText(tr("Qunatity"));
+    itemSugarButton->setText(tr("Sugar"));
+    itemPriceLabel->setText(tr("Item Price"));
+    totalPriceLabel->setText(tr("Total Price"));
 }
 
 void PropertyWidget::initOrderDetailsUI()
@@ -123,22 +138,22 @@ void PropertyWidget::initCommandButtonsUI()
 
 void PropertyWidget::initOrderControlUI()
 {
-    QPushButton* itemQuantityButton = new QPushButton(tr("الكمية"));
+    itemQuantityButton = new QPushButton(tr("Qunatity"));
     connect(itemQuantityButton, SIGNAL(clicked()), SLOT(openKeypadDialog()));
 
     itemQuantityLCDNumber = new QLCDNumber;
 
-    QLabel* itemPriceLabel = new QLabel(tr("سعر الحبة"));
+    itemPriceLabel = new QLabel(tr("Item Price"));
     itemPriceLCDNumber = new QLCDNumber;
     itemPriceLCDNumber->setFixedSize(70, 70);
 
-    QLabel* totalPriceLabel = new QLabel(tr("السعر الإجمالي"));
+    totalPriceLabel = new QLabel(tr("Total Price"));
     totalPriceLCDNumber = new QLCDNumber;
     totalPriceLCDNumber->setFixedSize(70, 70);
     totalPriceLCDNumber->setStyleSheet("color: red");
     totalPriceLCDNumber->setSegmentStyle(QLCDNumber::Filled);
 
-    QPushButton* itemSugarButton = new QPushButton(tr("السكر"));
+    itemSugarButton = new QPushButton(tr("Sugar"));
     connect(itemSugarButton, SIGNAL(clicked()), SLOT(openSugarDialog()));
 
     itemSugarLCDNumber = new QLCDNumber;
@@ -172,14 +187,14 @@ void PropertyWidget::initComponentsUI()
 
         ToolButton* button = new ToolButton;
         button->setObjectName(QString("%1_ComponentButton").arg(p->id()));
-        button->setText(p->arabicName());
+        button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(p->id())));
         button->setIconSize(QSize(64,64));
         button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        button->setToolTip(p->arabicName());
-        button->setStatusTip(p->arabicName());
+        button->setToolTip(button->text());
+        button->setStatusTip(button->text());
         button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), componentSignalMapper, SLOT(map()));
         this->componentSignalMapper->setMapping(button, p->id());
@@ -207,14 +222,14 @@ void PropertyWidget::initAdditionalsUI()
 
         ToolButton* button = new ToolButton;
         button->setObjectName(QString("%1_AdditionalsButton").arg(p->id()));
-        button->setText(p->arabicName());
+        button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(p->id())));
         button->setIconSize(QSize(64,64));
         button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
-        button->setToolTip(p->arabicName());
-        button->setStatusTip(p->arabicName());
+        button->setToolTip(button->text());
+        button->setStatusTip(button->text());
         button->setContentsMargins(0,0,0,0);
         connect(button, SIGNAL(clicked()), additionalSignalMapper, SLOT(map()));
         this->additionalSignalMapper->setMapping(button, p->id());
@@ -252,8 +267,14 @@ void PropertyWidget::setOrder(Model::OrderDetail orderDetail, bool isOpenedInEdi
         this->componentsGroupBox->setVisible(true);
     }
 
-    itemNameLabel->setText(m_orderDetail.itemDetail().item().arabicName());
-    itemNameLabel->setText(itemNameLabel->text() + " - " + m_orderDetail.itemDetail().size().arabicName());
+    if (Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) {
+        itemNameLabel->setText(m_orderDetail.itemDetail().item().arabicName());
+        itemNameLabel->setText(itemNameLabel->text() + " - " + m_orderDetail.itemDetail().size().arabicName());
+    } else {
+        itemNameLabel->setText(m_orderDetail.itemDetail().item().englishName());
+        itemNameLabel->setText(itemNameLabel->text() + " - " + m_orderDetail.itemDetail().size().englishName());
+    }
+
     itemQuantityLCDNumber->display(QString::number(m_orderDetail.qunatity()));
     itemPriceLCDNumber->display(QString::number(m_orderDetail.itemDetail().price()));
     itemSugarLCDNumber->display(QString::number(m_orderDetail.sugar().id()));
@@ -297,7 +318,7 @@ void PropertyWidget::setCurrentAdditional(int id)
 void PropertyWidget::addItemClicked()
 {
     if ((int)itemQuantityLCDNumber->value() <= 0) {
-        QMessageBox::warning(this, tr("لا يمكن تنفيذ العملية"), tr("فصلا قم بتحديد الكمية!"));
+        QMessageBox::warning(this, tr("Unable to add item to shopping cart"), tr("Please make sure you have set the quantity correctly!"));
         return ;
     }
 
@@ -415,12 +436,12 @@ void PropertyWidget::fillItemDetialsLineEdit()
     if (components.count())
         itemComponentsLabel->setText(components.join(" , "));
     else
-        itemComponentsLabel->setText("<font color='red'>لا توجد مكونات</font>");
+        itemComponentsLabel->setText(tr("<font color='red'>There is no components</font>"));
 
     if (additionals.count())
         itemAdditionalsLabel->setText(additionals.join(" , "));
     else
-        itemAdditionalsLabel->setText("<font color='red'>لا توجد إضافات</font>");
+        itemAdditionalsLabel->setText(tr("<font color='red'>There is no additionals</font>"));
 
     // Calculate total price
     updateItemPriceForSpecialCocktail();
@@ -547,4 +568,13 @@ int PropertyWidget::getLargestComponentsPrice(QList<Model::Component>& component
     }
 
     return largePrice;
+}
+
+void PropertyWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange) {
+        retransilateUi();
+    }
+
+    QWidget::changeEvent(event);
 }

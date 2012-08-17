@@ -156,5 +156,8 @@
         <file>reports/LogginReport.html</file>
         <file>reports/OrdersDetailsReport.html</file>
         <file>reports/OrdersReport.html</file>
+        <file>images/ar.png</file>
+        <file>images/en.png</file>
+        <file>translations/Mango_ar_SA.qm</file>
     </qresource>
 </RCC>
