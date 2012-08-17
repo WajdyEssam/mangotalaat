@@ -60,6 +60,12 @@ void ReturnOrderDialog::on_cancelButton_clicked()
 
 void ReturnOrderDialog::on_removeButton_clicked()
 {
+    int row = ui->tableWidget->currentRow();
+    if (row < 0) {
+        QMessageBox::warning(this,"لا يمكن ارجاع الطلب","فضلا اختر أحد الطلبات قبل عملية الحذف");
+        return ;
+    }
+
     QMessageBox::StandardButton button = QMessageBox::information(this,
         "ارجاع الطلب للنظام",
         "هل تريد الغاء هذ الطلب من النظام",
