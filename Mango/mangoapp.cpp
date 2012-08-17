@@ -9,6 +9,7 @@
 #include <QDebug>
 
 #include "mangoapp.h"
+#include "language.h"
 
 MangoApp::MangoApp(int &argc, char **argv) :
     QApplication(argc, argv),m_qtTranslator(0), m_mangoTranslator(0)
@@ -21,6 +22,7 @@ MangoApp::MangoApp(int &argc, char **argv) :
     loadQtTranslator();
     loadMangoTranslator();
     openDBConnection();
+    Settings::Language::setCurrentLanguage(Settings::Language::Arabic);
 }
 
 void MangoApp::loadStylesheet()

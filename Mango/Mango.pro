@@ -83,3 +83,4 @@ FORMS += \
     ui/returnorderdialog.ui \
     ui/selectperiddialog.ui
 
+RC_FILE = myapp.rc

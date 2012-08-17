@@ -13,6 +13,8 @@
 #include "../../MangoModel/orderobject.h"
 #include "../../MangoModel/orderdetail.h"
 
+#include "../language.h"
+
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -117,8 +119,8 @@ void OrderWidget::updateOrderDetails(QList<Model::OrderDetail> orderDetails)
         OrderObject* orderObject = new OrderObject(
                     orderDetail.itemDetail().id(),
                     orderDetail.orderIndexId(),
-                    orderDetail.itemDetail().item().arabicName(),
-                    orderDetail.itemDetail().size().arabicName(),
+                    Settings::Language::getCurrentLanguage() == Settings::Language::Arabic ? orderDetail.itemDetail().item().arabicName() : orderDetail.itemDetail().item().englishName(),
+                    Settings::Language::getCurrentLanguage() == Settings::Language::Arabic ? orderDetail.itemDetail().size().arabicName() : orderDetail.itemDetail().size().englishName(),
                     QString::number(orderDetail.cash()),
                     orderDetail.itemDetail().item().category().id());
 

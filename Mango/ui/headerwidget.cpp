@@ -140,6 +140,11 @@ void HeaderWidget::createToolButtons()
     englishLocaleAct->setCheckable(true);
     connect(englishLocaleAct, SIGNAL(triggered()), this, SIGNAL(englishLocaleClicked()));
 
+    if (Settings::Language::getCurrentLanguage() == Settings::Language::Arabic)
+        arabicLocaleAct->setChecked(true);
+    else
+        englishLocaleAct->setChecked(true);
+
     QMenu *systemMenu = new QMenu(this);
     systemMenu->addAction(closeSystemAction);
     systemMenu->addAction(returnOrderSystemAction);

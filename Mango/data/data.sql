@@ -20,7 +20,7 @@ CREATE TABLE system_checkout (
 	checkout_time DATATIME
 );
 
-INSERT INTO system_checkout(checkout_time) values("Thu Jul 26 14:08:49 2012");
+INSERT INTO system_checkout(checkout_time) values("2012-08-17T1:00:00");
 
 CREATE TABLE item_size (
 	id 	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -704,7 +704,7 @@ INSERT INTO components(arabic_name, english_name) values("جزر", "Carrots");
 INSERT INTO components(arabic_name, english_name) values("برتقال", "Orange");
 INSERT INTO components(arabic_name, english_name) values("آيس كريم", "Ice cream");
 INSERT INTO components(arabic_name, english_name) values("تفاح", "Apple");
-INSERT INTO components(arabic_name, english_name) values("رقي مع القطع", "Watermelon - Pieces");
+INSERT INTO components(arabic_name, english_name) values("رقي مع القطع", "Watermelon");
 INSERT INTO components(arabic_name, english_name) values("توت", "Barries");
 INSERT INTO components(arabic_name, english_name) values("أناناس", "Pinapple");
 INSERT INTO components(arabic_name, english_name) values("خوخ", "Peach");

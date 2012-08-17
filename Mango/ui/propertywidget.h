@@ -100,6 +100,8 @@ private:
     Model::Sugar readSugar();
     int readQunatity();
 
+    void removeComponents();
+    void removeAdditionals();
     void retransilateUi();
 
 protected:

@@ -424,13 +424,13 @@ void PropertyWidget::fillItemDetialsLineEdit()
     QStringList components;
     foreach (Model::Component c, readActiveComponents()) {
         Model::Component component = Services::Component::getById(c.id());
-        components.append(component.arabicName());
+        components.append(Settings::Language::getCurrentLanguage() == Settings::Language::Arabic ? component.arabicName() : component.englishName());
     }
 
     QStringList additionals;
     foreach (Model::Additional a, readActiveAdditionals()) {
         Model::Additional additional = Services::Additional::getById(a.id());
-        additionals.append(additional.arabicName());
+        additionals.append(Settings::Language::getCurrentLanguage() == Settings::Language::Arabic ? additional.arabicName() : additional.englishName());
     }
 
     if (components.count())
@@ -570,9 +570,33 @@ int PropertyWidget::getLargestComponentsPrice(QList<Model::Component>& component
     return largePrice;
 }
 
+void PropertyWidget::removeComponents()
+{
+    QLayoutItem* item;
+    while ((item = this->componentsGridLayout->takeAt(0)) != NULL ) {
+        delete item->widget();
+        delete item;
+    }
+}
+
+
+void PropertyWidget::removeAdditionals()
+{
+    QLayoutItem* item;
+    while ((item = this->additionalsGridLayout->takeAt(0)) != NULL ) {
+        delete item->widget();
+        delete item;
+    }
+}
+
+
 void PropertyWidget::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
+        removeComponents();
+        removeAdditionals();
+        initComponentsUI();
+        initAdditionalsUI();
         retransilateUi();
     }
 

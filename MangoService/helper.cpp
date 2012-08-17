@@ -86,4 +86,20 @@ QString Helper::fromAdditionalsToTextEn(QList<Model::Additional> additionals)
 
     return commaSeparatedText;
 }
+
+void Helper::runSoundFile(QString path) {
+    Phonon::MediaObject *music =
+             Phonon::createPlayer(Phonon::MusicCategory,
+                                  Phonon::MediaSource(path));
+     music->play();
+}
+
+const QString Helper::logonSoundFile = ":/sounds/logon.wav";
+const QString Helper::logoutSoundFile= ":/sounds/logout.wav";
+const QString Helper::checkoutSoundFile= ":/sounds/checkout.mp3";
+const QString Helper::addingSoundFile= ":/sounds/adding.wav";
+const QString Helper::errorSoundFile= ":/sounds/error.wav";
+const QString Helper::transitionSoundFile= ":/sounds/tansition.wav";
+const QString Helper::clearSoundFile= ":/sounds/clear.wav";
+const QString Helper::removeSoundFile= ":/sounds/remove.wav";
 }

@@ -107,7 +107,7 @@ void MainWindow::createHeaderDockWidget()
 
 void MainWindow::createOrderDockWidget()
 {
-    QDockWidget *orderDockWidget = new QDockWidget(this);
+    orderDockWidget = new QDockWidget(this);
     orderDockWidget->setObjectName("OrderDockWidget");
     orderDockWidget->setFloating(false);
     orderDockWidget->setTitleBarWidget(new QWidget);
@@ -241,16 +241,20 @@ void MainWindow::aboutSystemClickedSlot()
 
 void MainWindow::closeEvent(QCloseEvent * event)
 {
-    logout();
-    event->accept();
+    if ( logout() )
+        event->accept();
 }
 
 void MainWindow::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange) {
-        qDebug() << "chnage language";
-        QLocale l;
-        qDebug() << "locale: " << l.language();
+
+        if (Settings::Language::getCurrentLanguage() == Settings::Language::Arabic)
+            this->addDockWidget(Qt::RightDockWidgetArea, orderDockWidget);
+        else
+            this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
+
+        emit orderDetailUpdated(this->orderDetails);
     }
 
     QMainWindow::changeEvent(event);
@@ -258,23 +262,23 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::exit()
 {
-    logout();
-    qApp->quit();
+    if ( logout() )
+        qApp->quit();
 }
 
-void MainWindow::logout()
+bool MainWindow::logout()
 {
-#if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
                                                                   tr("Exit from application"),
                                                                   tr("Are you sure you want to close the application"),
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
-        return;
-#endif
+        return false;
 
+    Services::Helper::runSoundFile(Services::Helper::logoutSoundFile);
     this->AddLogoutEvent();
+    return true;
 }
 
 void MainWindow::applyOrderClickedSlot()
@@ -326,10 +330,6 @@ void MainWindow::applyDiscountOrderClickedSlot()
     if (dlg.exec() == QDialog::Accepted) {
         discount = dlg.discount();
         orderType = dlg.orderType();
-
-        qDebug() << "discount: " << discount;
-        qDebug() << "type: " << orderType;
-
         computeTotalCash(discount, orderType);
     }
 }
@@ -339,6 +339,7 @@ void MainWindow::orderItemClicked(QString orderIndexId)
     Model::OrderDetail orderDetail = getOrderByIndexId(orderIndexId);
     this->propertyWidget->setOrder(orderDetail, true);
     this->setCurrentPage(PropertyPage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
     headerWidget->enableBackButton(false);
 }
 
@@ -389,12 +390,14 @@ void MainWindow::selectCategorySlot(int categorId)
 {
     this->itemsWidget->createItems(categorId);
     this->setCurrentPage(ItemPage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
 }
 
 void MainWindow::selectItemSlot(int itemId)
 {
     this->sizeWidget->createItemSizes(itemId);
     this->setCurrentPage(SizePage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
 }
 
 void MainWindow::selectItemDetialSlot(int itemDetialId)
@@ -402,6 +405,7 @@ void MainWindow::selectItemDetialSlot(int itemDetialId)
     Model::OrderDetail orderDetail = Services::OrderDetail::getEmptyOrderDetail(itemDetialId);
     this->propertyWidget->setOrder(orderDetail, false);
     this->setCurrentPage(PropertyPage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
 }
 
 void MainWindow::arabicLocaleClicked()
@@ -421,6 +425,7 @@ void MainWindow::addItemToCart(Model::OrderDetail order)
 {
     this->orderDetails.append(order);
     this->setCurrentPage(CategoryPage);
+    Services::Helper::runSoundFile(Services::Helper::addingSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -436,6 +441,7 @@ void MainWindow::updateItemInCart(Model::OrderDetail oldOrder)
 
     this->orderDetails.append(oldOrder);
     this->setCurrentPage(CategoryPage);
+    Services::Helper::runSoundFile(Services::Helper::addingSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -451,6 +457,7 @@ void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
     }
 
     this->setCurrentPage(CategoryPage);
+    Services::Helper::runSoundFile(Services::Helper::removeSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -472,7 +479,7 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
 
     bool ret = Services::Order::add(order, this->orderDetails);
     if ( ret ) {
-        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCashAfterDiscount;
+        Services::Helper::runSoundFile(Services::Helper::checkoutSoundFile);
         printReceipt(discount);
         clearShoppingCart();
     }
@@ -484,18 +491,10 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
 void MainWindow::clearShoppingCart()
 {
     this->orderDetails.clear();
+    Services::Helper::runSoundFile(Services::Helper::clearSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::computeFree()
-{
-
-}
-
-void MainWindow::computeCupon()
-{
-
-}
 
 void MainWindow::printReceipt(int totalDiscount) {
     if ( this->orderDetails.empty())
@@ -531,8 +530,8 @@ void MainWindow::printReceipt(int totalDiscount) {
             QString size = order.itemDetail().size().englishName().at(0).toUpper();
 
             // handle GALLON size
-            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_1L )
-                size = "1L";
+            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_5L )
+                size = "5L";
             else if (order.itemDetail().size().id() == (int) Model::Size::GALLON_1_HALF_L)
                 size = "1.5L";
             else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_10L )
@@ -548,8 +547,6 @@ void MainWindow::printReceipt(int totalDiscount) {
             QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5 @ %6 @ %7")
                     .arg(quantity).arg(size).arg(itemName).arg(sugar).arg(price)
                     .arg(components).arg(additional);
-
-            qDebug() << itemLine;
             stream << itemLine << endl;
         }
 
