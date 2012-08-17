@@ -18,21 +18,18 @@ Language::Languages Language::getCurrentLanguage()
 void Language::setCurrentLanguage(Language::Languages language)
 {
     if (language == Language::Arabic) {
-
         QLocale l(QLocale::Arabic, QLocale::SaudiArabia);
         QLocale::setDefault(l);
-        qApp->setLayoutDirection(Qt::RightToLeft);
+        dynamic_cast<MangoApp*>(qApp)->setLayoutDirection(Qt::RightToLeft);
         dynamic_cast<MangoApp*>(qApp)->removeAllTranslator();
         dynamic_cast<MangoApp*>(qApp)->loadQtTranslator();
         dynamic_cast<MangoApp*>(qApp)->loadMangoTranslator();
 
     } else {
-
         QLocale l(QLocale::English, QLocale::UnitedStates);
         QLocale::setDefault(l);
-        qApp->setLayoutDirection(Qt::LeftToRight);
+        dynamic_cast<MangoApp*>(qApp)->setLayoutDirection(Qt::LeftToRight);
         dynamic_cast<MangoApp*>(qApp)->removeAllTranslator();
-
     }
 }
 

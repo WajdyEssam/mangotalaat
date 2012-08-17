@@ -16,6 +16,7 @@ MangoApp::MangoApp(int &argc, char **argv) :
 {
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    this->setLayoutDirection(Qt::RightToLeft);
     QDir::setCurrent(QCoreApplication::applicationDirPath());
     this->setFont(QFont("Tahoma", 8, QFont::Normal));
     loadStylesheet();

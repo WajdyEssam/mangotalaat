@@ -215,7 +215,7 @@ INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بو�
 INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول توت", "Red Bull Barries", 5);
 INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول كرز", "Red Bull Cherries", 5);
 INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول مكس", "Red Bull Mix", 5);
-INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول هلالي - سلاش", "Red Bull Hilaly - Slash", 5);
+INSERT INTO items(arabic_name, english_name, categories_id) values("ريد بول هلالي", "Red Bull Hilaly - Slash", 5);
 
 -- Frozen Yogurt فروزون يوغورت
 -- from id 91 to id 93

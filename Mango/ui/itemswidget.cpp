@@ -67,7 +67,9 @@ void ItemsWidget::createItems(int categoryId)
 
         if ( Settings::Language::getCurrentLanguage() == Settings::Language::English ) {
             if ( p->id() == 2 || p->id() == 29)
-            button->setFont(QFont("Hacen Liner Screen Bd", 12, QFont::Normal));
+                button->setFont(QFont("Hacen Liner Screen Bd", 12, QFont::Normal));
+            else
+                button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
         }
         else
             button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));

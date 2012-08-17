@@ -42,6 +42,7 @@ MainWindow::MainWindow(int userId, QWidget *parent) :
     this->establishConnections();
     this->addLoginEvent();
     this->disableButtonsForNotAuthenticatedUser();
+    this->setWindowTitle("مانجو طلعت");
 }
 
 MainWindow::~MainWindow()
@@ -313,6 +314,7 @@ void MainWindow::cancelOrderClickedSlot()
         return;
 
     clearShoppingCart();
+    setCurrentPage(CategoryPage);
 }
 
 void MainWindow::applyDiscountOrderClickedSlot()
