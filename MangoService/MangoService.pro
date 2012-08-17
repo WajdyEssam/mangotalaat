@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       -= gui
+QT += phonon
 
 TARGET = MangoService
 TEMPLATE = lib

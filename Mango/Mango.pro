@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql declarative webkit phonon
+QT       += core gui sql declarative webkit
 
 TARGET = Mango
 TEMPLATE = app
