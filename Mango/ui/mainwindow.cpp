@@ -447,6 +447,10 @@ void MainWindow::printReceipt() {
     if ( this->orderDetails.empty())
         return;
 
+    // file format
+    // total @ discount
+    // quantity @ size @ itemname @ sugar @ price @ component @ additional
+
     QString printApplicationPath = "ThermalPrinterTestApp.exe";
     QString outputFilename = "Data.txt";
 
@@ -456,15 +460,16 @@ void MainWindow::printReceipt() {
         totalCash += order.cash();
     }
 
+    QString total = QString::number(totalCash);
     QString cash = QString::number(totalCash);
-    QString discount = "0.0";
+    QString discount = "50";
 
     QFile file(outputFilename);
 
     if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
         QTextStream stream(&file);
 
-        QString firstLine = cash + " @ " + discount;
+        QString firstLine = cash + " @ " + discount + " @ " + total;
         stream << firstLine << endl;
 
         foreach(Model::OrderDetail order, this->orderDetails) {
@@ -479,24 +484,18 @@ void MainWindow::printReceipt() {
             else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_10L )
                 size = "10L";
 
-            // category name - item name
-            QString itemName = order.itemDetail().item().category().englishName() + "-" + order.itemDetail().item().englishName();
-
-            // components:(,)  additional:(,) Sugar:
-            QString result = "";
-
-            if ( !order.components().empty() )
-                result += " components (" + Services::Helper::fromComponentsToTextEn(order.components()) + ")";
-
-            if ( !order.additionals().empty())
-                result += " additionals (" + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + ")";
-
-            QString description =  result +  " Sugar: " + order.sugar().englishName();
-
+            // item name
+            QString itemName = order.itemDetail().item().englishName();
+            QString sugar = QString::number(order.sugar().id()-1);
+            QString components = "#C:" + Services::Helper::fromComponentsToTextEn(order.components()) + "";
+            QString additional = "#A:" + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + "";
             QString price = QString::number(order.cash());
-            QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5").arg(quantity).arg(size).arg(itemName).arg(description).arg(price);
 
+            QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5 @ %6 @ %7")
+                    .arg(quantity).arg(size).arg(itemName).arg(sugar).arg(price)
+                    .arg(components).arg(additional);
 
+            qDebug() << itemLine;
             stream << itemLine << endl;
         }
 
