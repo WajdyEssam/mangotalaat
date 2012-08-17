@@ -331,16 +331,13 @@ void PropertyWidget::addItemClicked()
     emit addItem(m_orderDetail);
 }
 
-void PropertyWidget::updateItemClicked()
+void PropertyWidget:: updateItemClicked()
 {
-//    int itemDetailId = m_orderDetail.itemDetail().id();
-//    QStringList components = readActiveComponents();
-//    QStringList additionals = readActiveAdditionals();
-//    int sugar = readSugar();
-//    int quantity = readQunatity();
-//    QString orderIndexId = this->m_orderDetail.orderIndexId();
 
-    //Model::OrderDetail orderDetail(itemDetailId, quantity, components, additionals, sugar, orderIndexId);
+    if ((int)itemQuantityLCDNumber->value() <= 0) {
+        QMessageBox::warning(this, tr("Unable to add item to shopping cart"), tr("Please make sure you have set the quantity correctly!"));
+        return ;
+    }
 
     m_orderDetail.setComponent(readActiveComponents());
     m_orderDetail.setAdditionals(readActiveAdditionals());
