@@ -6,6 +6,7 @@
 #include "invoiceveiwerwidget.h"
 #include "returnorderdialog.h"
 #include "selectperiddialog.h"
+#include "discountdialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -17,12 +18,12 @@
 #include "../../MangoService/checkout.h"
 #include "../../MangoService/itemdetail.h"
 #include "../../MangoService/orderdetail.h"
+#include "../../MangoService/helper.h"
 #include "../../MangoReports/report.h"
 #include "../../MangoReports/logginreport.h"
 #include "../../MangoReports/ordersdetailsreport.h"
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
-#include "../../MangoService/helper.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
     QMainWindow(parent)
@@ -111,6 +112,7 @@ void MainWindow::createOrderDockWidget()
     connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
     connect(orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
+    connect(orderWidget, SIGNAL(applyDiscountClicked()), SLOT(applyDiscountOrderClickedSlot()));
 }
 
 void MainWindow::disableButtonsForNotAuthenticatedUser()
@@ -207,7 +209,7 @@ void MainWindow::checkoutSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
         "اغلاق حساب اليوم",
-        "?هل تريد القيام باغلاق حساب اليومية",
+        "هل تريد القيام باغلاق حساب اليومية؟",
         QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes
     );
 
@@ -246,7 +248,7 @@ void MainWindow::logout()
 {
 #if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
-              "Close The Application", "Are you sure do you want to close the application?",
+              "الخروج من النظام", "هل تريد اغلاق النظام؟",
               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
@@ -259,31 +261,54 @@ void MainWindow::logout()
 void MainWindow::applyOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "Cart is empty", "There is no items in the cart!");
+            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::information(this, "Apply Order", "Are you sure of applying the order and print the invoice?",
+    QMessageBox::StandardButton button = QMessageBox::information(this, "تنفيذ الطلب", "هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة؟",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
 
-    computeTotalCash();
+    computeTotalCash(0, Model::OrderType::CASH);
 }
 
 void MainWindow::cancelOrderClickedSlot()
 {
     if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, "Cart is already empty", "There is no items in the cart!");
+            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
             return;
     }
 
-    QMessageBox::StandardButton button = QMessageBox::warning(this, "Cancel Order", "Are you sure of canceling the whole order?",
+    QMessageBox::StandardButton button = QMessageBox::warning(this, "إلغاء الطلب", "هل انت متأكد من إلغاء الطلب نهائيا؟",
                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
 
     clearShoppingCart();
+}
+
+void MainWindow::applyDiscountOrderClickedSlot()
+{
+    if (this->orderDetails.count() < 1) {
+            QMessageBox::information(this, "سلة المشتريات فارغة", "لا توجد عناصر في سلة المشتريات!");
+            return;
+    }
+
+    int discount = 0;
+    int totalCashBeforeDiscount = this->orderWidget->totalCash();
+    Model::OrderType::OrderTypes orderType = Model::OrderType::DISCOUNT_VALUE;
+
+    DiscountDialog dlg(totalCashBeforeDiscount);
+    if (dlg.exec() == QDialog::Accepted) {
+        discount = dlg.discount();
+        orderType = dlg.orderType();
+
+        qDebug() << "discount: " << discount;
+        qDebug() << "type: " << orderType;
+
+        computeTotalCash(discount, orderType);
+    }
 }
 
 void MainWindow::orderItemClicked(QString orderIndexId)
@@ -311,6 +336,7 @@ void MainWindow::setCurrentPage(WidgetPage page)
         headerWidget->enableBackButton(true);
 
     this->stackedWidget->slideInIdx(page);
+    this->updateGeometry();
 }
 
 void MainWindow::createStatusBar()
@@ -394,32 +420,29 @@ void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
 }
 
 
-void MainWindow::computeTotalCash()
+void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes orderType)
 {
-    this->discount = 0;
-
     if ( this->orderDetails.isEmpty() )
         return;
 
-    int cash = 0;
+    int totalCashBeforeDiscount = 0;
 
     foreach(Model::OrderDetail order, this->orderDetails) {
-        cash += order.cash();
+        totalCashBeforeDiscount += order.cash();
     }
 
-    int totalCash = cash - this->discount;
-    QDateTime now = QDateTime::currentDateTime();
+    int totalCashAfterDiscount = totalCashBeforeDiscount - discount;
 
-    Model::Order order(0, now, Model::OrderType::CASH, cash, discount, totalCash, 0);
+    Model::Order order(0, QDateTime::currentDateTime(), orderType, totalCashBeforeDiscount, discount, totalCashAfterDiscount, 0);
+
     bool ret = Services::Order::add(order, this->orderDetails);
-
     if ( ret ) {
-        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCash;
-        printReceipt();
+        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCashAfterDiscount;
+        printReceipt(discount);
         clearShoppingCart();
     }
 
-   QMessageBox::information(this, "Successfull operation", "System is ready for accepting next order", QMessageBox::Ok, QMessageBox::Ok);
+   QMessageBox::information(this, "تمت العملية بنجاح", "النظام جاهز لاستقبال طلب جديد", QMessageBox::Ok, QMessageBox::Ok);
 }
 
 void MainWindow::clearShoppingCart()
@@ -438,31 +461,26 @@ void MainWindow::computeCupon()
 
 }
 
-void MainWindow::setDiscount()
-{
-    this->discount = 0;
-}
-
-void MainWindow::printReceipt() {
+void MainWindow::printReceipt(int totalDiscount) {
     if ( this->orderDetails.empty())
         return;
 
     // file format
-    // total @ discount
+    // cash @ discount @ total
     // quantity @ size @ itemname @ sugar @ price @ component @ additional
 
     QString printApplicationPath = "ThermalPrinterTestApp.exe";
     QString outputFilename = "Data.txt";
 
     // write order detials to file
-    int totalCash = 0;
+    int totalCashBeforeDiscount = 0;
     foreach(Model::OrderDetail order, this->orderDetails) {
-        totalCash += order.cash();
+        totalCashBeforeDiscount += order.cash();
     }
 
-    QString total = QString::number(totalCash);
-    QString cash = QString::number(totalCash);
-    QString discount = "50";
+    QString cash = QString::number(totalCashBeforeDiscount);
+    QString discount = QString::number(totalDiscount);
+    QString total = QString::number(totalCashBeforeDiscount - totalDiscount);
 
     QFile file(outputFilename);
 

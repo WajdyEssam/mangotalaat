@@ -14,11 +14,13 @@ class OrderWidget : public QWidget
     Q_OBJECT
 public:
     explicit OrderWidget(QWidget *parent = 0);
-    
+    int totalCash() const;
+
 signals:
     void orderItemClick(QString);
     void applyClicked();
     void cancelClicked();
+    void applyDiscountClicked();
 
 public slots:
     void updateOrderDetails(QList<Model::OrderDetail>);

@@ -52,6 +52,7 @@ private slots:
     void returnOrderSystemClickedSlot();
     void applyOrderClickedSlot();
     void cancelOrderClickedSlot();
+    void applyDiscountOrderClickedSlot();
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
@@ -59,7 +60,7 @@ private slots:
     void addItemToCart(Model::OrderDetail);
     void updateItemInCart(Model::OrderDetail);
     void removeItemFromCart(Model::OrderDetail);
-    void printReceipt();
+    void printReceipt(int discount);
 
 private:
     QSignalMapper *signalMapper;
@@ -76,7 +77,6 @@ private:
     QLabel *helpLabel;
 
     QList<Model::OrderDetail> orderDetails;
-    int discount ;
     int m_userId;
     Model::OrderDetail getOrderByIndexId(QString indexId);
 
@@ -91,10 +91,9 @@ private:
     void addLoginEvent();
     void AddLogoutEvent();
     //void updateOrder(Model::OrderDetail oldOrder, Model::OrderDetail newOrder);
-    void computeTotalCash();
+    void computeTotalCash(int discount, Model::OrderType::OrderTypes orderType);
     void computeFree();
     void computeCupon();
-    void setDiscount();
     void clearShoppingCart();
     void disableButtonsForNotAuthenticatedUser();
 };
