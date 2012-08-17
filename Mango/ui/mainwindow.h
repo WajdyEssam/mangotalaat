@@ -47,7 +47,7 @@ private slots:
     void generalReportClickedSlot();
     void checkoutSystemClickedSlot();
     void aboutSystemClickedSlot();
-    void logout();
+    bool logout();
     void exit();
     void returnOrderSystemClickedSlot();
     void applyOrderClickedSlot();
@@ -56,7 +56,6 @@ private slots:
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
-    //void updateItemDetialSlot(Model::OrderDetail order);
     void addItemToCart(Model::OrderDetail);
     void updateItemInCart(Model::OrderDetail);
     void removeItemFromCart(Model::OrderDetail);
@@ -67,15 +66,12 @@ private:
     HeaderWidget *headerWidget;
     OrderWidget* orderWidget;
     SlidingStackedWidget *stackedWidget;
-
     CategoriesWidget* categoriesWidget;
     ItemsWidget* itemsWidget;
     SizeWidget* sizeWidget;
     PropertyWidget* propertyWidget;
-
     QLabel *versionLabel;
     QLabel *helpLabel;
-
     QList<Model::OrderDetail> orderDetails;
     int m_userId;
     Model::OrderDetail getOrderByIndexId(QString indexId);
@@ -90,10 +86,7 @@ private:
     void setCurrentPage(WidgetPage page);
     void addLoginEvent();
     void AddLogoutEvent();
-    //void updateOrder(Model::OrderDetail oldOrder, Model::OrderDetail newOrder);
     void computeTotalCash(int discount, Model::OrderType::OrderTypes orderType);
-    void computeFree();
-    void computeCupon();
     void clearShoppingCart();
     void disableButtonsForNotAuthenticatedUser();
 };

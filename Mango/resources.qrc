@@ -162,5 +162,7 @@
         <file>sounds/logon.wav</file>
         <file>sounds/logout.wav</file>
         <file>sounds/tansition.mp3</file>
+        <file>sounds/clear.wav</file>
+        <file>sounds/remove.wav</file>
     </qresource>
 </RCC>

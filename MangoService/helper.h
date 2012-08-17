@@ -21,6 +21,15 @@ public:
     static QString fromComponentsToTextEn(QList<Model::Component> components);
     static QString fromAdditionalsToTextEn(QList<Model::Additional> additionals);
     static void runSoundFile(QString path);
+
+    static const QString logonSoundFile;
+    static const QString logoutSoundFile;
+    static const QString checkoutSoundFile;
+    static const QString addingSoundFile;
+    static const QString errorSoundFile;
+    static const QString transitionSoundFile;
+    static const QString clearSoundFile;
+    static const QString removeSoundFile;
 };
 
 }

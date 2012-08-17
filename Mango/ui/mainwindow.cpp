@@ -8,9 +8,6 @@
 #include "selectperiddialog.h"
 #include "discountdialog.h"
 
-#include <vector>
-#include <QDebug>
-
 #include "../../MangoModel/event.h"
 #include "../../MangoModel/itemdetail.h"
 #include "../../MangoService/order.h"
@@ -234,28 +231,28 @@ void MainWindow::aboutSystemClickedSlot()
 
 void MainWindow::closeEvent(QCloseEvent * event)
 {
-    logout();
-    event->accept();
+    if ( logout() )
+        event->accept();
 }
 
 void MainWindow::exit()
 {
-    logout();
-    qApp->quit();
+    if ( logout() )
+        qApp->quit();
 }
 
-void MainWindow::logout()
+bool MainWindow::logout()
 {
-#if defined(DEBUG)
     QMessageBox::StandardButton button = QMessageBox::information(this,
               "الخروج من النظام", "هل تريد اغلاق النظام؟",
               QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
-        return;
-#endif
+        return false;
 
+    Services::Helper::runSoundFile(Services::Helper::logoutSoundFile);
     this->AddLogoutEvent();
+    return true;
 }
 
 void MainWindow::applyOrderClickedSlot()
@@ -303,10 +300,6 @@ void MainWindow::applyDiscountOrderClickedSlot()
     if (dlg.exec() == QDialog::Accepted) {
         discount = dlg.discount();
         orderType = dlg.orderType();
-
-        qDebug() << "discount: " << discount;
-        qDebug() << "type: " << orderType;
-
         computeTotalCash(discount, orderType);
     }
 }
@@ -316,6 +309,7 @@ void MainWindow::orderItemClicked(QString orderIndexId)
     Model::OrderDetail orderDetail = getOrderByIndexId(orderIndexId);
     this->propertyWidget->setOrder(orderDetail, true);
     this->setCurrentPage(PropertyPage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
     headerWidget->enableBackButton(false);
 }
 
@@ -366,12 +360,14 @@ void MainWindow::selectCategorySlot(int categorId)
 {
     this->itemsWidget->createItems(categorId);
     this->setCurrentPage(ItemPage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
 }
 
 void MainWindow::selectItemSlot(int itemId)
 {
     this->sizeWidget->createItemSizes(itemId);
     this->setCurrentPage(SizePage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
 }
 
 void MainWindow::selectItemDetialSlot(int itemDetialId)
@@ -379,6 +375,7 @@ void MainWindow::selectItemDetialSlot(int itemDetialId)
     Model::OrderDetail orderDetail = Services::OrderDetail::getEmptyOrderDetail(itemDetialId);
     this->propertyWidget->setOrder(orderDetail, false);
     this->setCurrentPage(PropertyPage);
+    Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
 }
 
 
@@ -386,6 +383,7 @@ void MainWindow::addItemToCart(Model::OrderDetail order)
 {
     this->orderDetails.append(order);
     this->setCurrentPage(CategoryPage);
+    Services::Helper::runSoundFile(Services::Helper::addingSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -401,6 +399,7 @@ void MainWindow::updateItemInCart(Model::OrderDetail oldOrder)
 
     this->orderDetails.append(oldOrder);
     this->setCurrentPage(CategoryPage);
+    Services::Helper::runSoundFile(Services::Helper::addingSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -416,6 +415,7 @@ void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
     }
 
     this->setCurrentPage(CategoryPage);
+    Services::Helper::runSoundFile(Services::Helper::removeSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
@@ -437,7 +437,7 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
 
     bool ret = Services::Order::add(order, this->orderDetails);
     if ( ret ) {
-        qDebug() << "New Order Status: " << ret << " Total cash: " << totalCashAfterDiscount;
+        Services::Helper::runSoundFile(Services::Helper::checkoutSoundFile);
         printReceipt(discount);
         clearShoppingCart();
     }
@@ -449,18 +449,10 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
 void MainWindow::clearShoppingCart()
 {
     this->orderDetails.clear();
+    Services::Helper::runSoundFile(Services::Helper::clearSoundFile);
     emit orderDetailUpdated(this->orderDetails);
 }
 
-void MainWindow::computeFree()
-{
-
-}
-
-void MainWindow::computeCupon()
-{
-
-}
 
 void MainWindow::printReceipt(int totalDiscount) {
     if ( this->orderDetails.empty())
@@ -513,8 +505,6 @@ void MainWindow::printReceipt(int totalDiscount) {
             QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5 @ %6 @ %7")
                     .arg(quantity).arg(size).arg(itemName).arg(sugar).arg(price)
                     .arg(components).arg(additional);
-
-            qDebug() << itemLine;
             stream << itemLine << endl;
         }
 
