@@ -86,4 +86,11 @@ QString Helper::fromAdditionalsToTextEn(QList<Model::Additional> additionals)
 
     return commaSeparatedText;
 }
+
+void Helper::runSoundFile(QString path) {
+    Phonon::MediaObject *music =
+             Phonon::createPlayer(Phonon::MusicCategory,
+                                  Phonon::MediaSource(path));
+     music->play();
+}
 }

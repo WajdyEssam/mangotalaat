@@ -156,5 +156,11 @@
         <file>reports/LogginReport.html</file>
         <file>reports/OrdersDetailsReport.html</file>
         <file>reports/OrdersReport.html</file>
+        <file>sounds/adding.wav</file>
+        <file>sounds/checkout.mp3</file>
+        <file>sounds/error.wav</file>
+        <file>sounds/logon.wav</file>
+        <file>sounds/logout.wav</file>
+        <file>sounds/tansition.mp3</file>
     </qresource>
 </RCC>

@@ -7,6 +7,7 @@
 #include "MangoService_global.h"
 #include "../MangoModel/component.h"
 #include "../MangoModel/additional.h"
+#include <phonon/phonon>
 
 namespace Services {
 
@@ -19,6 +20,7 @@ public:
     static QString fromAdditionalsToText(QList<Model::Additional> additionals);
     static QString fromComponentsToTextEn(QList<Model::Component> components);
     static QString fromAdditionalsToTextEn(QList<Model::Additional> additionals);
+    static void runSoundFile(QString path);
 };
 
 }
