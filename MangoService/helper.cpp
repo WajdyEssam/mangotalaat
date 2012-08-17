@@ -65,7 +65,7 @@ QString Helper::fromComponentsToTextEn(QList<Model::Component> components)
         commaSeparatedText += components.at(i).englishName();
 
         if ( i < components.size() - 1 ) {
-            commaSeparatedText += ",";
+            commaSeparatedText += "|";
         }
     }
 
@@ -80,7 +80,7 @@ QString Helper::fromAdditionalsToTextEn(QList<Model::Additional> additionals)
         commaSeparatedText += additionals.at(i).englishName();
 
         if ( i < additionals.size() - 1 ) {
-            commaSeparatedText += ",";
+            commaSeparatedText += "|";
         }
     }
 

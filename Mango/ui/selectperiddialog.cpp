@@ -16,7 +16,8 @@ SelectPeridDialog::~SelectPeridDialog()
 void SelectPeridDialog::on_buttonBox_accepted()
 {
     this->m_from = QDateTime(this->ui->fromWidget->selectedDate());
-    this->m_to = QDateTime(this->ui->toWidget->selectedDate());
+    this->m_to = QDateTime(this->ui->toWidget->selectedDate());    
+    this->m_to.setTime(QTime(23,59,59));
     this->m_accept = true;
     this->hide();
 }
