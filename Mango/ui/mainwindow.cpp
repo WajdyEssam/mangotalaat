@@ -27,7 +27,7 @@
 #include "../../MangoReports/ordersreport.h"
 #include "../../MangoReports/generalreport.h"
 
-#include "mangoapp.h"
+#include "../mangoapp.h"
 #include "../language.h"
 
 MainWindow::MainWindow(int userId, QWidget *parent) :
