@@ -49,7 +49,7 @@ void InvoiceVeiwerWidget::printReportSlot(){
 
 void InvoiceVeiwerWidget::saveReportSlot(){
     QString fileName = QFileDialog::getSaveFileName(
-                this, "Save Report", "", tr("PDF File (*.pdf)"));
+                this, "Save Report", QString::number(QDateTime::currentMSecsSinceEpoch()) + "_Report.pdf", tr("PDF File (*.pdf)"));
 
     if ( fileName.isEmpty() )
         return;
