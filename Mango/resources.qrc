@@ -169,5 +169,8 @@
         <file>sounds/tansition.wav</file>
         <file>images/Kiwi.ico</file>
         <file>myapp.rc</file>
+        <file>images/prices/1_1_en.png</file>
+        <file>images/prices/8_10_en.png</file>
+        <file>images/prices/8_15_en.png</file>
     </qresource>
 </RCC>
