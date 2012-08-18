@@ -172,5 +172,20 @@
         <file>images/prices/1_1_en.png</file>
         <file>images/prices/8_10_en.png</file>
         <file>images/prices/8_15_en.png</file>
+        <file>images/apply_order_ar.png</file>
+        <file>images/apply_order_hover_ar.png</file>
+        <file>images/apply_order_pressed_ar.png</file>
+        <file>images/cancel_order_ar.png</file>
+        <file>images/cancel_order_hover_ar.png</file>
+        <file>images/cancel_order_pressed_ar.png</file>
+        <file>images/cobon_order_ar.png</file>
+        <file>images/discount_order_ar.png</file>
+        <file>images/discount_order_hover_ar.png</file>
+        <file>images/discount_order_pressed_ar.png</file>
+        <file>images/cobon_order_hover_ar.png</file>
+        <file>images/cobon_order_pressed_ar.png</file>
+        <file>images/buttons/add_cart_button_ar.png</file>
+        <file>images/buttons/remove_cart_button_ar.png</file>
+        <file>images/buttons/update_cart_button_ar.png</file>
     </qresource>
 </RCC>

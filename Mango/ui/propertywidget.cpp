@@ -85,6 +85,18 @@ void PropertyWidget::retransilateUi()
     itemSugarButton->setText(tr("Sugar"));
     itemPriceLabel->setText(tr("Item Price"));
     totalPriceLabel->setText(tr("Total Price"));
+
+    if (Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) {
+        addButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart_button_ar.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+        updateButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/update_cart_button_ar.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+        removeButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/remove_cart_button_ar.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+
+    } else {
+        addButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+        updateButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/update_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+        removeButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/remove_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    }
+
 }
 
 void PropertyWidget::initOrderDetailsUI()
