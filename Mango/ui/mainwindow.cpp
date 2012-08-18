@@ -7,6 +7,7 @@
 #include "returnorderdialog.h"
 #include "selectperiddialog.h"
 #include "discountdialog.h"
+#include "customerdialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -85,6 +86,7 @@ void MainWindow::createHeaderDockWidget()
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(backClicked()), SLOT(showPreviousPage()));
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(showHomePage()));
+    connect(this->headerWidget, SIGNAL(addUsersActionClicked()), SLOT(addUsersClicked()));
     connect(this->headerWidget, SIGNAL(todayLogginReportActionClicked()), SLOT(todayLogginReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
@@ -166,6 +168,12 @@ void MainWindow::showHomePage()
     this->setCurrentPage(CategoryPage);
 }
 
+void MainWindow::addUsersClicked()
+{
+    CustomerDialog dialog;
+    dialog.exec();
+}
+
 void MainWindow::todayLogginReportClickedSlot()
 {
     QDateTime from = Services::Checkout::getAll().last().createdDateTime();
@@ -217,9 +225,9 @@ void MainWindow::returnOrderSystemClickedSlot()
 void MainWindow::checkoutSystemClickedSlot()
 {
     QMessageBox::StandardButton button = QMessageBox::information(this,
-                                                                  tr("Close Today Account"),
-                                                                  tr("Are you sure you want to close today accounts?"),
-                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+      tr("Close Today Account"),
+      tr("Are you sure you want to close today accounts?"),
+      QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
 
     if (button == QMessageBox::No)
         return;
@@ -290,9 +298,9 @@ void MainWindow::applyOrderClickedSlot()
     }
 
     QMessageBox::StandardButton button = QMessageBox::information(this,
-                                                                  tr("Apply the order"),
-                                                                  tr("Are you sure you want to apply the order and print the invoice?"),
-                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+          tr("Apply the order"),
+          tr("Are you sure you want to apply the order and print the invoice?"),
+          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
 
@@ -307,9 +315,9 @@ void MainWindow::cancelOrderClickedSlot()
     }
 
     QMessageBox::StandardButton button = QMessageBox::warning(this,
-                                                              tr("Cancel the order"),
-                                                              tr("Are you sure you want to cancel the order?"),
-                                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+          tr("Cancel the order"),
+          tr("Are you sure you want to cancel the order?"),
+          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (button == QMessageBox::No)
         return;
 
@@ -477,7 +485,8 @@ void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes ord
 
     int totalCashAfterDiscount = totalCashBeforeDiscount - discount;
 
-    Model::Order order(0, QDateTime::currentDateTime(), orderType, totalCashBeforeDiscount, discount, totalCashAfterDiscount, 0);
+    Model::Order order(0, QDateTime::currentDateTime(), orderType, totalCashBeforeDiscount, discount, totalCashAfterDiscount, 0,
+                       m_userId);
 
     bool ret = Services::Order::add(order, this->orderDetails);
     if ( ret ) {

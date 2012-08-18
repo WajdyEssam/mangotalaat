@@ -30,6 +30,7 @@ signals:
     void todayOrdersDetailsReportActionClicked();
     void generalReportActionClicked();
     void closeSystemActionClicked();
+    void addUsersActionClicked();
     void aboutSystemActionClicked();
     void returnOrderSystemActionClicked();
     void arabicLocaleClicked();
@@ -53,6 +54,7 @@ private:
     QAction *generalReportAction;
     QAction *aboutSystemAction;
     QAction *closeSystemAction;
+    QAction *addUsersAction;
     QAction *returnOrderSystemAction;
     QAction* arabicLocaleAct;
     QAction* englishLocaleAct;

@@ -172,5 +172,8 @@
         <file>images/prices/1_1_en.png</file>
         <file>images/prices/8_10_en.png</file>
         <file>images/prices/8_15_en.png</file>
+        <file>images/add.png</file>
+        <file>images/nextbutton.png</file>
+        <file>images/previousbutton.png</file>
     </qresource>
 </RCC>

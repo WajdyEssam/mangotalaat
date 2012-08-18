@@ -42,6 +42,7 @@ protected:
 private slots:
     void showPreviousPage();
     void showHomePage();
+    void addUsersClicked();
     void orderItemClicked(QString orderIndexId);
     void todayLogginReportClickedSlot();
     void todayOrdersReportClickedSlot();

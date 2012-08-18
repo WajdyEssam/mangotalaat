@@ -85,7 +85,8 @@ CREATE TABLE orders (
 	cash INTEGER,
 	discount INTEGER,
 	total_cash INTEGER,
-	is_cancelled INTEGER
+	is_cancelled INTEGER,
+	user_id INTEGER
 );
 
 CREATE TABLE order_details(

@@ -24,6 +24,11 @@ Model::User User::getById(int id)
         users.append(user);
     }
 
+    if ( users.empty() ) {
+        Model::User user(0, "DELETED", "DELETED", QDateTime::currentDateTime());
+        users.append(user);
+    }
+
     return users.first();
 }
 
