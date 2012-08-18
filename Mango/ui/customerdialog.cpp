@@ -28,6 +28,9 @@ CustomerDialog::CustomerDialog(QWidget *parent):
     connect(ui->nextButton,SIGNAL(clicked()),mapper,SLOT(toNext()));
     connect(ui->previousButton,SIGNAL(clicked()),mapper,SLOT(toPrevious()));
     connect(ui->searchButton,SIGNAL(toggled(bool)),this,SLOT(disableFilter(bool)));
+
+    ui->addButton->setEnabled(false);
+    ui->deleteButton->setEnabled(false);
 }
 
 CustomerDialog::~CustomerDialog() {
@@ -93,19 +96,32 @@ void CustomerDialog::on_addButton_clicked() {
 }
 
 int CustomerDialog::employeeNo() {
+    QSqlDatabase db = QSqlDatabase::database();
+    db.open();
     QSqlQuery query;
     query.exec("SELECT MAX(id) FROM users");
     int value = 0;
     if (query.next())
         value = query.value(0).toInt()+1;
+    db.close();
     return value;
 }
 
 void CustomerDialog::on_deleteButton_clicked() {
     int row = mapper->currentIndex();
 
+    int id = tableModel->data(tableModel->index(row, 0)).toInt();
+
+    if (id == 1) {
+        QMessageBox::warning(this, "لا يمكن تنفيذ العملية", "لا يمكن حذف حساب مدير النظام");
+        return;
+    }
+
     QSqlQuery query;
-    query.exec("SELECT * FROM orders WHERE user_id = " + row);
+    query.prepare("SELECT * FROM orders WHERE user_id = ?");
+    query.addBindValue(id);
+    bool ok = query.exec();
+
     bool haveRecords = false;
     if (query.next()) {
         haveRecords = true;

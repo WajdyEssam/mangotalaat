@@ -129,17 +129,17 @@ void PropertyWidget::initCommandButtonsUI()
 
     addButton = new QPushButton;
     addButton->setFixedSize(161,56);
-    addButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    addButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/add_cart_button_ar.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
     connect(addButton, SIGNAL(clicked()), this, SLOT(addItemClicked()));
 
     updateButton = new QPushButton;
     updateButton->setFixedSize(161,56);
-    updateButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/update_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    updateButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/update_cart_button_ar.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
     connect(updateButton, SIGNAL(clicked()), this, SLOT(updateItemClicked()));
 
     removeButton = new QPushButton;
     removeButton->setFixedSize(161,56);
-    removeButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/remove_cart_button.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
+    removeButton->setStyleSheet("border-width: 4px; border-image: url(:/images/buttons/remove_cart_button_ar.png) 4 4 4 4 stretch stretch; width: 177px; height: 55px;");
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removeItemClicked()));
 
     layout->addWidget(addButton);
