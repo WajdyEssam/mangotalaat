@@ -12,7 +12,8 @@ class MANGOMODELSHARED_EXPORT Order
 {
 public:
     Order(int id);
-    Order(int id, QDateTime createdDateTime, OrderType orderType, int cash, int discount, int totalCash, int isCancelled);
+    Order(int id, QDateTime createdDateTime, OrderType orderType, int cash, int discount, int totalCash, int isCancelled,
+          int userId);
 
     int id() const;
     QDateTime createdDateTime() const;
@@ -21,6 +22,7 @@ public:
     int discount() const ;
     int totalCash() const ;
     int isCancelled() const;
+    int userID() const;
 
     void setOrderType(OrderType orderType);
     void setIsCancelled(bool isCancelled);
@@ -33,6 +35,7 @@ private:
     int m_discount;
     int m_totalCash;
     bool m_isCancelled;
+    int m_userId;
 };
 
 }

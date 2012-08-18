@@ -187,5 +187,8 @@
         <file>images/buttons/add_cart_button_ar.png</file>
         <file>images/buttons/remove_cart_button_ar.png</file>
         <file>images/buttons/update_cart_button_ar.png</file>
+        <file>images/add.png</file>
+        <file>images/nextbutton.png</file>
+        <file>images/previousbutton.png</file>
     </qresource>
 </RCC>

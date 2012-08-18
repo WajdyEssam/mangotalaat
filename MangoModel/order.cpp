@@ -6,8 +6,9 @@ Order::Order(int id) :
     m_id(id), m_orderType(OrderType::CASH)
 {}
 
-Order::Order(int id, QDateTime createdDateTime, OrderType orderType, int cash, int discount, int totalCash, int isCancelled) :
+Order::Order(int id, QDateTime createdDateTime, OrderType orderType, int cash, int discount, int totalCash, int isCancelled, int userID) :
     m_id(id), m_createdDateTime(createdDateTime), m_orderType(orderType), m_cash(cash), m_discount(discount), m_totalCash(totalCash), m_isCancelled(isCancelled)
+    , m_userId(userID)
 {}
 
 void Order::setOrderType(OrderType orderType)
@@ -53,6 +54,10 @@ int Order::totalCash() const
 int Order::isCancelled() const
 {
     return this->m_isCancelled;
+}
+
+int Order::userID() const {
+    return this->m_userId;
 }
 
 }

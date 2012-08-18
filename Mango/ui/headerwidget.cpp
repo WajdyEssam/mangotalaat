@@ -124,6 +124,9 @@ void HeaderWidget::createToolButtons()
     closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("Close today accounts"), this);
     connect(closeSystemAction, SIGNAL(triggered()), this, SIGNAL(closeSystemActionClicked()));
 
+    addUsersAction = new QAction(QIcon(":/images/find.png"),tr("Add Users"), this);
+    connect(addUsersAction, SIGNAL(triggered()), this, SIGNAL(addUsersActionClicked()));
+
     aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("About System"), this);
     connect(aboutSystemAction, SIGNAL(triggered()), this, SIGNAL(aboutSystemActionClicked()));
 
@@ -146,11 +149,13 @@ void HeaderWidget::createToolButtons()
         englishLocaleAct->setChecked(true);
 
     QMenu *systemMenu = new QMenu(this);
-    systemMenu->addAction(closeSystemAction);
     systemMenu->addAction(returnOrderSystemAction);
     systemMenu->addSeparator();
     systemMenu->addAction(arabicLocaleAct);
     systemMenu->addAction(englishLocaleAct);
+    systemMenu->addSeparator();
+    systemMenu->addAction(closeSystemAction);
+    systemMenu->addAction(addUsersAction);
     systemMenu->addSeparator();
     systemMenu->addAction(aboutSystemAction);
 
@@ -201,14 +206,16 @@ void HeaderWidget::enableBackButton(bool value)
 
 void HeaderWidget::enableUserButtons()
 {
-    reportsButton->setEnabled(false);
-    closeSystemAction->setEnabled(false);
+    reportsButton->setVisible(false);
+    closeSystemAction->setVisible(false);
+    addUsersAction->setVisible(false);
 }
 
 void HeaderWidget::enableAdminButtons()
 {
     reportsButton->setEnabled(true);
     closeSystemAction->setEnabled(true);
+    addUsersAction->setEnabled(true);
 }
 
 
