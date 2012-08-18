@@ -558,5 +558,10 @@ void MainWindow::printReceipt(int totalDiscount) {
         arg << outputFilename;
         QProcess *process = new QProcess(this);
         process->start(printApplicationPath, arg);
+
+        QThread::msleep(700);
+
+        QProcess *process2 = new QProcess(this);
+        process2->start(printApplicationPath, arg);
     }
 }
