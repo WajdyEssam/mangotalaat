@@ -19,7 +19,7 @@ public:
         DISH,
         GALLON_1_HALF_L,
         GALLON_5L,
-        GALLON_10L,
+        GALLON_1L,
         NORMAL,
         FRUITS,
         BERRIES

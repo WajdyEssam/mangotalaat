@@ -536,8 +536,8 @@ void MainWindow::printReceipt(int totalDiscount) {
                 size = "5L";
             else if (order.itemDetail().size().id() == (int) Model::Size::GALLON_1_HALF_L)
                 size = "1.5L";
-            else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_10L )
-                size = "10L";
+            else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_1L )
+                size = "1L";
 
             // item name
             QString itemName = order.itemDetail().item().englishName();
@@ -559,9 +559,19 @@ void MainWindow::printReceipt(int totalDiscount) {
         QProcess *process = new QProcess(this);
         process->start(printApplicationPath, arg);
 
-        QThread::msleep(1200);
-
-        QProcess *process2 = new QProcess(this);
-        process2->start(printApplicationPath, arg);
+        QTimer::singleShot(1200, this, SLOT(anotherPrinting()));
     }
+}
+
+void MainWindow::anotherPrinting()
+{
+    QString printApplicationPath = "ThermalPrinterTestApp.exe";
+    QString outputFilename = "Data.txt";
+
+    QStringList arg;
+    arg << outputFilename;
+    QProcess *process2 = new QProcess(this);
+    process2->start(printApplicationPath, arg);
+
+    qDebug() << "Another Print";
 }

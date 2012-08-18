@@ -65,6 +65,7 @@ private slots:
     void updateItemInCart(Model::OrderDetail);
     void removeItemFromCart(Model::OrderDetail);
     void printReceipt(int discount);
+    void anotherPrinting();
 
 private:
     QSignalMapper *signalMapper;
