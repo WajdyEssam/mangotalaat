@@ -95,7 +95,7 @@ void CustomerDialog::on_addButton_clicked() {
 int CustomerDialog::employeeNo() {
     QSqlQuery query;
     query.exec("SELECT MAX(id) FROM users");
-    int value = 2;
+    int value = 0;
     if (query.next())
         value = query.value(0).toInt()+1;
     return value;
