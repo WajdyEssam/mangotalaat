@@ -29,7 +29,7 @@ SOURCES += main.cpp\
     ui/discountdialog.cpp \
     language.cpp \
     mangoapp.cpp \
-    ui/customerdialog.cpp
+    ui/employeedialog.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -50,7 +50,7 @@ HEADERS  += ui/categorieswidget.h \
     ui/discountdialog.h \
     language.h \
     mangoapp.h \
-    ui/customerdialog.h
+    ui/employeedialog.h
 
 RESOURCES += \
     resources.qrc
@@ -83,7 +83,6 @@ FORMS += \
     ui/invoiceveiwerwidget.ui \
     ui/loggindialog.ui \
     ui/returnorderdialog.ui \
-    ui/selectperiddialog.ui \
-    ui/customerdialog.ui
+    ui/selectperiddialog.ui
 
 RC_FILE = myapp.rc

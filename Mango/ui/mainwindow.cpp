@@ -7,7 +7,8 @@
 #include "returnorderdialog.h"
 #include "selectperiddialog.h"
 #include "discountdialog.h"
-#include "customerdialog.h"
+//#include "customerdialog.h"
+#include "employeedialog.h"
 
 #include <vector>
 #include <QDebug>
@@ -86,7 +87,8 @@ void MainWindow::createHeaderDockWidget()
     this->headerWidget = new HeaderWidget;
     connect(this->headerWidget, SIGNAL(backClicked()), SLOT(showPreviousPage()));
     connect(this->headerWidget, SIGNAL(homeClicked()), SLOT(showHomePage()));
-    connect(this->headerWidget, SIGNAL(addUsersActionClicked()), SLOT(addUsersClicked()));
+    connect(this->headerWidget, SIGNAL(addUserActionClicked()), SLOT(addUserClicked()));
+    connect(this->headerWidget, SIGNAL(updateUserActionClicked()), SLOT(updateUserClicked()));
     connect(this->headerWidget, SIGNAL(todayLogginReportActionClicked()), SLOT(todayLogginReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersReportActionClicked()), SLOT(todayOrdersReportClickedSlot()));
     connect(this->headerWidget, SIGNAL(todayOrdersDetailsReportActionClicked()), SLOT(todayOrdersDetailsReportClickedSlot()));
@@ -168,9 +170,15 @@ void MainWindow::showHomePage()
     this->setCurrentPage(CategoryPage);
 }
 
-void MainWindow::addUsersClicked()
+void MainWindow::addUserClicked()
 {
-    CustomerDialog dialog;
+    EmployeeDialog dialog(EmployeeDialog::Add);
+    dialog.exec();
+}
+
+void MainWindow::updateUserClicked()
+{
+    EmployeeDialog dialog(EmployeeDialog::Update);
     dialog.exec();
 }
 

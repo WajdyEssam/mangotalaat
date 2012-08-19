@@ -63,6 +63,8 @@ void HeaderWidget::retranslateUi()
     todayOrdersDetailsReportAction->setText(tr("Order details daily report"));
     generalReportAction->setText(tr("Complete report"));
     closeSystemAction->setText(tr("Close today accounts"));
+    addUserAction->setText(tr("Add User"));
+    updateUserAction->setText(tr("Update User"));
     aboutSystemAction->setText(tr("About System"));
     returnOrderSystemAction->setText(tr("Return Order"));
     arabicLocaleAct->setText(tr("Arabic"));
@@ -124,8 +126,11 @@ void HeaderWidget::createToolButtons()
     closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("Close today accounts"), this);
     connect(closeSystemAction, SIGNAL(triggered()), this, SIGNAL(closeSystemActionClicked()));
 
-    addUsersAction = new QAction(QIcon(":/images/find.png"),tr("Add Users"), this);
-    connect(addUsersAction, SIGNAL(triggered()), this, SIGNAL(addUsersActionClicked()));
+    addUserAction = new QAction(QIcon(":/images/find.png"),tr("Add User"), this);
+    connect(addUserAction, SIGNAL(triggered()), this, SIGNAL(addUserActionClicked()));
+
+    updateUserAction = new QAction(QIcon(":/images/find.png"),tr("Update User"), this);
+    connect(updateUserAction, SIGNAL(triggered()), this, SIGNAL(updateUserActionClicked()));
 
     aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("About System"), this);
     connect(aboutSystemAction, SIGNAL(triggered()), this, SIGNAL(aboutSystemActionClicked()));
@@ -154,8 +159,10 @@ void HeaderWidget::createToolButtons()
     systemMenu->addAction(arabicLocaleAct);
     systemMenu->addAction(englishLocaleAct);
     systemMenu->addSeparator();
+    systemMenu->addAction(addUserAction);
+    systemMenu->addAction(updateUserAction);
+    systemMenu->addSeparator();
     systemMenu->addAction(closeSystemAction);
-    systemMenu->addAction(addUsersAction);
     systemMenu->addSeparator();
     systemMenu->addAction(aboutSystemAction);
 
@@ -208,14 +215,14 @@ void HeaderWidget::enableUserButtons()
 {
     reportsButton->setVisible(false);
     closeSystemAction->setVisible(false);
-    addUsersAction->setVisible(false);
+    addUserAction->setVisible(false);
 }
 
 void HeaderWidget::enableAdminButtons()
 {
     reportsButton->setEnabled(true);
     closeSystemAction->setEnabled(true);
-    addUsersAction->setEnabled(true);
+    addUserAction->setEnabled(true);
 }
 
 

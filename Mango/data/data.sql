@@ -1,7 +1,7 @@
 CREATE TABLE users (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	username TEXT,
-	password TEXT,
+	username TEXT NOT NULL UNIQUE,
+	password TEXT NOT NULL,
 	register_time DATETIME
 );
 

@@ -19,6 +19,9 @@ public:
     QString password() const;
     QDateTime registerDateTime() const;
 
+    void setUserName(QString username);
+    void setPassword(QString password);
+
 private:
     int m_id;
     QString m_username;

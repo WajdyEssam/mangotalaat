@@ -30,4 +30,14 @@ QDateTime User::registerDateTime() const
     return this->m_registerTime;
 }
 
+void User::setUserName(QString username)
+{
+    m_username = username;
+}
+
+void User::setPassword(QString password)
+{
+    m_password = password;
+}
+
 }
