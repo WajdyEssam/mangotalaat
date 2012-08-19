@@ -106,128 +106,148 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>EmployeeDialog</name>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="24"/>
+        <location filename="../ui/employeedialog.cpp" line="26"/>
         <source>id:</source>
         <translation>م</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="25"/>
+        <location filename="../ui/employeedialog.cpp" line="27"/>
         <source>username:</source>
         <translation>اسم المستخدم</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="26"/>
+        <location filename="../ui/employeedialog.cpp" line="28"/>
         <source>password:</source>
         <translation>كلمة المرور</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="49"/>
+        <location filename="../ui/employeedialog.cpp" line="51"/>
         <source>Add</source>
         <translation>إضافة</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="52"/>
+        <location filename="../ui/employeedialog.cpp" line="54"/>
         <source>Delete</source>
         <translation>حذف</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="55"/>
+        <location filename="../ui/employeedialog.cpp" line="57"/>
         <source>Update</source>
         <translation>تحديث</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="58"/>
+        <location filename="../ui/employeedialog.cpp" line="60"/>
         <source>Close</source>
         <translation>إغلاق</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="83"/>
+        <location filename="../ui/employeedialog.cpp" line="85"/>
         <source>Add user</source>
         <translation>إضافة مستخدم</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="87"/>
+        <location filename="../ui/employeedialog.cpp" line="89"/>
         <source>Update users</source>
         <translation>تحديث المستخدمين</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="104"/>
-        <location filename="../ui/employeedialog.cpp" line="115"/>
+        <location filename="../ui/employeedialog.cpp" line="106"/>
+        <location filename="../ui/employeedialog.cpp" line="117"/>
         <source>Unable to add new employee</source>
         <translation>لا يمكن إضافة حساب موظف جديد</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="104"/>
+        <location filename="../ui/employeedialog.cpp" line="106"/>
         <source>Please provide correct information</source>
         <translation>من فضلك قم بإدخال بيانات صحيحة</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="112"/>
-        <location filename="../ui/employeedialog.cpp" line="138"/>
-        <location filename="../ui/employeedialog.cpp" line="161"/>
+        <location filename="../ui/employeedialog.cpp" line="114"/>
+        <location filename="../ui/employeedialog.cpp" line="139"/>
+        <location filename="../ui/employeedialog.cpp" line="175"/>
         <source>Operation done successfully</source>
         <translation>تمت العملية بنجاح</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="112"/>
+        <location filename="../ui/employeedialog.cpp" line="114"/>
         <source>Employee Added Succefully</source>
         <translation>تم إضافة الموظف بنجاح</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="115"/>
+        <location filename="../ui/employeedialog.cpp" line="117"/>
         <source>Please make sure you add unique username</source>
         <translation>عفوا ، تأكد من أن اسم المستخدم غير موجود</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="126"/>
-        <location filename="../ui/employeedialog.cpp" line="142"/>
+        <location filename="../ui/employeedialog.cpp" line="128"/>
+        <location filename="../ui/employeedialog.cpp" line="143"/>
         <source>Unable to update employee</source>
         <translation>لا يمكن تحديث حساب الموظف</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="126"/>
+        <location filename="../ui/employeedialog.cpp" line="128"/>
         <source>Please select an employee from list to update</source>
         <translation>قم باختيار حساب الموظف من القائمة</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="138"/>
+        <location filename="../ui/employeedialog.cpp" line="139"/>
         <source>Employee Updated Succefully</source>
         <translation>تمت تحديث حساب الموظف بنجاح</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="142"/>
+        <location filename="../ui/employeedialog.cpp" line="143"/>
         <source>Please make sure you set unique username</source>
         <translation>عفوا ، تأكد من أن اسم المستخدم غير موجود</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="154"/>
-        <location filename="../ui/employeedialog.cpp" line="165"/>
+        <location filename="../ui/employeedialog.cpp" line="155"/>
+        <location filename="../ui/employeedialog.cpp" line="179"/>
         <source>Unable to delete employee</source>
         <translation>لا يمكن حذف حساب الموظف</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="154"/>
-        <location filename="../ui/employeedialog.cpp" line="165"/>
+        <location filename="../ui/employeedialog.cpp" line="155"/>
+        <location filename="../ui/employeedialog.cpp" line="179"/>
         <source>Please select an employee from list to delete</source>
         <translation>قم باختيار حساب الموظف من القائمة</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="161"/>
+        <location filename="../ui/employeedialog.cpp" line="160"/>
+        <source>Unable to delete Admin</source>
+        <translation>لا يمكن تنفيذ العملية</translation>
+    </message>
+    <message>
+        <location filename="../ui/employeedialog.cpp" line="160"/>
+        <source>You Cannot delete the admin of the system</source>
+        <translation>لا يمكن حذف حساب مدير النظام</translation>
+    </message>
+    <message>
+        <location filename="../ui/employeedialog.cpp" line="168"/>
+        <source>Unable to this user</source>
+        <translation>لا يمكن حذف هذا الحساب</translation>
+    </message>
+    <message>
+        <location filename="../ui/employeedialog.cpp" line="168"/>
+        <source>this user have order records in the database</source>
+        <translation>هذا المستخدم لديه طلبات قام بتنفيذها وبالتالي لا يمكن حذف الحساب دون حذف هذه الطلبات</translation>
+    </message>
+    <message>
+        <location filename="../ui/employeedialog.cpp" line="175"/>
         <source>Employee Deleted Succefully</source>
         <translation>تم حذف حساب الموظف بنجاح</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="186"/>
+        <location filename="../ui/employeedialog.cpp" line="200"/>
         <source>id</source>
         <translation>م</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="186"/>
+        <location filename="../ui/employeedialog.cpp" line="200"/>
         <source>user name</source>
         <translation>اسم المستخدم</translation>
     </message>
     <message>
-        <location filename="../ui/employeedialog.cpp" line="186"/>
+        <location filename="../ui/employeedialog.cpp" line="200"/>
         <source>password</source>
         <translation>كلمة المرور</translation>
     </message>
