@@ -15,6 +15,7 @@ public:
     static bool cancel(Model::Order order);
     static Model::Order getById(int order_id);
     static QList<Model::Order> getAll();
+    static QList<Model::Order> getByUserId(int userId);
     static QList<Model::Order> getOrdersBetweenDateTime(QDateTime from, QDateTime to);
     static QList<Model::Order> getNotCancelledOrdersBetweenDateTime(QDateTime from, QDateTime to);
 };

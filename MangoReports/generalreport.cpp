@@ -7,6 +7,8 @@
 #include "../MangoService/orderdetail.h"
 #include "../MangoService/order.h"
 #include "../MangoService/helper.h"
+#include "../MangoService/user.h"
+#include "../MangoModel/user.h"
 #include <QDebug>
 
 GeneralReport::GeneralReport(const QDateTime& from, const QDateTime& to)
@@ -42,7 +44,7 @@ QString GeneralReport::getReportTemplateName()
 QString GeneralReport::getLogginTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-           "<tr class=\"table_header\"><th>رقم العملية</th><th>اسم المستخدم</th><th>تاريخ العملية</th><th>نوع العملية</th></tr>";
+           "<tr class=\"table_header\"><th>رقم العملية</th><th>اسم الموظف</th><th>تاريخ العملية</th><th>نوع العملية</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
     QString htmlTableResult = tableBegin;
@@ -115,7 +117,7 @@ QString GeneralReport::getOrdersDetailsTable()
 QString GeneralReport::getOrdersTable()
 {
     QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
-            "<tr class=\"table_header\"><th>رقم الطلب</th><th>وقت الطلب</th><th>نوع الطلب</th><th>المبلغ</th>"
+            "<tr class=\"table_header\"><th>رقم الطلب</th><th>وقت الطلب</th><th>اسم الموظف</th><th>نوع الطلب</th><th>المبلغ</th>"
             "<th>الخصم</th><th>الاجمالي</th><th>ملاحظات</th></tr>";
     QString tableEnd =  "</tbody></table>";
 
@@ -128,6 +130,8 @@ QString GeneralReport::getOrdersTable()
         if ( !order.isCancelled() )
             totalCash += order.totalCash();
 
+        QString username = Services::User::getById(order.userID()).userName();
+
         QString tableRaw = QString(
             "<tr valign=\"top\"> "
             "<td align=\"center\"><font size=\"2\">%1</font></td> "
@@ -137,9 +141,11 @@ QString GeneralReport::getOrdersTable()
             "<td align=\"center\"><font size=\"2\">%5</font></td> "
             "<td align=\"center\"><font size=\"2\">%6</font></td> "
             "<td align=\"center\"><font size=\"2\">%7</font></td> "
+            "<td align=\"center\"><font size=\"2\">%8</font></td> "
             "</tr>"
         ).arg( QString::number(order.id()),
                order.createdDateTime().toString("dd/MM/yyyy h:m:s ap"),
+               username,
                order.orderType().arabicName(),
                QString::number(order.cash()),
                QString::number(order.discount()),

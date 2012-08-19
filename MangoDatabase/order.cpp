@@ -98,6 +98,34 @@ QList<Model::Order> Order::getAll()
     return orders;
 }
 
+QList<Model::Order> Order::getByUserId(int userId)
+{
+    QList<Model::Order> orders;
+
+    DatabaseManager mgr;
+
+    QSqlQuery query("SELECT * from orders WHERE user_id = ?");
+    query.addBindValue(userId);
+    query.exec();
+
+    while(query.next()) {
+        int id = query.value(0).toInt();
+        QDateTime orderDate = query.value(1).toDateTime();
+        Model::OrderType orderType = Model::OrderType(query.value(2).toInt());
+        int cash = query.value(3).toInt();
+        int discount = query.value(4).toInt();
+        int totalCash = query.value(5).toInt();
+        int isCancelled = query.value(6).toInt();
+        int userid = query.value(7).toInt();
+
+        Model::Order order(id, orderDate, orderType, cash, discount, totalCash, isCancelled, userid);
+        orders.append(order);
+    }
+
+    return orders;
+}
+
+
 QList<Model::Order> Order::getOrdersBetweenDateTime(QDateTime from, QDateTime to)
 {
     QList<Model::Order> orders;

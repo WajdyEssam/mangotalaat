@@ -11,6 +11,8 @@
 
 #include "../../MangoModel/user.h"
 #include "../../MangoService/user.h"
+#include "../../MangoService/order.h"
+#include "../../MangoModel/order.h"
 
 EmployeeDialog::EmployeeDialog(EmployeeDialog::DialogMode mode, QWidget *parent) :
     QDialog(parent)
@@ -127,7 +129,6 @@ void EmployeeDialog::updateClicked()
         return;
     }
 
-
     Model::User user = Services::User::getById(id);
     user.setUserName(username);
     user.setPassword(password);
@@ -152,6 +153,19 @@ void EmployeeDialog::deleteClicked()
 
     if (username.isEmpty() || password.isEmpty() || id == 0) {
         QMessageBox::warning(this, tr("Unable to delete employee"), tr("Please select an employee from list to delete"));
+        return;
+    }
+
+    if ( id == 1 ) {
+        QMessageBox::warning(this, tr("Unable to delete Admin"), tr("You Cannot delete the admin of the system"));
+        return;
+    }
+
+    // check if user have order records, then do not delete this user
+    QList<Model::Order> orders = Services::Order::getByUserId(id);
+
+    if ( !orders.isEmpty()) {
+        QMessageBox::warning(this, tr("Unable to this user"), tr("this user have order records in the database"));
         return;
     }
 
