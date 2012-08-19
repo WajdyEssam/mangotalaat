@@ -216,6 +216,7 @@ void HeaderWidget::enableUserButtons()
     reportsButton->setVisible(false);
     closeSystemAction->setVisible(false);
     addUserAction->setVisible(false);
+    updateUserAction->setVisible(false);
 }
 
 void HeaderWidget::enableAdminButtons()
@@ -223,6 +224,7 @@ void HeaderWidget::enableAdminButtons()
     reportsButton->setEnabled(true);
     closeSystemAction->setEnabled(true);
     addUserAction->setEnabled(true);
+    updateUserAction->setEnabled(true);
 }
 
 

@@ -53,6 +53,16 @@ QList<Model::Order> Order::getAll()
     return orders;
 }
 
+QList<Model::Order> Order::getByUserId(int userId)
+{
+    QList<Model::Order> orders = Database::Order::getByUserId(userId);
+    for (QList<Model::Order>::iterator i = orders.begin(); i != orders.end(); ++i) {
+        i->setOrderType(Services::OrderType::getById(i->orderType().id()));
+    }
+
+    return orders;
+}
+
 QList<Model::Order> Order::getOrdersBetweenDateTime(QDateTime from, QDateTime to)
 {
     QList<Model::Order> orders = Database::Order::getOrdersBetweenDateTime(from, to);
