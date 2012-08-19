@@ -121,16 +121,16 @@ void HeaderWidget::createToolButtons()
     systemButton->setFont(font);
 
     // add menu for system button
-    closeSystemAction = new QAction(QIcon(":/images/find.png"),tr("Close today accounts"), this);
+    closeSystemAction = new QAction(QIcon(":/images/save.png"),tr("Close today accounts"), this);
     connect(closeSystemAction, SIGNAL(triggered()), this, SIGNAL(closeSystemActionClicked()));
 
-    addUsersAction = new QAction(QIcon(":/images/find.png"),tr("Add Users"), this);
+    addUsersAction = new QAction(QIcon(":/images/add.png"),tr("Add Users"), this);
     connect(addUsersAction, SIGNAL(triggered()), this, SIGNAL(addUsersActionClicked()));
 
-    aboutSystemAction = new QAction(QIcon(":/images/find.png"), tr("About System"), this);
+    aboutSystemAction = new QAction(QIcon(":/images/refresh.png"), tr("About System"), this);
     connect(aboutSystemAction, SIGNAL(triggered()), this, SIGNAL(aboutSystemActionClicked()));
 
-    returnOrderSystemAction = new QAction(QIcon(":/images/find.png"), tr("Return Order"), this);
+    returnOrderSystemAction = new QAction(QIcon(":/images/cancel.png"), tr("Return Order"), this);
     connect(returnOrderSystemAction, SIGNAL(triggered()), this, SIGNAL(returnOrderSystemActionClicked()));
 
     QActionGroup* localeGroup = new QActionGroup(this);
