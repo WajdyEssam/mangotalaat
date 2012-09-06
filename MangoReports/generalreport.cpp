@@ -24,6 +24,9 @@ QString GeneralReport::getHTML()
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول للنظام");
     orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
 
+    orignalHTML = orignalHTML.replace("%GLASS_REPORT_TYPE%", "تقرير عن عدد الكاسات");
+    orignalHTML = orignalHTML.replace("%GLASS_TABLE%", getGlassTable());
+
     orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "تقرير عن الطلبات");
     orignalHTML = orignalHTML.replace("%ORDER_TABLE%", getOrdersTable());
 
@@ -39,6 +42,68 @@ QString GeneralReport::getHTML()
 QString GeneralReport::getReportTemplateName()
 {
     return ":/reports/GeneralReport.html";
+}
+
+QString GeneralReport::getGlassTable()
+{
+    QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
+           "<tr class=\"table_header\"><th>عدد الكاسات</th><th>النوع</th></tr>";
+    QString tableEnd =  "</tbody></table>";
+
+    QString htmlTableResult = tableBegin;
+
+    QMap<QString, int> summations;
+
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
+    foreach(Model::Order order, orders) {
+        QList<Model::OrderDetail> details = Services::OrderDetail::getByOrderId(order.id());
+        foreach(Model::OrderDetail detail, details) {
+            int category = detail.itemDetail().item().category().id();
+
+            if ( isCountableGlass(category)) {
+                QString size = detail.itemDetail().size().arabicName();
+                if ( summations.contains(size) ) {
+                    int count = summations.value(size) + detail.qunatity();
+                    summations.insert(size, count);
+                }
+                else {
+                    summations.insert(size, 1);
+                }
+            }
+        }
+    }
+
+    QMapIterator<QString, int> i(summations);
+    while (i.hasNext()) {
+        i.next();
+
+        QString size = i.key();
+        int count = i.value();
+
+        QString tableRaw = QString(
+            "<tr valign=\"top\"> "
+            "<td align=\"center\"><font size=\"2\">%1</font></td> "
+            "<td align=\"center\"><font size=\"2\">%2</font></td> "
+            "</tr>"
+            ).arg(QString::number(count), size);
+        htmlTableResult += tableRaw ;
+    }
+
+    htmlTableResult += tableEnd;
+
+    return htmlTableResult;
+}
+
+bool GeneralReport::isCountableGlass(int categoryId)
+{
+    if ( categoryId == 1 ||
+         categoryId == 2 ||
+         categoryId == 4 ||
+         categoryId == 5 ||
+         categoryId == 8 )
+        return true;
+
+    return false;
 }
 
 QString GeneralReport::getLogginTable()

@@ -16,6 +16,8 @@ private:
     QString getLogginTable();
     QString getOrdersDetailsTable();
     QString getOrdersTable();
+    QString getGlassTable();
+    bool isCountableGlass(int categoryId);
 
 private:
     int totalCash;
