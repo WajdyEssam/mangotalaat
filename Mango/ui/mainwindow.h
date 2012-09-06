@@ -10,8 +10,6 @@
 #include "sizewidget.h"
 #include "propertywidget.h"
 
-#include "../../MangoModel/orderdetail.h"
-
 class HeaderWidget;
 class OrderWidget;
 class SlidingStackedWidget;
@@ -32,9 +30,6 @@ public:
     explicit MainWindow(int aUserId, QWidget *parent = 0);
     ~MainWindow();
 
-signals:
-    void orderDetailUpdated(QList<Model::OrderDetail> orderDetails);
-
 protected:
     void closeEvent(QCloseEvent *);
     void changeEvent(QEvent *);
@@ -44,7 +39,7 @@ private slots:
     void showHomePage();
     void addUserClicked();
     void updateUserClicked();
-    void orderItemClicked(QString orderIndexId);
+    void orderItemClicked(Model::OrderDetail orderDetail);
     void todayLogginReportClickedSlot();
     void todayOrdersReportClickedSlot();
     void todayOrdersDetailsReportClickedSlot();
@@ -54,20 +49,11 @@ private slots:
     bool logout();
     void exit();
     void returnOrderSystemClickedSlot();
-    void applyOrderClickedSlot();
-    void cancelOrderClickedSlot();
-    void applyDiscountOrderClickedSlot();
     void selectCategorySlot(int categoryId);
     void selectItemSlot(int itemId);
     void selectItemDetialSlot(int itemDetialId);
     void arabicLocaleClicked();
     void englishLocaleClicked();
-    //void updateItemDetialSlot(Model::OrderDetail order);
-    void addItemToCart(Model::OrderDetail);
-    void updateItemInCart(Model::OrderDetail);
-    void removeItemFromCart(Model::OrderDetail);
-    void printReceipt(int discount);
-    void anotherPrinting();
 
 private:
     QSignalMapper *signalMapper;
@@ -81,9 +67,7 @@ private:
     PropertyWidget* propertyWidget;
     QLabel *versionLabel;
     QLabel *helpLabel;
-    QList<Model::OrderDetail> orderDetails;
     int m_userId;
-    Model::OrderDetail getOrderByIndexId(QString indexId);
 
     void setWindowSize();
     void createWidgetPages();
@@ -95,8 +79,6 @@ private:
     void setCurrentPage(WidgetPage page);
     void addLoginEvent();
     void AddLogoutEvent();
-    void computeTotalCash(int discount, Model::OrderType::OrderTypes orderType);
-    void clearShoppingCart();
     void disableButtonsForNotAuthenticatedUser();
 };
 

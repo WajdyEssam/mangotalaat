@@ -6,11 +6,8 @@
 #include "invoiceveiwerwidget.h"
 #include "returnorderdialog.h"
 #include "selectperiddialog.h"
-#include "discountdialog.h"
-//#include "customerdialog.h"
 #include "employeedialog.h"
 
-#include <vector>
 #include <QDebug>
 #include <QLocale>
 #include <QTranslator>
@@ -98,7 +95,6 @@ void MainWindow::createHeaderDockWidget()
     connect(this->headerWidget, SIGNAL(returnOrderSystemActionClicked()), SLOT(returnOrderSystemClickedSlot()));
     connect(this->headerWidget, SIGNAL(arabicLocaleClicked()), SLOT(arabicLocaleClicked()));
     connect(this->headerWidget, SIGNAL(englishLocaleClicked()), SLOT(englishLocaleClicked()));
-
     connect(this->headerWidget, SIGNAL(logoutClicked()), SLOT(exit()));
 
     QDockWidget *headerDockWidget = new QDockWidget(this);
@@ -117,15 +113,12 @@ void MainWindow::createOrderDockWidget()
     orderDockWidget->setFloating(false);
     orderDockWidget->setTitleBarWidget(new QWidget);
 
-    orderWidget = new OrderWidget;
+    orderWidget = new OrderWidget(m_userId);
     orderDockWidget->setWidget(orderWidget);
     this->addDockWidget(Qt::RightDockWidgetArea, orderDockWidget);
 
-    connect(this, SIGNAL(orderDetailUpdated(QList<Model::OrderDetail>)), orderWidget, SLOT(updateOrderDetails(QList<Model::OrderDetail>)));
-    connect(orderWidget, SIGNAL(orderItemClick(QString)), SLOT(orderItemClicked(QString)));
-    connect(orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
-    connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
-    connect(orderWidget, SIGNAL(applyDiscountClicked()), SLOT(applyDiscountOrderClickedSlot()));
+    connect(orderWidget, SIGNAL(orderItemClick(Model::OrderDetail)), SLOT(orderItemClicked(Model::OrderDetail)));
+    connect(orderWidget, SIGNAL(showHomePage()), SLOT(showHomePage()));
 }
 
 void MainWindow::disableButtonsForNotAuthenticatedUser()
@@ -271,7 +264,7 @@ void MainWindow::changeEvent(QEvent *event)
         else
             this->addDockWidget(Qt::LeftDockWidgetArea, orderDockWidget);
 
-        emit orderDetailUpdated(this->orderDetails);
+        this->orderWidget->updateQMLCart();
     }
 
     QMainWindow::changeEvent(event);
@@ -298,76 +291,12 @@ bool MainWindow::logout()
     return true;
 }
 
-void MainWindow::applyOrderClickedSlot()
+void MainWindow::orderItemClicked(Model::OrderDetail orderDetail)
 {
-    if (this->orderDetails.count() < 1) {
-        QMessageBox::information(this, tr("Shopping cart is empty"), tr("There is no item in the shopping cart!"));
-            return;
-    }
-
-    QMessageBox::StandardButton button = QMessageBox::information(this,
-          tr("Apply the order"),
-          tr("Are you sure you want to apply the order and print the invoice?"),
-          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-    if (button == QMessageBox::No)
-        return;
-
-    computeTotalCash(0, Model::OrderType::CASH);
-}
-
-void MainWindow::cancelOrderClickedSlot()
-{
-    if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, tr("Shopping cart is empty"), tr("There is no item in the shopping cart!"));
-            return;
-    }
-
-    QMessageBox::StandardButton button = QMessageBox::warning(this,
-          tr("Cancel the order"),
-          tr("Are you sure you want to cancel the order?"),
-          QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-    if (button == QMessageBox::No)
-        return;
-
-    clearShoppingCart();
-    setCurrentPage(CategoryPage);
-}
-
-void MainWindow::applyDiscountOrderClickedSlot()
-{
-    if (this->orderDetails.count() < 1) {
-            QMessageBox::information(this, tr("Shopping cart is empty"), tr("There is no item in the shopping cart!"));
-            return;
-    }
-
-    int discount = 0;
-    int totalCashBeforeDiscount = this->orderWidget->totalCash();
-    Model::OrderType::OrderTypes orderType = Model::OrderType::DISCOUNT_VALUE;
-
-    DiscountDialog dlg(totalCashBeforeDiscount);
-    if (dlg.exec() == QDialog::Accepted) {
-        discount = dlg.discount();
-        orderType = dlg.orderType();
-        computeTotalCash(discount, orderType);
-    }
-}
-
-void MainWindow::orderItemClicked(QString orderIndexId)
-{
-    Model::OrderDetail orderDetail = getOrderByIndexId(orderIndexId);
     this->propertyWidget->setOrder(orderDetail, true);
     this->setCurrentPage(PropertyPage);
     Services::Helper::runSoundFile(Services::Helper::transitionSoundFile);
     headerWidget->enableBackButton(false);
-}
-
-Model::OrderDetail MainWindow::getOrderByIndexId(QString indexId) {
-    foreach(Model::OrderDetail order, this->orderDetails) {
-        if ( order.orderIndexId() == indexId )
-            return order;
-    }
-
-    return this->orderDetails.at(0);
 }
 
 void MainWindow::setCurrentPage(WidgetPage page)
@@ -399,9 +328,10 @@ void MainWindow::establishConnections()
     connect(this->categoriesWidget, SIGNAL(selectCategory(int)), this, SLOT(selectCategorySlot(int)));
     connect(this->itemsWidget, SIGNAL(selectItem(int)), this, SLOT(selectItemSlot(int)));
     connect(this->sizeWidget, SIGNAL(selectItemDetail(int)), this, SLOT(selectItemDetialSlot(int)));
-    connect(this->propertyWidget, SIGNAL(addItem(Model::OrderDetail)), this, SLOT(addItemToCart(Model::OrderDetail)));
-    connect(this->propertyWidget, SIGNAL(updateItem(Model::OrderDetail)), this, SLOT(updateItemInCart(Model::OrderDetail)));
-    connect(this->propertyWidget, SIGNAL(removeItem(Model::OrderDetail)), this, SLOT(removeItemFromCart(Model::OrderDetail)));
+
+    connect(this->propertyWidget, SIGNAL(addItem(Model::OrderDetail)), this->orderWidget, SLOT(addItemToCart(Model::OrderDetail)));
+    connect(this->propertyWidget, SIGNAL(updateItem(Model::OrderDetail)), this->orderWidget, SLOT(updateItemInCart(Model::OrderDetail)));
+    connect(this->propertyWidget, SIGNAL(removeItem(Model::OrderDetail)), this->orderWidget, SLOT(removeItemFromCart(Model::OrderDetail)));
 }
 
 void MainWindow::selectCategorySlot(int categorId)
@@ -436,159 +366,4 @@ void MainWindow::englishLocaleClicked()
 {
     Settings::Language::setCurrentLanguage(Settings::Language::English);
     this->setCurrentPage(CategoryPage);
-}
-
-
-void MainWindow::addItemToCart(Model::OrderDetail order)
-{
-    this->orderDetails.append(order);
-    this->setCurrentPage(CategoryPage);
-    Services::Helper::runSoundFile(Services::Helper::addingSoundFile);
-    emit orderDetailUpdated(this->orderDetails);
-}
-
-void MainWindow::updateItemInCart(Model::OrderDetail oldOrder)
-{
-    for(int i=0; i<this->orderDetails.size(); i++) {
-        Model::OrderDetail order = this->orderDetails.at(i);
-        if ( order.orderIndexId() == oldOrder.orderIndexId() ) {
-            this->orderDetails.removeAt(i);
-            break;
-        }
-    }
-
-    this->orderDetails.append(oldOrder);
-    this->setCurrentPage(CategoryPage);
-    Services::Helper::runSoundFile(Services::Helper::addingSoundFile);
-    emit orderDetailUpdated(this->orderDetails);
-}
-
-void MainWindow::removeItemFromCart(Model::OrderDetail oldOrder)
-{
-    for(int i=0; i<this->orderDetails.size(); i++) {
-        Model::OrderDetail order = this->orderDetails.at(i);
-
-        if ( order.orderIndexId() == oldOrder.orderIndexId() ) {
-            this->orderDetails.removeAt(i);
-            break;
-        }
-    }
-
-    this->setCurrentPage(CategoryPage);
-    Services::Helper::runSoundFile(Services::Helper::removeSoundFile);
-    emit orderDetailUpdated(this->orderDetails);
-}
-
-
-void MainWindow::computeTotalCash(int discount, Model::OrderType::OrderTypes orderType)
-{
-    if ( this->orderDetails.isEmpty() )
-        return;
-
-    int totalCashBeforeDiscount = 0;
-
-    foreach(Model::OrderDetail order, this->orderDetails) {
-        totalCashBeforeDiscount += order.cash();
-    }
-
-    int totalCashAfterDiscount = totalCashBeforeDiscount - discount;
-
-    Model::Order order(0, QDateTime::currentDateTime(), orderType, totalCashBeforeDiscount, discount, totalCashAfterDiscount, 0,
-                       m_userId);
-
-    bool ret = Services::Order::add(order, this->orderDetails);
-    if ( ret ) {
-        Services::Helper::runSoundFile(Services::Helper::checkoutSoundFile);
-        printReceipt(discount);
-        clearShoppingCart();
-    }
-
-    setCurrentPage(CategoryPage);
-    QMessageBox::information(this, tr("Operation done successully"), tr("System is ready to accept new orders"), QMessageBox::Ok, QMessageBox::Ok);
-}
-
-void MainWindow::clearShoppingCart()
-{
-    this->orderDetails.clear();
-    Services::Helper::runSoundFile(Services::Helper::clearSoundFile);
-    emit orderDetailUpdated(this->orderDetails);
-}
-
-
-void MainWindow::printReceipt(int totalDiscount) {
-    if ( this->orderDetails.empty())
-        return;
-
-    // file format
-    // cash @ discount @ total
-    // quantity @ size @ itemname @ sugar @ price @ component @ additional
-
-    QString printApplicationPath = "ThermalPrinterTestApp.exe";
-    QString outputFilename = "Data.txt";
-
-    // write order detials to file
-    int totalCashBeforeDiscount = 0;
-    foreach(Model::OrderDetail order, this->orderDetails) {
-        totalCashBeforeDiscount += order.cash();
-    }
-
-    QString cash = QString::number(totalCashBeforeDiscount);
-    QString discount = QString::number(totalDiscount);
-    QString total = QString::number(totalCashBeforeDiscount - totalDiscount);
-
-    QFile file(outputFilename);
-
-    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
-        QTextStream stream(&file);
-
-        QString firstLine = cash + " @ " + discount + " @ " + total;
-        stream << firstLine << endl;
-
-        foreach(Model::OrderDetail order, this->orderDetails) {
-            QString quantity = QString::number(order.qunatity());
-            QString size = order.itemDetail().size().englishName().at(0).toUpper();
-
-            // handle GALLON size
-            if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_5L )
-                size = "5L";
-            else if (order.itemDetail().size().id() == (int) Model::Size::GALLON_1_HALF_L)
-                size = "1.5L";
-            else if ( order.itemDetail().size().id() == (int) Model::Size::GALLON_1L )
-                size = "1L";
-
-            // item name
-            QString itemName = order.itemDetail().item().englishName();
-            QString sugar = QString::number(order.sugar().id()-1);
-            QString components = "#C:" + Services::Helper::fromComponentsToTextEn(order.components()) + "";
-            QString additional = "#A:" + Services::Helper::fromAdditionalsToTextEn(order.additionals()) + "";
-            QString price = QString::number(order.cash());
-
-            QString itemLine = QString("%1 @ %2 @ %3 @ %4 @ %5 @ %6 @ %7")
-                    .arg(quantity).arg(size).arg(itemName).arg(sugar).arg(price)
-                    .arg(components).arg(additional);
-            stream << itemLine << endl;
-        }
-
-        file.close();
-
-        QStringList arg;
-        arg << outputFilename;
-        QProcess *process = new QProcess(this);
-        process->start(printApplicationPath, arg);
-
-        QTimer::singleShot(1200, this, SLOT(anotherPrinting()));
-    }
-}
-
-void MainWindow::anotherPrinting()
-{
-    QString printApplicationPath = "ThermalPrinterTestApp.exe";
-    QString outputFilename = "Data.txt";
-
-    QStringList arg;
-    arg << outputFilename;
-    QProcess *process2 = new QProcess(this);
-    process2->start(printApplicationPath, arg);
-
-    qDebug() << "Another Print";
 }

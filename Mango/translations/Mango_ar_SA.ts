@@ -436,78 +436,66 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="236"/>
+        <location filename="../ui/mainwindow.cpp" line="229"/>
         <source>Close Today Account</source>
         <translation>إغلاق حساب اليوم</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="237"/>
+        <location filename="../ui/mainwindow.cpp" line="230"/>
         <source>Are you sure you want to close today accounts?</source>
         <translation>هل أنت متأكد من إغلاق حساب اليوم</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="289"/>
+        <location filename="../ui/mainwindow.cpp" line="282"/>
         <source>Exit from application</source>
         <translation>الخروج من البرنامج</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="290"/>
+        <location filename="../ui/mainwindow.cpp" line="283"/>
         <source>Are you sure you want to close the application</source>
         <translation>هل أنت متأكد من إغلاق البرنامج</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="304"/>
-        <location filename="../ui/mainwindow.cpp" line="321"/>
-        <location filename="../ui/mainwindow.cpp" line="339"/>
         <source>Shopping cart is empty</source>
-        <translation>سلة المشتريات فارغة</translation>
+        <translation type="obsolete">سلة المشتريات فارغة</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="304"/>
-        <location filename="../ui/mainwindow.cpp" line="321"/>
-        <location filename="../ui/mainwindow.cpp" line="339"/>
         <source>There is no item in the shopping cart!</source>
-        <translation>لا توجد عناصر في سلة المشتريات!</translation>
+        <translation type="obsolete">لا توجد عناصر في سلة المشتريات!</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="309"/>
         <source>Apply the order</source>
-        <translation>تنفيذ الطلب</translation>
+        <translation type="obsolete">تنفيذ الطلب</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="310"/>
         <source>Are you sure you want to apply the order and print the invoice?</source>
-        <translation>هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة</translation>
+        <translation type="obsolete">هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="326"/>
         <source>Cancel the order</source>
-        <translation>إلغاء الطلب</translation>
+        <translation type="obsolete">إلغاء الطلب</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="327"/>
         <source>Are you sure you want to cancel the order?</source>
-        <translation>هل أنت متأكد من إلغاء الطلب</translation>
+        <translation type="obsolete">هل أنت متأكد من إلغاء الطلب</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="388"/>
+        <location filename="../ui/mainwindow.cpp" line="317"/>
         <source>Mango Talaat - 2012</source>
         <translation>مانجو طلعت -- 2012</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="393"/>
+        <location filename="../ui/mainwindow.cpp" line="322"/>
         <source>Version 1.1</source>
         <translation>النسخة 1.1</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="507"/>
         <source>Operation done successully</source>
-        <translation>تمت العملية بنجاح</translation>
+        <translation type="obsolete">تمت العملية بنجاح</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="507"/>
         <source>System is ready to accept new orders</source>
-        <translation>النظام جاهز لاستقبال طلبات جديدة</translation>
+        <translation type="obsolete">النظام جاهز لاستقبال طلبات جديدة</translation>
     </message>
 </context>
 <context>
@@ -518,9 +506,63 @@ p, li { white-space: pre-wrap; }
         <translation>سلة المشتريات</translation>
     </message>
     <message>
-        <location filename="../ui/orderwidget.cpp" line="65"/>
+        <location filename="../ui/orderwidget.cpp" line="64"/>
+        <source>Total Cash</source>
+        <translation>الإجمالي</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="71"/>
+        <source>Discount</source>
+        <translation>الخصم</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="80"/>
         <source>Checkout Order</source>
         <translation>حساب الطلب</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="173"/>
+        <location filename="../ui/orderwidget.cpp" line="190"/>
+        <location filename="../ui/orderwidget.cpp" line="208"/>
+        <source>Shopping cart is empty</source>
+        <translation>سلة المشتريات فارغة</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="173"/>
+        <location filename="../ui/orderwidget.cpp" line="190"/>
+        <location filename="../ui/orderwidget.cpp" line="208"/>
+        <source>There is no item in the shopping cart!</source>
+        <translation>لا توجد عناصر في سلة المشتريات!</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="178"/>
+        <source>Apply the order</source>
+        <translation>تنفيذ الطلب</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="179"/>
+        <source>Are you sure you want to apply the order and print the invoice?</source>
+        <translation>هل أنت متأكد من تنفيذ الطلب وطباعة الفاتورة</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="195"/>
+        <source>Cancel the order</source>
+        <translation>إلغاء الطلب</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="196"/>
+        <source>Are you sure you want to cancel the order?</source>
+        <translation>هل أنت متأكد من إلغاء الطلب</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="256"/>
+        <source>Operation done successully</source>
+        <translation>تمت العملية بنجاح</translation>
+    </message>
+    <message>
+        <location filename="../ui/orderwidget.cpp" line="256"/>
+        <source>System is ready to accept new orders</source>
+        <translation>النظام جاهز لاستقبال طلبات جديدة</translation>
     </message>
 </context>
 <context>

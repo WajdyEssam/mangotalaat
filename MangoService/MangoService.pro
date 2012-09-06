@@ -29,7 +29,8 @@ SOURCES += mangoservice.cpp \
     canceledorder.cpp \
     additional.cpp \
     sugar.cpp \
-    componentprice.cpp
+    componentprice.cpp \
+    receiptprinter.cpp
 
 HEADERS += mangoservice.h\
         MangoService_global.h \
@@ -49,7 +50,8 @@ HEADERS += mangoservice.h\
     canceledorder.h \
     additional.h \
     sugar.h \
-    componentprice.h
+    componentprice.h \
+    receiptprinter.h
 
 unix:DESTDIR = ../bin
 unix:OBJECTS_DIR = build/_obj
