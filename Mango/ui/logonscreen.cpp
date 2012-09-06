@@ -37,8 +37,7 @@ void LogonScreen::on_logonButton_clicked()
     try {
         this->user = authenicateUser(username, password);
         Services::Helper::runSoundFile(Services::Helper::logonSoundFile);
-        this->applicationWindow = new MainWindow(this);
-        this->applicationWindow->setUserID(this->user.id());
+        this->applicationWindow = new MainWindow(this->user.id(), this);
         this->applicationWindow->show();
 
         this->ui->usernameLineEdit->clear();

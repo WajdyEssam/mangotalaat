@@ -190,5 +190,6 @@
         <file>images/add.png</file>
         <file>images/nextbutton.png</file>
         <file>images/previousbutton.png</file>
+        <file>images/backgrounds/logon.jpg</file>
     </qresource>
 </RCC>

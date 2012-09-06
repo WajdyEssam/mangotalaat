@@ -32,13 +32,16 @@
 #include "../mangoapp.h"
 #include "../language.h"
 
-MainWindow::MainWindow(QMainWindow* parentWindow, QWidget *parent) :
+MainWindow::MainWindow(int id, QMainWindow* parentWindow, QWidget *parent) :
     QMainWindow(parent)
 {
     m_parentWindow = parentWindow;
+    this->m_userId = id;
+
     this->setWindowSize();
     this->createDockWidgets();
     this->createWidgetPages();
+    this->disableButtonsForNotAuthenticatedUser();
     this->createStatusBar();
     this->establishConnections();
     this->addLoginEvent();
@@ -124,12 +127,6 @@ void MainWindow::createOrderDockWidget()
     connect(orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
     connect(orderWidget, SIGNAL(applyDiscountClicked()), SLOT(applyDiscountOrderClickedSlot()));
-}
-
-void MainWindow::setUserID(int id)
-{
-    this->m_userId = id;
-    this->disableButtonsForNotAuthenticatedUser();
 }
 
 void MainWindow::disableButtonsForNotAuthenticatedUser()

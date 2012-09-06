@@ -29,9 +29,8 @@ public:
         PropertyPage = 3
     };
 
-    explicit MainWindow(QMainWindow* parentWindow, QWidget *parent = 0);
+    explicit MainWindow(int id, QMainWindow* parentWindow, QWidget *parent = 0);
     ~MainWindow();
-    void setUserID(int id);
 
 signals:
     void orderDetailUpdated(QList<Model::OrderDetail> orderDetails);
