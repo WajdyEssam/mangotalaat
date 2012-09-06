@@ -121,6 +121,9 @@ p, li { white-space: pre-wrap; }
               <iconset resource="../resources.qrc">
                <normaloff>:/images/back_ar.png</normaloff>:/images/back_ar.png</iconset>
              </property>
+             <property name="default">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
