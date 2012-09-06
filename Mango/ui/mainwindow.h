@@ -29,8 +29,9 @@ public:
         PropertyPage = 3
     };
 
-    explicit MainWindow(int aUserId, QWidget *parent = 0);
+    explicit MainWindow(QMainWindow* parentWindow, QWidget *parent = 0);
     ~MainWindow();
+    void setUserID(int id);
 
 signals:
     void orderDetailUpdated(QList<Model::OrderDetail> orderDetails);
@@ -84,6 +85,8 @@ private:
     QList<Model::OrderDetail> orderDetails;
     int m_userId;
     Model::OrderDetail getOrderByIndexId(QString indexId);
+
+    QMainWindow* m_parentWindow;
 
     void setWindowSize();
     void createWidgetPages();

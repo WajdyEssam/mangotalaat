@@ -32,18 +32,16 @@
 #include "../mangoapp.h"
 #include "../language.h"
 
-MainWindow::MainWindow(int userId, QWidget *parent) :
+MainWindow::MainWindow(QMainWindow* parentWindow, QWidget *parent) :
     QMainWindow(parent)
 {
-    m_userId = userId;
-
+    m_parentWindow = parentWindow;
     this->setWindowSize();
     this->createDockWidgets();
     this->createWidgetPages();
     this->createStatusBar();
     this->establishConnections();
     this->addLoginEvent();
-    this->disableButtonsForNotAuthenticatedUser();
     this->setWindowTitle("مانجو طلعت");
 }
 
@@ -53,7 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setWindowSize()
 {
-    this->setWindowState(Qt::WindowMaximized); // WindowFullScreen
+    this->setWindowState(Qt::WindowFullScreen); // WindowFullScreen
     this->setStyleSheet("MainWindow {background-image: url(:/images/background.png);}");
 }
 
@@ -126,6 +124,12 @@ void MainWindow::createOrderDockWidget()
     connect(orderWidget, SIGNAL(applyClicked()), SLOT(applyOrderClickedSlot()));
     connect(orderWidget, SIGNAL(cancelClicked()), SLOT(cancelOrderClickedSlot()));
     connect(orderWidget, SIGNAL(applyDiscountClicked()), SLOT(applyDiscountOrderClickedSlot()));
+}
+
+void MainWindow::setUserID(int id)
+{
+    this->m_userId = id;
+    this->disableButtonsForNotAuthenticatedUser();
 }
 
 void MainWindow::disableButtonsForNotAuthenticatedUser()
@@ -279,8 +283,12 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::exit()
 {
-    if ( logout() )
-        qApp->quit();
+    if ( logout() ) {
+        //qApp->quit();
+        this->hide();
+        this->deleteLater();
+        this->m_parentWindow->show();
+    }
 }
 
 bool MainWindow::logout()
