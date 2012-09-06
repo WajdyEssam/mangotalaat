@@ -41,6 +41,8 @@ void LogonScreen::on_logonButton_clicked()
         this->applicationWindow->setUserID(this->user.id());
         this->applicationWindow->show();
 
+        this->ui->usernameLineEdit->clear();
+        this->ui->passwordLineEdit->clear();
         this->hide();
     }
     catch (std::exception e) {
