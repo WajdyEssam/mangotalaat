@@ -191,5 +191,9 @@
         <file>images/nextbutton.png</file>
         <file>images/previousbutton.png</file>
         <file>images/backgrounds/logon.jpg</file>
+        <file>images/prices/7_100_en.png</file>
+        <file>images/prices/8_25_en.png</file>
+        <file>images/prices/8_20_en.png</file>
+        <file>images/prices/6_35_en.png</file>
     </qresource>
 </RCC>
