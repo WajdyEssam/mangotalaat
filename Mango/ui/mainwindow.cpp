@@ -281,7 +281,6 @@ void MainWindow::changeEvent(QEvent *event)
 void MainWindow::exit()
 {
     if ( logout() ) {
-        //qApp->quit();
         this->hide();
         this->deleteLater();
         this->m_parentWindow->show();
