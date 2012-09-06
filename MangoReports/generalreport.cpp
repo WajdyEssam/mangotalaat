@@ -19,10 +19,14 @@ GeneralReport::GeneralReport(const QDateTime& from, const QDateTime& to)
 QString GeneralReport::getHTML()
 {
     this->totalCash = 0;
+    this->totalDiscount = 0;
 
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول للنظام");
     orignalHTML = orignalHTML.replace("%LOGIN_TABLE%", getLogginTable());
+
+    orignalHTML = orignalHTML.replace("%GLASS_REPORT_TYPE%", "تقرير عن عدد الكاسات");
+    orignalHTML = orignalHTML.replace("%GLASS_TABLE%", getGlassTable());
 
     orignalHTML = orignalHTML.replace("%ORDER_REPORT_TYPE%", "تقرير عن الطلبات");
     orignalHTML = orignalHTML.replace("%ORDER_TABLE%", getOrdersTable());
@@ -30,7 +34,8 @@ QString GeneralReport::getHTML()
     orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
     orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getOrdersDetailsTable());
 
-    QString cashString = "<b> الإجمالي هو " + QString::number(this->totalCash) + " </b>";
+    QString cashString = "<b> اجمالي الخصم " + QString::number(this->totalDiscount) + " </b>";
+    cashString += "<b> الإجمالي هو " + QString::number(this->totalCash) + " </b>";
     orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
@@ -39,6 +44,68 @@ QString GeneralReport::getHTML()
 QString GeneralReport::getReportTemplateName()
 {
     return ":/reports/GeneralReport.html";
+}
+
+QString GeneralReport::getGlassTable()
+{
+    QString tableBegin = "<table width=\"100%\" cellspacing=\"1\"><tbody>"
+           "<tr class=\"table_header\"><th>عدد الكاسات</th><th>النوع</th></tr>";
+    QString tableEnd =  "</tbody></table>";
+
+    QString htmlTableResult = tableBegin;
+
+    QMap<QString, int> summations;
+
+    QList<Model::Order> orders = Services::Order::getOrdersBetweenDateTime(this->m_from, this->m_to);
+    foreach(Model::Order order, orders) {
+        QList<Model::OrderDetail> details = Services::OrderDetail::getByOrderId(order.id());
+        foreach(Model::OrderDetail detail, details) {
+            int category = detail.itemDetail().item().category().id();
+
+            if ( isCountableGlass(category)) {
+                QString size = detail.itemDetail().size().arabicName();
+                if ( summations.contains(size) ) {
+                    int count = summations.value(size) + detail.qunatity();
+                    summations.insert(size, count);
+                }
+                else {
+                    summations.insert(size, 1);
+                }
+            }
+        }
+    }
+
+    QMapIterator<QString, int> i(summations);
+    while (i.hasNext()) {
+        i.next();
+
+        QString size = i.key();
+        int count = i.value();
+
+        QString tableRaw = QString(
+            "<tr valign=\"top\"> "
+            "<td align=\"center\"><font size=\"2\">%1</font></td> "
+            "<td align=\"center\"><font size=\"2\">%2</font></td> "
+            "</tr>"
+            ).arg(QString::number(count), size);
+        htmlTableResult += tableRaw ;
+    }
+
+    htmlTableResult += tableEnd;
+
+    return htmlTableResult;
+}
+
+bool GeneralReport::isCountableGlass(int categoryId)
+{
+    if ( categoryId == 1 ||
+         categoryId == 2 ||
+         categoryId == 4 ||
+         categoryId == 5 ||
+         categoryId == 8 )
+        return true;
+
+    return false;
 }
 
 QString GeneralReport::getLogginTable()
@@ -127,8 +194,10 @@ QString GeneralReport::getOrdersTable()
     foreach(Model::Order order, orders) {
         QString note = order.isCancelled() ? "ملغى": " ";
 
-        if ( !order.isCancelled() )
+        if ( !order.isCancelled() ) {
             totalCash += order.totalCash();
+            totalDiscount += order.discount();
+        }
 
         QString username = Services::User::getById(order.userID()).userName();
 

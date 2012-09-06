@@ -29,18 +29,19 @@
 #include "../mangoapp.h"
 #include "../language.h"
 
-MainWindow::MainWindow(int userId, QWidget *parent) :
+MainWindow::MainWindow(int id, QMainWindow* parentWindow, QWidget *parent) :
     QMainWindow(parent)
 {
-    m_userId = userId;
+    m_parentWindow = parentWindow;
+    this->m_userId = id;
 
     this->setWindowSize();
     this->createDockWidgets();
     this->createWidgetPages();
+    this->disableButtonsForNotAuthenticatedUser();
     this->createStatusBar();
     this->establishConnections();
     this->addLoginEvent();
-    this->disableButtonsForNotAuthenticatedUser();
     this->setWindowTitle("مانجو طلعت");
 }
 
@@ -50,7 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setWindowSize()
 {
-    this->setWindowState(Qt::WindowMaximized); // WindowFullScreen
+    this->setWindowState(Qt::WindowFullScreen); // WindowFullScreen
     this->setStyleSheet("MainWindow {background-image: url(:/images/background.png);}");
 }
 
@@ -272,8 +273,11 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::exit()
 {
-    if ( logout() )
-        qApp->quit();
+    if ( logout() ) {
+        this->hide();
+        this->deleteLater();
+        this->m_parentWindow->show();
+    }
 }
 
 bool MainWindow::logout()

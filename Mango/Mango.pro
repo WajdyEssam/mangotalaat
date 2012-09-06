@@ -22,14 +22,14 @@ SOURCES += main.cpp\
     ui/keypaddialog.cpp \
     ui/aboutdialog.cpp \
     ui/invoiceveiwerwidget.cpp \
-    ui/loggindialog.cpp \
     ui/returnorderdialog.cpp \
     ui/selectperiddialog.cpp \
     ui/sugardialog.cpp \
     ui/discountdialog.cpp \
     language.cpp \
     mangoapp.cpp \
-    ui/employeedialog.cpp
+    ui/employeedialog.cpp \
+    ui/logonscreen.cpp
 
 HEADERS  += ui/categorieswidget.h \
     ui/mainwindow.h \
@@ -43,14 +43,14 @@ HEADERS  += ui/categorieswidget.h \
     ui/keypaddialog.h \
     ui/aboutdialog.h \
     ui/invoiceveiwerwidget.h \
-    ui/loggindialog.h \
     ui/returnorderdialog.h \
     ui/selectperiddialog.h \
     ui/sugardialog.h \
     ui/discountdialog.h \
     language.h \
     mangoapp.h \
-    ui/employeedialog.h
+    ui/employeedialog.h \
+    ui/logonscreen.h
 
 RESOURCES += \
     resources.qrc
@@ -81,8 +81,8 @@ LIBS += -L$$PWD/../bin/ -lMangoReports
 FORMS += \
     ui/aboutdialog.ui \
     ui/invoiceveiwerwidget.ui \
-    ui/loggindialog.ui \
     ui/returnorderdialog.ui \
-    ui/selectperiddialog.ui
+    ui/selectperiddialog.ui \
+    ui/logonscreen.ui
 
 RC_FILE = myapp.rc

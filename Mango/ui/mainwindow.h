@@ -27,7 +27,7 @@ public:
         PropertyPage = 3
     };
 
-    explicit MainWindow(int aUserId, QWidget *parent = 0);
+    explicit MainWindow(int id, QMainWindow* parentWindow, QWidget *parent = 0);
     ~MainWindow();
 
 protected:
@@ -68,6 +68,8 @@ private:
     QLabel *versionLabel;
     QLabel *helpLabel;
     int m_userId;
+
+    QMainWindow* m_parentWindow;
 
     void setWindowSize();
     void createWidgetPages();
