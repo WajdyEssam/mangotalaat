@@ -19,6 +19,7 @@ GeneralReport::GeneralReport(const QDateTime& from, const QDateTime& to)
 QString GeneralReport::getHTML()
 {
     this->totalCash = 0;
+    this->totalDiscount = 0;
 
     QString orignalHTML = getTemplateFileContent();
     orignalHTML = orignalHTML.replace("%LOGIN_REPORT_TYPE%", "تقرير عن عمليات الدخول للنظام");
@@ -33,7 +34,8 @@ QString GeneralReport::getHTML()
     orignalHTML = orignalHTML.replace("%DETAIL_REPORT_TYPE%", "تقرير بتفاصيل الطلبات");
     orignalHTML = orignalHTML.replace("%DETAIL_TABLE%", getOrdersDetailsTable());
 
-    QString cashString = "<b> الإجمالي هو " + QString::number(this->totalCash) + " </b>";
+    QString cashString = "<b> اجمالي الخصم " + QString::number(this->totalDiscount) + " </b>";
+    cashString += "<b> الإجمالي هو " + QString::number(this->totalCash) + " </b>";
     orignalHTML = orignalHTML.replace("%SUMMARY%", cashString);
 
     return orignalHTML;
@@ -192,8 +194,10 @@ QString GeneralReport::getOrdersTable()
     foreach(Model::Order order, orders) {
         QString note = order.isCancelled() ? "ملغى": " ";
 
-        if ( !order.isCancelled() )
+        if ( !order.isCancelled() ) {
             totalCash += order.totalCash();
+            totalDiscount += order.discount();
+        }
 
         QString username = Services::User::getById(order.userID()).userName();
 

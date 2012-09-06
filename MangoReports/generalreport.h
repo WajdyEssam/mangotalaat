@@ -21,6 +21,7 @@ private:
 
 private:
     int totalCash;
+    int totalDiscount;
 };
 
 #endif // GENERALREPORT_H
