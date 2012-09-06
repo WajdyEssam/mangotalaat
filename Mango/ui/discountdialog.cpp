@@ -64,6 +64,7 @@ void DiscountDialog::setupUi()
     cashAfterDiscountLCDNumber->setMinimumHeight(60);
     discountLCDNumber->setMinimumHeight(60);
     discountComboBox->setMinimumWidth(100);
+    discountComboBox->setMinimumHeight(60);
 
     // Get all order types
     foreach (Model::OrderType orderType, Services::OrderType::getAll()) {
@@ -87,7 +88,7 @@ void DiscountDialog::setupUi()
     upperGridLayout->addWidget(discountLCDNumber, 3, 1);
     upperGridLayout->addWidget(discountButton, 3, 2);
 
-    QPushButton* okButton = new QPushButton(tr("Apply discount and close the order"));
+    QPushButton* okButton = new QPushButton(tr("Ok"));
     connect(okButton, SIGNAL(clicked()), SLOT(applyDiscount()));
 
     QPushButton* cancelButton = new QPushButton(tr("Cancel"));
@@ -149,10 +150,5 @@ void DiscountDialog::openKeypadDialog()
 
 void DiscountDialog::applyDiscount()
 {
-    QMessageBox::StandardButton button = QMessageBox::information(this, tr("Apply Discount and Close the Order"), tr("Are you sure you want to apply the discount, close the order and print the invoice?"),
-                                                                  QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-    if (button == QMessageBox::No)
-        return;
-
     this->accept();
 }
