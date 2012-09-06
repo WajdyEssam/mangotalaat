@@ -277,6 +277,7 @@ void MainWindow::exit()
         this->hide();
         this->deleteLater();
         this->m_parentWindow->show();
+        this->m_parentWindow->setWindowState(Qt::WindowFullScreen);
     }
 }
 

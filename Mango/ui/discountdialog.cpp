@@ -69,7 +69,7 @@ void DiscountDialog::setupUi()
     // Get all order types
     foreach (Model::OrderType orderType, Services::OrderType::getAll()) {
         // Remove CASH and COBON from list
-        if (orderType.id() == Model::OrderType::CASH || orderType.id() == Model::OrderType::CUPON)
+        if (orderType.id() == Model::OrderType::CASH)
             continue;
         discountComboBox->addItem(orderType.arabicName(), orderType.id());
     }
@@ -109,7 +109,7 @@ void DiscountDialog::setupUi()
 void DiscountDialog::changeWidget(int index)
 {
     Model::OrderType::OrderTypes orderType = static_cast<Model::OrderType::OrderTypes>(discountComboBox->itemData(index).toInt());
-    if (orderType == Model::OrderType::FREE) {
+    if (orderType == Model::OrderType::FREE || orderType == Model::OrderType::CUPON) {
         discountButton->setEnabled(false);
         m_discount = m_totalCashBeforeDiscount;
         cashAfterDiscountLCDNumber->display(0);
