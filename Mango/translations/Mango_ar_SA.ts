@@ -83,24 +83,26 @@ p, li { white-space: pre-wrap; }
         <translation>نوع الخصم</translation>
     </message>
     <message>
-        <location filename="../ui/discountdialog.cpp" line="90"/>
-        <source>Apply discount and close the order</source>
-        <translation>تنفيذ الخصم وإغلاق الطلب</translation>
+        <location filename="../ui/discountdialog.cpp" line="91"/>
+        <source>Ok</source>
+        <translation>موافق</translation>
     </message>
     <message>
-        <location filename="../ui/discountdialog.cpp" line="93"/>
+        <source>Apply discount and close the order</source>
+        <translation type="obsolete">تنفيذ الخصم وإغلاق الطلب</translation>
+    </message>
+    <message>
+        <location filename="../ui/discountdialog.cpp" line="94"/>
         <source>Cancel</source>
         <translation>إلغاء</translation>
     </message>
     <message>
-        <location filename="../ui/discountdialog.cpp" line="152"/>
         <source>Apply Discount and Close the Order</source>
-        <translation>تطبيق الخصم وإغلاق الطلب</translation>
+        <translation type="obsolete">تطبيق الخصم وإغلاق الطلب</translation>
     </message>
     <message>
-        <location filename="../ui/discountdialog.cpp" line="152"/>
         <source>Are you sure you want to apply the discount, close the order and print the invoice?</source>
-        <translation>هل انت متأكد من تطبيق الخصم، إغلاق الطلب وطباعة الفاتورة؟</translation>
+        <translation type="obsolete">هل انت متأكد من تطبيق الخصم، إغلاق الطلب وطباعة الفاتورة؟</translation>
     </message>
 </context>
 <context>
@@ -412,46 +414,83 @@ p, li { white-space: pre-wrap; }
 </context>
 <context>
     <name>LogginDialog</name>
-    <message utf8="true">
-        <location filename="../ui/loggindialog.ui" line="14"/>
-        <source>نظام مانقو طلعت </source>
+    <message>
+        <source>Login</source>
+        <translation type="obsolete">تسجيل دخول</translation>
+    </message>
+    <message>
+        <source>User Name:</source>
+        <translation type="obsolete">اسم المستخدم:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="obsolete">كلمة المرور:</translation>
+    </message>
+</context>
+<context>
+    <name>LogonScreen</name>
+    <message>
+        <location filename="../ui/logonscreen.ui" line="14"/>
+        <source>MainWindow</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../ui/loggindialog.ui" line="20"/>
-        <source>Login</source>
-        <translation>تسجيل دخول</translation>
+    <message utf8="true">
+        <location filename="../ui/logonscreen.ui" line="64"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; dir=&apos;rtl&apos; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:22pt; font-weight:600; color:#ffffff;&quot;&gt;مانقو طلعت &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../ui/loggindialog.ui" line="29"/>
-        <source>User Name:</source>
-        <translation>اسم المستخدم:</translation>
+    <message utf8="true">
+        <location filename="../ui/logonscreen.ui" line="77"/>
+        <source>تسجيل دخول المستخدم</source>
+        <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../ui/loggindialog.ui" line="39"/>
-        <source>Password:</source>
-        <translation>كلمة المرور:</translation>
+    <message utf8="true">
+        <location filename="../ui/logonscreen.ui" line="86"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p dir=&apos;rtl&apos; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#ffffff;&quot;&gt;اسم المستخدم&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/logonscreen.ui" line="100"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p dir=&apos;rtl&apos; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; color:#ffffff;&quot;&gt;كلمة المرور&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../ui/logonscreen.ui" line="118"/>
+        <source>دخول</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="229"/>
+        <location filename="../ui/mainwindow.cpp" line="230"/>
         <source>Close Today Account</source>
         <translation>إغلاق حساب اليوم</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="230"/>
+        <location filename="../ui/mainwindow.cpp" line="231"/>
         <source>Are you sure you want to close today accounts?</source>
         <translation>هل أنت متأكد من إغلاق حساب اليوم</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="282"/>
+        <location filename="../ui/mainwindow.cpp" line="286"/>
         <source>Exit from application</source>
         <translation>الخروج من البرنامج</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="283"/>
+        <location filename="../ui/mainwindow.cpp" line="287"/>
         <source>Are you sure you want to close the application</source>
         <translation>هل أنت متأكد من إغلاق البرنامج</translation>
     </message>
@@ -480,12 +519,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">هل أنت متأكد من إلغاء الطلب</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="317"/>
+        <location filename="../ui/mainwindow.cpp" line="321"/>
         <source>Mango Talaat - 2012</source>
         <translation>مانجو طلعت -- 2012</translation>
     </message>
     <message>
-        <location filename="../ui/mainwindow.cpp" line="322"/>
+        <location filename="../ui/mainwindow.cpp" line="326"/>
         <source>Version 1.1</source>
         <translation>النسخة 1.1</translation>
     </message>
