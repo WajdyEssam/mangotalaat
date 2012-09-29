@@ -1,5 +1,10 @@
 #include "returnorderdialog.h"
 #include "ui_returnorderdialog.h"
+
+#include "../../MangoService/orderdetail.h"
+#include "../../MangoService/receiptprinter.h"
+
+#include "../../MangoModel/cartorder.h"
 #include <QDebug>
 
 ReturnOrderDialog::ReturnOrderDialog(const QDateTime& from, const QDateTime& to, QWidget *parent) :
@@ -87,4 +92,37 @@ void ReturnOrderDialog::on_removeButton_clicked()
     }
 
     initTable();
+}
+
+void ReturnOrderDialog::on_pushButton_clicked()
+{
+    int row = ui->tableWidget->currentRow();
+    if (row < 0) {
+        QMessageBox::warning(this,"لا يمكن طباعة الفاتورة","يجب تحديد أحد الطلبات");
+        return ;
+    }
+
+    QMessageBox::StandardButton button = QMessageBox::information(this,
+                                                                  tr("Print Order from the system"),
+                                                                  tr("Are you sure you want to re-print the order?"),
+                                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+
+    if (button == QMessageBox::No)
+        return;
+
+
+    QModelIndexList selectedList = ui->tableWidget->selectionModel()->selectedRows();
+    for( int i=0; i<selectedList.count(); i++) {
+        int row = selectedList.at(i).row();
+        int orderId = this->ui->tableWidget->item(row, 0)->text().toInt();
+
+        Model::CartOrder cartOrder;
+        foreach (Model::OrderDetail orderDetail, Services::OrderDetail::getByOrderId(orderId)) {
+            cartOrder.add(orderDetail);
+        }
+
+        Services::ReceiptPrinter printer(this);
+        printer.print(&cartOrder);
+    }
+
 }

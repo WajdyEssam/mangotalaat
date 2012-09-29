@@ -10,6 +10,11 @@ namespace Services {
 const QString ReceiptPrinter::printApplicationPath = "ThermalPrinterTestApp.exe";
 const QString ReceiptPrinter::outputFilename = "Data.txt";
 
+ReceiptPrinter::ReceiptPrinter(QObject *parent) :
+    QObject(parent)
+{
+}
+
 // Print Receipt Method
 /* file format:
 ** cash @ discount @ total
@@ -26,7 +31,7 @@ void ReceiptPrinter::print(const Model::CartOrder* cartOrder) {
 
     QFile file(outputFilename);
 
-    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) {
         QTextStream stream(&file);
 
         QString firstLine = totalCashAfterDiscount + " @ " + discount + " @ " + totalCashBeforeDiscount;
@@ -59,7 +64,6 @@ void ReceiptPrinter::print(const Model::CartOrder* cartOrder) {
 
         file.close();
         exec();
-        QTimer::singleShot(1200, this, SLOT(exec()));
     }
 }
 
@@ -72,9 +76,10 @@ void ReceiptPrinter::exec()
 {
     QStringList arg;
     arg << outputFilename;
-    QProcess p;
-    p.start(printApplicationPath, arg);
-    p.waitForStarted();
+    QProcess* p = new QProcess(this);
+    p->start(printApplicationPath, arg);
+    p->waitForFinished();
 }
+
 
 }

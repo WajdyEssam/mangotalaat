@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QLCDNumber>
 #include <QMessageBox>
+#include <QTimer>
 #include <QDebug>
 
 #include "orderwidget.h"
@@ -247,7 +248,11 @@ void OrderWidget::applyOrder()
         Services::Helper::runSoundFile(Services::Helper::checkoutSoundFile);
 
         Services::ReceiptPrinter printer;
+
         printer.print(&m_cartOrder);
+        printer.printLastReceipt();
+
+//        QTimer::singleShot(1200, &printer, SLOT(exec()));
 
         clearShoppingCart();
     }
