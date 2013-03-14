@@ -57,6 +57,7 @@ RESOURCES += \
 
 OTHER_FILES += \
     mango.qss \
+    mango-Protech-1024-768.qss \
     ui/qml/orderlist.qml
 
 TRANSLATIONS = translations/Mango_ar_SA.ts

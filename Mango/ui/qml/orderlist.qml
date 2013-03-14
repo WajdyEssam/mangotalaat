@@ -2,7 +2,6 @@ import QtQuick 1.0
 
 Rectangle {
     id: order_window
-    //color: mycolor
     signal itemClick(string item_id)
 
     Image {
@@ -29,12 +28,12 @@ Rectangle {
         Rectangle {
 
             id: orderRect
-            width: 340
+            width: 290
             height: 50
 
             BorderImage {
                 id: itemImage
-                width: 338; height: parent.height
+                width: 285; height: parent.height
                 source: mouseArea.containsMouse ? "qrc:/images/pressed_button.png" : "qrc:/images/normal_button.png" ;
                 border.left: 4; border.top: 4
                 border.right: 4; border.bottom: 4
@@ -67,9 +66,9 @@ Rectangle {
 
                 Item {
                     height: parent.height
-                    width: 270
+                    width: 240
                     anchors.left: iconImage.right
-                    anchors.leftMargin: 20
+                    anchors.leftMargin: 10
 
                     Text {
                         id: orderLabel
@@ -91,6 +90,7 @@ Rectangle {
                         font.family: "ChunkFive";
                         anchors.right: parent.right
                         anchors.top: parent.top
+                        anchors.rightMargin: 5
                         anchors.topMargin: 12
                         color: "black"
                     }

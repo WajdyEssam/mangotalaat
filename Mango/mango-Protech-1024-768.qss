@@ -1,0 +1,140 @@
+ 
+#categoryWidget QToolButton
+{
+    border-width: 4px;
+    border-image: url(:/images/normal_button.png) 4 4 4 4 stretch stretch;
+    min-width: 122px;
+    min-height: 122px;
+    text-align: center;
+    color: black;
+}
+
+#categoryWidget QToolButton:hover
+{
+    border-width: 4px;
+    border-image: url(:/images/hover_button.png) 4 4 4 4 stretch stretch;
+    min-width: 122px;
+    min-height: 122px;
+}
+
+#categoryWidget QToolButton:pressed, #categoryWidget QToolButton:checked
+{
+    border-width: 4px;
+    border-image: url(:/images/pressed_button.png) 4 4 4 4 stretch stretch;
+    min-width: 122px;
+    min-height: 122px;
+}
+
+
+#propertyWidget QToolButton
+{
+    border-width: 4px;
+    border-image: url(:/images/normal_button.png) 4 4 4 4 stretch stretch;
+    min-width: 70px;
+    min-height: 70px;
+    text-align: center;
+    color: black;
+}
+
+#propertyWidget QToolButton:hover
+{
+    border-width: 4px;
+    border-image: url(:/images/hover_button.png) 4 4 4 4 stretch stretch;
+    min-width: 70px;
+    min-height: 70px;
+}
+
+#propertyWidget QToolButton:pressed, #categoryWidget QToolButton:checked
+{
+    border-width: 4px;
+    border-image: url(:/images/pressed_button.png) 4 4 4 4 stretch stretch;
+    min-width: 70px;
+    min-height: 70px;
+}
+
+
+#itemWidget QToolButton
+{
+    border-width: 4px;
+    border-image: url(:/images/normal_button.png) 4 4 4 4 stretch stretch;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+#itemWidget QToolButton:hover
+{
+    border-width: 4px;
+    border-image: url(:/images/hover_button.png) 4 4 4 4 stretch stretch;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+#itemWidget QToolButton:pressed, #itemWidget QToolButton:checked
+{
+    border-width: 4px;
+    border-image: url(:/images/pressed_button.png) 4 4 4 4 stretch stretch;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+
+#headerWidget QToolButton
+{
+    background-color: transparent;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+#headerWidget QToolButton:hover, #headerWidget QToolButton:hover:checked
+{
+    background: qradialgradient(cx:0.5, cy:1, radius: 0.5, fx:0.5, fy:1.3,stop: 0 cyan, stop: 1.0 transparent);
+    color: yellow;
+    border-color: #0e536e;
+}
+
+#headerWidget QToolButton:pressed
+{
+    padding-top: 5px;
+}
+
+QHeaderView::section
+{
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,stop:0 #616161, stop: 0.5 #505050,stop: 0.6 #434343, stop:1 #656565);
+    color: white;
+    padding-left: 4px;
+    border: 1px solid #6c6c6c;
+    font: bold
+}
+
+
+#sizeWidget QToolButton
+{
+    background-color: transparent;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    font-weight: bold;
+    text-align: center;
+}
+
+#sizeWidget QToolButton:hover, #headerWidget QToolButton:hover:checked
+{
+}
+
+#sizeWidget QToolButton:pressed
+{
+    padding-top: 5px;
+}
+
+QStatusBar {
+    background: gray;
+    color:white;
+}

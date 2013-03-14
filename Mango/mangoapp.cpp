@@ -7,6 +7,9 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QDebug>
+#include <QRect>
+#include <QDesktopWidget>
+#include <QMessageBox>
 
 #include "mangoapp.h"
 #include "language.h"
@@ -28,7 +31,15 @@ MangoApp::MangoApp(int &argc, char **argv) :
 
 void MangoApp::loadStylesheet()
 {
-    QFile file(":/mango.qss");
+    QString fileName = "mango.qss";
+
+    QDesktopWidget* widget = this->desktop();
+    QRect rect = widget->screenGeometry();
+
+    if (rect.width() == 1024 && rect.height() == 768)
+        fileName = "mango-Protech-1024-768.qss";
+
+    QFile file(QString(":/%1").arg(fileName));
     file.open(QFile::ReadOnly);
     QString StyleSheet = QLatin1String(file.readAll());
     this->setStyleSheet(StyleSheet);
@@ -61,6 +72,12 @@ void MangoApp::loadMangoTranslator()
 
 void MangoApp::openDBConnection()
 {
+    QFile file("mango.db");
+    if (!file.exists()) {
+        QMessageBox::critical(0, "No Database", "Unable to find db file");
+        quit();
+    }
+
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("mango.db");
 }

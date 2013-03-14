@@ -6,7 +6,7 @@ LogonScreen::LogonScreen(QWidget *parent) :
     ui(new Ui::LogonScreen)
 {
     ui->setupUi(this);
-    this->setWindowState(Qt::WindowFullScreen); // WindowFullScreen
+    this->setWindowState(Qt::WindowMaximized); // WindowFullScreen
 }
 
 LogonScreen::~LogonScreen()

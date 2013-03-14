@@ -7,8 +7,9 @@
 
 namespace Services {
 
-const QString ReceiptPrinter::printApplicationPath = "ThermalPrinterTestApp.exe";
+const QString ReceiptPrinter::printApplicationPath = "SII_IFD00x_USB_Printer.exe";
 const QString ReceiptPrinter::outputFilename = "Data.txt";
+const QString ReceiptPrinter::cashDrawerPath = "EPOS_CashDrawer.exe";
 
 ReceiptPrinter::ReceiptPrinter(QObject *parent) :
     QObject(parent)
@@ -64,6 +65,7 @@ void ReceiptPrinter::print(const Model::CartOrder* cartOrder) {
 
         file.close();
         exec();
+        openCashDrawer();
     }
 }
 
@@ -72,11 +74,20 @@ void ReceiptPrinter::printLastReceipt()
     exec();
 }
 
+void ReceiptPrinter::openCashDrawer()
+{
+    QStringList arg;
+    arg << outputFilename;
+    QScopedPointer<QProcess> p(new QProcess(this));
+    p->start(cashDrawerPath, arg);
+    p->waitForFinished();
+}
+
 void ReceiptPrinter::exec()
 {
     QStringList arg;
     arg << outputFilename;
-    QProcess* p = new QProcess(this);
+    QScopedPointer<QProcess> p(new QProcess(this));
     p->start(printApplicationPath, arg);
     p->waitForFinished();
 }

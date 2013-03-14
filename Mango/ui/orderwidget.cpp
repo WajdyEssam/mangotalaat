@@ -25,7 +25,7 @@
 OrderWidget::OrderWidget(int userId, QWidget *parent) :
     QWidget(parent), m_userId(userId)
 {
-    this->setFixedWidth(380);
+    this->setFixedWidth(340);
     this->setObjectName("orderWidget");
 
     layout = new QVBoxLayout(this);
@@ -250,9 +250,6 @@ void OrderWidget::applyOrder()
         Services::ReceiptPrinter printer;
 
         printer.print(&m_cartOrder);
-        printer.printLastReceipt();
-
-//        QTimer::singleShot(1200, &printer, SLOT(exec()));
 
         clearShoppingCart();
     }

@@ -202,8 +202,8 @@ void PropertyWidget::initComponentsUI()
         button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/components/component_notactive_%1.png").arg(p->id())));
-        button->setIconSize(QSize(64,64));
-        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
+        button->setIconSize(QSize(32,32));
+        button->setFont(QFont("Hacen Liner Screen Bd", 13, QFont::Normal));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(button->text());
         button->setStatusTip(button->text());
@@ -237,8 +237,8 @@ void PropertyWidget::initAdditionalsUI()
         button->setText((Settings::Language::getCurrentLanguage() == Settings::Language::Arabic) ? p->arabicName() : p->englishName());
         button->setActiveState(ToolButton::NotActive);
         button->setIcon(QIcon(QString(":/images/additionals/additional_notactive_%1.png").arg(p->id())));
-        button->setIconSize(QSize(64,64));
-        button->setFont(QFont("Hacen Liner Screen Bd", 14, QFont::Normal));
+        button->setIconSize(QSize(32,32));
+        button->setFont(QFont("Hacen Liner Screen Bd", 13, QFont::Normal));
         button->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
         button->setToolTip(button->text());
         button->setStatusTip(button->text());

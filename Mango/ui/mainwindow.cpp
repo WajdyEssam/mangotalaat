@@ -51,7 +51,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setWindowSize()
 {
-    this->setWindowState(Qt::WindowFullScreen); // WindowFullScreen
+    this->setWindowState(Qt::WindowMaximized); // WindowFullScreen
     this->setStyleSheet("MainWindow {background-image: url(:/images/background.png);}");
 }
 
@@ -277,7 +277,7 @@ void MainWindow::exit()
         this->hide();
         this->deleteLater();
         this->m_parentWindow->show();
-        this->m_parentWindow->setWindowState(Qt::WindowFullScreen);
+        this->m_parentWindow->setWindowState(Qt::WindowMaximized);
     }
 }
 
@@ -319,7 +319,7 @@ void MainWindow::createStatusBar()
 {
     this->versionLabel = new QLabel(this);
     this->statusBar()->showMessage("");
-    this->statusBar()->addPermanentWidget(new QLabel(tr("Mango Talaat - 2012")));
+    this->statusBar()->addPermanentWidget(new QLabel(tr("Mango Talaat - 2013")));
     this->statusBar()->addPermanentWidget(versionLabel);
 
     this->helpLabel = new QLabel(this);

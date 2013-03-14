@@ -16,11 +16,13 @@ public:
     ReceiptPrinter(QObject* parent=0);
     void print(const Model::CartOrder* cartOrder);
     void printLastReceipt();
+    void openCashDrawer();
 public slots:
     void exec();
 private:
     static const QString printApplicationPath;
     static const QString outputFilename;
+    static const QString cashDrawerPath;
 };
 
 }

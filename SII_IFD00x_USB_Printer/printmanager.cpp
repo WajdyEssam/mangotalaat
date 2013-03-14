@@ -11,7 +11,7 @@ PrintManager::PrintManager(QString fileName)
     m_reciept = RecieptReader::read(fileName);
 
     printer.setColorMode(QPrinter::GrayScale);
-    printer.setCopyCount(1);
+    printer.setCopyCount(2);
     printer.setPaperSize(QPrinter::Letter);
 }
 
@@ -48,10 +48,10 @@ QString PrintManager::getSubHeader()
 
 QString PrintManager::getOrderLineTitle()
 {
-    return QString("%1  %2/%3     %4           %5\n %6 \n")
+    return QString("%1  %2/%3     %4         %5\n %6 \n")
             .arg("#").arg("Size")
             .arg("Sugar").arg("Item").arg("$")
-            .arg("_________________________________");
+            .arg("---------------------------------");
 }
 
 QString PrintManager::getWithSpace(QString name, int max, bool leftJustified)
@@ -92,7 +92,7 @@ QString PrintManager::getOrderLine() const {
         QString orderLine = QString("%1%2%3%4")
                 .arg(getWithSpace(item.quantity(), 3))
                 .arg(getWithSpace(size_sugar, 5))
-                .arg(getWithSpace(item.name(), 25))
+                .arg(getWithSpace(item.name(), 23))
                 .arg(item.price());
 
         result.append(orderLine).append("\n");
