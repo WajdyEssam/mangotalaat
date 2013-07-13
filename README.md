@@ -1,7 +1,7 @@
-Welcome to Mango Application
+Welcome to Mangotalaat  Application
 ------------------------------
 
-1) its a commercial application designed for juice shop in Saudi Arabia, using C++/Qt.
+1) Its a commercial application designed for juice shop in Saudi Arabia, using C++/Qt.
 
 2) The application support touch screen and normal machine.
 
