@@ -14,7 +14,14 @@ Welcome to Mangotalaat  Application
 6) The application provide basic reporting mechanism using HTML
 
 ToDo:
+-------
+
 1) replace all objects passed by value to references or pointers based to increase performance
+
+2) database connection should be opening one time only (not with each operations) to increase the performance
+
+3) change the general architecture from Anemic domain model to more flexible design
+
 
 contact:
 wajdyessam AT hotmail DOT COM
