@@ -1,6 +1,8 @@
 Welcome to Mangotalaat  Application
 ------------------------------
 
+http://wajdyessam.github.io/mangotalaat
+
 1) Its a commercial application designed for juice shop in Saudi Arabia, using C++/Qt.
 
 2) The application support touch screen and normal machine.
